@@ -1,0 +1,42 @@
+<html lang="en">
+<th:block th:include="fragments/head :: head"></th:block>
+
+<body>
+
+<!-- Navigation -->
+<nav id="siteNav" class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+        <!-- Logo and responsive toggle -->
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#">SEFA</a>
+        </div>
+        <!-- Navbar links -->
+        <div class="collapse navbar-collapse" id="navbar">
+            <ul class="nav navbar-nav navbar-right">
+                <li class="active"><a href="#">Home</a></li>
+                <li><a href="admin">Admin App</a></li>
+                <li><a href="customer">Customer App</a></li>
+                <!-- <li><a href="/swagger-ui/index.html">API description</a></li> -->
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container -->
+</nav>
+
+<!-- Header -->
+<header>
+    <div class="header-content">
+        <div class="header-content-inner">
+            <h1>SEFA</h1>
+            <p>A SErvice-based eFood Application</p>
+            <!-- <a href="#" class="btn btn-primary btn-lg">Engage Now</a> -->
+        </div>
+    </div>
+</header>
+
+
+
+<th:block th:include="fragments/footer :: footer"></th:block>
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>

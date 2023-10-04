@@ -1,0 +1,19 @@
+rootProject.name = 'sefa'
+
+include 'services-restapi'
+
+include 'web-service'
+include 'api-gateway-service'
+
+include 'restaurant-service'
+include 'ordering-service'
+
+include 'payment-proxies:payment-proxy-1-service'
+include 'payment-proxies:payment-proxy-2-service'
+include 'payment-proxies:payment-proxy-3-service'
+include 'delivery-proxies:delivery-proxy-1-service'
+include 'delivery-proxies:delivery-proxy-2-service'
+include 'delivery-proxies:delivery-proxy-3-service'
+
+include 'servers:eureka-registry-server'
+include 'servers:config-server'

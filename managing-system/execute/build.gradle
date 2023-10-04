@@ -1,0 +1,7 @@
+dependencies {
+    implementation project(':knowledge')
+    implementation fileTree(dir: '../libs', include: ['**/*.jar'])
+    implementation "io.github.resilience4j:resilience4j-spring-cloud2:1.7.0"
+
+
+}

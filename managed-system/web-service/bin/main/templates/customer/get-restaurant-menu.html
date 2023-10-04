@@ -1,0 +1,43 @@
+<html lang="en">
+<th:block th:include="fragments/head :: head"></th:block>
+<body>
+
+<th:block th:include="fragments/navbar :: navbar(2,${cartId})"></th:block>
+
+<div class="content">
+    <h3>Menu of Restaurant <span th:text="${restaurant.name}">name goes here</span></h3>
+    <table>
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Name</th>
+                <th>Price</th>
+                <th>Add to cart</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="menuItem : ${menu.getMenuItems()}">
+                <td th:text="${menuItem.id}">id goes here</td>
+                <td th:text="${menuItem.name}">name goes here</td>
+                <td th:text="${menuItem.price}">price goes here</td>
+                <td>
+                    <form th:action="|/customer/cart/${cartId}/addItem|" method="POST">
+                        <input type="hidden" name="restaurantId" th:value="${restaurant.id}">
+                        <input type="hidden" name="cartId" th:value="${cartId}">
+                        <input type="hidden" name="itemId" th:value="${menuItem.id}">
+                        <input type="submit" value="Add">
+                    </form>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+</div>
+
+<hr/>
+
+
+<th:block th:include="fragments/footer :: footer"></th:block>
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+</body>
+</html>
