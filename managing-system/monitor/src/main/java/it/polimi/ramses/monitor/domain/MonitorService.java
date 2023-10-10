@@ -49,6 +49,9 @@ public class MonitorService {
     public MonitorService(KnowledgeClient knowledgeClient, ThreadPoolTaskScheduler taskScheduler) {
         this.knowledgeClient = knowledgeClient;
         this.taskScheduler = taskScheduler;
+
+        // add all the services registered in Eureka, WRONG!!
+        // Knowledge start firstly because at the beginning it retrieves all the services registered!
         knowledgeClient.getServicesMap().values().forEach(service -> managedServices.add(service.getServiceId()));
     }
 
@@ -58,13 +61,18 @@ public class MonitorService {
     public void initRoutine() {
         monitorRoutine = taskScheduler.scheduleWithFixedDelay(new MonitorRoutine(), schedulingPeriod);
     }
-     */
+    */
 
+    //PRIMO METODO CHE VIENE INVOCATO QUANDO IL MONITOR PARTE
+    //The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread.
+    // The class must define a method of no arguments called run.
+    //This interface is designed to provide a common protocol for objects that wish to execute code while they are active.
     class MonitorRoutine implements Runnable {
         @Override
         public void run() {
-            log.debug("\nA new Monitor routine iteration started");
+            log.debug("A new Monitor routine iteration started");
             try {
+                //Create a new empty Metrics List Buffer
                 List<InstanceMetricsSnapshot> metricsList = Collections.synchronizedList(new LinkedList<>());
                 List<Thread> threads = new LinkedList<>();
                 AtomicBoolean invalidIteration = new AtomicBoolean(false);

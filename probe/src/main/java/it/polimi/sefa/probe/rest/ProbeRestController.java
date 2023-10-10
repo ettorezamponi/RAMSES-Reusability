@@ -17,13 +17,11 @@ import java.util.Map;
 @RestController
 @RequestMapping(path="/rest")
 public class ProbeRestController {
+
     @Autowired
     ProbeService probeService;
-
     @Value("${ENABLE_FAKE_UNREACHABLE_RESTAURANT}")
     private String fakeUnreachableRestaurant;
-
-
     private final Object lock = new Object();
     private Integer fakeCounter = 0;
     private String instanceToMakeUnreachable = null;

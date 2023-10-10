@@ -43,6 +43,7 @@ public class KnowledgeInit implements InitializingBean {
             configDirPath = Paths.get("").toAbsolutePath().toString();
             log.warn("No configuration path specified. Using current working directory: {}", configDirPath);
         }
+        // parse from json what SHOULD BE in the architecture runtime
         FileReader architectureReader = new FileReader(ResourceUtils.getFile(configDirPath+"/system_architecture.json"));
         List<Service> serviceList = SystemArchitectureParser.parse(architectureReader);
         FileReader qoSReader = new FileReader(ResourceUtils.getFile(configDirPath+"/qos_specification.json"));
@@ -50,16 +51,21 @@ public class KnowledgeInit implements InitializingBean {
         FileReader benchmarkReader = new FileReader(ResourceUtils.getFile(configDirPath+"/system_benchmarks.json"));
         Map<String, List<SystemBenchmarkParser.ServiceImplementationBenchmarks>> servicesBenchmarks = SystemBenchmarkParser.parse(benchmarkReader);
 
+        // It retrieves for each service registered in Eureka: serviceId, currentImplementationId, instances
         Map<String, ServiceInfo> probeSystemRuntimeArchitecture = probeClient.getSystemArchitecture();
+        //log.info("PROBE SYSTEM ARCHITECTURE:" + probeSystemRuntimeArchitecture.toString());
+        //log.info("SERVICELIST: " + serviceList.toString());
 
         serviceList.forEach(service -> {
             ServiceInfo serviceInfo = probeSystemRuntimeArchitecture.get(service.getServiceId());
+            //log.info("SERVICE INFO:" + serviceInfo);
             if (serviceInfo == null)
                 throw new RuntimeException("Service " + service.getServiceId() + " not found in the system  runtime architecture");
             List<String> instances = serviceInfo.getInstances();
             if (instances == null || instances.isEmpty()){
                 throw new RuntimeException("No instances found for service " + service.getServiceId());
             }
+
             service.setCurrentImplementationId(serviceInfo.getCurrentImplementationId());
             service.setAllQoS(servicesQoS.get(service.getServiceId()));
             servicesBenchmarks.get(service.getServiceId()).forEach(serviceImplementationBenchmarks -> {
@@ -76,6 +82,7 @@ public class KnowledgeInit implements InitializingBean {
             service.setConfiguration(probeClient.getServiceConfiguration(service.getServiceId(), service.getCurrentImplementationId()));
             configurationRepository.save(service.getConfiguration());
             knowledgeService.addService(service);
+            log.debug("SERVICE ADDED TO THE NOWLEDGE: " + service);
         });
 
         for (Service service : serviceList) {

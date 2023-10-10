@@ -1,6 +1,21 @@
 {
 	"services"	: [
 		{
+			"service_id":"MOVIE-INFO-SERVICE",
+			"qos" : [
+				{
+					"name" : "availability",
+					"weight" : 0.5,
+					"min_threshold" : 0.9
+				},
+				{
+					"name" : "average_response_time",
+					"weight" : 0.5,
+					"max_threshold": 90
+				}
+			]
+		},
+		{
 			"service_id":"RESTAURANT-SERVICE",
 			"qos" : [
 				{

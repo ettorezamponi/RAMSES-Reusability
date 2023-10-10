@@ -55,7 +55,7 @@ echo
 sleep 2
 
 ##### SEFA #####
-echo; PrintSuccess "Setting up the Managed System, SEFA!"; echo 
+echo; PrintSuccess "Setting up the Managed System, SEFA!"; echo
 
 PrintSuccess "Setting up Netflix Eureka Server"
 docker pull sbi98/sefa-eureka:$ARCH
@@ -64,15 +64,15 @@ echo
 sleep 2
 
 PrintSuccess "Setting up Spring Config Server"
-docker pull sbi98/sefa-configserver:$ARCH
-docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net sbi98/sefa-configserver:$ARCH
-#Personalized config server
-#docker pull giamburrasca/sefa-configserver:v1.0
-#docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-configserver:v1.0
+#docker pull sbi98/sefa-configserver:$ARCH
+#docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net sbi98/sefa-configserver:$ARCH
+#PERSONALIZED CONFIG SERVER
+docker pull giamburrasca/sefa-configserver:v1.0
+docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-configserver:v1.0
 echo
 sleep 10
 
-declare -a arr=("sefa-restaurant-service" 
+declare -a arr=("sefa-restaurant-service"
                 "sefa-ordering-service"
                 "sefa-payment-proxy-1-service"
                 "sefa-delivery-proxy-1-service"
@@ -102,7 +102,7 @@ do
 done
 
 ##### PROBE AND ACTUATORS #####
-echo; PrintSuccess "Setting up probe and actuators!"; echo 
+echo; PrintSuccess "Setting up probe and actuators!"; echo
 
 declare -a pract=("sefa-probe" "sefa-instances-manager")
 for i in "${pract[@]}"
@@ -120,27 +120,4 @@ docker run -P --name sefa-config-manager -e GITHUB_OAUTH=$GITHUB_OAUTH -e GITHUB
 echo
 sleep 1
 
-##### RAMSES #####
-echo; PrintSuccess "Setting up the Managing System, RAMSES!"; echo 
-
-declare -a ramsesarr=("ramses-knowledge" "ramses-analyse" "ramses-plan" "ramses-execute" "ramses-monitor" "ramses-dashboard")
-for i in "${ramsesarr[@]}"
-do
-   PrintSuccess "Pulling $i"
-   docker pull sbi98/$i:$ARCH
-   docker run -P --name $i -d --network ramses-sas-net sbi98/$i:$ARCH
-   echo
-   sleep 1
-done
-
-echo; PrintSuccess "DONE!"; echo 
-echo; PrintWarn "A load generator is also available on Docker Hub. The image is sbi98/sefa-load-generator. Do you want to run it? Y/n"; echo 
-
-read decision
-if [[$decision = "Y" || $decision = "y"]]; then
-   loadgen
-else 
-   echo "Exiting. You can run only the load generator by running this script with the -l flag."
-fi
-
-
+echo; PrintSuccess "DONE!"; echo

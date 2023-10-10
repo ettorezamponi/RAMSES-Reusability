@@ -31,7 +31,10 @@ public class Service {
     public Service(String serviceId, List<ServiceImplementation> possibleImplementations, List<String> dependencies) {
         this.serviceId = serviceId;
         this.dependencies = dependencies;
-        possibleImplementations.forEach(impl -> {this.possibleImplementations.put(impl.getImplementationId(), impl); impl.setServiceId(getServiceId());});
+        possibleImplementations.forEach(impl -> {
+            this.possibleImplementations.put(impl.getImplementationId(), impl);
+            impl.setServiceId(getServiceId());}
+        );
     }
 
     @JsonIgnore
