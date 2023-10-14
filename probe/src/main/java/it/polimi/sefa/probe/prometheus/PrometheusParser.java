@@ -26,9 +26,12 @@ public class PrometheusParser {
         List<MetricFamily> metricFamilies;
         try {
             URL url = new URL(instanceInfo.getHomePageUrl());
+            log.info("INSTANCE INFO:" + instanceInfo);
             url = new URL(url, actuatorRelativePath+"/prometheus");
+            log.debug("URL TO GIVE TO PROMETHEUS:" + url);
             PrometheusScraper scraper = new PrometheusScraper(url);
             metricFamilies = scraper.scrape();
+            log.info("METRICS FAMILIES: " + metricFamilies.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -37,8 +40,10 @@ public class PrometheusParser {
 
         metricFamilies.forEach(metricFamily -> {
             String propertyName = metricFamily.getName(); //e.g. http_server_requests_seconds
+            log.info("PROPERTY NAME: " + propertyName);
             //MetricType metricType = elem.getType(); //e.g. GAUGE
             metricFamily.getMetrics().forEach(metric -> { //e.g., one metric is the http_server_requests_seconds for the endpoint X
+                log.info("METRIC: " + metric);
                 Map<String, String> labels = metric.getLabels();
                 switch (propertyName) {
                     case PrometheusMetrics.HTTP_REQUESTS_TIME ->

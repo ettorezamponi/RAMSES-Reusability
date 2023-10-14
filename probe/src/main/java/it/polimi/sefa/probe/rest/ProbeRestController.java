@@ -35,6 +35,7 @@ public class ProbeRestController {
                     if (instanceToMakeUnreachable == null) {
                         instanceToMakeUnreachable = snapshots.get(0).getInstanceId();
                         snapshots.get(0).setStatus(InstanceStatus.UNREACHABLE);
+                        log.debug(serviceId+ "SETTED AS UNREACHABLE");
                     } else {
                         snapshots.stream().filter(snapshot -> snapshot.getInstanceId().equalsIgnoreCase(instanceToMakeUnreachable)).forEach(snapshot -> {
                             snapshot.setStatus(InstanceStatus.UNREACHABLE);

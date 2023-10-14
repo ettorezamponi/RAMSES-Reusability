@@ -53,12 +53,12 @@ public class KnowledgeInit implements InitializingBean {
 
         // It retrieves for each service registered in Eureka: serviceId, currentImplementationId, instances
         Map<String, ServiceInfo> probeSystemRuntimeArchitecture = probeClient.getSystemArchitecture();
-        //log.info("PROBE SYSTEM ARCHITECTURE:" + probeSystemRuntimeArchitecture.toString());
+        log.info("PROBE SYSTEM ARCHITECTURE:" + probeSystemRuntimeArchitecture.toString());
         //log.info("SERVICELIST: " + serviceList.toString());
 
         serviceList.forEach(service -> {
             ServiceInfo serviceInfo = probeSystemRuntimeArchitecture.get(service.getServiceId());
-            //log.info("SERVICE INFO:" + serviceInfo);
+            log.info("SERVICE INFO:" + serviceInfo);
             if (serviceInfo == null)
                 throw new RuntimeException("Service " + service.getServiceId() + " not found in the system  runtime architecture");
             List<String> instances = serviceInfo.getInstances();
@@ -89,7 +89,7 @@ public class KnowledgeInit implements InitializingBean {
             ServiceConfiguration configuration = service.getConfiguration();
             if (configuration.getLoadBalancerType() != null && configuration.getLoadBalancerType().equals(ServiceConfiguration.LoadBalancerType.WEIGHTED_RANDOM)) {
                 if (configuration.getLoadBalancerWeights() == null) {
-                    for (Instance instance : service.getInstances())
+                     for (Instance instance : service.getInstances())
                         configuration.addLoadBalancerWeight(instance.getInstanceId(), 1.0/service.getInstances().size());
                 } else if (!configuration.getLoadBalancerWeights().keySet().equals(service.getCurrentImplementation().getInstances().keySet())) {
                     throw new RuntimeException("Service " + service.getServiceId() + " has a load balancer weights map with different keys than the current implementation instances");

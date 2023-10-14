@@ -63,10 +63,10 @@ public class MonitorService {
     }
     */
 
-    //PRIMO METODO CHE VIENE INVOCATO QUANDO IL MONITOR PARTE
-    //The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread.
+    // PRIMO METODO CHE VIENE INVOCATO QUANDO IL MONITOR PARTE
+    // The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread.
     // The class must define a method of no arguments called run.
-    //This interface is designed to provide a common protocol for objects that wish to execute code while they are active.
+    // This interface is designed to provide a common protocol for objects that wish to execute code while they are active.
     class MonitorRoutine implements Runnable {
         @Override
         public void run() {
@@ -81,6 +81,7 @@ public class MonitorService {
                     Thread thread = new Thread( () -> {
                         try {
                             List<InstanceMetricsSnapshot> instancesSnapshots = probeClient.takeSnapshot(serviceId);
+                            //log.debug("INSTANCE SNAPSHOT: " +instancesSnapshots);
                             if (instancesSnapshots == null) {
                                 invalidIteration.set(true);
                             } else {
@@ -110,6 +111,8 @@ public class MonitorService {
                 }
 
                 instanceMetricsListBuffer.add(metricsList);
+                log.info("INSTAMCE METRIC LIST: " + instanceMetricsListBuffer);
+
                 if (getLoopIterationFinished()) {
                     log.debug("Monitor routine completed. Updating Knowledge and notifying the Analyse to start the next iteration.\n");
                     knowledgeClient.addMetricsFromBuffer(instanceMetricsListBuffer);

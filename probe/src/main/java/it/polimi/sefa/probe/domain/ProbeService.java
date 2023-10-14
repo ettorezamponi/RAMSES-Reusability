@@ -46,7 +46,8 @@ public class ProbeService {
             if (invalidIteration.get()) return;
             InstanceMetricsSnapshot instanceMetricsSnapshot;
             try {
-                instanceMetricsSnapshot = prometheusParser.parse(instance);
+                instanceMetricsSnapshot = prometheusParser.parse(instance); //usually cpuUsage, diskTotalSpace, diskFreeSpace
+                log.debug("INSTANCE METRIC SNAPSHOT: " + instanceMetricsSnapshots);
                 instanceMetricsSnapshot.applyTimestamp();
                 log.debug("Adding metric for instance {}", instanceMetricsSnapshot.getInstanceId());
                 instanceMetricsSnapshots.add(instanceMetricsSnapshot);

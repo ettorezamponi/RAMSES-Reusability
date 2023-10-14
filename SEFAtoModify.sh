@@ -29,7 +29,7 @@ if [[(${ARCH} != "arm64") && ( ${ARCH} != "amd64")]]; then
   PrintWarn "Desired architecture not specified or unknown. Supported values are 'arm64' and 'amd64'. Using 'arm64' as default option"
   ARCH="arm64"
 else
-   PrintSuccess "Running script with selceted architecture: ${ARCH}"
+   PrintSuccess "Running script with selected architecture: ${ARCH}"
 fi
 
 ##### Network #####
@@ -104,20 +104,29 @@ done
 ##### PROBE AND ACTUATORS #####
 echo; PrintSuccess "Setting up probe and actuators!"; echo
 
-declare -a pract=("sefa-probe" "sefa-instances-manager")
-for i in "${pract[@]}"
-do
-   PrintSuccess "Pulling $i"
-   docker pull sbi98/$i:$ARCH
-   docker run -P --name $i -d --network ramses-sas-net sbi98/$i:$ARCH
-   echo
-   sleep 1
-done
+PrintSuccess "Pulling Probe"
+docker pull giamburrasca/probe:v1.12
+docker run -P --name sefa-probe -d --network ramses-sas-net giamburrasca/probe:v1.12
+echo
+sleep 1
+
+PrintSuccess "Pulling sefa-instances-manager"
+docker pull sbi98/sefa-instances-manager:$ARCH
+docker run -P --name sefa-instances-manager -d --network ramses-sas-net sbi98/sefa-instances-manager:$ARCH
+echo
+sleep 1
 
 PrintSuccess "Pulling sefa-config-manager"
 docker pull sbi98/sefa-config-manager:$ARCH
 docker run -P --name sefa-config-manager -e GITHUB_OAUTH=$GITHUB_OAUTH -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net sbi98/sefa-config-manager:$ARCH
 echo
 sleep 1
+
+# microservice added to experiment
+#PrintSuccess "Setting up Movie Info extra service"
+#docker pull giamburrasca/movie-info-service:v1.0
+#docker run -P --name movie-info-service -d --network ramses-sas-net giamburrasca/movie-info-service:v1.0
+#echo
+#sleep 2
 
 echo; PrintSuccess "DONE!"; echo

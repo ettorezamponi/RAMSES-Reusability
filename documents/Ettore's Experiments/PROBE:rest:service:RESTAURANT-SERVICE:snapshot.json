@@ -1,0 +1,21 @@
+[
+  {
+    "id": null,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {},
+    "cpuUsage": 0.011572349028568046,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 4.8711241728E10,
+    "timestamp": "2023-10-10T16:53:37.785+00:00",
+    "active": true,
+    "shutdown": false,
+    "failed": false,
+    "unreachable": false,
+    "booting": false
+  }
+]
+
+//PROBE.TAKESNAPSHOT

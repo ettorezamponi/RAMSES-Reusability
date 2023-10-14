@@ -1,0 +1,21 @@
+[
+  {
+    "id": null,
+    "serviceId": "MOVIE-INFO-SERVICE",
+    "instanceId": "movie-info-service@localhost:8082",
+    "status": "UNREACHABLE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {},
+    "cpuUsage": null,
+    "diskTotalSpace": null,
+    "diskFreeSpace": null,
+    "timestamp": "2023-10-10T16:54:00.729+00:00",
+    "active": false,
+    "shutdown": false,
+    "failed": false,
+    "unreachable": true,
+    "booting": false
+  }
+]
+
+//PROBE.TAKESNAPSHOT
