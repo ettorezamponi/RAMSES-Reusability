@@ -3,10 +3,8 @@ PrintSuccess() { echo -e "\033[0;32m$1\033[0m"; }
 PrintWarn() { echo -e "\033[0;33m$1\033[0m"; }
 PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 
-if [[("${GITHUB_OAUTH}" = "") || ("${GITHUB_REPOSITORY_URL}" = "")]]; then
-  PrintError "Env var GITHUB_OAUTH and GITHUB_REPOSITORY_URL must be set!"
-  exit 1
-fi
+export GITHUB_REPOSITORY_URL=https://github.com/ettorezamponi/config-server.git
+export GITHUB_OAUTH=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
 
 usage() {
   echo "Usage: [-a <arch>] [-l]"
