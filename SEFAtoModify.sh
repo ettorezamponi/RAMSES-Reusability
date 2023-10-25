@@ -3,10 +3,8 @@ PrintSuccess() { echo -e "\033[0;32m$1\033[0m"; }
 PrintWarn() { echo -e "\033[0;33m$1\033[0m"; }
 PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 
-if [[("${GITHUB_OAUTH}" = "") || ("${GITHUB_REPOSITORY_URL}" = "")]]; then
-  PrintError "Env var GITHUB_OAUTH and GITHUB_REPOSITORY_URL must be set!"
-  exit 1
-fi
+export GITHUB_REPOSITORY_URL=https://github.com/ettorezamponi/config-server.git
+export GITHUB_OAUTH=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
 
 usage() {
   echo "Usage: [-a <arch>] [-l]"
@@ -40,12 +38,12 @@ docker network create ramses-sas-net
 echo
 
 ##### LOAD GENERATOR ####
-if $LOADGEN; then
-  PrintSuccess "Setting up Load Generator"
-  docker pull sbi98/sefa-load-generator:$ARCH
-  docker run -P --name sefa-load-generator -d --network ramses-sas-net sbi98/sefa-load-generator:$ARCH
-  exit 0
-fi
+#if $LOADGEN; then
+#  PrintSuccess "Setting up Load Generator"
+#  docker pull sbi98/sefa-load-generator:$ARCH
+#  docker run -P --name sefa-load-generator -d --network ramses-sas-net sbi98/sefa-load-generator:$ARCH
+#  exit 0
+#fi
 
 ##### MYSQL #####
 PrintSuccess "Setting up MySQL Server"
@@ -111,8 +109,8 @@ echo
 sleep 1
 
 PrintSuccess "Pulling sefa-instances-manager"
-docker pull sbi98/sefa-instances-manager:$ARCH
-docker run -P --name sefa-instances-manager -d --network ramses-sas-net sbi98/sefa-instances-manager:$ARCH
+docker pull giamburrasca/sefa-instance-manager-et:v0.3
+docker run -P --name sefa-instances-manager -d --network ramses-sas-net giamburrasca/sefa-instance-manager-et:v0.3
 echo
 sleep 1
 
@@ -122,11 +120,11 @@ docker run -P --name sefa-config-manager -e GITHUB_OAUTH=$GITHUB_OAUTH -e GITHUB
 echo
 sleep 1
 
-# microservice added to experiment
-#PrintSuccess "Setting up Movie Info extra service"
-#docker pull giamburrasca/movie-info-service:v1.0
-#docker run -P --name movie-info-service -d --network ramses-sas-net giamburrasca/movie-info-service:v1.0
-#echo
-#sleep 2
+#microservice added to experiment
+PrintSuccess "Setting up Movie Info extra service"
+docker pull giamburrasca/movie-info-service:v1.1
+docker run -P --name movie-info-service -d --network ramses-sas-net giamburrasca/movie-info-service:v1.1
+echo
+sleep 2
 
 echo; PrintSuccess "DONE!"; echo

@@ -77,20 +77,20 @@
 			"implementations" : [
 				{
 					"implementation_id" : "delivery-proxy-1-service",
-					"implementation_trust" : 4,
-					"preference" : 0.4,
+					"implementation_trust" : 1,
+					"preference" : 0.2,
 					"instance_load_shutdown_threshold" : 0.4
 				},
 				{
 					"implementation_id" : "delivery-proxy-2-service",
-					"implementation_trust" : 6,
-					"preference" : 0.3,
+					"implementation_trust" : 9,
+					"preference" : 0.6,
 					"instance_load_shutdown_threshold" : 0.4
 				},
 				{
 					"implementation_id" : "delivery-proxy-3-service",
 					"implementation_trust" : 7,
-					"preference" : 0.3,
+					"preference" : 0.2,
 					"instance_load_shutdown_threshold" : 0.4
 				}
 			],

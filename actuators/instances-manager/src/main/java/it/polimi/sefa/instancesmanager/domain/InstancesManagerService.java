@@ -79,7 +79,9 @@ public class InstancesManagerService {
     }
 
 
+    // addInstances(NAME, NO of INSTANCES)
     public List<ServiceContainerInfo> addInstances(String serviceImplementationName, int numberOfInstances) {
+        log.debug("*** IMAGE LS: "+dockerClient.listImagesCmd()+"***");
         String imageName = serviceImplementationName;
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
@@ -100,7 +102,8 @@ public class InstancesManagerService {
                     .withEnv(envVars)
                     .withExposedPorts(serverPort)
                     .withHostConfig(newHostConfig().withPortBindings(portBindings))
-                    .exec().getId();
+                    .exec()
+                    .getId();
             dockerClient.startContainerCmd(newContainerId).exec();
             serviceContainerInfos.add(new ServiceContainerInfo(imageName, newContainerId, imageName + "_" + randomPort, dockerIp, randomPort, envVars));
         }

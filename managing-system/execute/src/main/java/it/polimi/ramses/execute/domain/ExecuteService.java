@@ -36,12 +36,16 @@ public class ExecuteService {
                     log.info("Executing adaptation option: " + adaptationOption.getDescription());
                     Class<? extends AdaptationOption> clazz = adaptationOption.getClass();
                     if (AddInstanceOption.class.equals(clazz)) {
+                        log.info("adding instance...");
                         handleAddInstanceOption((AddInstanceOption) (adaptationOption));
                     } else if (ShutdownInstanceOption.class.equals(clazz)) {
+                        log.info("shutting down instance...");
                         handleShutdownInstanceOption((ShutdownInstanceOption) (adaptationOption));
                     } else if (ChangeLoadBalancerWeightsOption.class.equals(clazz)) {
+                        log.info("changing load balancing weights...");
                         handleChangeLBWeightsOption((ChangeLoadBalancerWeightsOption) (adaptationOption));
                     } else if(ChangeImplementationOption.class.equals(clazz)){
+                        log.info("changing implementation...");
                         handleChangeImplementationOption((ChangeImplementationOption) (adaptationOption));
                     } else {
                         log.error("Unknown adaptation option type: " + adaptationOption.getClass());
@@ -135,6 +139,7 @@ public class ExecuteService {
         ServiceImplementation oldImplementation = service.getCurrentImplementation();
 
         // Start new instances of the new implementation
+        log.debug("Name and no of instances to add: "+changeImplementationOption.getNewImplementationId()+", "+changeImplementationOption.getNumberOfInstances());
         StartNewInstancesResponse instancesResponse = instancesManagerClient.addInstances(new StartNewInstancesRequest(changeImplementationOption.getNewImplementationId(), changeImplementationOption.getNumberOfInstances()));
         if (instancesResponse.getDockerizedInstances().isEmpty())
             throw new RuntimeException("No instances were added");
