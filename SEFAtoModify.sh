@@ -4,7 +4,7 @@ PrintWarn() { echo -e "\033[0;33m$1\033[0m"; }
 PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 
 export GITHUB_REPOSITORY_URL=https://github.com/ettorezamponi/config-server.git
-export GITHUB_OAUTH=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
+export GITHUB_OAUTH=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
 
 usage() {
   echo "Usage: [-a <arch>] [-l]"
@@ -82,6 +82,8 @@ do
    PrintSuccess "Setting up $i"
    docker pull sbi98/$i:$ARCH
    docker run -P --name $i -d --network ramses-sas-net sbi98/$i:$ARCH
+   docker image tag sbi98/$i:$ARCH $i
+   docker rmi sbi98/$i:$ARCH
    echo
    sleep 1
 done
@@ -95,6 +97,8 @@ for i in "${extra[@]}"
 do
    PrintSuccess "Pulling $i"
    docker pull sbi98/$i:$ARCH
+   docker image tag sbi98/$i:$ARCH $i
+   docker rmi sbi98/$i:$ARCH
    echo
    sleep 1
 done
@@ -109,8 +113,8 @@ echo
 sleep 1
 
 PrintSuccess "Pulling sefa-instances-manager"
-docker pull giamburrasca/sefa-instance-manager-et:v0.3
-docker run -P --name sefa-instances-manager -d --network ramses-sas-net giamburrasca/sefa-instance-manager-et:v0.3
+docker pull giamburrasca/sefa-instance-manager-et:v0.73
+docker run -P --name sefa-instances-manager -d --network ramses-sas-net giamburrasca/sefa-instance-manager-et:v0.73
 echo
 sleep 1
 

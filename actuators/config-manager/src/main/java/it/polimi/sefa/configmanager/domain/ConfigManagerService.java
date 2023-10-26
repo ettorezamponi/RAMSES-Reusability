@@ -21,7 +21,7 @@ public class ConfigManagerService {
     CredentialsProvider credentialsProvider;
 
     public ConfigManagerService(@Value("https://github.com/ettorezamponi/config-server.git") String gitRepository) throws Exception {
-        String token = "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";
+        String token = "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";
         if (token == null)
             throw new Exception("GITHUB_OAUTH environment variable not set");
         credentialsProvider = new UsernamePasswordCredentialsProvider(token, "");

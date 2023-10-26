@@ -5,6 +5,7 @@ import com.github.dockerjava.api.exception.NotFoundException;
 import com.github.dockerjava.api.exception.NotModifiedException;
 import com.github.dockerjava.api.model.Container;
 import com.github.dockerjava.api.model.ExposedPort;
+import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
@@ -52,6 +53,36 @@ public class InstancesManagerService {
         for (Container container : containers) {
             log.warn("\nContainer name: {} \n\tports: {}", Arrays.stream(container.getNames()).findFirst().orElse("N/A"), Arrays.toString(container.getPorts()));
         }
+
+        //Container name: /sefa-delivery-proxy-1-service
+        //	ports: [ContainerPort(ip=0.0.0.0, privatePort=58095, publicPort=55025, type=tcp)]
+
+
+        /*for (Image container : containers) {
+            log.warn("\nImage label: "+container.getId() + ", REPO DIGEST: " + Arrays.toString(container.getRepoTags()));
+        }/*
+        // Image label: sha256:a7b94a512d1a 7f6a1d08d90cfe10975e783c506765588105c6a5f6fdeaef45fd,
+        // REPO DIGEST: [sbi98/sefa-payment-proxy-2-service:arm64]
+
+        InspectContainerResponse analyse = dockerClient.inspectContainerCmd("sefa-web-service").exec();
+        log.debug("Container ispezionato: " +analyse.getName());
+
+        /*String newContainerId = dockerClient.createContainerCmd("delivery-proxy-2-service:arm64")
+                .withName("delivery-2-FINALLY")
+                .exec()
+                .getId();*/
+        //dockerClient.startContainerCmd("delivery-proxy-2-service").exec();
+        /*String imageName = "sefa-delivery-proxy-2-service";
+        String newContainerId = dockerClient.createContainerCmd(imageName)
+                .withName(imageName)
+                .exec()
+                .getId();
+        dockerClient.startContainerCmd(newContainerId).exec();
+        log.debug("**** START NEW IMAGE ****");*/
+
+        //simulation of addInstances with delivery proxy 2
+        //addInstances("delivery-proxy-2-service", 1);
+
         switch (currentProfile) {
             case "PerfectInstance" -> simulationInstanceParamsMap.put(currentProfile, List.of(
                     // (failureRate, sleepDuration, sleepVariance)
@@ -81,7 +112,6 @@ public class InstancesManagerService {
 
     // addInstances(NAME, NO of INSTANCES)
     public List<ServiceContainerInfo> addInstances(String serviceImplementationName, int numberOfInstances) {
-        log.debug("*** IMAGE LS: "+dockerClient.listImagesCmd()+"***");
         String imageName = serviceImplementationName;
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
@@ -91,21 +121,28 @@ public class InstancesManagerService {
             else
                 simulationInstanceParamsList = List.of(new SimulationInstanceParams(0.0, 0.0, 0.0));
         }
+        //hearth
         for (int i = 0; i < numberOfInstances; i++) {
             int randomPort = getRandomPort();
-            ExposedPort serverPort = ExposedPort.tcp(randomPort);
+            //porta da richiamare dalle properties e non dichiarandola
+            ExposedPort serverPort = ExposedPort.tcp(58096);
             Ports portBindings = new Ports();
             portBindings.bind(serverPort, Ports.Binding.bindIpAndPort("0.0.0.0", randomPort));
             List<String> envVars = buildContainerEnvVariables(randomPort, simulationInstanceParamsList.get(i % simulationInstanceParamsList.size()));
-            String newContainerId = dockerClient.createContainerCmd(imageName)
-                    .withName(imageName + "_" + randomPort)
-                    .withEnv(envVars)
+            String newContainerId = dockerClient.createContainerCmd("sefa-"+imageName)
+                    .withName(imageName)
                     .withExposedPorts(serverPort)
-                    .withHostConfig(newHostConfig().withPortBindings(portBindings))
+                    .withHostConfig(newHostConfig().withPortBindings(portBindings).withNetworkMode("ramses-sas-net"))
                     .exec()
                     .getId();
             dockerClient.startContainerCmd(newContainerId).exec();
+            log.debug("Container "+newContainerId+" started, with these specifics: \nenv var:"+envVars+"\nexposed ports: "+serverPort+"\nport bindings: "+portBindings.getBindings().toString()+"\nserver port: "+serverPort);
             serviceContainerInfos.add(new ServiceContainerInfo(imageName, newContainerId, imageName + "_" + randomPort, dockerIp, randomPort, envVars));
+
+            List<Container> contain = dockerClient.listContainersCmd().exec();
+            for (Container container : contain) {
+                log.warn("\nContainer name: {} \n\tports: {}", Arrays.stream(container.getNames()).findFirst().orElse("N/A"), Arrays.toString(container.getPorts()));
+            }
         }
         return serviceContainerInfos;
     }

@@ -97,7 +97,7 @@ public class KnowledgeService {
                     if (!Objects.equals(metricsSnapshot.getServiceImplementationId(), service.getCurrentImplementationId())) //Skip the metricsSnapshot if it is not related to the current implementation
                         continue;
                     Instance instance = service.getInstance(metricsSnapshot.getInstanceId());
-                    //log.info("INSTANCE FOUND:" + instance);
+                    log.info("INSTANCE FOUND:" + instance);
                     if (instance == null)
                         throw new RuntimeException("Instance " +metricsSnapshot.getInstanceId()+" not found in service "+metricsSnapshot.getServiceId());
                     // If the instance has been shutdown, skip its metrics snapshot in the buffer. Next buffer won't contain its metrics snapshots.

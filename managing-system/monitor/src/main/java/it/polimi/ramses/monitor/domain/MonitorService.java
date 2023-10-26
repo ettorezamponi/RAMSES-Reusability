@@ -111,7 +111,7 @@ public class MonitorService {
                 }
 
                 instanceMetricsListBuffer.add(metricsList);
-                log.info("INSTAMCE METRIC LIST: " + instanceMetricsListBuffer);
+                log.info("INSTANCE METRIC LIST: " + instanceMetricsListBuffer);
 
                 if (getLoopIterationFinished()) {
                     log.debug("Monitor routine completed. Updating Knowledge and notifying the Analyse to start the next iteration.\n");
