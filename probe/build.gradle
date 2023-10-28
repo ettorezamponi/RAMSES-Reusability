@@ -11,7 +11,7 @@ id "org.springframework.boot" version "${SPRING_BOOT_VERSION}"
 id "io.spring.dependency-management" version "${SPRING_DEPENDENCY_MANAGEMENT_VERSION}"
 }
 
-group = "it.polimi.sefa"
+group = "sefa"
 version = "latest"
 
 repositories {

@@ -10,7 +10,7 @@ plugins {
 }
 
 subprojects {
-	group = "it.polimi.dummymanaged"
+	group = "dummymanaged"
 	version = "latest"
 
 	apply plugin: "java"

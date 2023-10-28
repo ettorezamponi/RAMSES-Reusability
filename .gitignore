@@ -11,6 +11,8 @@ ARCHIVE/*
 # Log file
 **/*.log
 
+# .run files
+
 # BlueJ files
 **/*.ctxt
 

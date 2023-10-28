@@ -4,7 +4,7 @@
     <persistence-units>
       <persistence-unit name="Default">
         <packages>
-          <package value="polimi.sefa" />
+          <package value="sefa" />
         </packages>
       </persistence-unit>
     </persistence-units>

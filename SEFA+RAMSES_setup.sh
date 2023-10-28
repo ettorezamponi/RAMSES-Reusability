@@ -71,7 +71,12 @@ docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITO
 echo
 sleep 10
 
-declare -a arr=("sefa-restaurant-service" 
+docker pull giamburrasca/restaurant:v0.1
+docker run -P --name sefa-restaurant-service -d --network ramses-sas-net giamburrasca/restaurant:v0.1
+
+sleep2
+
+declare -a arr=(#"sefa-restaurant-service"
                 "sefa-ordering-service"
                 "sefa-payment-proxy-1-service"
                 "sefa-delivery-proxy-1-service"

@@ -10,7 +10,7 @@ plugins {
 }
 
 
-group = "it.polimi.dummymanagedsystem"
+group = "dummymanagedsystem"
 version = "latest"
 
 apply plugin: "java"

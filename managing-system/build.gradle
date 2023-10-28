@@ -12,7 +12,7 @@ plugins {
 }
 
 subprojects {
-	group = "it.polimi.ramses"
+	group = "ramses"
 	version = "latest"
 
 	repositories {
