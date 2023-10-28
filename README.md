@@ -1,4 +1,25 @@
-# RAMSES - A Reusable Autonomic Manager for MicroServicES
+# RAMSES - Reusability
+MSc final thesis project by Ettore Zamponi.
+
+![Java](https://img.shields.io/badge/java-%23ED8B00.svg?style=for-the-badge&logo=openjdk&logoColor=white)
+![Spring](https://img.shields.io/badge/spring-%236DB33F.svg?style=for-the-badge&logo=spring&logoColor=white)
+![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
+![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
+![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
+## Things to need before execute the code.
+
+1) build with gradle the microservices inside the folder [libs](./libs)
+2) copy the jar in a new folder where the dependency request them
+3) * [config-manager](./actuators/config-manager) requires _config-parser.jar_
+   * [managed-system](./managed-system) requires _config-parser.jar_ and _load-balancer.jar_
+   * [managing-system](./managing-system) requires _config-parser.jar_
+   * [probe](./probe) requires _config-parser.jar_ and _prometheus-scraper.jar_
+   * [simple-managed-system](./simple-managed-system) requires _config-parser.jar_ and _load-balancer.jar_
+4) once copied all in the correct directories, reload all gradle projects (if not recognized, link each gradle project through the _build.gradle_ file in each project)
+
+---
+
+# *RAMSES - A Reusable Autonomic Manager for MicroServicES*
 MSc final thesis project by Vincenzo Riccio and Giancarlo Sorrentino.
 
 ## Project composition
