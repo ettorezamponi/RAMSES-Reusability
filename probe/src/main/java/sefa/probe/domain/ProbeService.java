@@ -100,7 +100,6 @@ public class ProbeService {
         return getService(application);
     }
 
-
     private boolean pingHost(String host, int port, int timeout) {
         try (Socket socket = new Socket()) {
             socket.connect(new InetSocketAddress(host, port), timeout);

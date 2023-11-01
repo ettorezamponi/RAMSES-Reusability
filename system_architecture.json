@@ -1,19 +1,6 @@
 {
 	"services"	: [
 		{
-			"service_id":"MOVIE-INFO-SERVICE",
-			"implementations" : [
-				{
-					"implementation_id" : "movie-info-service",
-					"implementation_trust" : 1,
-					"preference" : 1,
-					"instance_load_shutdown_threshold" : 0.4
-				}
-
-			],
-			"dependencies" : []
-		},
-		{
 			"service_id":"RESTAURANT-SERVICE",
 			"implementations" : [
 				{

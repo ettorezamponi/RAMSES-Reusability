@@ -6,7 +6,13 @@ PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 export GITHUB_REPOSITORY_URL=https://github.com/ettorezamponi/config-server.git
 export GITHUB_OAUTH=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
 
-echo "ARM64 is the default desired architecture."
+
+usage() {
+  echo "Usage: [-a <arch>] [-l]"
+  echo "-a <arch>: Desired architecture. Supported values are 'arm64' and 'amd64'. Default is 'arm64'"
+  echo "-l: start only the load generator"
+  exit 1
+}
 
 LOADGEN=false
 while getopts a:l option
@@ -116,10 +122,8 @@ sleep 1
 ##### RAMSES #####
 echo; PrintSuccess "Setting up the Managing System, RAMSES!"; echo
 
-PrintSuccess "Pulling Knowledge"
-docker pull giamburrasca/knowledge:v0.2
-docker run -P --name sefa-knowledge-low -d --network ramses-sas-net giamburrasca/knowledge:v0.2
-echo
+docker pull giamburrasca/knowledge:v0.1
+docker run -P --name ramses-knowledge -d --network ramses-sas-net giamburrasca/knowledge:v0.1
 sleep 1
 
 declare -a ramsesarr=("ramses-analyse" "ramses-plan" "ramses-execute" "ramses-monitor" "ramses-dashboard")
@@ -133,6 +137,13 @@ do
 done
 
 echo; PrintSuccess "DONE!"; echo
+#echo; PrintWarn "A load generator is also available on Docker Hub. The image is sbi98/sefa-load-generator. Do you want to run it? Y/n"; echo
 
+#read decision
+#if [[$decision = "Y" || $decision = "y"]]; then
+#   loadgen
+#else
+#   echo "Exiting. You can run only the load generator by running this script with the -l flag."
+#fi
 
 

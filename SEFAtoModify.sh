@@ -82,8 +82,8 @@ do
    PrintSuccess "Setting up $i"
    docker pull sbi98/$i:$ARCH
    docker run -P --name $i -d --network ramses-sas-net sbi98/$i:$ARCH
-   docker image tag sbi98/$i:$ARCH $i
-   docker rmi sbi98/$i:$ARCH
+#   docker image tag sbi98/$i:$ARCH $i
+#   docker rmi sbi98/$i:$ARCH
    echo
    sleep 1
 done
@@ -97,8 +97,8 @@ for i in "${extra[@]}"
 do
    PrintSuccess "Pulling $i"
    docker pull sbi98/$i:$ARCH
-   docker image tag sbi98/$i:$ARCH $i
-   docker rmi sbi98/$i:$ARCH
+#   docker image tag sbi98/$i:$ARCH $i
+#   docker rmi sbi98/$i:$ARCH
    echo
    sleep 1
 done
@@ -112,17 +112,17 @@ docker run -P --name sefa-probe -d --network ramses-sas-net giamburrasca/probe:v
 echo
 sleep 1
 
-PrintSuccess "Pulling sefa-instances-manager"
-docker pull giamburrasca/sefa-instance-manager-et:v0.73
-docker run -P --name sefa-instances-manager -d --network ramses-sas-net giamburrasca/sefa-instance-manager-et:v0.73
-echo
-sleep 1
-
-PrintSuccess "Pulling sefa-config-manager"
-docker pull sbi98/sefa-config-manager:$ARCH
-docker run -P --name sefa-config-manager -e GITHUB_OAUTH=$GITHUB_OAUTH -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net sbi98/sefa-config-manager:$ARCH
-echo
-sleep 1
+#PrintSuccess "Pulling sefa-instances-manager"
+#docker pull giamburrasca/sefa-instance-manager-et:v0.73
+#docker run -P --name sefa-instances-manager -d --network ramses-sas-net giamburrasca/sefa-instance-manager-et:v0.73
+#echo
+#sleep 1
+#
+#PrintSuccess "Pulling sefa-config-manager"
+#docker pull sbi98/sefa-config-manager:$ARCH
+#docker run -P --name sefa-config-manager -e GITHUB_OAUTH=$GITHUB_OAUTH -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net sbi98/sefa-config-manager:$ARCH
+#echo
+#sleep 1
 
 #microservice added to experiment
 PrintSuccess "Setting up Movie Info extra service"

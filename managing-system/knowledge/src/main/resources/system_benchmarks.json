@@ -1,24 +1,6 @@
 {
 	"services" : [
 		{
-			"service_id":"MOVIE-INFO-SERVICE",
-			"implementations" : [
-				{
-					"implementation_id" : "movie-info-service",
-					"adaptation_benchmarks" : [
-						{
-							"name": "average_response_time",
-							"benchmark": 50
-						},
-						{
-							"name": "availability",
-							"benchmark": 0.92
-						}
-					]
-				}
-			]
-		},
-		{
 			"service_id":"RESTAURANT-SERVICE",
 			"implementations" : [
 				{
@@ -120,7 +102,7 @@
 					"adaptation_benchmarks" : [
 						{
 							"name": "average_response_time",
-							"benchmark": 350
+							"benchmark": 50
 						},
 						{
 							"name": "availability",
