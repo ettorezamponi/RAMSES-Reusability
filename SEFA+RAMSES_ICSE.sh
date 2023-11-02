@@ -10,7 +10,7 @@ export GITHUB_OAUTH=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
 usage() {
   echo "Usage: [-a <arch>] [-l]"
   echo "-a <arch>: Desired architecture. Supported values are 'arm64' and 'amd64'. Default is 'arm64'"
-  echo "-l: start only the load generator"
+#  echo "-l: start only the load generator"
   exit 1
 }
 
@@ -122,16 +122,12 @@ sleep 1
 ##### RAMSES #####
 echo; PrintSuccess "Setting up the Managing System, RAMSES!"; echo
 
-docker pull giamburrasca/knowledge:v0.1
-docker run -P --name ramses-knowledge -d --network ramses-sas-net giamburrasca/knowledge:v0.1
-sleep 1
-
-declare -a ramsesarr=("ramses-analyse" "ramses-plan" "ramses-execute" "ramses-monitor" "ramses-dashboard")
+declare -a ramsesarr=("ramses-knowledge" "ramses-analyse" "ramses-plan" "ramses-execute" "ramses-monitor" "ramses-dashboard")
 for i in "${ramsesarr[@]}"
 do
    PrintSuccess "Pulling $i"
-   docker pull sbi98/$i:$ARCH
-   docker run -P --name $i -d --network ramses-sas-net sbi98/$i:$ARCH
+   docker pull giamburrasca/$i:v1
+   docker run -P --name $i -d --network ramses-sas-net giamburrasca/$i:v1
    echo
    sleep 1
 done
