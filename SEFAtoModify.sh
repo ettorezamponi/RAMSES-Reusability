@@ -125,10 +125,10 @@ sleep 1
 #sleep 1
 
 #microservice added to experiment
-PrintSuccess "Setting up Movie Info extra service"
-docker pull giamburrasca/movie-info-service:v1.1
-docker run -P --name movie-info-service -d --network ramses-sas-net giamburrasca/movie-info-service:v1.1
-echo
-sleep 2
+#PrintSuccess "Setting up Movie Info extra service"
+#docker pull giamburrasca/movie-info-service:v1.1
+#docker run -P --name movie-info-service -d --network ramses-sas-net giamburrasca/movie-info-service:v1.1
+#echo
+#sleep 2
 
 echo; PrintSuccess "DONE!"; echo

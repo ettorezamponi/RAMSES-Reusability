@@ -54,7 +54,7 @@ public class InstancesManagerService {
         }
 
         //Container name: /sefa-delivery-proxy-1-service
-        //	ports: [ContainerPort(ip=0.0.0.0, privatePort=58095, publicPort=55025, type=tcp)]
+        //ports: [ContainerPort(ip=0.0.0.0, privatePort=58095, publicPort=55025, type=tcp)]
 
 
         /*for (Image container : containers) {
@@ -71,6 +71,7 @@ public class InstancesManagerService {
                 .exec()
                 .getId();*/
         //dockerClient.startContainerCmd("delivery-proxy-2-service").exec();
+
         /*String imageName = "sefa-delivery-proxy-2-service";
         String newContainerId = dockerClient.createContainerCmd(imageName)
                 .withName(imageName)
@@ -79,8 +80,13 @@ public class InstancesManagerService {
         dockerClient.startContainerCmd(newContainerId).exec();
         log.debug("**** START NEW IMAGE ****");*/
 
-        //simulation of addInstances with delivery proxy 2
-        addInstances("delivery-proxy-2-service", 1);
+        //simulation of addInstances with delivery proxy 2, attenzione che più di un istanza dello stesso container non si può avviare
+        //addInstances("delivery-proxy-2-service", 1);
+
+        //String delivery2port = env.getProperty("SERVER_PORT");
+        // questo restituisce 58015, ovvero la porta dell'instance manager
+
+
 
         switch (currentProfile) {
             case "PerfectInstance" -> simulationInstanceParamsMap.put(currentProfile, List.of(
@@ -124,12 +130,15 @@ public class InstancesManagerService {
         for (int i = 0; i < numberOfInstances; i++) {
             int randomPort = getRandomPort();
             //porta da richiamare dalle properties e non dichiarandola
-            ExposedPort serverPort = ExposedPort.tcp(randomPort);
+            ExposedPort serverPort = ExposedPort.tcp(58096);
             Ports portBindings = new Ports();
             portBindings.bind(serverPort, Ports.Binding.bindIpAndPort("0.0.0.0", randomPort));
             List<String> envVars = buildContainerEnvVariables(randomPort, simulationInstanceParamsList.get(i % simulationInstanceParamsList.size()));
-            String newContainerId = dockerClient.createContainerCmd("sefa-"+imageName)
+            // [EUREKA_IP_PORT=172.23.220.187:58082, API_GATEWAY_IP_PORT=172.23.220.187:58081, MYSQL_IP_PORT=172.23.220.187:3306,
+            // SERVER_PORT=50916, HOST=172.23.220.187, SLEEP_MEAN=0.0, SLEEP_VARIANCE=0.0, EXCEPTION_PROBABILITY=0.0]
+            String newContainerId = dockerClient.createContainerCmd("sbi98/sefa-"+imageName+":arm64")
                     .withName(imageName)
+                    //.withEnv(envVars) NOT USEFUL !?!?
                     .withExposedPorts(serverPort)
                     .withHostConfig(newHostConfig().withPortBindings(portBindings).withNetworkMode("ramses-sas-net"))
                     .exec()
@@ -144,6 +153,10 @@ public class InstancesManagerService {
             }
         }
         return serviceContainerInfos;
+        // [ServiceContainerInfo(imageName=delivery-proxy-2-service, containerId=ab5b030b257b554088989c45ce6d68cf3164d52f5e5706adff23d35daa4b6f05,
+        // containerName=delivery-proxy-2-service_51333, address=172.23.220.187, port=51333, envVars=[EUREKA_IP_PORT=172.23.220.187:58082,
+        // API_GATEWAY_IP_PORT=172.23.220.187:58081, MYSQL_IP_PORT=172.23.220.187:3306, SERVER_PORT=51333, HOST=172.23.220.187, SLEEP_MEAN=0.0,
+        // SLEEP_VARIANCE=0.0, EXCEPTION_PROBABILITY=0.0])]
     }
 
     public void startInstance(String serviceImplementationName, int port) {
@@ -185,6 +198,7 @@ public class InstancesManagerService {
 
         // Get Eureka, Gateway and MySQL addresses from Environment. When null, use the local IP address and the default ports
         String eurekaIpPort = env.getProperty("EUREKA_IP_PORT");
+        //valore di eurekaIpPort se eurekaIpPort non è nullo, altrimenti viene utilizzato il valore di localIp concatenato con ":58082"
         envVars.add("EUREKA_IP_PORT=" + (eurekaIpPort == null ? localIp+":58082" : eurekaIpPort));
         String apiGatewayIpPort = env.getProperty("API_GATEWAY_IP_PORT");
         envVars.add("API_GATEWAY_IP_PORT="+(apiGatewayIpPort == null ? localIp+":58081" : apiGatewayIpPort));
@@ -195,6 +209,8 @@ public class InstancesManagerService {
         envVars.add("SLEEP_MEAN="+simulationInstanceParams.getSleepDuration()*1000);
         envVars.add("SLEEP_VARIANCE="+simulationInstanceParams.getSleepVariance());
         envVars.add("EXCEPTION_PROBABILITY="+simulationInstanceParams.getExceptionProbability());
+        //log.debug("*** BUILD CONTAINER ENV VARS: eurekaIpPort="+eurekaIpPort+", apiGatewayIpPort="+apiGatewayIpPort+", mySqlIpPort="+mySqlIpPort);
+
         return envVars;
     }
 
