@@ -36,7 +36,7 @@ public class InstancesManagerRestController {
 
 	@PostMapping(path = "/removeInstance")
 	public RemoveInstanceResponse removeInstance(@RequestBody RemoveInstanceRequest request) {
-		instancesManagerService.stopInstance(request.getServiceImplementationName(), request.getPort());
+		instancesManagerService.stopInstance(request.getServiceImplementationName());
 		return new RemoveInstanceResponse(request.getServiceImplementationName(), request.getAddress(), request.getPort());
 	}
 

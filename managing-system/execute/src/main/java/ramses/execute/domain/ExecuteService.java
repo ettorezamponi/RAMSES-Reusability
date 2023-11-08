@@ -183,6 +183,7 @@ public class ExecuteService {
      */
     public void actuatorShutdownInstance(String instanceToRemoveId) {
         String[] ipPort = instanceToRemoveId.split("@")[1].split(":");
+        // (sefa-delivery-proxy-1-service, delivery-proxy-1-service, 58095)
         instancesManagerClient.removeInstance(new RemoveInstanceRequest(instanceToRemoveId.split("@")[0], ipPort[0], Integer.parseInt(ipPort[1])));
     }
 }

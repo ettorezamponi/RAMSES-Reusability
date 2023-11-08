@@ -68,7 +68,7 @@ PrintSuccess "Setting up Spring Config Server"
 docker pull giamburrasca/sefa-configserver:v1.0
 docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-configserver:v1.0
 echo
-sleep 10
+sleep 2
 
 declare -a arr=("sefa-restaurant-service"
                 "sefa-ordering-service"
@@ -131,4 +131,4 @@ sleep 1
 #echo
 #sleep 2
 
-echo; PrintSuccess "DONE!"; echo
+echo; PrintSuccess "SEFA DONE!"; echo

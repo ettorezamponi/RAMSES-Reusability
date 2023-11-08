@@ -3,7 +3,7 @@ PrintSuccess() { echo -e "\033[0;32m$1\033[0m"; }
 PrintWarn() { echo -e "\033[0;33m$1\033[0m"; }
 PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 
-##### KNOWLEDGE #####
+##### ACTUATORS #####
 PrintSuccess "Setting up local ACTUATORS"
 docker run -P --name sefa-config-manager -d --network ramses-sas-net config-manager
 echo
@@ -17,7 +17,7 @@ sleep 3
 PrintSuccess "Setting up local RAMSES"
 docker run -P --name ramses-knowledge -d --network ramses-sas-net knowledge
 echo
-sleep 8
+sleep 14
 ##### MONITOR #####
 docker run -P --name ramses-monitor -d --network ramses-sas-net monitor
 echo
@@ -39,4 +39,4 @@ docker run -P --name ramses-dashboard -d --network ramses-sas-net dashboard
 echo
 sleep 2
 
-echo; PrintSuccess "DONE!"; echo
+echo; PrintSuccess "RAMSES DONE!"; echo

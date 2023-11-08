@@ -86,7 +86,7 @@ public class InstancesManagerService {
         //String delivery2port = env.getProperty("SERVER_PORT");
         // questo restituisce 58015, ovvero la porta dell'instance manager
 
-
+        //stopInstance("sefa-delivery-proxy-1-service");
 
         switch (currentProfile) {
             case "PerfectInstance" -> simulationInstanceParamsMap.put(currentProfile, List.of(
@@ -176,8 +176,8 @@ public class InstancesManagerService {
         throw new RuntimeException("Too many containers found: " + containers);
     }
 
-    public void stopInstance(String serviceImplementationName, int port) {
-        List<Container> containers = dockerClient.listContainersCmd().withNameFilter(Collections.singleton(serviceImplementationName+"_"+port)).exec();
+    public void stopInstance(String serviceImplementationName) {
+        List<Container> containers = dockerClient.listContainersCmd().withNameFilter(Collections.singleton(serviceImplementationName)).exec();
         if (containers.size() == 1) {
             Container container = containers.get(0);
             try {
@@ -187,7 +187,7 @@ public class InstancesManagerService {
             }
             return;
         } else if (containers.size() == 0){
-            log.warn("Container {}_{} not found. Considering it as crashed.", serviceImplementationName, port);
+            log.warn("Container {} not found. Considering it as crashed.", serviceImplementationName);
             return;
         }
         throw new RuntimeException("Too many containers found: " + containers);
