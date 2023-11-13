@@ -122,14 +122,17 @@ sleep 1
 ##### RAMSES #####
 echo; PrintSuccess "Setting up the Managing System, RAMSES!"; echo
 
-declare -a ramsesarr=("ramses-knowledge" "ramses-analyse" "ramses-plan" "ramses-execute" "ramses-monitor" "ramses-dashboard")
+docker run -P --name ramses-knowledge -d --network ramses-sas-net ramses-knowledge
+sleep 9
+
+declare -a ramsesarr=("ramses-analyse" "ramses-plan" "ramses-execute" "ramses-monitor" "ramses-dashboard")
 for i in "${ramsesarr[@]}"
 do
    PrintSuccess "Pulling $i"
    #docker pull giamburrasca/$i:v1
    docker run -P --name $i -d --network ramses-sas-net $i
    echo
-   sleep 1
+   sleep 2
 done
 
 echo; PrintSuccess "DONE!"; echo

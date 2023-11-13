@@ -15,7 +15,6 @@ import java.util.*;
 public class PerformanceFakerService {
     @Value("${FAKE_SLOW_ORDERING}")
     private String fakeSlowOrderingStr;
-
     @Value("${FAKE_SLOW_ORDERING_1_SLEEP}")
     private Double fakeSlowOrdering1Sleep;
     @Value("${FAKE_SLOW_ORDERING_1_START}")
@@ -47,14 +46,18 @@ public class PerformanceFakerService {
         boolean fakeSlowOrdering = fakeSlowOrderingStr.equalsIgnoreCase("Y");
         log.info("PerformanceFakerService initialized with the following values:");
         log.info("fakeSlowOrdering? {}", fakeSlowOrderingStr.equalsIgnoreCase("Y") ? "YES" : "NO");
+
         log.info("fakeSlowOrdering1Sleep: {}", fakeSlowOrdering1Sleep);
         log.info("fakeSlowOrdering1Start: {}", fakeSlowOrdering1Start);
         log.info("fakeSlowOrdering1Duration: {}", fakeSlowOrdering1Duration);
+
         log.info("fakeSlowOrdering2Sleep: {}", fakeSlowOrdering2Sleep);
         log.info("fakeSlowOrdering2Start: {}", fakeSlowOrdering2Start);
         log.info("fakeSlowOrdering2Duration: {}", fakeSlowOrdering2Duration);
+
         log.info("fakeUnreachableRestaurantCounter: {}", fakeUnreachableRestaurantCounter);
         log.info("fakeUnreachableRestaurantDelay: {}", fakeUnreachableRestaurantDelay);
+
         if (fakeSlowOrdering) {
             TimerTask fakeSlowOrderingTask1Start = new TimerTask() {
                 public void run() {
@@ -74,7 +77,7 @@ public class PerformanceFakerService {
             };
             Timer fakeSlowOrderingTimer1End = new Timer("fakeSlowOrderingTimer1End");
             fakeSlowOrderingTimer1End.schedule(fakeSlowOrderingTask1End, 1000L * (fakeSlowOrdering1Start+fakeSlowOrdering1Duration));
-            
+
             TimerTask fakeSlowOrderingTask2Start = new TimerTask() {
                 public void run() {
                     log.info("Faking slow ordering 2");
@@ -133,6 +136,7 @@ public class PerformanceFakerService {
             discoveryClient.getApplication("ORDERING-SERVICE").getInstances().forEach(instance -> {
                 Double originalSleep = originalInstancesSleeps.get(instance.getInstanceId());
                 if (originalSleep == null) return;
+
                 String url = "http://" + instance.getHostName() + ":" + instance.getPort() + "/rest/instrumentation/sleepMean?sleepMean={sleepMean}";
                 RestTemplate restTemplate = new RestTemplate();
                 log.info("Changing sleep for instance {} from {} to {}", instance.getInstanceId(), originalSleep, sleepMean+originalSleep);

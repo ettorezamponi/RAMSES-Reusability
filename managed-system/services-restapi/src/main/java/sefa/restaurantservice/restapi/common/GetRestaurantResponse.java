@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 public class GetRestaurantResponse {
 
 	private Long id;
-	
 	private String name; 
 	private String location;	
 }

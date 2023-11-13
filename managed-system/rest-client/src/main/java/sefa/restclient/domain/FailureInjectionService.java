@@ -59,6 +59,8 @@ public class FailureInjectionService {
                     adaptationController.startInstance(idOfInstanceToFail);
                 }
             };
+
+
             TimerTask failureInjection2StartTask = new TimerTask() {
                 @Override
                 public void run() {

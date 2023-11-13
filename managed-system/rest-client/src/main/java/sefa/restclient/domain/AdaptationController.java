@@ -32,6 +32,8 @@ public class AdaptationController {
     public void startMonitorRoutine() {
         String url = monitorURL+"/rest/startRoutine";
         log.info("startMonitorRoutine request: {}", url);
+        //In applicazioni più avanzate, potresti voler considerare l'uso di chiamate asincrone
+        // o la migrazione verso la nuova classe RestTemplate introducendo in Spring 5, ovvero WebClient.
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getForObject(url, String.class);
     }
@@ -74,8 +76,11 @@ public class AdaptationController {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.postForObject(url, 
                 new RemoveInstanceRequest(
+                        //payment-proxy-1-service
                         instanceId.split("@")[0],
-                        instanceId.split("@")[1].split(":")[0], 
+                        // 192.168.1.18
+                        instanceId.split("@")[1].split(":")[0],
+                        // 58090
                         Integer.parseInt(instanceId.split("@")[1].split(":")[1]))
                 , String.class);
     }

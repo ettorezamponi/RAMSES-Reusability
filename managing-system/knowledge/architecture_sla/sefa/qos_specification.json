@@ -56,7 +56,7 @@
 				{
 					"name" : "average_response_time",
 					"weight" : 0.5,
-					"max_threshold": 150
+					"max_threshold": 500
 				}
 			]
 		}
