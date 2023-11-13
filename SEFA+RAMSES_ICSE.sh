@@ -63,13 +63,13 @@ echo
 sleep 2
 
 PrintSuccess "Setting up Spring Config Server"
-docker pull sbi98/sefa-configserver:$ARCH
-docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net sbi98/sefa-configserver:$ARCH
+#docker pull sbi98/sefa-configserver:$ARCH
+#docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net sbi98/sefa-configserver:$ARCH
 #Personalized config server
-#docker pull giamburrasca/sefa-configserver:v1.0
-#docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-configserver:v1.0
+docker pull giamburrasca/sefa-configserver:v1.0
+docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-configserver:v1.0
 echo
-sleep 10
+sleep 8
 
 declare -a arr=("sefa-restaurant-service"
                 "sefa-ordering-service"
@@ -126,8 +126,8 @@ declare -a ramsesarr=("ramses-knowledge" "ramses-analyse" "ramses-plan" "ramses-
 for i in "${ramsesarr[@]}"
 do
    PrintSuccess "Pulling $i"
-   docker pull giamburrasca/$i:v1
-   docker run -P --name $i -d --network ramses-sas-net giamburrasca/$i:v1
+   #docker pull giamburrasca/$i:v1
+   docker run -P --name $i -d --network ramses-sas-net $i
    echo
    sleep 1
 done

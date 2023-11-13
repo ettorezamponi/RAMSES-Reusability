@@ -14,18 +14,21 @@ docker build -t instances-manager .
 
 ##### RAMSES #####
 cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/managing-system/knowledge
-docker build -t knowledge .
+docker build -t ramses-knowledge .
 
 cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/managing-system/monitor
-docker build -t monitor .
+docker build -t ramses-monitor .
 
 cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/managing-system/analyse
-docker build -t analyse .
+docker build -t ramses-analyse .
 
 cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/managing-system/plan
-docker build -t plan .
+docker build -t ramses-plan .
 
 cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/managing-system/execute/
-docker build -t execute .
+docker build -t ramses-execute .
+
+cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/managing-system/dashboard/
+docker build -t ramses-dashboard .
 
 echo; PrintSuccess "DOCKER IMAGES BUILDED!"; echo
