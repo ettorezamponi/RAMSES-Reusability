@@ -7,6 +7,8 @@ In these scenarios, before each experiment is executed, the Managed System is fr
 
 Remember to clean the config-server on GitHub, after each adaptation, new weighted values for the adapted services are pushed into the application.properties file. Otherwise, when a new deployment of RAMSES is attempted, knowledge will find configuration incompatibilities and will not be able to be executed.
 
+PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SERVER!
+
 * ## Scenario 1 - *handleAddInstanceOption*
 
   Simulating a crash or connection problem as a real case, we make one of the microservices unreachable by forcing its shutdown.
@@ -23,10 +25,24 @@ Remember to clean the config-server on GitHub, after each adaptation, new weight
 
   In the same simulation, after 9 minutes, it happens that the managing decides to start a new instance (non-forced) of the "sefa-ordering-service" microservice. This is done in order to work in a more optimised way and have a much lower ART dividing the workload.
 
-* Scenario 2
+* ## Scenario 2 - *handleChangeImplementationOption*
+
+  This represents the most complete scenario in that the managing recognises a better implementation, stops the old container and starts the new one with higher restrictions.
   
-  *handleChangeImplementationOption*
-  ...
+  This was done modifiyng [qos_specification.json](./managing-system/knowledge/architecture_sla/sefa/qos_specification.json) and running a simple purchase simulation for the short duration of 2 minutes:
+  
+  ```
+  "name" : "average_response_time",
+  "weight" : 0.5,
+  "max_threshold": 150
+  ```
+
+  An unfeasible test scenario was implemented by setting a threshold for the average response time of 150 compared to the classical 500 for the delivery.
+None of the three delivery services is able to meet this, but it was done on purpose to see the reaction of RAMSES. 
+
+  As soon as the Analyse Window Size is full, a change implementation option will take place. After that the QoS history will be deleted and the system will start collecting data again, until it will realisee that even the new instance cannot satisfy the unreachable threshold and will allocate a new additional service (this is the reason of the short simulation provided).
+
+
 * Scenario 3
   
   *handleChangeLBWeightsOption*
