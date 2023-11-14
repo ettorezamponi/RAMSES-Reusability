@@ -32,9 +32,19 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
   This was done modifiyng [qos_specification.json](./managing-system/knowledge/architecture_sla/sefa/qos_specification.json) and running a simple purchase simulation for the short duration of 2 minutes:
   
   ```
-  "name" : "average_response_time",
-  "weight" : 0.5,
-  "max_threshold": 150
+  "service_id" : "DELIVERY-PROXY-SERVICE",
+			"qos" : [
+				{
+					"name" : "availability",
+					"weight" : 0.5,
+					"min_threshold" : 0.92
+				},
+				{
+					"name" : "average_response_time",
+					"weight" : 0.5,
+					"max_threshold": 150
+				}
+			]
   ```
 
   An unfeasible test scenario was implemented by setting a threshold for the average response time of 150 compared to the classical 500 for the delivery.
