@@ -117,13 +117,13 @@ PrintSuccess "Pulling sefa-config-manager"
 docker pull sbi98/sefa-config-manager:$ARCH
 docker run -P --name sefa-config-manager -e GITHUB_OAUTH=$GITHUB_OAUTH -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net sbi98/sefa-config-manager:$ARCH
 echo
-sleep 1
 
 ##### RAMSES #####
 echo; PrintSuccess "Setting up the Managing System, RAMSES!"; echo
+sleep 20
 
 docker run -P --name ramses-knowledge -d --network ramses-sas-net ramses-knowledge
-sleep 9
+sleep 10
 
 declare -a ramsesarr=("ramses-analyse" "ramses-plan" "ramses-execute" "ramses-monitor" "ramses-dashboard")
 for i in "${ramsesarr[@]}"
@@ -135,14 +135,18 @@ do
    sleep 2
 done
 
+# docker run -P --name sefa-payment-proxy-2-service -d --network ramses-sas-net sbi98/sefa-payment-proxy-2-service:arm64
+
+
 echo; PrintSuccess "DONE!"; echo
-#echo; PrintWarn "A load generator is also available on Docker Hub. The image is sbi98/sefa-load-generator. Do you want to run it? Y/n"; echo
-
-#read decision
-#if [[$decision = "Y" || $decision = "y"]]; then
-#   loadgen
-#else
-#   echo "Exiting. You can run only the load generator by running this script with the -l flag."
-#fi
 
 
+#echo; PrintWarn "Add instances scenario"; echo
+# payment after 90 seconds, ordering after 9 minutes
+# docker pull giamburrasca/simulation-scenario1:arm64
+# docker run -P --name simulation-scenario-1 -d --network ramses-sas-net giamburrasca/simulation-scenario1:arm64
+
+#echo; PrintWarn "Change implementation scenario"; echo
+# change implementation
+# giamburrasca/ramses-knowledge-scenario2:arm64
+# docker run -P --name simulation-scenario-2 -d --network ramses-sas-net giamburrasca/simulation-scenario2:arm64
