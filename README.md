@@ -103,9 +103,34 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
   ```
   In other cases,  RAMSES will continue to allocate container to respect the unfeasible threshold.
 
-* Scenario 3
+* Scenario 3 - *handleChangeLBWeightsOption*
+
+  This particular action is performed whenever there is an adaptation, in particular whenever a new service is allocated in aid of the previous ones already in place.
+  In particular, the *change load balancer weight* takes care of distributing the workload between the different instances of the same service.
+
+  Managin and managed were deployed normally. During the simulation, however, the ART of the ordering-service is raised twice, after 90 seconds and after 180 seconds from the start of the simulation, via the method [getSleepForOrderingServiceInstances](./managed-system/rest-client/src/main/java/sefa/restclient/domain/PerformanceFakerService.java) settings its value in the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) file.
+  ```
+  FAKE_SLOW_ORDERING=Y
   
-  *handleChangeLBWeightsOption*
+  FAKE_SLOW_ORDERING_1_SLEEP=1000
+  FAKE_SLOW_ORDERING_2_SLEEP=600
+  
+  FAKE_SLOW_ORDERING_1_START=90
+  FAKE_SLOW_ORDERING_1_DURATION=60
+  FAKE_SLOW_ORDERING_2_START=180
+  FAKE_SLOW_ORDERING_2_DURATION=60
+  ```
+
+  By doing so, the managing will start other ordering services in addition to the existing ones, and the chance load weight balanini function will take care of splitting the work and, very importantly, save any new weight changes in the GitHub repository used by the configuration server.
+
+  Configurations are saved each time they are changed, so that each time the managing is restarted, the changes are retrieved during the knowledge start-up. It is therefore important to clean up the configuration repo each time you want to re-deploy a clean managing system.
+
+  In this scenario, by starting two new order services, we will find weights equally distributed and thus saved in the configuration server:
+  ```
+  loadbalancing.ordering-service.sefa-ordering-service-34489_34489.weight=0.3333333333333333
+  loadbalancing.ordering-service.sefa-ordering-service_58086.weight=0.3333333333333333
+  loadbalancing.ordering-service.sefa-ordering-service-46293_46293.weight=0.3333333333333333
+  ```
   ...
 * Scenario 4
   
