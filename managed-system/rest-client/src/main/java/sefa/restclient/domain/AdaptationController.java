@@ -96,4 +96,11 @@ public class AdaptationController {
                 Map.of("serviceId", serviceId));
     }
 
+    public void updateMaxThreshold(String serviceId, Double value) {
+        String url = knowledgeURL+"/rest/service/"+serviceId+"/responseTimeThreshold?value="+value;
+        log.info("updateMaxThreshold request: {}", url);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.put(url, null);
+    }
+
 }

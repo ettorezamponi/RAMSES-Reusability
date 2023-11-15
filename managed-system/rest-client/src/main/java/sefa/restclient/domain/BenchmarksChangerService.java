@@ -16,6 +16,16 @@ public class BenchmarksChangerService {
     private String changeImplStr;
     @Value("${CHANGE_BENCHMARK_START}")
     private Integer changeBenchmarkStart;
+    @Value("${CHANGE_THRESHOLD}")
+    private String changeMaxThreshold;
+    @Value("${CHANGE_THRESHOLD_START}")
+    private Integer changeThresholdStart;
+    @Value("${MAX_ART_THRESHOLD}")
+    private double maxArtThreshold;
+    @Value("${CHANGE_THRESHOLD_DURATION}")
+    private Integer changeThresholdDuration;
+    @Value("${DEFAULT_THRESHOLD}")
+    private double defaultThreshold;
 
     @Autowired
     private AdaptationController adaptationController;
@@ -23,6 +33,7 @@ public class BenchmarksChangerService {
     @PostConstruct
     public void init() {
         boolean changeImpl = changeImplStr.equalsIgnoreCase("Y");
+        boolean changeThresh = changeMaxThreshold.equalsIgnoreCase("Y");
         log.info("BenchmarksChangerService initialized with the following values:");
         log.info("Change Implementation? {}", changeImplStr.equalsIgnoreCase("Y") ? "YES" : "NO");
         log.info("changeBenchmarkStart: {}", changeBenchmarkStart);
@@ -32,11 +43,36 @@ public class BenchmarksChangerService {
             TimerTask changeBenchmark = new TimerTask() {
                 @Override
                 public void run() {
-                    log.info("changeBenchmarkStart: injecting failure");
-                    adaptationController.updateBenchmarks("PAYMENT-PROXY-SERVICE", "payment-proxy-2-service", "Availability", 1.0);
+                    log.info("changeBenchmarkStart: injecting availability to 1 for payment-1-service");
+                    adaptationController.updateBenchmarks("PAYMENT-PROXY-SERVICE", "payment-proxy-1-service", "Availability", 1.0);
                 }
             };
             timer.schedule(changeBenchmark, changeBenchmarkStart * 1000L);
         }
+
+        if (changeThresh) {
+            Timer timer = new Timer();
+            TimerTask updateThreshold = new TimerTask() {
+                @Override
+                public void run() {
+                    log.info("Updating max_ART threshold for DELIVERY-PROXY-SERVICE at {}", maxArtThreshold);
+                    adaptationController.updateMaxThreshold("DELIVERY-PROXY-SERVICE", maxArtThreshold);
+                }
+            };
+            timer.schedule(updateThreshold,1000L * changeThresholdStart);
+        }
+
+        if (changeThresholdDuration != 0) {
+            Timer timer = new Timer();
+            TimerTask updateThreshold = new TimerTask() {
+                @Override
+                public void run() {
+                    log.info("Resetting max_ART threshold for DELIVERY-PROXY-SERVICE at {}", defaultThreshold);
+                    adaptationController.updateMaxThreshold("DELIVERY-PROXY-SERVICE", defaultThreshold);
+                }
+            };
+            timer.schedule(updateThreshold,1000L * (changeThresholdStart+changeThresholdDuration));
+        }
+
     }
 }

@@ -59,6 +59,7 @@ public class PerformanceFakerService {
         log.info("fakeUnreachableRestaurantDelay: {}", fakeUnreachableRestaurantDelay);
 
         if (fakeSlowOrdering) {
+
             TimerTask fakeSlowOrderingTask1Start = new TimerTask() {
                 public void run() {
                     log.info("Faking slow ordering 1");
@@ -86,7 +87,7 @@ public class PerformanceFakerService {
                 }
             };
             Timer fakeSlowOrderingTimer2Start = new Timer("fakeSlowOrderingTimer2Start");
-            fakeSlowOrderingTimer2Start.schedule(fakeSlowOrderingTask2Start, 1000L * fakeSlowOrdering2Start);
+            //fakeSlowOrderingTimer2Start.schedule(fakeSlowOrderingTask2Start, 1000L * fakeSlowOrdering2Start);
             
             TimerTask fakeSlowOrderingTask2End = new TimerTask() {
                 public void run() {
@@ -95,7 +96,7 @@ public class PerformanceFakerService {
                 }
             };
             Timer fakeSlowOrderingTimer2End = new Timer("fakeSlowOrderingTimer2End");
-            fakeSlowOrderingTimer2End.schedule(fakeSlowOrderingTask2End, 1000L * (fakeSlowOrdering2Start+fakeSlowOrdering2Duration));
+            //fakeSlowOrderingTimer2End.schedule(fakeSlowOrderingTask2End, 1000L * (fakeSlowOrdering2Start+fakeSlowOrdering2Duration));
         }
 
         if (fakeUnreachableRestaurantCounter != 0) {
