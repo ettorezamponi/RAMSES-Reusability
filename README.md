@@ -28,12 +28,10 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
   -----------
 
   sefa slowing sleep mean - non forced adding instance
-
-```
+  ```
   FAKE_SLOW_ORDERING_1_START=90
-  
-	FAKE_SLOW_ORDERING_1_DURATION=45
-```
+  FAKE_SLOW_ORDERING_1_DURATION=45
+  ```
 
 
 * ## Scenario 2 - *handleChangeImplementationOption*
