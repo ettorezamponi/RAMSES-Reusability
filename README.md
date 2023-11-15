@@ -95,8 +95,13 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
   ```
   At this point a 10-minute simulation is run and a *changeImplementation* will take place due to the threshold not being met by "delivery-proxy-1-service".
 
-  Finally, it will inject a feasible threshold to return the situation to normal; otherwise RAMSES will continue to allocate container to respect the unfeasible threshold.
-  
+  Finally, it will inject a feasible threshold to return the situation to normal declaring in the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) using the method *updateMaxThreshold* implemented inside the [rest-client](.managed-system/rest-client/src/main/java/sefa/restclient/domain/BenchmarksChangerService.java):
+  ```
+  CHANGE_THRESHOLD=Y
+  MAX_ART_THRESHOLD=350
+  CHANGE_THRESHOLD_START=105
+  ```
+  In other cases,  RAMSES will continue to allocate container to respect the unfeasible threshold.
 
 * Scenario 3
   
