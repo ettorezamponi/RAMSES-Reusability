@@ -132,8 +132,17 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
   loadbalancing.ordering-service.sefa-ordering-service-46293_46293.weight=0.3333333333333333
   ```
   ...
-* Scenario 4
-  
-  *handleShutdownInstanceOption*
+* Scenario 4 - *handleShutdownInstanceOption*
   ...
-  
+
+
+# Troubleshooting and Known Issue
+
+1) A known issue on macOS involves the Actuator component, that sometimes cannot directly contact the Docker interface to run or stop containers. This results in the Instances Manager container to fail its booting process. To solve this issue, install socat using [this guide](https://stackoverflow.com/questions/16808543/install-socat-on-mac) and run the command:
+   ```
+   $ socat -d TCP-LISTEN:2375,range=0.0.0.0/0,reuseaddr,fork UNIX:/var/run/docker.sock
+   ```
+   
+2) Clean the *application.properties* file in the configuration server repo on GitHub after each adaptation.
+3) Sometimes the Knowledge container is not able to find correctly all the service. Just try to restart the knowledge container, and only after its start-up, relaunch all remaining managing containers.
+   This is a problem of the Discovery Client not fast enough to register or unregister services.
