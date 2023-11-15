@@ -80,6 +80,9 @@ public class RequestsGenerator {
         };
         Timer stopSimulationTimer = new Timer("StopSimulationTimer");
         stopSimulationTimer.schedule(stopSimulationTask, 1000*60*trialDurationMinutes);
+
+
+
     }
 
 
