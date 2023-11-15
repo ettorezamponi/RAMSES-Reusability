@@ -25,33 +25,80 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
 
   In the same simulation, after 9 minutes, it happens that the managing decides to start a new instance (non-forced) of the "sefa-ordering-service" microservice. This is done in order to work in a more optimised way and have a much lower ART dividing the workload.
 
+  -----------
+
+  sefa slowing sleep mean - non forced adding instance
+
+```
+  FAKE_SLOW_ORDERING_1_START=90
+  
+	FAKE_SLOW_ORDERING_1_DURATION=45
+```
+
+
 * ## Scenario 2 - *handleChangeImplementationOption*
 
-  This represents the most complete scenario in that the managing recognises a better implementation, stops the old container and starts the new one with higher restrictions.
+  This represents the most complete scenario in that the managing recognises a better implementation, stops the old container and starts the new one with higher benefits.
   
-  This was done modifiyng [qos_specification.json](./managing-system/knowledge/architecture_sla/sefa/qos_specification.json) and running a simple purchase simulation for the short duration of 2 minutes:
-  
+  This was done modifiyng the environment as follows to simulate a situation in which one of the services is unable to meet the specified thresholds.
+  The ART threshold for 'DELIVERY-PROXY-SERVICE' is lowered to 150 in the [qos.json](./managing-system/knowledge/architecture_sla/sefa/qos_specification.json):
   ```
   "service_id" : "DELIVERY-PROXY-SERVICE",
 	"qos" : [
+			{
+				"name" : "availability",
+				"weight" : 0.5,
+				"min_threshold" : 0.92
+			},
+			{
+				"name" : "average_response_time",
+				"weight" : 0.5,
+				"max_threshold": 150
+			}
+	]
+  ```
+  The 'delivery-proxy-2-service' benchmark was lowered to encourage the system to choose that particular service as a substitute in the [system_benchmarks.json](./managing-system/knowledge/architecture_sla/sefa/system_benchmarks.json):
+  ```
+  "implementation_id" : "delivery-proxy-2-service",
+	"adaptation_benchmarks" : [
+			{
+				"name": "average_response_time",
+				"benchmark": 150
+			},
+			{
+				"name": "availability",
+				"benchmark": 0.94
+			}
+		]
+  ```
+  And finally, the [system_architecture.json](./managing-system/knowledge/architecture_sla/sefa/system_architecture.json) was slightly modified for demonstration purposes, to encourage people to choose the 'delivery-proxy-2-service' over the other two possible implementations:
+  ```
+  "service_id":"DELIVERY-PROXY-SERVICE",
+	"implementations" : [
 		{
-			"name" : "availability",
-			"weight" : 0.5,
-			"min_threshold" : 0.92
+			"implementation_id" : "delivery-proxy-1-service",
+			"implementation_trust" : 1,
+			"preference" : 0.2,
+			"instance_load_shutdown_threshold" : 0.4
 		},
 		{
-			"name" : "average_response_time",
-			"weight" : 0.5,
-			"max_threshold": 150
+			"implementation_id" : "delivery-proxy-2-service",
+			"implementation_trust" : 9,
+			"preference" : 0.6,
+			"instance_load_shutdown_threshold" : 0.4
+		},
+		{
+			"implementation_id" : "delivery-proxy-3-service",
+			"implementation_trust" : 7,
+			"preference" : 0.2,
+			"instance_load_shutdown_threshold" : 0.4
 		}
 	]
   ```
+  At this point a 10-minute simulation is run and a *changeImplementation* will take place due to the threshold not being met by "delivery-proxy-1-service".
 
-  An unfeasible test scenario was implemented by setting a threshold for the average response time of 150 compared to the classical 500 for the delivery.
-None of the three delivery services is able to meet this, but it was done on purpose to see the reaction of RAMSES. 
-
-  As soon as the Analyse Window Size is full, a change implementation option will take place. After that the QoS history will be deleted and the system will start collecting data again, until it will realisee that even the new instance cannot satisfy the unreachable threshold and will allocate a new additional service (this is the reason of the short simulation provided).
-
+  Finally, it will inject a feasible threshold to return the situation to normal; otherwise RAMSES will continue to allocate container to respect the unfeasible threshold.
+  
 
 * Scenario 3
   
