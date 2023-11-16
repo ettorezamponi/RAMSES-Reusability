@@ -103,4 +103,11 @@ public class AdaptationController {
         restTemplate.put(url, null);
     }
 
+    public void updateOrderingException(String orderingURL, Double value) {
+        String url = orderingURL+"rest/instrumentation/exceptionProbability?exceptionProbability="+value;
+        log.info("update ordering exception request: {}", url);
+        RestTemplate restTemplate = new RestTemplate();
+        restTemplate.put(url, null);
+    }
+
 }

@@ -139,7 +139,7 @@ public class InstancesManagerService {
             log.warn("Container {} at port {} not found. Considering it as crashed.", address, port);
             return;
         }
-        throw new RuntimeException("Too many containers found: " + containers);
+        throw new RuntimeException("Too many containers found to start: " + containers);
     }
 
     public void stopInstance(String address, int port) {
@@ -164,7 +164,34 @@ public class InstancesManagerService {
             log.warn("Container {} at port {} not found. Considering it as crashed.", address, port);
             return;
         }
-        throw new RuntimeException("Too many containers found: " + containers);
+
+        if (containers.size() > 1) {
+
+            // check if the port is inside the container's name
+            // TODO it will be very difficult to retrieve two containers with same randomly numbers inside the name
+            List<Container> containersWithPort = containers
+                    .stream()
+                    .filter(container ->
+                        Arrays.stream(container.getNames()).anyMatch(name -> name.matches(String.valueOf(port))))
+                    .toList();
+
+            // if we found a container without the port inside the name, it will be the first started, so the last one
+            if (containersWithPort.isEmpty()) {
+                Container lastContainer = containers.get(containers.size() - 1);
+                dockerClient.stopContainerCmd(lastContainer.getId()).exec();
+                log.info(" WE STOPPED THE ORIGINAL CONTAINER");
+                return;
+
+            //otherwise we stop the container with the number inside the name
+            } else {
+                Container containerWithPortToStop = containersWithPort.get(0);
+                dockerClient.stopContainerCmd(containerWithPortToStop.getId()).exec();
+                log.info("WE STOPPED THE CONTAINER WITH THE NUMBER {} INSIDE THE NAME", port);
+                return;
+            }
+        }
+
+        throw new RuntimeException("Too many containers found with same attributes: " + containers);
     }
 
     private List<String> buildContainerEnvVariables(String containerName, int serverPort, SimulationInstanceParams simulationInstanceParams) {

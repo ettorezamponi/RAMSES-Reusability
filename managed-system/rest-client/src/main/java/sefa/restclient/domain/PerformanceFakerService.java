@@ -32,6 +32,20 @@ public class PerformanceFakerService {
     private Integer fakeUnreachableRestaurantCounter;
     @Value("${FAKE_UNREACHABLE_RESTAURANT_DELAY}")
     private Integer fakeUnreachableRestaurantDelay;
+    @Value("${FAKE_EXCEPTION_ORDERING}")
+    private String fakeExceptionOrderingStr;
+    @Value("${FAKE_EXCEPTION_VALUE_1}")
+    private Double fakeExceptionValue1;
+    @Value("${FAKE_EXCEPTION_VALUE_2}")
+    private Double fakeExceptionValue2;
+    @Value("${FAKE_EXCEPTION_VALUE_3}")
+    private Double fakeExceptionValue3;
+    @Value("${FAKE_EXCEPTION_START_1}")
+    private Integer fakeExceptionStart1;
+    @Value("${FAKE_EXCEPTION_START_2}")
+    private Integer fakeExceptionStart2;
+    @Value("${FAKE_EXCEPTION_START_3}")
+    private Integer fakeExceptionStart3;
     
     @Autowired
     private AdaptationController adaptationController;
@@ -44,6 +58,7 @@ public class PerformanceFakerService {
     public void init() {
         discoveryClient.getApplications(); // force eureka client to initialize
         boolean fakeSlowOrdering = fakeSlowOrderingStr.equalsIgnoreCase("Y");
+        boolean fakeExceptionOrdering = fakeExceptionOrderingStr.equalsIgnoreCase("Y");
         log.info("PerformanceFakerService initialized with the following values:");
         log.info("fakeSlowOrdering? {}", fakeSlowOrderingStr.equalsIgnoreCase("Y") ? "YES" : "NO");
 
@@ -62,7 +77,7 @@ public class PerformanceFakerService {
 
             TimerTask fakeSlowOrderingTask1Start = new TimerTask() {
                 public void run() {
-                    log.info("Faking slow ordering 1");
+                    log.info("START: Faking slow ordering 1");
                     originalInstancesSleeps = getSleepForOrderingServiceInstances();
                     changeSleepForOrderingServiceInstances(fakeSlowOrdering1Sleep);
                 }
@@ -72,7 +87,7 @@ public class PerformanceFakerService {
             
             TimerTask fakeSlowOrderingTask1End = new TimerTask() {
                 public void run() {
-                    log.info("Faking slow ordering 1 end");
+                    log.info("END: Faking slow ordering 1 end");
                     changeSleepForOrderingServiceInstances(0.0);
                 }
             };
@@ -81,7 +96,7 @@ public class PerformanceFakerService {
 
             TimerTask fakeSlowOrderingTask2Start = new TimerTask() {
                 public void run() {
-                    log.info("Faking slow ordering 2");
+                    log.info("START: Faking slow ordering 2");
                     originalInstancesSleeps = getSleepForOrderingServiceInstances();
                     changeSleepForOrderingServiceInstances(fakeSlowOrdering2Sleep);
                 }
@@ -91,7 +106,7 @@ public class PerformanceFakerService {
             
             TimerTask fakeSlowOrderingTask2End = new TimerTask() {
                 public void run() {
-                    log.info("Faking slow ordering 2 end");
+                    log.info("END: Faking slow ordering 2 end");
                     changeSleepForOrderingServiceInstances(0.0);
                 }
             };
@@ -113,6 +128,44 @@ public class PerformanceFakerService {
             };
             Timer fakeUnreachableRestaurantTimer = new Timer("fakeUnreachableRestaurantTimer");
             fakeUnreachableRestaurantTimer.schedule(fakeUnreachableRestaurantTask, 1000L * 60 * fakeUnreachableRestaurantDelay);
+        }
+
+        if (fakeExceptionOrdering) {
+            Integer lastPos = discoveryClient.getApplication("ORDERING-SERVICE").size() - 1;
+            String orderUrl = discoveryClient.getApplication("ORDERING-SERVICE").getInstances().get(lastPos).getHomePageUrl();
+
+            Timer timer = new Timer();
+            TimerTask fakeExcpetion = new TimerTask() {
+                @Override
+                public void run() {
+                    log.info("Faking the FIRST exception for sefa-ordering-service url: {} to a value of {}", orderUrl,fakeExceptionValue1);
+                    adaptationController.updateOrderingException(orderUrl, fakeExceptionValue1);
+                }
+            };
+            timer.schedule(fakeExcpetion, 1000L * fakeExceptionStart1);
+
+            if (fakeExceptionStart2 != 0) {
+                Timer timer2 = new Timer();
+                TimerTask fakeExcpetion2 = new TimerTask() {
+                    @Override
+                    public void run() {
+                        log.info("Faking the SECOND exception for sefa-ordering-service url: {} to a value of {}", orderUrl,fakeExceptionValue2);
+                        adaptationController.updateOrderingException(orderUrl, fakeExceptionValue2);
+                    }
+                };
+                timer2.schedule(fakeExcpetion2, 1000L * fakeExceptionStart2);
+            }
+            if (fakeExceptionStart3 != 0) {
+                Timer timer3 = new Timer();
+                TimerTask fakeExcpetion3 = new TimerTask() {
+                    @Override
+                    public void run() {
+                        log.info("Faking the THIRD exception for sefa-ordering-service url: {} to a value of {}", orderUrl,fakeExceptionValue3);
+                        adaptationController.updateOrderingException(orderUrl, fakeExceptionValue3);
+                    }
+                };
+                timer3.schedule(fakeExcpetion3, 1000L * fakeExceptionStart3);
+            }
         }
     }
 
@@ -157,4 +210,5 @@ public class PerformanceFakerService {
             System.exit(1);
         }
     }
+
 }

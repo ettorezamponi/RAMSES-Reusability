@@ -103,7 +103,7 @@ done
 ##### PROBE AND ACTUATORS #####
 echo; PrintSuccess "Setting up probe and actuators!"; echo
 
-declare -a pract=("sefa-probe" "sefa-instances-manager")
+declare -a pract=("sefa-probe" )
 for i in "${pract[@]}"
 do
    PrintSuccess "Pulling $i"
@@ -112,6 +112,8 @@ do
    echo
    sleep 1
 done
+
+docker run -P --name sefa-instances-manager -d --network ramses-sas-net instances-manager
 
 PrintSuccess "Pulling sefa-config-manager"
 docker pull sbi98/sefa-config-manager:$ARCH
@@ -150,3 +152,21 @@ echo; PrintSuccess "DONE!"; echo
 # change implementation
 # giamburrasca/ramses-knowledge-scenario2:arm64
 # docker run -P --name simulation-scenario-2 -d --network ramses-sas-net giamburrasca/simulation-scenario2:arm64
+
+#scenario 3
+# da aggiustare perchè il 3 è stato sovrascritto dal seguente scenario senza cambiare nome
+# giamburrasca/ramses-knowledge-scenario3:arm64
+# giamburrasca/simulation-scenario3:arm64
+
+#scenario 4
+# giamburrasca/ramses-knowledge-scenario4:arm64
+
+#"service_id":"ORDERING-SERVICE",
+#			"implementations" : [
+#				{
+#					"implementation_id" : "ordering-service",
+#					"implementation_trust" : 1,
+#					"preference" : 1,
+#					"instance_load_shutdown_threshold" : 0.5
+#				}
+

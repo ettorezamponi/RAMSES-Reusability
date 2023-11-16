@@ -83,6 +83,7 @@ public class ExecuteService {
         String newInstanceId = service.createInstance(newInstancesAddress).getInstanceId();
         log.info("Adding instance to service" + serviceId + " with new instance " + newInstanceId);
         Map<String, Double> newWeights = addInstanceOption.getFinalWeights(newInstanceId);
+        //log.info("*** NEW WEIGHTS= "+newWeights);
         knowledgeClient.notifyAddInstance(new AddInstanceRequest(serviceId, newInstancesAddress));
         if (newWeights != null) {
             for (String instanceToShutdownId : addInstanceOption.getInstancesToShutdownIds()) {
@@ -122,6 +123,7 @@ public class ExecuteService {
         Map<String, Double> newWeights = changeLoadBalancerWeightsOption.getNewWeights();
         changeLoadBalancerWeightsOption.getInstancesToShutdownIds().forEach(instanceToShutdownId -> {
             actuatorShutdownInstance(instanceToShutdownId);
+            log.warn("SHUTDOWN INSTANCE REQUEST: serviceId= {}, instanceToShutdownId={}", serviceId, instanceToShutdownId);
             knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
         });
         configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, changeLoadBalancerWeightsOption.getInstancesToShutdownIds()));
