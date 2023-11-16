@@ -121,22 +121,66 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
   FAKE_SLOW_ORDERING_2_DURATION=60
   ```
 
-  By doing so, the managing will start other ordering services in addition to the existing ones, and the chance load weight balanini function will take care of splitting the work and, very importantly, save any new weight changes in the GitHub repository used by the configuration server.
+  By doing so, the managing will start other ordering services in addition to the existing ones, and the chance load weight balancing function will take care of splitting the work and, very importantly, save any new weight changes in the GitHub repository used by the configuration server.
 
   Configurations are saved each time they are changed, so that each time the managing is restarted, the changes are retrieved during the knowledge start-up. It is therefore important to clean up the configuration repo each time you want to re-deploy a clean managing system.
 
-  In this scenario, by starting two new order services, we will find weights equally distributed and thus saved in the configuration server:
+  In this scenario, at a certain point of the simulation, after starting two new order services, we will find weights equally distributed and thus saved in the configuration server:
   ```
   loadbalancing.ordering-service.sefa-ordering-service-34489_34489.weight=0.3333333333333333
   loadbalancing.ordering-service.sefa-ordering-service_58086.weight=0.3333333333333333
   loadbalancing.ordering-service.sefa-ordering-service-46293_46293.weight=0.3333333333333333
   ```
-  ...
+
 * Scenario 4 - *handleShutdownInstanceOption*
-  ...
 
+  In this last scenario we see the last of the adaptation options that RAMSES is able to implement, namely *handleShutdownInstanceOption*.
 
-# Troubleshooting and Known Issue
+  We create a simulation where after 90 seconds from the start we deliberately slow down the ordering-service for one minute (after which it will be reset to normal values), this will cause the managing to start a new instance to help our slowed down service. Always through the [application.properties](./managed-system/rest-client/src/main/resources/application.properties).
+
+  ```
+  FAKE_SLOW_ORDERING=Y
+  FAKE_SLOW_ORDERING_1_SLEEP=1000
+  FAKE_SLOW_ORDERING_1_START=90
+  FAKE_SLOW_ORDERING_1_DURATION=60
+  ```
+
+  After this, the work to be done will be handled by two instances that will divide the workload in half by setting weights (as seen in the previous scenario) resulting in the configuration repo as follows:
+  
+  ```
+  loadbalancing.ordering-service.sefa-ordering-service-42315_42315.weight=0.5
+  loadbalancing.ordering-service.sefa-ordering-service_58086.weight=0.5
+  ```
+
+   At this point, after 260 seconds from the beginning, we cause one of the two instances to decrease its availability of the 28%, so that the average availability of the entire ordering-service straddles the threshold.
+  In this way, the managing will have to take note of the unfollowed threshold and act accordingly, in other words add another instances or change the load balancing weights again. Another times through the same properties file:
+
+  ```
+  FAKE_EXCEPTION_ORDERING=Y
+  FAKE_EXCEPTION_VALUE_1=0.28
+  FAKE_EXCEPTION_START_1=260
+  ```
+
+  Finally, the managing will realise that the threshold has not been met and will change the weights of the two instances, reducing the workload of the least available instance to zero and thus shutting it down definitively.
+
+  ```
+  Executing adaptation option: Goal: Availability - Change LBW. Service: ORDERING-SERVICE
+  	New weights are:
+  	{ordering-service@sefa-ordering-service-42315:42315=1.0}.
+  SHUTDOWN INSTANCE REQUEST: serviceId= ORDERING-SERVICE, instanceToShutdownId=ordering-service@sefa-ordering-service:58086
+  ```
+
+  And consequently updating the configuration repo in this way:
+
+   ```
+   loadbalancing.ordering-service.sefa-ordering-service-42315_42315.weight=1.0
+   ```
+
+  If the availability is very close or straddles the threshold, it is more likely that the weights will be changed, otherwise, if there is a large gap between the actual availability and the threshold, a new instance will be added to help the two already present.
+
+  In this same simulation, it happened to see both a change of weights as desired and the addition of a new instance. This is due to the random part of the simulation, fake purchases and various mathematical calculations which even in a real scenario cannot be controlled.
+
+# Troubleshooting and Known Issues
 
 1) A known issue on macOS involves the Actuator component, that sometimes cannot directly contact the Docker interface to run or stop containers. This results in the Instances Manager container to fail its booting process. To solve this issue, install socat using [this guide](https://stackoverflow.com/questions/16808543/install-socat-on-mac) and run the command:
    ```
