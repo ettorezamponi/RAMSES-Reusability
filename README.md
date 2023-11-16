@@ -103,7 +103,7 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
   ```
   In other cases,  RAMSES will continue to allocate container to respect the unfeasible threshold.
 
-* Scenario 3 - *handleChangeLBWeightsOption*
+* ## Scenario 3 - *handleChangeLBWeightsOption*
 
   This particular action is performed whenever there is an adaptation, in particular whenever a new service is allocated in aid of the previous ones already in place.
   In particular, the *change load balancer weight* takes care of distributing the workload between the different instances of the same service.
@@ -132,7 +132,7 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
   loadbalancing.ordering-service.sefa-ordering-service-46293_46293.weight=0.3333333333333333
   ```
 
-* Scenario 4 - *handleShutdownInstanceOption*
+* ## Scenario 4 - *handleShutdownInstanceOption*
 
   In this last scenario we see the last of the adaptation options that RAMSES is able to implement, namely *handleShutdownInstanceOption*.
 
