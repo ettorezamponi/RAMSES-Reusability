@@ -6,13 +6,11 @@ PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 export GITHUB_REPOSITORY_URL=https://github.com/ettorezamponi/config-server.git
 export GITHUB_OAUTH=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
 
+PrintWarn "Desired architecture not specified or unknown. Supported values are 'arm64' and 'amd64'. Using 'arm64' as default option"
+ARCH="arm64"
+PrintWarn "Running script with selceted architecture: ${ARCH}"
+sleep 3
 
-if [[(${ARCH} != "arm64") && ( ${ARCH} != "amd64")]]; then
-  PrintWarn "Desired architecture not specified or unknown. Supported values are 'arm64' and 'amd64'. Using 'arm64' as default option"
-  ARCH="arm64"
-else
-   PrintSuccess "Running script with selceted architecture: ${ARCH}"
-fi
 
 ##### Network #####
 docker network rm ramses-sas-net
