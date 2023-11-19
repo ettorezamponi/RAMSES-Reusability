@@ -81,7 +81,7 @@ public class ExecuteService {
 
         String newInstancesAddress = instancesResponse.getDockerizedInstances().get(0).getAddress() + ":" + instancesResponse.getDockerizedInstances().get(0).getPort();
         String newInstanceId = service.createInstance(newInstancesAddress).getInstanceId();
-        log.info("Adding instance to service" + serviceId + " with new instance " + newInstanceId);
+        log.info("Adding instance to service " + serviceId + " with new instance " + newInstanceId);
         Map<String, Double> newWeights = addInstanceOption.getFinalWeights(newInstanceId);
         //log.info("*** NEW WEIGHTS= "+newWeights);
         knowledgeClient.notifyAddInstance(new AddInstanceRequest(serviceId, newInstancesAddress));

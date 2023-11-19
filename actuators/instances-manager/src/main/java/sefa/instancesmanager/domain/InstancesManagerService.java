@@ -83,7 +83,7 @@ public class InstancesManagerService {
 
 
     public List<ServiceContainerInfo> addInstances(String serviceImplementationName, int numberOfInstances) {
-        String imageName = "sbi98/sefa-"+serviceImplementationName+":"+arch;
+        String imageName = "giamburrasca/sefa-"+serviceImplementationName+":"+arch;
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
         synchronized (lock) {

@@ -14,24 +14,33 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
   Simulating a crash or connection problem as a real case, we make one of the microservices unreachable by forcing its shutdown.
   The managing will realise this situation, and will start (forced option) a new instance of the same microservice in order to resume correct execution of the system as soon as possible.
 
-  To do this, a *failure injection* implemented in the [rest-client](./managed-system/rest-client/src/main/java/sefa/restclient/domain/FailureInjectionService.java) code is used.
-  In this case, it was decided to crash the 'sefa-restaurant-service' 90 seconds after the start of the simulation modifying the following variables inside the [application.properties](./managed-system/rest-client/src/main/resources/application.properties).
+  To do this, a *failure injection* implemented in the simulation (lasting 5 minutes) [rest-client](./managed-system/rest-client/src/main/java/sefa/restclient/domain/FailureInjectionService.java) code is used.
+  In this case, it was decided to crash the 'sefa-restaurant-service' 180 seconds after the start modifying the following variables inside the [application.properties](./managed-system/rest-client/src/main/resources/application.properties).
   ```
   FAILURE_INJECTION = Y
-  FAILURE_INJECTION_1_START = 90
+  FAILURE_INJECTION_1_START = 180
   ID_OF_INSTANCE_TO_FAIL = restaurant-service@sefa-restaurant-service:58085
   ```
-  Let it be clear that this can be done with all instances of SEFA and after any time. In addition, it is also possible to restart the same instance after a certain amount of time.
 
-  In the same simulation, after 9 minutes, it happens that the managing decides to start a new instance (non-forced) of the "sefa-ordering-service" microservice. This is done in order to work in a more optimised way and have a much lower ART dividing the workload.
-
-  -----------
-
-  sefa slowing sleep mean - non forced adding instance
+  Through the *plan* logs we see that a service is unreachable and the addition of a new service will be forced:
   ```
-  FAKE_SLOW_ORDERING_1_START=90
-  FAKE_SLOW_ORDERING_1_DURATION=45
+  Instances: restaurant-service@sefa-restaurant-service:58085
+  Instance failed or unreachable
+  
+  FORCED - Add a new instance. Service: RESTAURANT-SERVICE No instances available
   ```
+
+  The blue line represents the *restaurant service* before the adaptation, and the green line the after, i.e. after forcibly adding the new instance.
+  ![alt](./documents/plotScenari/scenario1.png)
+
+  Let it be clear that this can be done with all instances of SEFA and after any time.
+
+  In addition, the *ordering service* tends to have a response time of approximately 1000-1200 ms, so during the simulation we can also see the addition (non-forced option) of an instance of the *ordering service* in order to observe the threshold.
+  ```
+  ORDERING-SERVICE: Selected option AddInstanceOption for AverageResponseTime with benefit 1.507561964285497.
+  Details: Goal: AverageResponseTime - Add a new instance. Service: ORDERING-SERVICE The service avg response time specification is not satisfied
+  ```
+  This adaptation depends also on the randomness of the simulation, so it is not certain that it always happens in every simulation.
 
 
 * ## Scenario 2 - *handleChangeImplementationOption*

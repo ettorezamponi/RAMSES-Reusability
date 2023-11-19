@@ -60,18 +60,18 @@ public class BenchmarksChangerService {
                 }
             };
             timer.schedule(updateThreshold,1000L * changeThresholdStart);
-        }
 
-        if (changeThresholdDuration != 0) {
-            Timer timer = new Timer();
-            TimerTask updateThreshold = new TimerTask() {
-                @Override
-                public void run() {
-                    log.info("Resetting max_ART threshold for DELIVERY-PROXY-SERVICE at {}", defaultThreshold);
-                    adaptationController.updateMaxThreshold("DELIVERY-PROXY-SERVICE", defaultThreshold);
-                }
-            };
-            timer.schedule(updateThreshold,1000L * (changeThresholdStart+changeThresholdDuration));
+            if (changeThresholdDuration != 0) {
+                Timer timerStop = new Timer();
+                TimerTask resetThreshold = new TimerTask() {
+                    @Override
+                    public void run() {
+                        log.info("Resetting max_ART threshold for DELIVERY-PROXY-SERVICE at {}", defaultThreshold);
+                        adaptationController.updateMaxThreshold("DELIVERY-PROXY-SERVICE", defaultThreshold);
+                    }
+                };
+                timerStop.schedule(resetThreshold,1000L * (changeThresholdStart+changeThresholdDuration));
+            }
         }
 
     }

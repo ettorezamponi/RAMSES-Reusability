@@ -75,6 +75,7 @@ public class FailureInjectionService {
                     adaptationController.startInstance(idOfInstanceToFail);
                 }
             };
+
             timer.schedule(failureInjection1StartTask, failureInjection1Start * 1000L);
             if (failureInjection1Duration != 0)
                 timer.schedule(failureInjection1StopTask, (failureInjection1Start+failureInjection1Duration) * 1000L);
