@@ -47,7 +47,16 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
 
   This represents the most complete scenario in which the managing recognises a better implementation, stops the old container and starts the new one with higher benefits.
 
-  At the beginning of the simulation, a very low Average Response Time threshold (150) is set such that it cannot be met by the *delivery service* instance, as we can see in the following plot where the green lines (*delivery-proxy-1-service*) is over the threshold:
+  At the beginning of the simulation, a very low Average Response Time threshold (150) is set such that it cannot be met by the *delivery service* instance, through the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) of the simulation:
+  ```
+  CHANGE_THRESHOLD=Y
+  MAX_ART_THRESHOLD=150
+  CHANGE_THRESHOLD_START=10
+  CHANGE_THRESHOLD_DURATION=120
+  DEFAULT_THRESHOLD=500
+  ```
+  
+  As we can see in the following plot where the green lines (*delivery-proxy-1-service*) is over the threshold:
 
   ![alt](./documents/plotScenari/scenario2-1.png)
 
@@ -91,7 +100,7 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
   This particular action is performed whenever there is an adaptation, in particular whenever a new service is allocated in aid of the previous ones already in place.
   In particular, the *change load balancer weight* takes care of distributing the workload between the different instances of the same service.
 
-  Managin and managed were deployed normally. During the simulation, however, the ART of the ordering-service is raised twice, after 90 seconds and after 180 seconds from the start of the simulation, via the method [getSleepForOrderingServiceInstances](./managed-system/rest-client/src/main/java/sefa/restclient/domain/PerformanceFakerService.java) settings its value in the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) file.
+  Managing and managed were deployed normally. During the simulation (10 minutes) the Average Response Time of the ordering-service is raised twice, after 90 seconds and after 180 seconds from the start of the simulation, settings its value in the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) file.
   ```
   FAKE_SLOW_ORDERING=Y
   
@@ -104,16 +113,25 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
   FAKE_SLOW_ORDERING_2_DURATION=60
   ```
 
-  By doing so, the managing will start other ordering services in addition to the existing ones, and the chance load weight balancing function will take care of splitting the work and, very importantly, save any new weight changes in the GitHub repository used by the configuration server.
+  By doing so, the managing will start another *ordering service* in addition to the existing ones, and the load weight balancing function will take care of splitting the work and, very importantly, save any new weight changes in the GitHub repository used by the configuration server.
+  As seen below, the result in the configuration repo and in the *plan* service logs:
+
+  ```
+  loadbalancing.ordering-service.sefa-ordering-service-35359_35359.weight=0.8
+  loadbalancing.ordering-service.sefa-ordering-service_58086.weight=0.2
+  ```
+  ```
+  Details: Goal: AverageResponseTime - Change LBW. Service: ORDERING-SERVICE
+  New weights are: {ordering-service@sefa-ordering-service:58086=0.2, ordering-service@sefa-ordering-service-35359:35359=0.8}.
+  At least one instance satisfies the avg Response time specifications
+  ```
 
   Configurations are saved each time they are changed, so that each time the managing is restarted, the changes are retrieved during the knowledge start-up. It is therefore important to clean up the configuration repo each time you want to re-deploy a clean managing system.
 
-  In this scenario, at a certain point of the simulation, after starting two new order services, we will find weights equally distributed and thus saved in the configuration server:
-  ```
-  loadbalancing.ordering-service.sefa-ordering-service-34489_34489.weight=0.3333333333333333
-  loadbalancing.ordering-service.sefa-ordering-service_58086.weight=0.3333333333333333
-  loadbalancing.ordering-service.sefa-ordering-service-46293_46293.weight=0.3333333333333333
-  ```
+  The plot of the *ordering service* show the benefits of, firstly instantiate a new service when the first one is slowed (first peak), and then changing the load balancing weights when the first instance is slowed again entrusting more work to the instance that performs better (second peak, color green):
+
+  ![alt](./documents/plotScenari/scenario3.png)
+
 
 * ## Scenario 4 - *handleShutdownInstanceOption*
 
