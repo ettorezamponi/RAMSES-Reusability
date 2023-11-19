@@ -45,40 +45,15 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
 
 * ## Scenario 2 - *handleChangeImplementationOption*
 
-  This represents the most complete scenario in that the managing recognises a better implementation, stops the old container and starts the new one with higher benefits.
+  This represents the most complete scenario in which the managing recognises a better implementation, stops the old container and starts the new one with higher benefits.
+
+  At the beginning of the simulation, a very low Average Response Time threshold (150) is set such that it cannot be met by the *delivery service* instance, as we can see in the following plot where the green lines (*delivery-proxy-1-service*) is over the threshold:
+
+  ![alt](./documents/plotScenari/scenario2-1.png)
+
+  The managing notices the problem, and change the implementation seeing that *delivery-proxy-2-service* has much better values than the 1, which is not working well.
   
-  This was done modifiyng the environment as follows to simulate a situation in which one of the services is unable to meet the specified thresholds.
-  The ART threshold for 'DELIVERY-PROXY-SERVICE' is lowered to 150 in the [qos.json](./managing-system/knowledge/architecture_sla/sefa/qos_specification.json):
-  ```
-  "service_id" : "DELIVERY-PROXY-SERVICE",
-	"qos" : [
-			{
-				"name" : "availability",
-				"weight" : 0.5,
-				"min_threshold" : 0.92
-			},
-			{
-				"name" : "average_response_time",
-				"weight" : 0.5,
-				"max_threshold": 150
-			}
-	]
-  ```
-  The 'delivery-proxy-2-service' benchmark was lowered to encourage the system to choose that particular service as a substitute in the [system_benchmarks.json](./managing-system/knowledge/architecture_sla/sefa/system_benchmarks.json):
-  ```
-  "implementation_id" : "delivery-proxy-2-service",
-	"adaptation_benchmarks" : [
-			{
-				"name": "average_response_time",
-				"benchmark": 150
-			},
-			{
-				"name": "availability",
-				"benchmark": 0.94
-			}
-		]
-  ```
-  And finally, the [system_architecture.json](./managing-system/knowledge/architecture_sla/sefa/system_architecture.json) was slightly modified for demonstration purposes, to encourage people to choose the 'delivery-proxy-2-service' over the other two possible implementations:
+  These are the configuration of the three different potential instances of the *delivery-proxy-service* inside the configuration file [system_architecture.json](./managing-system/knowledge/architecture_sla/sefa/system_architecture.json):
   ```
   "service_id":"DELIVERY-PROXY-SERVICE",
 	"implementations" : [
@@ -102,15 +77,14 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
 		}
 	]
   ```
-  At this point a 10-minute simulation is run and a *changeImplementation* will take place due to the threshold not being met by "delivery-proxy-1-service".
-
-  Finally, it will inject a feasible threshold to return the situation to normal declaring in the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) using the method *updateMaxThreshold* implemented inside the [rest-client](.managed-system/rest-client/src/main/java/sefa/restclient/domain/BenchmarksChangerService.java):
+  The simulation lasts 5 minutes and the plan's logs will show the correct change implementation adaptation executed:
   ```
-  CHANGE_THRESHOLD=Y
-  MAX_ART_THRESHOLD=350
-  CHANGE_THRESHOLD_START=105
+  DELIVERY-PROXY-SERVICE: Selected option ChangeImplementationOption for AverageResponseTime with benefit 1.0760645103065511. 
+  Details: Goal: AverageResponseTime - Change DELIVERY-PROXY-SERVICE implementation from delivery-proxy-1-service to delivery-proxy-2-service. Changing implementation
   ```
-  In other cases,  RAMSES will continue to allocate container to respect the unfeasible threshold.
+  At this point the correct Average Response Time threshold will be restored to a normal value (in other cases, RAMSES will continue to allocate container to respect the unfeasible threshold) and the new implementation could satisfy it.
+  
+  ![alt](./documents/plotScenari/scenario2-2.png)
 
 * ## Scenario 3 - *handleChangeLBWeightsOption*
 
