@@ -17,7 +17,7 @@ PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 PrintSuccess "Setting up local RAMSES"
 docker run -P --name ramses-knowledge -d --network ramses-sas-net ramses-knowledge
 echo
-sleep 14
+sleep 10
 ##### MONITOR #####
 docker run -P --name ramses-monitor -d --network ramses-sas-net ramses-monitor
 echo
