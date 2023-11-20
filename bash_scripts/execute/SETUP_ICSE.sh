@@ -112,8 +112,18 @@ echo; PrintSuccess "DONE!"; echo
 sleep 3
 
 echo; PrintWarn "Do you wanna simulate a scenario ?!"; echo
+echo; PrintWarn "1:addIstance \ 2:changeImplementation \ 3:changeLBWeights \ 4:shutdownInstance"; echo
 
-NUMBER=1
 
-# docker pull giamburrasca/scenario$NUMBER:$ARCH
-# docker run -P --name simulation-scenario-$NUMBER -d --network ramses-sas-net giamburrasca/scenario$NUMBER:$ARCH
+echo "Insert the number of the scenario you want or press anything else to exit:"
+read userInput
+
+if [[ $userInput =~ ^[1-4]$ ]]; then
+    NUMBER=$userInput
+    echo "You choose to simulate the scenario $NUMBER."
+    docker pull giamburrasca/scenario$NUMBER:$ARCH
+    docker run -P --name simulation-scenario-$NUMBER -d --network ramses-sas-net giamburrasca/scenario$NUMBER:$ARCH
+    echo "Simulation started."
+else
+    echo "Enjoy RAMSES!"
+fi
