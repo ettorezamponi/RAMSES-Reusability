@@ -5,6 +5,7 @@ import com.github.dockerjava.api.exception.NotFoundException;
 import com.github.dockerjava.api.exception.NotModifiedException;
 import com.github.dockerjava.api.model.Container;
 import com.github.dockerjava.api.model.ExposedPort;
+import com.github.dockerjava.api.model.HostConfig;
 import com.github.dockerjava.api.model.Ports;
 import com.github.dockerjava.core.DefaultDockerClientConfig;
 import com.github.dockerjava.core.DockerClientBuilder;
@@ -28,6 +29,7 @@ public class InstancesManagerService {
     private String currentProfile;
     private final String localIp;
     private final String dockerIp;
+    private final String arch;
     private final DockerClient dockerClient;
 
     // <Profile, List of SimulationInstanceParams>
@@ -38,6 +40,7 @@ public class InstancesManagerService {
         this.env = env;
         localIp = getMachineLocalIp();
         dockerIp = env.getProperty("DOCKER_IP") != null ? env.getProperty("DOCKER_IP") : localIp;
+        arch = env.getProperty("ARCH") != null ? env.getProperty("ARCH") : "arm64";
         String dockerPort = env.getProperty("DOCKER_PORT");
         if (dockerIp == null || dockerIp.isEmpty() || dockerPort == null || dockerPort.isEmpty())
             throw new RuntimeException("Docker IP and port must be set");
@@ -79,9 +82,6 @@ public class InstancesManagerService {
         dockerClient.startContainerCmd(newContainerId).exec();
         log.debug("**** START NEW IMAGE ****");*/
 
-        //simulation of addInstances with delivery proxy 2
-        addInstances("delivery-proxy-2-service", 1);
-
         switch (currentProfile) {
             case "PerfectInstance" -> simulationInstanceParamsMap.put(currentProfile, List.of(
                     // (failureRate, sleepDuration, sleepVariance)
@@ -109,9 +109,8 @@ public class InstancesManagerService {
     }
 
 
-    // addInstances(NAME, NO of INSTANCES)
     public List<ServiceContainerInfo> addInstances(String serviceImplementationName, int numberOfInstances) {
-        String imageName = serviceImplementationName;
+        String imageName = "giamburrasca/sefa-"+serviceImplementationName+":"+arch;
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
         synchronized (lock) {
@@ -120,34 +119,41 @@ public class InstancesManagerService {
             else
                 simulationInstanceParamsList = List.of(new SimulationInstanceParams(0.0, 0.0, 0.0));
         }
-        //hearth
         for (int i = 0; i < numberOfInstances; i++) {
             int randomPort = getRandomPort();
-            //porta da richiamare dalle properties e non dichiarandola
-            ExposedPort serverPort = ExposedPort.tcp(randomPort);
+            ExposedPort exposedRandomPort = ExposedPort.tcp(randomPort);
             Ports portBindings = new Ports();
-            portBindings.bind(serverPort, Ports.Binding.bindIpAndPort("0.0.0.0", randomPort));
-            List<String> envVars = buildContainerEnvVariables(randomPort, simulationInstanceParamsList.get(i % simulationInstanceParamsList.size()));
-            String newContainerId = dockerClient.createContainerCmd("sefa-"+imageName)
-                    .withName(imageName)
-                    .withExposedPorts(serverPort)
-                    .withHostConfig(newHostConfig().withPortBindings(portBindings).withNetworkMode("ramses-sas-net"))
+            portBindings.bind(exposedRandomPort, Ports.Binding.bindIpAndPort("0.0.0.0", randomPort));
+            String containerName = "sefa-" + serviceImplementationName + "-" + randomPort;
+            HostConfig hostConfig = new HostConfig();
+            hostConfig.withPortBindings(portBindings);
+            hostConfig.withNetworkMode("ramses-sas-net");
+            List<String> envVars = buildContainerEnvVariables(containerName, randomPort, simulationInstanceParamsList.get(i % simulationInstanceParamsList.size()));
+            String newContainerId = dockerClient.createContainerCmd(imageName)
+                    .withImage(imageName)
+                    .withName(containerName)
+                    .withEnv(envVars)
+                    .withExposedPorts(exposedRandomPort)
+                    .withHostConfig(hostConfig)
                     .exec()
                     .getId();
             dockerClient.startContainerCmd(newContainerId).exec();
-            log.debug("Container "+newContainerId+" started, with these specifics: \nenv var:"+envVars+"\nexposed ports: "+serverPort+"\nport bindings: "+portBindings.getBindings().toString()+"\nserver port: "+serverPort);
-            serviceContainerInfos.add(new ServiceContainerInfo(imageName, newContainerId, imageName + "_" + randomPort, dockerIp, randomPort, envVars));
-
-            List<Container> contain = dockerClient.listContainersCmd().exec();
-            for (Container container : contain) {
-                log.warn("\nContainer name: {} \n\tports: {}", Arrays.stream(container.getNames()).findFirst().orElse("N/A"), Arrays.toString(container.getPorts()));
-            }
+            serviceContainerInfos.add(new ServiceContainerInfo(imageName, newContainerId, containerName, containerName, randomPort, envVars));
         }
         return serviceContainerInfos;
     }
 
-    public void startInstance(String serviceImplementationName, int port) {
-        List<Container> containers = dockerClient.listContainersCmd().withShowAll(true).withNameFilter(Collections.singleton(serviceImplementationName+"_"+port)).exec();
+    public void startInstance(String address, int port) {
+        List<Container> containers = dockerClient
+                .listContainersCmd()
+                .withShowAll(true)
+                .exec()
+                .stream()
+                .filter(container ->
+                        Arrays.stream(container.getNames()).anyMatch(name -> name.contains(address))
+                )
+                .toList();
+
         if (containers.size() == 1) {
             Container container = containers.get(0);
             try {
@@ -156,15 +162,23 @@ public class InstancesManagerService {
                 log.warn("Cannot start container {}", container.getId());
             }
             return;
-        } else if (containers.size() == 0){
-            log.warn("Container {}_{} not found. Considering it as crashed.", serviceImplementationName, port);
+        } else if (containers.size() == 0) {
+            log.warn("Container {} at port {} not found. Considering it as crashed.", address, port);
             return;
         }
-        throw new RuntimeException("Too many containers found: " + containers);
+        throw new RuntimeException("Too many containers found to start: " + containers);
     }
 
-    public void stopInstance(String serviceImplementationName, int port) {
-        List<Container> containers = dockerClient.listContainersCmd().withNameFilter(Collections.singleton(serviceImplementationName+"_"+port)).exec();
+    public void stopInstance(String address, int port) {
+        List<Container> containers = dockerClient
+                .listContainersCmd()
+                .exec()
+                .stream()
+                .filter(container ->
+                        Arrays.stream(container.getNames()).anyMatch(name -> name.contains(address))
+                )
+                .toList();
+
         if (containers.size() == 1) {
             Container container = containers.get(0);
             try {
@@ -173,25 +187,52 @@ public class InstancesManagerService {
                 log.warn("Container {} already removed", container.getId());
             }
             return;
-        } else if (containers.size() == 0){
-            log.warn("Container {}_{} not found. Considering it as crashed.", serviceImplementationName, port);
+        } else if (containers.size() == 0) {
+            log.warn("Container {} at port {} not found. Considering it as crashed.", address, port);
             return;
         }
-        throw new RuntimeException("Too many containers found: " + containers);
+
+        if (containers.size() > 1) {
+
+            // check if the port is inside the container's name
+            // TODO it will be very difficult to retrieve two containers with same randomly numbers inside the name
+            List<Container> containersWithPort = containers
+                    .stream()
+                    .filter(container ->
+                        Arrays.stream(container.getNames()).anyMatch(name -> name.matches(String.valueOf(port))))
+                    .toList();
+
+            // if we found a container without the port inside the name, it will be the first started, so the last one
+            if (containersWithPort.isEmpty()) {
+                Container lastContainer = containers.get(containers.size() - 1);
+                dockerClient.stopContainerCmd(lastContainer.getId()).exec();
+                log.info(" WE STOPPED THE ORIGINAL CONTAINER");
+                return;
+
+            //otherwise we stop the container with the number inside the name
+            } else {
+                Container containerWithPortToStop = containersWithPort.get(0);
+                dockerClient.stopContainerCmd(containerWithPortToStop.getId()).exec();
+                log.info("WE STOPPED THE CONTAINER WITH THE NUMBER {} INSIDE THE NAME", port);
+                return;
+            }
+        }
+
+        throw new RuntimeException("Too many containers found with same attributes: " + containers);
     }
 
-    private List<String> buildContainerEnvVariables(int serverPort, SimulationInstanceParams simulationInstanceParams) {
+    private List<String> buildContainerEnvVariables(String containerName, int serverPort, SimulationInstanceParams simulationInstanceParams) {
         List<String> envVars = new LinkedList<>();
 
         // Get Eureka, Gateway and MySQL addresses from Environment. When null, use the local IP address and the default ports
-        String eurekaIpPort = env.getProperty("EUREKA_IP_PORT");
+        /* String eurekaIpPort = env.getProperty("EUREKA_IP_PORT");
         envVars.add("EUREKA_IP_PORT=" + (eurekaIpPort == null ? localIp+":58082" : eurekaIpPort));
         String apiGatewayIpPort = env.getProperty("API_GATEWAY_IP_PORT");
         envVars.add("API_GATEWAY_IP_PORT="+(apiGatewayIpPort == null ? localIp+":58081" : apiGatewayIpPort));
         String mySqlIpPort = env.getProperty("MYSQL_IP_PORT");
-        envVars.add("MYSQL_IP_PORT="+(mySqlIpPort == null ? localIp+":3306" : mySqlIpPort));
+        envVars.add("MYSQL_IP_PORT="+(mySqlIpPort == null ? localIp+":3306" : mySqlIpPort)); */
         envVars.add("SERVER_PORT="+serverPort);
-        envVars.add("HOST="+dockerIp);
+        envVars.add("HOST="+containerName);
         envVars.add("SLEEP_MEAN="+simulationInstanceParams.getSleepDuration()*1000);
         envVars.add("SLEEP_VARIANCE="+simulationInstanceParams.getSleepVariance());
         envVars.add("EXCEPTION_PROBABILITY="+simulationInstanceParams.getExceptionProbability());
@@ -224,4 +265,3 @@ public class InstancesManagerService {
         }
     }
 }
-

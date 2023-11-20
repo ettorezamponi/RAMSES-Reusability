@@ -284,9 +284,13 @@ public class KnowledgeService {
     }
 
     public void updateBenchmark(String serviceId, String serviceImplementationId, String simpleClassName, Double value) {
+        // concatena il nome della classe QoS e simpleClassName
         String qosSpecificationClassName = QoSSpecification.class.getPackage().getName() + "." + simpleClassName;
+        // indica che la variabile qosClass può fare riferimento a una classe che estende QoSSpecification.
         Class<? extends QoSSpecification> qosClass;
         try {
+            // < ? extends QoSSpecification > consente di lavorare con classi che estendono QoSSpecification in modo più generico.
+            // specifica che la classe da castare deve essere una sottoclasse di QoSSpecification
             qosClass = (Class<? extends QoSSpecification>) Class.forName(qosSpecificationClassName);
             if (!QoSSpecification.class.isAssignableFrom(qosClass))
                 throw new RuntimeException("The provided class " + qosClass.getName() + " does not extend the QoS class.");

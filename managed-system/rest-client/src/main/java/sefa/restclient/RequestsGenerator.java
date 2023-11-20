@@ -26,8 +26,8 @@ import java.util.TimerTask;
 public class RequestsGenerator {
     @Value("${ADAPT}")
     private int adapt;
-    @Value("${TRIAL_DURATION_MINUTES}")
-    private long trialDurationMinutes;
+    //@Value("${TRIAL_DURATION_MINUTES}")
+    private long trialDurationMinutes = 10;
     @Value("${spring.task.execution.pool.core-size}")
     private int poolSize;
 
@@ -80,6 +80,9 @@ public class RequestsGenerator {
         };
         Timer stopSimulationTimer = new Timer("StopSimulationTimer");
         stopSimulationTimer.schedule(stopSimulationTask, 1000*60*trialDurationMinutes);
+
+
+
     }
 
 
@@ -87,29 +90,39 @@ public class RequestsGenerator {
     @Scheduled(fixedDelay = 10)
     public void scheduleFixedRateTaskAsync() {
         try {
+            // ritardo casuale nell'esecuzione per un tempo casuale tra 0 e 499 millisecondi
             Thread.sleep((long) (Math.random() * 500));
             log.debug("Starting simulation routine");
+
             Collection<GetRestaurantResponse> restaurants = requestGeneratorService.getAllRestaurants();
             if (restaurants == null || restaurants.size() < 1)
                 throw new RuntimeException("No restaurants available");
+
+            //restaurant {id,name,location}. Quindi estrae il primo ristorante dalla collezione di ristoranti e lo assegna alla variabile restaurant
             GetRestaurantResponse restaurant = restaurants.iterator().next();
             long restaurantId = restaurant.getId();
             GetRestaurantMenuResponse menu = requestGeneratorService.getRestaurantMenu(restaurantId);
             if (menu == null || menu.getMenuItems().size() < 1)
                 throw new RuntimeException("No menu items available");
+
+            // estrae il primo piatto dalla collezione del menu e lo assegna alla variabile menuItem
             MenuItemElement menuItem = menu.getMenuItems().iterator().next();
             CreateCartResponse cartCreated = requestGeneratorService.createCart(restaurantId);
             if (cartCreated == null) throw new RuntimeException("Cart creation failed");
+
             long cartId = cartCreated.getId();
             AddItemToCartResponse cart = requestGeneratorService.addItemToCart(cartId, restaurantId, menuItem.getId(), 2);
             if (cart == null || cart.getItems().size() != 1)
                 throw new RuntimeException("Wrong number of items in cart");
+
+            // estrae il primo item dal carrello e lo assegna alla variabile returnedItem
             CartItemElement returnedItem = cart.getItems().iterator().next();
             if (returnedItem.getQuantity() != 2 ||
                     !returnedItem.getId().equals(menuItem.getId()) ||
                     !returnedItem.getName().equals(menuItem.getName()) ||
                     cart.getTotalPrice() != menuItem.getPrice() * 2)
                 throw new RuntimeException("Inconsistent cart");
+
             ConfirmOrderResponse confirmedOrder = requestGeneratorService.confirmOrder(cartId, "1111111111111111", 12, 2023, "001",
                     "Via REST Client", "Roma", 1, "12345", "1234567890", new Date());
             if (confirmedOrder == null) throw new RuntimeException("Impossible to confirm order [1]");

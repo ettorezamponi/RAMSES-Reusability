@@ -1,5 +1,6 @@
 package sefa.instancesmanager.rest;
 
+import sefa.instancesmanager.restinterface.*;
 import sefa.instancesmanager.domain.ServiceContainerInfo;
 import sefa.instancesmanager.domain.InstancesManagerService;
 import lombok.extern.slf4j.Slf4j;
@@ -8,7 +9,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RestController;
-import sefa.instancesmanager.restinterface.*;
 
 import java.util.List;
 
@@ -30,13 +30,13 @@ public class InstancesManagerRestController {
 
 	@PostMapping(path = "/startInstance")
 	public StartInstanceResponse startInstance(@RequestBody StartInstanceRequest request) {
-		instancesManagerService.startInstance(request.getServiceImplementationName(), request.getPort());
+		instancesManagerService.startInstance(request.getAddress(), request.getPort());
 		return new StartInstanceResponse(request.getServiceImplementationName(), request.getAddress(), request.getPort());
 	}
 
 	@PostMapping(path = "/removeInstance")
 	public RemoveInstanceResponse removeInstance(@RequestBody RemoveInstanceRequest request) {
-		instancesManagerService.stopInstance(request.getServiceImplementationName(), request.getPort());
+		instancesManagerService.stopInstance(request.getAddress(), request.getPort());
 		return new RemoveInstanceResponse(request.getServiceImplementationName(), request.getAddress(), request.getPort());
 	}
 

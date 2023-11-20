@@ -63,12 +63,12 @@ sleep 2
 
 PrintSuccess "Setting up Spring Config Server"
 #docker pull sbi98/sefa-configserver:$ARCH
-#docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net sbi98/sefa-configserver:$ARCH
+#docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net config-server
 #PERSONALIZED CONFIG SERVER
 docker pull giamburrasca/sefa-configserver:v1.0
 docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-configserver:v1.0
 echo
-sleep 10
+sleep 8
 
 declare -a arr=("sefa-restaurant-service"
                 "sefa-ordering-service"
@@ -102,33 +102,34 @@ do
    echo
    sleep 1
 done
+#docker pull giamburrasca/sefa-delivery-proxy-2-service:arm64
 
 ##### PROBE AND ACTUATORS #####
 echo; PrintSuccess "Setting up probe and actuators!"; echo
 
 PrintSuccess "Pulling Probe"
-docker pull giamburrasca/probe:v1.12
-docker run -P --name sefa-probe -d --network ramses-sas-net giamburrasca/probe:v1.12
+docker pull sbi98/sefa-probe:arm64
+docker run -P --name sefa-probe -d --network ramses-sas-net sbi98/sefa-probe:arm64
 echo
 sleep 1
 
-#PrintSuccess "Pulling sefa-instances-manager"
-#docker pull giamburrasca/sefa-instance-manager-et:v0.73
-#docker run -P --name sefa-instances-manager -d --network ramses-sas-net giamburrasca/sefa-instance-manager-et:v0.73
-#echo
-#sleep 1
-#
-#PrintSuccess "Pulling sefa-config-manager"
-#docker pull sbi98/sefa-config-manager:$ARCH
-#docker run -P --name sefa-config-manager -e GITHUB_OAUTH=$GITHUB_OAUTH -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net sbi98/sefa-config-manager:$ARCH
-#echo
-#sleep 1
+PrintSuccess "Pulling sefa-instances-manager"
+docker pull giamburrasca/sefa-instances-manager:v0.8
+docker run -P --name sefa-instances-manager -d --network ramses-sas-net giamburrasca/sefa-instances-manager:v0.8
+echo
+sleep 3
 
-#microservice added to experiment
-PrintSuccess "Setting up Movie Info extra service"
-docker pull giamburrasca/movie-info-service:v1.1
-docker run -P --name movie-info-service -d --network ramses-sas-net giamburrasca/movie-info-service:v1.1
+PrintSuccess "Pulling sefa-config-manager"
+docker pull giamburrasca/sefa-config-manager:v0.8
+docker run -P --name sefa-config-manager -e GITHUB_OAUTH=$GITHUB_OAUTH -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-config-manager:v0.8
 echo
 sleep 2
 
-echo; PrintSuccess "DONE!"; echo
+#microservice added to experiment
+#PrintSuccess "Setting up Movie Info extra service"
+#docker pull giamburrasca/movie-info-service:v1.1
+#docker run -P --name movie-info-service -d --network ramses-sas-net giamburrasca/movie-info-service:v1.1
+#echo
+#sleep 2
+
+echo; PrintSuccess "SEFA DONE!"; echo

@@ -60,6 +60,7 @@ public class KnowledgeInit implements InitializingBean {
         serviceList.forEach(service -> {
             ServiceInfo serviceInfo = probeSystemRuntimeArchitecture.get(service.getServiceId());
             log.info("SERVICE INFO:" + serviceInfo);
+            // ServiceInfo(serviceId=RESTAURANT-SERVICE, currentImplementationId=restaurant-service, instances=[restaurant-service@sefa-restaurant-service:58085])
             if (serviceInfo == null)
                 throw new RuntimeException("Service " + service.getServiceId() + " not found in the system  runtime architecture");
             List<String> instances = serviceInfo.getInstances();
@@ -83,7 +84,7 @@ public class KnowledgeInit implements InitializingBean {
             service.setConfiguration(probeClient.getServiceConfiguration(service.getServiceId(), service.getCurrentImplementationId()));
             configurationRepository.save(service.getConfiguration());
             knowledgeService.addService(service);
-            log.debug("SERVICE ADDED TO THE NOWLEDGE: " + service);
+            log.debug("SERVICE ADDED TO THE KNOWLEDGE: " + service);
         });
 
         for (Service service : serviceList) {
