@@ -109,31 +109,11 @@ done
 
 echo; PrintSuccess "DONE!"; echo
 
+sleep 3
 
-#echo; PrintWarn "Add instances scenario"; echo
-# payment after 90 seconds, ordering after 9 minutes
-# docker pull giamburrasca/simulation-scenario1:arm64
-# docker run -P --name simulation-scenario-1 -d --network ramses-sas-net giamburrasca/simulation-scenario1:arm64
+echo; PrintWarn "Do you wanna simulate a scenario ?!"; echo
 
-#echo; PrintWarn "Change implementation scenario"; echo
-# change implementation
-# giamburrasca/ramses-knowledge-scenario2:arm64
-# docker run -P --name simulation-scenario-2 -d --network ramses-sas-net giamburrasca/simulation-scenario2:arm64
+NUMBER=1
 
-#scenario 3
-# da aggiustare perchè il 3 è stato sovrascritto dal seguente scenario senza cambiare nome
-# giamburrasca/ramses-knowledge-scenario3:arm64
-# giamburrasca/simulation-scenario3:arm64
-
-#scenario 4
-# giamburrasca/ramses-knowledge-scenario4:arm64
-
-#"service_id":"ORDERING-SERVICE",
-#			"implementations" : [
-#				{
-#					"implementation_id" : "ordering-service",
-#					"implementation_trust" : 1,
-#					"preference" : 1,
-#					"instance_load_shutdown_threshold" : 0.5
-#				}
-
+# docker pull giamburrasca/scenario$NUMBER:$ARCH
+# docker run -P --name simulation-scenario-$NUMBER -d --network ramses-sas-net giamburrasca/scenario$NUMBER:$ARCH

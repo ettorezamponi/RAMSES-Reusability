@@ -137,7 +137,7 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
 
   In this last scenario we see the last of the adaptation options that RAMSES is able to implement, namely *handleShutdownInstanceOption*.
 
-  We create a simulation where after 90 seconds from the start we deliberately slow down the ordering-service for one minute (after which it will be reset to normal values), this will cause the managing to start a new instance to help our slowed down service. Always through the [application.properties](./managed-system/rest-client/src/main/resources/application.properties).
+  We create a simulation (lasting 10 minutes) where after 90 seconds from the start we deliberately slow down the *ordering service* for one minute (after which it will be reset to normal values), this will cause the managing to start a new instance to help our slowed down service. Always through the [application.properties](./managed-system/rest-client/src/main/resources/application.properties).
 
   ```
   FAKE_SLOW_ORDERING=Y
@@ -146,36 +146,45 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
   FAKE_SLOW_ORDERING_1_DURATION=60
   ```
 
-  After this, the work to be done will be handled by two instances that will divide the workload in half by setting weights (as seen in the previous scenario) resulting in the configuration repo as follows:
+  After this, the workload will be handled by two instances that will divide the workload in half by setting weights (as seen in the previous scenario) resulting in the configuration repo as follows:
   
   ```
   loadbalancing.ordering-service.sefa-ordering-service-42315_42315.weight=0.5
   loadbalancing.ordering-service.sefa-ordering-service_58086.weight=0.5
   ```
 
-   At this point, after 260 seconds from the beginning, we cause one of the two instances to decrease its availability of the 28%, so that the average availability of the entire ordering-service straddles the threshold.
-  In this way, the managing will have to take note of the unfollowed threshold and act accordingly, in other words add another instances or change the load balancing weights again. Another times through the same properties file:
+  At this point, after 260 seconds from the beginning, it causes one of the two instances to decrease its availability of the 28%, so that the average availability of the entire ordering-service straddles the threshold.
+  In this way, the managing will have to take note of the unfollowed threshold and act accordingly, in other words add another instances or change the load balancing weights again.
+  
+  The managing, probably would change the load balancing weights assigning more work to the instance that performs best and has not been slowed down.
+
+  After 400 seconds it will do the same thing again by slowing down the same instance as before (the one with a lower workload).
+  
+  Another times through the same properties file:
 
   ```
   FAKE_EXCEPTION_ORDERING=Y
   FAKE_EXCEPTION_VALUE_1=0.28
+  FAKE_EXCEPTION_VALUE_2=0.7
   FAKE_EXCEPTION_START_1=260
+  FAKE_EXCEPTION_START_2=400
   ```
 
-  Finally, the managing will realise that the threshold has not been met and will change the weights of the two instances, reducing the workload of the least available instance to zero and thus shutting it down definitively.
+  Finally, the managing will realise that the threshold has not been met and will change the weights of the two instances (*plan*'s logs), reducing the workload of the least available instance to zero and thus shutting it down definitively.
 
   ```
   Executing adaptation option: Goal: Availability - Change LBW. Service: ORDERING-SERVICE
-  	New weights are:
-  	{ordering-service@sefa-ordering-service-42315:42315=1.0}.
+  New weights are: {ordering-service@sefa-ordering-service-42315:42315=1.0}.
   SHUTDOWN INSTANCE REQUEST: serviceId= ORDERING-SERVICE, instanceToShutdownId=ordering-service@sefa-ordering-service:58086
   ```
-
   And consequently updating the configuration repo in this way:
 
    ```
    loadbalancing.ordering-service.sefa-ordering-service-42315_42315.weight=1.0
    ```
+  
+  The availability plot of the *ordering service* clearly shows the benefits of weight changes occurring twice, when the availability goes under the threshold:
+  ![alt](./documents/plotScenari/scenario4.png)
 
   If the availability is very close or straddles the threshold, it is more likely that the weights will be changed, otherwise, if there is a large gap between the actual availability and the threshold, a new instance will be added to help the two already present.
 
