@@ -199,4 +199,4 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
    
 2) Clean the *application.properties* file in the configuration server repo on GitHub after each adaptation.
 3) Sometimes the Knowledge container is not able to find correctly all the service. Just try to restart the knowledge container, and only after its start-up, relaunch all remaining managing containers.
-   This is a problem of the Discovery Client not fast enough to register or unregister services.
+   This is a problem of the Discovery Client not fast enough to register or unregister services. [SOLVED]
