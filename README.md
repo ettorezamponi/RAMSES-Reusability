@@ -9,6 +9,38 @@ Remember to clean the config-server on GitHub, after each adaptation, new weight
 
 PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SERVER!
 
+## Installation guide
+Together with the actual code of both RAMSES and SEFA, we also provide a set of ready-to-use docker scenarios. By following the next steps, you can set up and run both systems on the same machine. 
+
+To begin with, install [Docker](https://www.docker.com/) on your machine and run it. After the installation, we suggest to configure it with the following minimum requirements:
+- **CPU**: 8
+- **Memory**: 10GB
+- **Swap**: 1GB
+
+The whole Self-Adaptive System was developed, run and tested on a 2023 Apple MacBook Pro with the following specifications:
+- **SoC**: Apple M2 Pro (10-core CPU, 16-core GPU)
+- **RAM**: 16GB LPDDR4
+- **Storage**: 512GB on NVMe SSD
+- **OS**: macOS Sonoma 14.1.1
+- **IDE**: Intellij IDEA
+- **Docker** v24.0.6 (allocating 9 CPUs, 10GB Memory, 2GB Swap)
+
+The **Java** version used by the project is version `16.0.2`.
+
+The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration repository. You can do so by forking [our repository](https://github.com/ramses-sas/config-server). Check that the `application.properties` file does not include any load balancer weight. If so, simply delete those lines and push on your repository. Once you have created your configuration repository, create an environmental variable storing its URL by running the following command, after replacing `<YOUR_REPO_URL>` with the URL of the repository you just created:
+```
+$ export GITHUB_REPOSITORY_URL=<YOUR_REPO_URL>
+```
+The `GITHUB_REPOSITORY_URL` variable should look like `https://github.com/ramses-sas/config-server.git`
+
+Now, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You can do so by following [this guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+Once again, create an environmental variable storing your access token by running the following command, after replacing `<YOUR_TOKEN>` with the token you just created:
+```
+$ export GITHUB_OAUTH=<YOUR_TOKEN> 
+```
+The `GITHUB_OAUTH` variable should look like an alphanumeric string.
+
+
 * ## Scenario 1 - *handleAddInstanceOption*
 
   Simulating a crash or connection problem as a real case, we make one of the microservices unreachable by forcing its shutdown.
