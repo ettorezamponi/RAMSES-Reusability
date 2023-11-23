@@ -228,7 +228,7 @@ The `GITHUB_OAUTH` variable should look like an alphanumeric string.
    ```
    $ socat -d TCP-LISTEN:2375,range=0.0.0.0/0,reuseaddr,fork UNIX:/var/run/docker.sock
    ```
-If the path is not correct for the Docker configuration, follow this [forum question](https://forums.docker.com/t/is-a-missing-docker-sock-file-a-bug/134351) about.
+	If the path is not correct for the Docker configuration, follow this [forum question](https://forums.docker.com/t/is-a-missing-docker-sock-file-a-bug/134351) about.
    
 2) Clean the *application.properties* file in the configuration server repo on GitHub after each adaptation.
 3) Sometimes the Knowledge container is not able to find correctly all the service. Just try to restart the knowledge container, and only after its start-up, relaunch all remaining managing containers.
