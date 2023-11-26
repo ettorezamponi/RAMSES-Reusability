@@ -23,6 +23,7 @@ import jakarta.servlet.annotation.WebListener;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
  * Application Lifecycle Listener implementation class Registry Client Startup.
@@ -31,6 +32,7 @@ import org.slf4j.LoggerFactory;
  *
  */
 @WebListener
+@EnableEurekaClient
 public class RegistryStartup implements ServletContextListener {
 
   private static final Logger LOG = LoggerFactory.getLogger(RegistryStartup.class);
