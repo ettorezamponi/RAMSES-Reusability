@@ -17,13 +17,16 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.netflix.config.ConfigurationManager;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
+import org.apache.commons.logging.Log;
+import org.apache.shenyu.registry.api.config.RegisterConfig;
+import org.apache.shenyu.registry.api.entity.InstanceEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
  * Application Lifecycle Listener implementation class Registry Client Startup.
@@ -32,7 +35,6 @@ import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
  *
  */
 @WebListener
-@EnableEurekaClient
 public class RegistryStartup implements ServletContextListener {
 
   private static final Logger LOG = LoggerFactory.getLogger(RegistryStartup.class);
@@ -42,6 +44,8 @@ public class RegistryStartup implements ServletContextListener {
   private static final int HEARTBEAT_INTERVAL_MS = 2500;
 
   private static ScheduledExecutorService heartbeatScheduler;
+
+  EurekaRegistration eurekaRegistration = new EurekaRegistration();
 
   /**
    * Empty constructor.
@@ -74,5 +78,14 @@ public class RegistryStartup implements ServletContextListener {
       }
     }, HEARTBEAT_INTERVAL_MS, HEARTBEAT_INTERVAL_MS, TimeUnit.MILLISECONDS);
     LOG.info("Registry online");
+    LOG.info("----------------------------------------------------------------------------------------------------------");
+
+    eurekaRegistration.init(new RegisterConfig());
+    LOG.debug("***************************", ConfigurationManager.getConfigInstance());
+    //InstanceEntity instanceEntity = new InstanceEntity();
+    //eurekaRegistration.persistInstance(instanceEntity);
+    //eurekaRegistration.close();
+    //LOG.debug("Eureka.close EXECUTED");
+
   }
 }
