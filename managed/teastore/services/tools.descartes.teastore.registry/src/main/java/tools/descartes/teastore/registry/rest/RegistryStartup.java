@@ -27,7 +27,6 @@ import org.apache.shenyu.registry.api.config.RegisterConfig;
 import org.apache.shenyu.registry.api.entity.InstanceEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.cloud.netflix.eureka.EnableEurekaClient;
 
 /**
  * Application Lifecycle Listener implementation class Registry Client Startup.
