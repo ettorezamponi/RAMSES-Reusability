@@ -8,6 +8,9 @@ import com.netflix.appinfo.MyDataCenterInfo;
 import com.netflix.appinfo.MyDataCenterInstanceConfig;
 import com.netflix.appinfo.providers.EurekaConfigBasedInstanceInfoProvider;
 import com.netflix.config.ConfigurationManager;
+import com.netflix.config.DynamicConfiguration;
+import com.netflix.config.PollResult;
+import com.netflix.config.sources.URLConfigurationSource;
 import com.netflix.discovery.DefaultEurekaClientConfig;
 import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.EurekaClient;
@@ -26,7 +29,7 @@ import org.slf4j.LoggerFactory;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class EurekaRegistration {
+public class EurekaRegistration implements ShenyuInstanceRegisterRepository {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(EurekaRegistration.class);
 
@@ -34,13 +37,20 @@ public class EurekaRegistration {
 
     private EurekaHttpClient eurekaHttpClient;
 
-    //@Override
+    @Override
     public void init(final RegisterConfig config) {
         ConfigurationManager.getConfigInstance().setProperty("eureka.client.service-url.defaultZone", "http://sefa-eureka:58082/eureka/");
         ConfigurationManager.getConfigInstance().setProperty("eureka.serviceUrl.default", "http://sefa-eureka:58082/eureka/"); //config.getServerLists()
+        LOGGER.debug("****************** configuration setted");
         ApplicationInfoManager applicationInfoManager = initializeApplicationInfoManager(new MyDataCenterInstanceConfig());
+        LOGGER.debug("****************** application info manager setted");
         eurekaClient = new DiscoveryClient(applicationInfoManager, new DefaultEurekaClientConfig());
         eurekaHttpClient = new JerseyApplicationClient(new ApacheHttpClient4(), config.getServerLists(), null);
+        LOGGER.debug("****************** eureka client setted");
+
+        InstanceEntity instanceEntity = new InstanceEntity();
+        persistInstance(instanceEntity);
+        //close();
     }
 
     private ApplicationInfoManager initializeApplicationInfoManager(final EurekaInstanceConfig instanceConfig) {
@@ -48,7 +58,7 @@ public class EurekaRegistration {
         return new ApplicationInfoManager(instanceConfig, instanceInfo);
     }
 
-    //@Override
+    @Override
     public void persistInstance(final InstanceEntity instance) {
         EurekaHttpResponse<Void> register = eurekaHttpClient.register(generateInstanceInfo(instance));
         LOGGER.info("eureka client register success: {}", register.getEntity());
@@ -64,7 +74,7 @@ public class EurekaRegistration {
                 .build();
     }
 
-    //@Override
+    @Override
     public List<InstanceEntity> selectInstances(final String selectKey) {
         return getInstances(selectKey);
     }
@@ -78,7 +88,7 @@ public class EurekaRegistration {
                 ).collect(Collectors.toList());
     }
 
-    //@Override
+    @Override
     public void close() {
         eurekaClient.shutdown();
     }
