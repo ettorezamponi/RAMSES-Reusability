@@ -47,10 +47,6 @@ public class EurekaRegistration implements ShenyuInstanceRegisterRepository {
         eurekaClient = new DiscoveryClient(applicationInfoManager, new DefaultEurekaClientConfig());
         eurekaHttpClient = new JerseyApplicationClient(new ApacheHttpClient4(), config.getServerLists(), null);
         LOGGER.debug("****************** eureka client setted");
-
-        InstanceEntity instanceEntity = new InstanceEntity();
-        persistInstance(instanceEntity);
-        //close();
     }
 
     private ApplicationInfoManager initializeApplicationInfoManager(final EurekaInstanceConfig instanceConfig) {

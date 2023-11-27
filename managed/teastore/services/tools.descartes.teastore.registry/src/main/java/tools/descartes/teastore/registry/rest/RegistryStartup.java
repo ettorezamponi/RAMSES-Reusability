@@ -13,6 +13,8 @@
  */
 package tools.descartes.teastore.registry.rest;
 
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -80,12 +82,23 @@ public class RegistryStartup implements ServletContextListener {
     LOG.info("Registry online");
     LOG.info("----------------------------------------------------------------------------------------------------------");
 
-    eurekaRegistration.init(new RegisterConfig());
+
+    //eurekaRegistration.init(new RegisterConfig());
     //LOG.debug("***************************", ConfigurationManager.getConfigInstance());
     //InstanceEntity instanceEntity = new InstanceEntity();
     //eurekaRegistration.persistInstance(instanceEntity);
     //eurekaRegistration.close();
     //LOG.debug("Eureka.close EXECUTED");
+
+    Timer timer = new Timer();
+    TimerTask eurekaTimer = new TimerTask() {
+      @Override
+      public void run() {
+        eurekaRegistration.init(new RegisterConfig());
+        LOG.debug("****** TIMER EUREKA EXECUTED");
+      }
+    };
+    timer.schedule(eurekaTimer, 1000L * 5);
 
   }
 }

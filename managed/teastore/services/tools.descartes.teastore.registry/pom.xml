@@ -129,14 +129,13 @@
 	</dependencies>
 
 
-
 	<build>
 		<finalName>tools.descartes.teastore.registry</finalName>
 		<plugins>
 			<plugin>
 				<!-- Attach classes so that registryclient can import registry for testing. -->
 				<artifactId>maven-war-plugin</artifactId>
-				<version>3.3.1</version>
+				<version>3.4.0</version>
 				<configuration>
 					<attachClasses>true</attachClasses>
 					<classesClassifier>classes</classesClassifier>
