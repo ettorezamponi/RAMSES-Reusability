@@ -31,28 +31,28 @@ The **Java** version used by the project is version `16.0.2`.
 
 1. ### Install Docker
 
-    Docker Engine is required to launch all the microservices, follow this [link](https://www.docker.com/get-started/) to download and install it if you do not have 	it yet.
+	Docker Engine is required to launch all the microservices, follow this [link](https://www.docker.com/get-started/) to download and install it if you do not have 	it yet.
 
-2. ### Create the configuration repo
+2. ### Launch the socat command
+
+	Launch the port forwarding command through Socat (or similar) as explained [here](#Troubleshooting-and-Known-Issues).
+
+3. ### Create the configuration repo
 	The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration 	repository. You 	can do so by forking [our repository](https://github.com/ettorezamponi/config-server). Check that the `application.properties` file does not 	include any load balancer 		weight. If so, simply delete those lines and push on your repository.
 
 	Once you have created your configuration repository, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You 		can do so by following [this 	guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
-   	At this point, enter your configuration repo and access token into the "ready-to-use" [script](/bash_scripts/execute/SETUP_ICSE.sh)'s two initial variables:
+   	At this point, enter your configuration repo and access token into the [bash script](/bash_scripts/execute/SETUP_ICSE.sh) initial variables:
 
    	```
    	export GITHUB_REPOSITORY_URL = ...
 	export GITHUB_OAUTH = ...
-    	
-4. ### Launch the socat command
 
-	Launch the port forwarding command through Socat (or similar) as explained [here](#Troubleshooting-and-Known-Issues).
-
-5. ### Launch the script
+4. ### Execute the script
    
-   	Finally run the bash script to execute the "ready-to-use" system, [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh).
+   	Finally run the ready-to-use script, [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh).
    ```
-   sh bash_scripts/execute/SETUP_ICSE.sh
+   sh SETUP_ICSE.sh
    ```
 
 ## Scenarios
