@@ -3,8 +3,14 @@ PrintSuccess() { echo -e "\033[0;32m$1\033[0m"; }
 PrintWarn() { echo -e "\033[0;33m$1\033[0m"; }
 PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 
-export GITHUB_REPOSITORY_URL=https://github.com/ettorezamponi/config-server.git
-export GITHUB_OAUTH=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
+# MODIFY THESE TWO VARIABLES TO BE ABLE TO MANAGE THE CONFIG REPO
+export GITHUB_REPOSITORY_URL=
+export GITHUB_OAUTH=
+
+if [[("${GITHUB_OAUTH}" = "") || ("${GITHUB_REPOSITORY_URL}" = "")]]; then
+  PrintError "Env var GITHUB_OAUTH and GITHUB_REPOSITORY_URL must be set!"
+  exit 1
+fi
 
 PrintWarn "Desired architecture not specified or unknown. Supported values are 'arm64' and 'amd64'. Using 'arm64' as default option"
 ARCH="arm64"
