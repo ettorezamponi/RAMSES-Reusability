@@ -3,7 +3,7 @@ PrintSuccess() { echo -e "\033[0;32m$1\033[0m"; }
 PrintWarn() { echo -e "\033[0;33m$1\033[0m"; }
 PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 
-# MODIFY THESE TWO VARIABLES TO BE ABLE TO MANAGE THE CONFIG REPO
+# MODIFY THESE TWO VARIABLES WITH YOUR OWN CONFIG REPO
 export GITHUB_REPOSITORY_URL=
 export GITHUB_OAUTH=
 
