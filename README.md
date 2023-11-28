@@ -12,6 +12,8 @@ PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SER
 ## Installation guide
 Together with the actual code of both RAMSES and SEFA, we also provide a set of ready-to-use docker scenarios. By following the next steps, you can set up and run both systems on the same machine. 
 
+The bash script to execute the "ready-to-use" system is the [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh).
+
 To begin with, install [Docker](https://www.docker.com/) on your machine and run it. After the installation, we suggest to configure it with the following minimum requirements:
 - **CPU**: 8
 - **Memory**: 10GB
