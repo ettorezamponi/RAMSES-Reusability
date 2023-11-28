@@ -38,7 +38,7 @@ The **Java** version used by the project is version `16.0.2`.
 
 	Once you have created your configuration repository, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You 		can do so by following [this 	guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
-   	At this point, enter your configuration repo and access token into the script's two initial variables:
+   	At this point, enter your configuration repo and access token into the "ready-to-use" [script](/bash_scripts/execute/SETUP_ICSE.sh)'s two initial variables:
 
    	```
    	export GITHUB_REPOSITORY_URL = ...
@@ -50,7 +50,10 @@ The **Java** version used by the project is version `16.0.2`.
 
 5. ### Launch the script
    
-   	The bash script to execute the "ready-to-use" system is the [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh).
+   	Finally run the bash script to execute the "ready-to-use" system, [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh).
+   ```
+   sh bash_scripts/execute/SETUP_ICSE.sh
+   ```
 
 ## Scenarios
 
