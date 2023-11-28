@@ -4,8 +4,8 @@ PrintWarn() { echo -e "\033[0;33m$1\033[0m"; }
 PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 
 # MODIFY THESE TWO VARIABLES TO BE ABLE TO MANAGE THE CONFIG REPO
-export GITHUB_REPOSITORY_URL=
-export GITHUB_OAUTH=
+export GITHUB_REPOSITORY_URL=...
+export GITHUB_OAUTH=...
 
 if [[("${GITHUB_OAUTH}" = "") || ("${GITHUB_REPOSITORY_URL}" = "")]]; then
   PrintError "Env var GITHUB_OAUTH and GITHUB_REPOSITORY_URL must be set!"
