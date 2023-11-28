@@ -57,6 +57,8 @@ The **Java** version used by the project is version `16.0.2`.
 
 ## Scenarios
 
+In this chapter, four distinct test and development scenarios are outlined. Each scenario provides a unique context for evaluating and advancing the subject matter. The goal is to explore diverse situations, allowing for comprehensive testing and development considerations. The chapter delves into these scenarios to offer a nuanced understanding of the subject matter in various practical contexts, fostering a more robust approach to testing and development processes.
+
 * ### Scenario 1 - *handleAddInstanceOption*
 
   Simulating a crash or connection problem as a real case, we make one of the microservices unreachable by forcing its shutdown.
