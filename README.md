@@ -33,20 +33,17 @@ The **Java** version used by the project is version `16.0.2`.
 
     Docker Engine is required to launch all the microservices, follow this [link](https://www.docker.com/get-started/) to download and install it if you do not have 	it yet.
 
-3. ### Create the configuration repo
-	The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration 	repository. You can do so by forking [our repository](https://github.com/ettorezamponi/config-server). Check that the `application.properties` file does not 	include any load balancer weight. If so, simply delete those lines and push on your repository. Once you have created your configuration repository, create 	an environmental variable storing its URL by running the following command, after replacing `<YOUR_REPO_URL>` with the URL of the repository you just 		created:
-	```
-	$ export GITHUB_REPOSITORY_URL=<YOUR_REPO_URL>
-	```
-	The `GITHUB_REPOSITORY_URL` variable should look like `https://github.com/ramses-sas/config-server.git`
-	
-	Now, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You can do so by following [this 	guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
-	Once again, create an environmental variable storing your access token by running the following command, after replacing `<YOUR_TOKEN>` with the token you 	just created:
-	```
-	$ export GITHUB_OAUTH=<YOUR_TOKEN> 
-	```
-	The `GITHUB_OAUTH` variable should look like an alphanumeric string.
+2. ### Create the configuration repo
+	The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration 	repository. You 	can do so by forking [our repository](https://github.com/ettorezamponi/config-server). Check that the `application.properties` file does not 	include any load balancer 		weight. If so, simply delete those lines and push on your repository.
 
+	Once you have created your configuration repository, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You 		can do so by following [this 	guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+
+   	At this point, enter your configuration repo and access token into the script's two initial variables:
+
+   	```
+   	export GITHUB_REPOSITORY_URL = ...
+	export GITHUB_OAUTH = ...
+    	
 4. ### Launch the socat command
 
 	Launch the port forwarding command through Socat (or similar) as explained [here](#Troubleshooting-and-Known-Issues).
