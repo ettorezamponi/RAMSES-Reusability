@@ -7,12 +7,10 @@ In these scenarios, before each experiment is executed, the Managed System is fr
 
 Remember to clean the config-server on GitHub, after each adaptation, new weighted values for the adapted services are pushed into the application.properties file. Otherwise, when a new deployment of RAMSES is attempted, knowledge will find configuration incompatibilities and will not be able to be executed.
 
-PAY ATTENTION TO THE GITHUB ENV VAR TO BE ABLE TO PUSH ON THE CORRECT CONFIG SERVER!
+N.B. Pay attention to the github env var to be able to push on the correct config server!
 
-## Installation guide
+## Development Ambient
 Together with the actual code of both RAMSES and SEFA, we also provide a set of ready-to-use docker scenarios. By following the next steps, you can set up and run both systems on the same machine. 
-
-The bash script to execute the "ready-to-use" system is the [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh).
 
 To begin with, install [Docker](https://www.docker.com/) on your machine and run it. After the installation, we suggest to configure it with the following minimum requirements:
 - **CPU**: 8
@@ -29,23 +27,33 @@ The whole Self-Adaptive System was developed, run and tested on a 2023 Apple Mac
 
 The **Java** version used by the project is version `16.0.2`.
 
-The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration repository. You can do so by forking [our repository](https://github.com/ramses-sas/config-server). Check that the `application.properties` file does not include any load balancer weight. If so, simply delete those lines and push on your repository. Once you have created your configuration repository, create an environmental variable storing its URL by running the following command, after replacing `<YOUR_REPO_URL>` with the URL of the repository you just created:
-```
-$ export GITHUB_REPOSITORY_URL=<YOUR_REPO_URL>
-```
-The `GITHUB_REPOSITORY_URL` variable should look like `https://github.com/ramses-sas/config-server.git`
+## Installation guide
 
-Now, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You can do so by following [this guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
-Once again, create an environmental variable storing your access token by running the following command, after replacing `<YOUR_TOKEN>` with the token you just created:
-```
-$ export GITHUB_OAUTH=<YOUR_TOKEN> 
-```
-The `GITHUB_OAUTH` variable should look like an alphanumeric string.
+1. ### Create the configuration repo
+	The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration 	repository. You can do so by forking [our repository](https://github.com/ramses-sas/config-server). Check that the `application.properties` file does not 	include any load balancer weight. If so, simply delete those lines and push on your repository. Once you have created your configuration repository, create 	an environmental variable storing its URL by running the following command, after replacing `<YOUR_REPO_URL>` with the URL of the repository you just 		created:
+	```
+	$ export GITHUB_REPOSITORY_URL=<YOUR_REPO_URL>
+	```
+	The `GITHUB_REPOSITORY_URL` variable should look like `https://github.com/ramses-sas/config-server.git`
+	
+	Now, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You can do so by following [this 	guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+	Once again, create an environmental variable storing your access token by running the following command, after replacing `<YOUR_TOKEN>` with the token you 	just created:
+	```
+	$ export GITHUB_OAUTH=<YOUR_TOKEN> 
+	```
+	The `GITHUB_OAUTH` variable should look like an alphanumeric string.
 
-Finally launch the port forwarding command through Socat (or similar) as explained [here](#Troubleshooting-and-Known-Issues).
+2. ### Launch the socat command
 
+	Launch the port forwarding command through Socat (or similar) as explained [here](#Troubleshooting-and-Known-Issues).
 
-* ## Scenario 1 - *handleAddInstanceOption*
+3. ### Launch the script
+   
+   	The bash script to execute the "ready-to-use" system is the [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh).
+
+## Scenarios
+
+* ### Scenario 1 - *handleAddInstanceOption*
 
   Simulating a crash or connection problem as a real case, we make one of the microservices unreachable by forcing its shutdown.
   The managing will realise this situation, and will start (forced option) a new instance of the same microservice in order to resume correct execution of the system as soon as possible.
@@ -79,7 +87,7 @@ Finally launch the port forwarding command through Socat (or similar) as explain
   This adaptation depends also on the randomness of the simulation, so it is not certain that it always happens in every simulation.
 
 
-* ## Scenario 2 - *handleChangeImplementationOption*
+* ### Scenario 2 - *handleChangeImplementationOption*
 
   This represents the most complete scenario in which the managing recognises a better implementation, stops the old container and starts the new one with higher benefits.
 
@@ -131,7 +139,7 @@ Finally launch the port forwarding command through Socat (or similar) as explain
   
   ![alt](./documents/plotScenari/scenario2-2.png)
 
-* ## Scenario 3 - *handleChangeLBWeightsOption*
+* ### Scenario 3 - *handleChangeLBWeightsOption*
 
   This particular action is performed whenever there is an adaptation, in particular whenever a new service is allocated in aid of the previous ones already in place.
   In particular, the *change load balancer weight* takes care of distributing the workload between the different instances of the same service.
@@ -169,7 +177,7 @@ Finally launch the port forwarding command through Socat (or similar) as explain
   ![alt](./documents/plotScenari/scenario3.png)
 
 
-* ## Scenario 4 - *handleShutdownInstanceOption*
+* ### Scenario 4 - *handleShutdownInstanceOption*
 
   In this last scenario we see the last of the adaptation options that RAMSES is able to implement, namely *handleShutdownInstanceOption*.
 
