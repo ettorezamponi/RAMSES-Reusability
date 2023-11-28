@@ -121,7 +121,7 @@ echo; PrintWarn "Do you wanna simulate a scenario ?!"; echo
 echo; PrintWarn "1:addIstance \ 2:changeImplementation \ 3:changeLBWeights \ 4:shutdownInstance"; echo
 
 
-echo "Insert the number of the scenario you want or press anything else to exit:"
+echo "Insert the number of the scenario you want or press "RETURN" to exit:"
 read userInput
 
 if [[ $userInput =~ ^[1-4]$ ]]; then
