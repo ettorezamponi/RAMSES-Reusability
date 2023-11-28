@@ -116,15 +116,15 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.netflix.eureka</groupId>
-			<artifactId>eureka-client</artifactId>
-			<version>1.10.18</version>
-		</dependency>
-
-		<dependency>
 			<groupId>com.netflix.archaius</groupId>
 			<artifactId>archaius-core</artifactId>
 			<version>0.7.7</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.netflix.eureka</groupId>
+			<artifactId>eureka-client</artifactId>
+			<version>1.10.18</version>
 		</dependency>
 	</dependencies>
 

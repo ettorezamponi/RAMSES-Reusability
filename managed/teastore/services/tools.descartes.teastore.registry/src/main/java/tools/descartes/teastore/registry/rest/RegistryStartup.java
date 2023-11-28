@@ -15,10 +15,15 @@ package tools.descartes.teastore.registry.rest;
 
 import java.util.Timer;
 import java.util.TimerTask;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.netflix.appinfo.ApplicationInfoManager;
+import com.netflix.appinfo.InstanceInfo;
+import com.netflix.appinfo.MyDataCenterInstanceConfig;
+import com.netflix.appinfo.providers.EurekaConfigBasedInstanceInfoProvider;
 import com.netflix.config.ConfigurationManager;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -63,6 +68,7 @@ public class RegistryStartup implements ServletContextListener {
    */
   public void contextDestroyed(ServletContextEvent arg0) {
     heartbeatScheduler.shutdownNow();
+    eurekaRegistration.close();
     LOG.info("Shutdown registry");
   }
 
@@ -94,8 +100,13 @@ public class RegistryStartup implements ServletContextListener {
     TimerTask eurekaTimer = new TimerTask() {
       @Override
       public void run() {
-        eurekaRegistration.init(new RegisterConfig());
-        LOG.debug("****** TIMER EUREKA EXECUTED");
+
+        //eurekaRegistration.setServerProperties();
+        //eurekaRegistration.init(new RegisterConfig());
+        //eurekaRegistration.persistInstance(new InstanceEntity());
+
+        //LOG.debug("*****CONF MANAGER: ", ConfigurationManager.getConfigInstance().toString());
+
       }
     };
     timer.schedule(eurekaTimer, 1000L * 5);
