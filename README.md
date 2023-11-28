@@ -40,6 +40,8 @@ $ export GITHUB_OAUTH=<YOUR_TOKEN>
 ```
 The `GITHUB_OAUTH` variable should look like an alphanumeric string.
 
+Finally launch the port forwarding command through Socat (or similar) as explained [here](#Troubleshooting-and-Known-Issues).
+
 
 * ## Scenario 1 - *handleAddInstanceOption*
 
