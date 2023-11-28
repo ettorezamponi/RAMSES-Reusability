@@ -29,7 +29,11 @@ The **Java** version used by the project is version `16.0.2`.
 
 ## Installation guide
 
-1. ### Create the configuration repo
+1. ### Install Docker
+
+   	Install Docker Engine to launch all the microservices, follow this [link](https://www.docker.com/get-started/) to download and install it if you do not have 	it yet.
+
+3. ### Create the configuration repo
 	The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration 	repository. You can do so by forking [our repository](https://github.com/ramses-sas/config-server). Check that the `application.properties` file does not 	include any load balancer weight. If so, simply delete those lines and push on your repository. Once you have created your configuration repository, create 	an environmental variable storing its URL by running the following command, after replacing `<YOUR_REPO_URL>` with the URL of the repository you just 		created:
 	```
 	$ export GITHUB_REPOSITORY_URL=<YOUR_REPO_URL>
@@ -43,11 +47,11 @@ The **Java** version used by the project is version `16.0.2`.
 	```
 	The `GITHUB_OAUTH` variable should look like an alphanumeric string.
 
-2. ### Launch the socat command
+4. ### Launch the socat command
 
 	Launch the port forwarding command through Socat (or similar) as explained [here](#Troubleshooting-and-Known-Issues).
 
-3. ### Launch the script
+5. ### Launch the script
    
    	The bash script to execute the "ready-to-use" system is the [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh).
 
