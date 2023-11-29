@@ -17,6 +17,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
+import com.smattme.eureka.client.wrapper.EurekaClientService;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
@@ -32,6 +33,8 @@ import org.slf4j.LoggerFactory;
  */
 @WebListener
 public class RegistryStartup implements ServletContextListener {
+
+  EurekaClientService eurekaClientService = new EurekaClientService();
 
   private static final Logger LOG = LoggerFactory.getLogger(RegistryStartup.class);
   /**
@@ -72,5 +75,26 @@ public class RegistryStartup implements ServletContextListener {
       }
     }, HEARTBEAT_INTERVAL_MS, HEARTBEAT_INTERVAL_MS, TimeUnit.MILLISECONDS);
     LOG.info("Registry online");
+    LOG.info("----------------------------------------------------------------------------------------------------------");
+
+    try {
+      Thread.sleep(6000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
+
+
+    // Avvia un nuovo thread dopo l'attesa
+    Thread myThread = new Thread(() -> {
+      try {
+        // Codice del thread
+        LOG.info("--------------------------------------------- \n Il thread è stato avviato dopo 6 secondi.");
+        eurekaClientService.registerInstance();
+      } catch (Exception e) {
+        e.printStackTrace();
+      }
+    });
+
+    myThread.start();
   }
 }
