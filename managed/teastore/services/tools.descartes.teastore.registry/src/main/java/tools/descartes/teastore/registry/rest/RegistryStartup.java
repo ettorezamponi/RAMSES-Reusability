@@ -58,7 +58,8 @@ public class RegistryStartup implements ServletContextListener {
    */
   public void contextDestroyed(ServletContextEvent arg0) {
     heartbeatScheduler.shutdownNow();
-    LOG.info("Shutdown registry");
+    eurekaClientService.deRegister();
+    LOG.info("Shutdown registry and eureka client");
   }
 
   /**
@@ -88,13 +89,21 @@ public class RegistryStartup implements ServletContextListener {
     Thread myThread = new Thread(() -> {
       try {
         // Codice del thread
-        LOG.info("--------------------------------------------- \n Il thread è stato avviato dopo 6 secondi.");
+        LOG.info("Thread started after 6 seconds");
         eurekaClientService.registerInstance();
+
       } catch (Exception e) {
         e.printStackTrace();
       }
     });
 
     myThread.start();
+
+    /*try {
+      myThread.join();
+      LOG.info("------------------THREAD TERMINATED");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }*/
   }
 }
