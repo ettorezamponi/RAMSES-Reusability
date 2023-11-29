@@ -92,6 +92,15 @@
 			<scope>provided</scope>
 		</dependency>
 
+		<!-- NEWWWW -->
+
+		<!-- Illegal reflective access by com.thoughtworks.xstream.core.util.Fields -->
+		<dependency>
+			<groupId>com.thoughtworks.xstream</groupId>
+			<artifactId>xstream</artifactId>
+			<version>1.4.20</version>
+		</dependency>
+
 		<dependency>
 			<groupId>com.smattme</groupId>
 			<artifactId>eureka-client-wrapper</artifactId>
