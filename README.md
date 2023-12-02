@@ -58,12 +58,16 @@ The **Java** version used by the project is version `16.0.2`.
 
 ## Scenarios
 
-In this chapter, four distinct test and development scenarios are outlined. Each scenario provides a unique context for evaluating and advancing the subject matter. The goal is to explore diverse situations, allowing for comprehensive testing and development considerations. The chapter delves into these scenarios to offer a nuanced understanding of the subject matter in various practical contexts, fostering a more robust approach to testing and development processes.
+In this chapter, four distinct test and development scenarios are outlined. Each scenario provides a unique context for evaluating and advancing the subject matter. The goal is to explore different situations, allowing for comprehensive testing and development considerations. The chapter delves into these scenarios to offer a nuanced understanding of the subject matter in various practical contexts, fostering a more robust approach to testing and development processes.
+
+For simulation it's intended a script that automatically executes a complete order on the managed system, i.e., places an order, completes it with data, proceeds with payment for thefood delivery. This executes an order every 500 milliseconds, the total duration and other special configurations are explained in each of the following scenarios.
 
 * ### Scenario 1 - *handleAddInstanceOption*
 
-  Simulating a crash or connection problem as a real case, we make one of the microservices unreachable by forcing its shutdown.
-  The managing will realise this situation, and will start (forced option) a new instance of the same microservice in order to resume correct execution of the system as soon as possible.
+  This represents the real case in which one of the services crashes suddenly, or perhaps due to a momentary disconnection, and thus becomes unreachable. 
+  To simulate this scenario it makes one of the microservices unreachable by forcing its shutdown.
+  
+  The managing will realise this situation, and will start (forced option) a new instance of the same service in order to resume the correct execution of the entire system as soon as possible.
 
   To do this, a *failure injection* implemented in the simulation (lasting 5 minutes) [rest-client](./managed-system/rest-client/src/main/java/sefa/restclient/domain/FailureInjectionService.java) code is used.
   In this case, it was decided to crash the 'sefa-restaurant-service' 180 seconds after the start modifying the following variables inside the [application.properties](./managed-system/rest-client/src/main/resources/application.properties).
@@ -73,26 +77,32 @@ In this chapter, four distinct test and development scenarios are outlined. Each
   ID_OF_INSTANCE_TO_FAIL = restaurant-service@sefa-restaurant-service:58085
   ```
 
-  Through the *plan* logs we see that a service is unreachable and the addition of a new service will be forced:
+  After the crash, through the *plan*'s logs, it is seen that the service is unreachable, and a new one is forced to be added.
   ```
   Instances: restaurant-service@sefa-restaurant-service:58085
   Instance failed or unreachable
   
   FORCED - Add a new instance. Service: RESTAURANT-SERVICE No instances available
   ```
+  The following graphs represent the trend of availability and average response time for the service under analysis.
+  The red line reflects the limit to be maintained for availability, and the limit not to be exceeded for average response time.
 
-  The blue line represents the *restaurant service* before the adaptation, and the green line the after, i.e. after forcibly adding the new instance.
+  The blue line represents the performance of the service before adaptation, i.e. at the beginning of the simulation when no changes were made to our managed.
+  The green one, instead, represent the performance after the adaptation, in this particular case, after that the managing added the new instance of *restaurant service*.
+
+  In the graph we do not see a drop below the limit despite the forced shutdown of the service, this happens because each point that makes up the graph is an average of several orders executed by the simulation script.
+  Thus the moment when the instance is unavailable is balanced and reestablished by subsequent orders. 
+  For the availability, it creates a plot lower the precedent trend but still satisfactory. In fact, after the adjustment, the plot trend will tend to improve and re-establish on the initial values.
+
   ![alt](./documents/plotScenari/scenario1.png)
 
-  Let it be clear that this can be done with all instances of SEFA and after any time.
+  Let it be clear that this situation can be replicated making unreachable all instances of SEFA and after any time.
 
-  In addition, the *ordering service* tends to have a response time of approximately 1000-1200 ms, so during the simulation we can also see the addition (non-forced option) of an instance of the *ordering service* in order to observe the threshold.
+  In addition, depending on the randomness of the simulation, sometimes the *ordering service* tends to have a response time of approximately 1000-1200 ms, so during the simulation we can also see the addition (non-forced option) of an instance of the *ordering service* in order to observe the threshold.
   ```
   ORDERING-SERVICE: Selected option AddInstanceOption for AverageResponseTime with benefit 1.507561964285497.
   Details: Goal: AverageResponseTime - Add a new instance. Service: ORDERING-SERVICE The service avg response time specification is not satisfied
   ```
-  This adaptation depends also on the randomness of the simulation, so it is not certain that it always happens in every simulation.
-
 
 * ### Scenario 2 - *handleChangeImplementationOption*
 
