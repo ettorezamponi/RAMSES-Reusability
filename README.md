@@ -36,6 +36,11 @@ The **Java** version used by the project is version `16.0.2`.
 2. ### Launch the socat command
 
 	Launch the port forwarding command through Socat (or similar) as explained [here](#Troubleshooting-and-Known-Issues).
+    
+    To be able to launch this command.
+    ```
+   $ socat -d TCP-LISTEN:2375,range=0.0.0.0/0,reuseaddr,fork UNIX:/var/run/docker.sock
+   ``` 
 
 3. ### Create the configuration repo
 	The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration 	repository. You 	can do so by forking [our repository](https://github.com/ettorezamponi/config-server). Check that the `application.properties` file does not 	include any load balancer 		weight. If so, simply delete those lines and push on your repository.
@@ -108,7 +113,8 @@ For simulation it's intended a script that automatically executes a complete ord
 
   This represents the most complete scenario in which the managing recognises a better implementation, stops the old container and starts the new one with higher benefits.
 
-  At the beginning of the simulation, a very low Average Response Time threshold (150) is set such that it cannot be met by the *delivery service* instance, through the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) of the simulation:
+  To simulate the real case where a service is unable to meet certain specifications or begins to perform unsatisfactorily, at the beginning of the simulation, a very low Average Response Time threshold (150) is set such that it cannot be met by the *delivery service* instance, through the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) of the simulation.
+  After 120 seconds the threshold will be reset to a normal value, so that the newly instantiated service will be able to meet it. 
   ```
   CHANGE_THRESHOLD=Y
   MAX_ART_THRESHOLD=150
@@ -116,14 +122,14 @@ For simulation it's intended a script that automatically executes a complete ord
   CHANGE_THRESHOLD_DURATION=120
   DEFAULT_THRESHOLD=500
   ```
-  
-  As we can see in the following plot where the green lines (*delivery-proxy-1-service*) is over the threshold:
 
+  In fact, the trend of the average response time does not meet the set limit by being above the threshold represented by the red line.
+  
   ![alt](./documents/plotScenari/scenario2-1.png)
 
-  The managing notices the problem, and change the implementation seeing that *delivery-proxy-2-service* has much better values than the 1, which is not working well.
+  The managing notices the problem, and changes the implementation seeing that *delivery-proxy-2-service* has much better values than the first one, which is not working well.
   
-  These are the configuration of the three different potential instances of the *delivery-proxy-service* inside the configuration file [system_architecture.json](./managing-system/knowledge/architecture_sla/sefa/system_architecture.json):
+  These are the configuration of the three different potential instances of the *delivery-proxy-service* settled in the configuration file [system_architecture.json](./managing-system/knowledge/architecture_sla/sefa/system_architecture.json):
   ```
   "service_id":"DELIVERY-PROXY-SERVICE",
 	"implementations" : [
@@ -147,7 +153,7 @@ For simulation it's intended a script that automatically executes a complete ord
 		}
 	]
   ```
-  The simulation lasts 5 minutes and the plan's logs will show the correct change implementation adaptation executed:
+  The simulation lasts 5 minutes and the plan's logs will show the correct change implementation adaptation executed.
   ```
   DELIVERY-PROXY-SERVICE: Selected option ChangeImplementationOption for AverageResponseTime with benefit 1.0760645103065511. 
   Details: Goal: AverageResponseTime - Change DELIVERY-PROXY-SERVICE implementation from delivery-proxy-1-service to delivery-proxy-2-service. Changing implementation
@@ -155,6 +161,8 @@ For simulation it's intended a script that automatically executes a complete ord
   At this point the correct Average Response Time threshold will be restored to a normal value (in other cases, RAMSES will continue to allocate container to respect the unfeasible threshold) and the new implementation could satisfy it.
   
   ![alt](./documents/plotScenari/scenario2-2.png)
+
+  In the proposed graphs we do not see differences in trends before and after adjustment (as in the previous scenario) because when a new threshold is set, the graph is recalculated from scratch with the new data available. In other words, you get two graphs each with its threshold, and you only notice the trend of the service under examination and the threshold set during that time period.
 
 * ### Scenario 3 - *handleChangeLBWeightsOption*
 
