@@ -10,7 +10,7 @@ MSc final thesis project by Ettore Zamponi.
 
 The TeaStore is a micro-service reference and test application developed by the Descartes Research Group at the University of Würzburg. The TeaStore emulates a basic web store for automatically generated, fictitious teas, tea accessories and supplies. As it is primarily a test application, it features UI elements for database generation and service resetting in addition to the store itself.
 
-This branch is about adapting [TeaStore](https://github.com/DescartesResearch/TeaStore/tree/master) in RAMSES.
+This branch is about adapting [TeaStore](https://github.com/DescartesResearch/TeaStore/tree/master) in RAMSES with classical *@EurekaClient* annotation mechanism.
 
 ---
 
