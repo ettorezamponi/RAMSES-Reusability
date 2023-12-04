@@ -167,9 +167,9 @@ For simulation it's intended a script that automatically executes a complete ord
 * ### Scenario 3 - *handleChangeLBWeightsOption*
 
   This particular action is performed whenever there is an adaptation, in particular whenever a new service is allocated in aid of the previous ones already in place.
-  In particular, the *change load balancer weight* takes care of distributing the workload between the different instances of the same service.
+  In particular, the *change load balancer weight* takes care of distributing the workload between different instances of the same service.
 
-  Managing and managed were deployed normally. During the simulation (10 minutes) the Average Response Time of the ordering-service is raised twice, after 90 seconds and after 180 seconds from the start of the simulation, settings its value in the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) file.
+  In this scenario, managing and managed were deployed normally. During the simulation (10 minutes) the Average Response Time of the ordering-service is raised twice, after 90 seconds and after 180 seconds from the start of the simulation, settings its value in the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) file.
   ```
   FAKE_SLOW_ORDERING=Y
   
@@ -182,8 +182,16 @@ For simulation it's intended a script that automatically executes a complete ord
   FAKE_SLOW_ORDERING_2_DURATION=60
   ```
 
-  By doing so, the managing will start another *ordering service* in addition to the existing ones, and the load weight balancing function will take care of splitting the work and, very importantly, save any new weight changes in the GitHub repository used by the configuration server.
-  As seen below, the result in the configuration repo and in the *plan* service logs:
+  By doing so, only one instance will not be able to maintain the average response time within the threshold, consequentially the managing will start another *ordering service* in addition to the existing ones. The *load weight balancing* function will take care of splitting the work and, very importantly, save any new weight changes in the GitHub repository used by the configuration server.
+
+  The plot of the *ordering service* show the benefits of this adaptation: initially instantiating a new service when the first one is slowed and splitting the workload between the old and the new instance, indeed the blue peak represents the first slowdown in the average response time;
+  and then, changing the load balancing weights when only the first instance is slowed again entrusting more work to the instance that performs better, in fact the second one is not slowed down. 
+
+  This graph represents the entire progress of the simulation, changing color to green after the second adaptation has been carried out.
+
+  ![alt](./documents/plotScenari/scenario3.png)
+
+  As seen below, the result of the second adaptation could be seen in the configuration repo and in the *plan* service logs.
 
   ```
   loadbalancing.ordering-service.sefa-ordering-service-35359_35359.weight=0.8
@@ -195,12 +203,7 @@ For simulation it's intended a script that automatically executes a complete ord
   At least one instance satisfies the avg Response time specifications
   ```
 
-  Configurations are saved each time they are changed, so that each time the managing is restarted, the changes are retrieved during the knowledge start-up. It is therefore important to clean up the configuration repo each time you want to re-deploy a clean managing system.
-
-  The plot of the *ordering service* show the benefits of, firstly instantiate a new service when the first one is slowed (first peak), and then changing the load balancing weights when the first instance is slowed again entrusting more work to the instance that performs better (second peak, color green):
-
-  ![alt](./documents/plotScenari/scenario3.png)
-
+  Configurations are saved every time they are changed, so that each time the managing is restarted, the changes are retrieved during the knowledge start-up. It is therefore important to clean up the configuration repo each time you want to re-deploy a clean managing system.
 
 * ### Scenario 4 - *handleShutdownInstanceOption*
 
