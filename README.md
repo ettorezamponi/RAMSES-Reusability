@@ -132,26 +132,26 @@ For simulation it's intended a script that automatically executes a complete ord
   These are the configuration of the three different potential instances of the *delivery-proxy-service* settled in the configuration file [system_architecture.json](./managing-system/knowledge/architecture_sla/sefa/system_architecture.json):
   ```
   "service_id":"DELIVERY-PROXY-SERVICE",
-	"implementations" : [
-		{
-			"implementation_id" : "delivery-proxy-1-service",
-			"implementation_trust" : 1,
-			"preference" : 0.2,
-			"instance_load_shutdown_threshold" : 0.4
-		},
-		{
-			"implementation_id" : "delivery-proxy-2-service",
-			"implementation_trust" : 9,
-			"preference" : 0.6,
-			"instance_load_shutdown_threshold" : 0.4
-		},
-		{
-			"implementation_id" : "delivery-proxy-3-service",
-			"implementation_trust" : 7,
-			"preference" : 0.2,
-			"instance_load_shutdown_threshold" : 0.4
-		}
-	]
+    "implementations" : [
+        {
+            "implementation_id" : "delivery-proxy-1-service",
+            "implementation_trust" : 1,
+            "preference" : 0.2,
+            "instance_load_shutdown_threshold" : 0.4
+        },
+        {
+            "implementation_id" : "delivery-proxy-2-service",
+            "implementation_trust" : 9,
+            "preference" : 0.6,
+            "instance_load_shutdown_threshold" : 0.4
+        },
+        {
+            "implementation_id" : "delivery-proxy-3-service",
+            "implementation_trust" : 7,
+            "preference" : 0.2,
+            "instance_load_shutdown_threshold" : 0.4
+        }
+    ]
   ```
   The simulation lasts 5 minutes and the plan's logs will show the correct change implementation adaptation executed.
   ```
@@ -209,7 +209,10 @@ For simulation it's intended a script that automatically executes a complete ord
 
   In this last scenario we see the last of the adaptation options that RAMSES is able to implement, namely *handleShutdownInstanceOption*.
 
-  We create a simulation (lasting 10 minutes) where after 90 seconds from the start we deliberately slow down the *ordering service* for one minute (after which it will be reset to normal values), this will cause the managing to start a new instance to help our slowed down service. Always through the [application.properties](./managed-system/rest-client/src/main/resources/application.properties).
+  We create a simulation (lasting 10 minutes) where after 90 seconds from the start we deliberately slow down the *ordering service* for one minute (after which it will be reset to normal values). 
+  This will cause the managing to start a new instance to help our slowed down service. 
+  
+  As the previous scenarios, through the [application.properties](./managed-system/rest-client/src/main/resources/application.properties).
 
   ```
   FAKE_SLOW_ORDERING=Y
@@ -218,21 +221,21 @@ For simulation it's intended a script that automatically executes a complete ord
   FAKE_SLOW_ORDERING_1_DURATION=60
   ```
 
-  After this, the workload will be handled by two instances that will divide the workload in half by setting weights (as seen in the previous scenario) resulting in the configuration repo as follows:
+  After this, the workload will be handled by two instances that will divide the workload in half by setting weights (as seen in the previous scenario) resulting in the configuration repo as follows.
   
   ```
   loadbalancing.ordering-service.sefa-ordering-service-42315_42315.weight=0.5
   loadbalancing.ordering-service.sefa-ordering-service_58086.weight=0.5
   ```
 
-  At this point, after 260 seconds from the beginning, it causes one of the two instances to decrease its availability of the 28%, so that the average availability of the entire ordering-service straddles the threshold.
+  At this point, after 260 seconds from the beginning, we lower the availability of one of the two instances of the 28%, so that the average availability of the entire ordering-service straddles the threshold.
   In this way, the managing will have to take note of the unfollowed threshold and act accordingly, in other words add another instances or change the load balancing weights again.
   
-  The managing, probably would change the load balancing weights assigning more work to the instance that performs best and has not been slowed down.
+  The managing, probably would change the load balancing weights assigning more work to the instance that performs better and has not been slowed down.
 
-  After 400 seconds it will do the same thing again by slowing down the same instance as before (the one with a lower workload).
+  After 400 seconds we will perform the same slowdown again to the same instance as before (the one with a lower workload).
   
-  Another times through the same properties file:
+  Through the same properties file.
 
   ```
   FAKE_EXCEPTION_ORDERING=Y
@@ -255,7 +258,11 @@ For simulation it's intended a script that automatically executes a complete ord
    loadbalancing.ordering-service.sefa-ordering-service-42315_42315.weight=1.0
    ```
   
-  The availability plot of the *ordering service* clearly shows the benefits of weight changes occurring twice, when the availability goes under the threshold:
+  The availability plot of the *ordering service* clearly shows the benefits of weight changes occurring twice, when the availability goes under the threshold.
+  
+  The first drop after 60 seconds is when a new instance of the *ordering service* is added. 
+  The first major drop below the threshold is the first time the service is slowed down in order to change the workload weights.
+  And finally, when the process changes color to green, it happens following the last adaptation in which the managing proceeded to turn off the repeatedly slowed down instance. Consequently the performance of the service will tend to recover and have an upward curve.
   ![alt](./documents/plotScenari/scenario4.png)
 
   If the availability is very close or straddles the threshold, it is more likely that the weights will be changed, otherwise, if there is a large gap between the actual availability and the threshold, a new instance will be added to help the two already present.
