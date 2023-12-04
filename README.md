@@ -162,7 +162,7 @@ For simulation it's intended a script that automatically executes a complete ord
   
   ![alt](./documents/plotScenari/scenario2-2.png)
 
-  In the proposed graphs we do not see differences in trends before and after adjustment (as in the previous scenario) because when a new threshold is set, the graph is recalculated from scratch with the new data available. In other words, you get two graphs each with its threshold, and you only notice the trend of the service under examination and the threshold set during that time period.
+  In the proposed graphs we do not see differences in trends before and after adjustment (as in the previous scenario changing colors) because when a new threshold is set, the graph is recalculated from scratch with the new data available. In other words, you get two graphs each with its threshold, and you only notice the trend of the service under examination and the threshold set during that time period.
 
 * ### Scenario 3 - *handleChangeLBWeightsOption*
 
