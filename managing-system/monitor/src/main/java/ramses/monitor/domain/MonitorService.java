@@ -77,7 +77,7 @@ public class MonitorService {
                     Thread thread = new Thread( () -> {
                         try {
                             List<InstanceMetricsSnapshot> instancesSnapshots = probeClient.takeSnapshot(serviceId);
-                            //log.debug("INSTANCE SNAPSHOT: " +instancesSnapshots);
+                            //log.debug("INSTANCE SNAPSHOT: "+instancesSnapshots);
                             if (instancesSnapshots == null) {
                                 invalidIteration.set(true);
                             } else {

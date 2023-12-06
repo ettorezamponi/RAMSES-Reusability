@@ -10,6 +10,7 @@ import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
 import io.micrometer.core.instrument.binder.jvm.JvmThreadMetrics;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
+import io.prometheus.client.exporter.common.TextFormat;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import org.slf4j.Logger;
@@ -24,7 +25,7 @@ import java.util.Map;
 @Path("/metrics")
 public class MetricsExporter {
     private static final Logger LOG = LoggerFactory.getLogger(RegistryStartup.class);
-    MeterRegistry registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+    PrometheusMeterRegistry registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
 
 
     @GET
@@ -34,6 +35,9 @@ public class MetricsExporter {
     }
 
     private void exporter(MeterRegistry meterRegistry) {
+
+        String x = registry.scrape(TextFormat.CONTENT_TYPE_OPENMETRICS_100);
+        LOG.info("REGISTRY SCRAPE = "+x);
 
         new ClassLoaderMetrics().bindTo(meterRegistry);
         new JvmMemoryMetrics().bindTo(meterRegistry);
@@ -72,4 +76,5 @@ public class MetricsExporter {
         }
         return tagMap;
     }
+
 }
