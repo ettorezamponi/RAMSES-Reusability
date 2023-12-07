@@ -39,7 +39,7 @@ The **Java** version used by the project is version `16.0.2`.
     
     To be able to launch this command.
     ```
-   $ socat -d TCP-LISTEN:2375,range=0.0.0.0/0,reuseaddr,fork UNIX:/var/run/docker.sock
+   $ socat -d TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock
    ``` 
 
 3. ### Create the configuration repo
