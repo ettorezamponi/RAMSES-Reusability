@@ -272,7 +272,8 @@ For simulation it's intended a script that automatically executes a complete ord
 # Troubleshooting and Known Issues
 
 1) A known issue on macOS involves the Actuator component, that sometimes cannot directly contact the Docker interface to run or stop containers. This results in the Instances Manager container to fail its booting process.
-	To solve this issue, install [Homebrew](https://brew.sh) if you do not have it yet, update its packages with the following command.
+	
+ 	To solve this issue, install [Homebrew](https://brew.sh) if you do not have it yet, update its packages with the following command.
 
 	```
 	brew upgrade
