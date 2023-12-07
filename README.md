@@ -276,19 +276,20 @@ For simulation it's intended a script that automatically executes a complete ord
  	To solve this issue, install [Homebrew](https://brew.sh) if you do not have it yet, update its packages with the following command.
 
 	```
-	brew upgrade
+	$ brew upgrade
 	```
 	
 	Install the latest versione of [Socat](http://www.dest-unreach.org/socat/) (1.8.0.0) with this command.
 	
 	```
-	brew install socat
+	$ brew install socat
 	```
 	
 	Run this command so that socat is used to expose the Docker daemon on a specific TCP port (in this 	case, port 2375) so that requests can be handled via Docker's local UNIX socket.
-	   ```
+
+	   
 	   $ socat -d TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock
-	   ```
+
 	
 	If the path is not correct for the Docker configuration, follow this [forum question](https://forums.docker.com/t/is-a-missing-docker-sock-file-a-bug/134351) about.
    
