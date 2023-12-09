@@ -14,6 +14,7 @@ import jakarta.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// TODO make it reachable through "/actuator/prometheus" and not tools.descartes.ecc
 @Path("/prometheus")
 public class MetricsExporter {
     private static final Logger LOG = LoggerFactory.getLogger(RegistryStartup.class);
@@ -25,6 +26,7 @@ public class MetricsExporter {
         new JvmGcMetrics().bindTo(prometheusRegistry);
         new ProcessorMetrics().bindTo(prometheusRegistry);
         new JvmThreadMetrics().bindTo(prometheusRegistry);
+
     }
 
 
