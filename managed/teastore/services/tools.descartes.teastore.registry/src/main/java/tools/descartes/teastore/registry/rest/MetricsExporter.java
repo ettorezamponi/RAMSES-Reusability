@@ -8,11 +8,14 @@ import io.micrometer.core.instrument.binder.jvm.ClassLoaderMetrics;
 import io.micrometer.core.instrument.binder.jvm.JvmGcMetrics;
 import io.micrometer.core.instrument.binder.jvm.JvmMemoryMetrics;
 import io.micrometer.core.instrument.binder.jvm.JvmThreadMetrics;
+import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 import io.prometheus.client.exporter.common.TextFormat;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -25,56 +28,23 @@ import java.util.Map;
 @Path("/metrics")
 public class MetricsExporter {
     private static final Logger LOG = LoggerFactory.getLogger(RegistryStartup.class);
-    PrometheusMeterRegistry registry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+    PrometheusMeterRegistry prometheusRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+
+    public void MicrometerResource() {
+        new ClassLoaderMetrics().bindTo(prometheusRegistry);
+        new JvmMemoryMetrics().bindTo(prometheusRegistry);
+        new JvmGcMetrics().bindTo(prometheusRegistry);
+        new ProcessorMetrics().bindTo(prometheusRegistry);
+        new JvmThreadMetrics().bindTo(prometheusRegistry);
+    }
 
 
+    @SuppressWarnings("checkstyle:designforextension")
     @GET
+    @Produces(MediaType.TEXT_PLAIN)
     public String getMetrics() {
-        exporter(registry);
-        return convertMetricsToJson(registry);
-    }
-
-    private void exporter(MeterRegistry meterRegistry) {
-
-        String x = registry.scrape(TextFormat.CONTENT_TYPE_OPENMETRICS_100);
-        LOG.info("REGISTRY SCRAPE = "+x);
-
-        new ClassLoaderMetrics().bindTo(meterRegistry);
-        new JvmMemoryMetrics().bindTo(meterRegistry);
-        new JvmGcMetrics().bindTo(meterRegistry);
-        new JvmThreadMetrics().bindTo(meterRegistry);
-
-        LOG.info("*** PROMETHEUS METRICS ***");
-
-        //meterRegistry.close();
-    }
-
-    private static String convertMetricsToJson(MeterRegistry meterRegistry) {
-        List<Map<String, Object>> metricsList = new ArrayList<>();
-
-        for (Meter meter : meterRegistry.getMeters()) {
-            Map<String, Object> metricInfo = new HashMap<>();
-            metricInfo.put("name", meter.getId().getName());
-            //metricInfo.put("type", meter.getId().getType());
-            //metricInfo.put("tags", convertTagsToJson(meter.getId().getTags()));
-            metricInfo.put("measurements", meter.measure());
-            metricsList.add(metricInfo);
-        }
-
-        try {
-            return new ObjectMapper().writeValueAsString(metricsList);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return "{Error while writing values as string}";
-        }
-    }
-
-    private static Map<String, String> convertTagsToJson(Iterable<Tag> tags) {
-        Map<String, String> tagMap = new HashMap<>();
-        for (Tag tag : tags) {
-            tagMap.put(tag.getKey(), tag.getValue());
-        }
-        return tagMap;
+        MicrometerResource();
+        return prometheusRegistry.scrape();
     }
 
 }
