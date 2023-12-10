@@ -13,6 +13,9 @@
  */
 package tools.descartes.teastore.registry.rest;
 
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
@@ -43,6 +46,8 @@ public class RegistryStartup implements ServletContextListener {
   private static final int HEARTBEAT_INTERVAL_MS = 2500;
 
   private static ScheduledExecutorService heartbeatScheduler;
+
+  EurekaRegistration eurekaRegistration = new EurekaRegistration();
 
   /**
    * Empty constructor.
@@ -78,6 +83,7 @@ public class RegistryStartup implements ServletContextListener {
     LOG.info("Registry online");
     LOG.info("----------------------------------------------------------------------------------------------------------");
 
+    
     try {
       Thread.sleep(6000);
     } catch (InterruptedException e) {
@@ -105,5 +111,6 @@ public class RegistryStartup implements ServletContextListener {
     } catch (Exception e) {
       e.printStackTrace();
     }*/
+
   }
 }
