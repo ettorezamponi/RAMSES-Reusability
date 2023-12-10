@@ -20,18 +20,11 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import com.netflix.appinfo.ApplicationInfoManager;
-import com.netflix.appinfo.InstanceInfo;
-import com.netflix.appinfo.MyDataCenterInstanceConfig;
-import com.netflix.appinfo.providers.EurekaConfigBasedInstanceInfoProvider;
-import com.netflix.config.ConfigurationManager;
+import com.smattme.eureka.client.wrapper.EurekaClientService;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
-import org.apache.commons.logging.Log;
-import org.apache.shenyu.registry.api.config.RegisterConfig;
-import org.apache.shenyu.registry.api.entity.InstanceEntity;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -43,6 +36,8 @@ import org.slf4j.LoggerFactory;
  */
 @WebListener
 public class RegistryStartup implements ServletContextListener {
+
+  EurekaClientService eurekaClientService = new EurekaClientService();
 
   private static final Logger LOG = LoggerFactory.getLogger(RegistryStartup.class);
   /**
@@ -68,8 +63,8 @@ public class RegistryStartup implements ServletContextListener {
    */
   public void contextDestroyed(ServletContextEvent arg0) {
     heartbeatScheduler.shutdownNow();
-    eurekaRegistration.close();
-    LOG.info("Shutdown registry");
+    eurekaClientService.deRegister();
+    LOG.info("Shutdown registry and eureka client");
   }
 
   /**
@@ -88,28 +83,34 @@ public class RegistryStartup implements ServletContextListener {
     LOG.info("Registry online");
     LOG.info("----------------------------------------------------------------------------------------------------------");
 
+    
+    try {
+      Thread.sleep(6000);
+    } catch (InterruptedException e) {
+      e.printStackTrace();
+    }
 
-    //eurekaRegistration.init(new RegisterConfig());
-    //LOG.debug("***************************", ConfigurationManager.getConfigInstance());
-    //InstanceEntity instanceEntity = new InstanceEntity();
-    //eurekaRegistration.persistInstance(instanceEntity);
-    //eurekaRegistration.close();
-    //LOG.debug("Eureka.close EXECUTED");
 
-    Timer timer = new Timer();
-    TimerTask eurekaTimer = new TimerTask() {
-      @Override
-      public void run() {
+    // Avvia un nuovo thread dopo l'attesa
+    Thread myThread = new Thread(() -> {
+      try {
+        // Codice del thread
+        LOG.info("Thread started after 6 seconds");
+        eurekaClientService.registerInstance();
 
-        //eurekaRegistration.setServerProperties();
-        //eurekaRegistration.init(new RegisterConfig());
-        //eurekaRegistration.persistInstance(new InstanceEntity());
-
-        //LOG.debug("*****CONF MANAGER: ", ConfigurationManager.getConfigInstance().toString());
-
+      } catch (Exception e) {
+        e.printStackTrace();
       }
-    };
-    timer.schedule(eurekaTimer, 1000L * 5);
+    });
+
+    myThread.start();
+
+    /*try {
+      myThread.join();
+      LOG.info("------------------THREAD TERMINATED");
+    } catch (Exception e) {
+      e.printStackTrace();
+    }*/
 
   }
 }

@@ -4,6 +4,7 @@
   <welcome-file-list>
     <welcome-file>index</welcome-file>
   </welcome-file-list>
+
   <servlet>
     <servlet-name>registryrest</servlet-name>
     <servlet-class>
@@ -19,5 +20,6 @@
     <servlet-name>registryrest</servlet-name>
     <url-pattern>/rest/*</url-pattern>
   </servlet-mapping>
+
   <absolute-ordering/>
 </web-app>

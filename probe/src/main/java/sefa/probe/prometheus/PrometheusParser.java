@@ -45,7 +45,7 @@ public class PrometheusParser {
             log.info("PROPERTY NAME: " + propertyName);
             //MetricType metricType = elem.getType(); //e.g. GAUGE
             metricFamily.getMetrics().forEach(metric -> { //e.g., one metric is the http_server_requests_seconds for the endpoint X
-                log.info("METRIC: " + metric);
+                //log.info("METRIC: " + metric); --> "METRIC: prometheus.types.Gauge@8663d4a"
                 Map<String, String> labels = metric.getLabels();
                 switch (propertyName) {
                     case PrometheusMetrics.HTTP_REQUESTS_TIME ->
@@ -74,7 +74,9 @@ public class PrometheusParser {
                             instanceMetricsSnapshot.addCircuitBreakerSlowCallCount(labels.get("name"), labels.get("kind"), (int) ((Gauge) metric).getValue());
                     case PrometheusMetrics.CB_FAILURE_RATE ->
                             instanceMetricsSnapshot.addCircuitBreakerFailureRate(labels.get("name"), ((Gauge) metric).getValue());
-                    default -> { }
+                    default -> {
+                        log.warn("PropertyName not founded for the metric: ", metric.getLabels());
+                    }
                 }
             });
         } );
