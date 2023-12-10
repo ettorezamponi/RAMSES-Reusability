@@ -47,7 +47,6 @@ public class RegistryStartup implements ServletContextListener {
 
   private static ScheduledExecutorService heartbeatScheduler;
 
-  EurekaRegistration eurekaRegistration = new EurekaRegistration();
 
   /**
    * Empty constructor.
@@ -81,17 +80,15 @@ public class RegistryStartup implements ServletContextListener {
       }
     }, HEARTBEAT_INTERVAL_MS, HEARTBEAT_INTERVAL_MS, TimeUnit.MILLISECONDS);
     LOG.info("Registry online");
-    LOG.info("----------------------------------------------------------------------------------------------------------");
+    LOG.info("-------------------------------------------------------------------------------------------------");
 
     
     try {
-      Thread.sleep(6000);
+      Thread.sleep(5000);
     } catch (InterruptedException e) {
       e.printStackTrace();
     }
 
-
-    // Avvia un nuovo thread dopo l'attesa
     Thread myThread = new Thread(() -> {
       try {
         // Codice del thread
@@ -104,13 +101,5 @@ public class RegistryStartup implements ServletContextListener {
     });
 
     myThread.start();
-
-    /*try {
-      myThread.join();
-      LOG.info("------------------THREAD TERMINATED");
-    } catch (Exception e) {
-      e.printStackTrace();
-    }*/
-
   }
 }
