@@ -67,7 +67,7 @@ In this chapter, four distinct test and development scenarios are outlined. Each
 
 For simulation it's intended a script that automatically executes a complete order on the managed system, i.e., places an order, completes it with data, proceeds with payment for thefood delivery. This executes an order every 500 milliseconds, the total duration and other special configurations are explained in each of the following scenarios.
 
-* ### Scenario 1 - *handleAddInstanceOption*
+* ### Scenario 1 - *UNREACHABLE SERVICE*
 
   This represents the real case in which one of the services crashes suddenly, or perhaps due to a momentary disconnection, and thus becomes unreachable. 
   To simulate this scenario it makes one of the microservices unreachable by forcing its shutdown.
@@ -109,7 +109,7 @@ For simulation it's intended a script that automatically executes a complete ord
   Details: Goal: AverageResponseTime - Add a new instance. Service: ORDERING-SERVICE The service avg response time specification is not satisfied
   ```
 
-* ### Scenario 2 - *handleChangeImplementationOption*
+* ### Scenario 2 - *CHANGING IMPLEMENTATION*
 
   This represents the most complete scenario in which the managing recognises a better implementation, stops the old container and starts the new one with higher benefits.
 
@@ -164,12 +164,13 @@ For simulation it's intended a script that automatically executes a complete ord
 
   In the proposed graphs we do not see differences in trends before and after adjustment (as in the previous scenario changing colors) because when a new threshold is set, the graph is recalculated from scratch with the new data available. In other words, you get two graphs each with its threshold, and you only notice the trend of the service under examination and the threshold set during that time period.
 
-* ### Scenario 3 - *handleChangeLBWeightsOption*
+* ### Scenario 3 - *LOAD BALANCING CONFIGURATION*
 
   This particular action is performed whenever there is an adaptation, in particular whenever a new service is allocated in aid of the previous ones already in place.
   In particular, the *change load balancer weight* takes care of distributing the workload between different instances of the same service.
 
   In this scenario, managing and managed were deployed normally. During the simulation (10 minutes) the Average Response Time of the ordering-service is raised twice, after 90 seconds and after 180 seconds from the start of the simulation, settings its value in the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) file.
+  
   ```
   FAKE_SLOW_ORDERING=Y
   
@@ -205,7 +206,7 @@ For simulation it's intended a script that automatically executes a complete ord
 
   Configurations are saved every time they are changed, so that each time the managing is restarted, the changes are retrieved during the knowledge start-up. It is therefore important to clean up the configuration repo each time you want to re-deploy a clean managing system.
 
-* ### Scenario 4 - *handleShutdownInstanceOption*
+* ### Scenario 4 - *HANDLE SLOW SERVICE*
 
   In this last scenario we see the last of the adaptation options that RAMSES is able to implement, namely *handleShutdownInstanceOption*.
 
