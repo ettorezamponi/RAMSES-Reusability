@@ -19,9 +19,9 @@ docker run -P --name sefa-eureka -d --network teastore sefa-eureka
 sleep 5
 
 #MOVIE INFO SERVICE
-docker run -P --name movie-service -d --network teastore movie
+#docker run -P --name movie-service -d --network teastore movie
 sleep 2
 
 #REGISTRY TEASTORE
-docker run -P --name registry -d --network teastore registry
+docker run -p 8080:8080 --name registry -d --network teastore registry
 sleep 2

@@ -117,24 +117,12 @@
 			<version>1.4.20</version>
 		</dependency>
 
-    <!-- EUREKA -->
 		<dependency>
-			<groupId>com.smattme</groupId>
-			<artifactId>eureka-client-wrapper</artifactId>
-			<version>1.0.0</version>
+			<groupId>tools.ramses</groupId>
+			<artifactId>module</artifactId>
+			<version>1.0</version>
 		</dependency>
 
-    <!-- PROMETHEUS -->
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-core</artifactId>
-			<version>1.12.0</version>
-		</dependency>
-		<dependency>
-			<groupId>io.micrometer</groupId>
-			<artifactId>micrometer-registry-prometheus</artifactId>
-			<version>1.12.0</version>
-		</dependency>
 
 	</dependencies>
 

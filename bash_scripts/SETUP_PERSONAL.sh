@@ -14,7 +14,7 @@ fi
 
 PrintWarn "Desired architecture not specified or unknown. Supported values are 'arm64' and 'amd64'. Using 'arm64' as default option"
 ARCH="arm64"
-PrintWarn "Running script with selceted architecture: ${ARCH}"
+PrintWarn "Running script with selected architecture: ${ARCH}"
 sleep 3
 
 

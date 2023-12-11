@@ -13,14 +13,12 @@
  */
 package tools.descartes.teastore.registry.rest;
 
-import java.util.Timer;
-import java.util.TimerTask;
-import java.util.concurrent.CompletableFuture;
+
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
+import tools.ezamponi.EurekaClientHelper;
 
-import com.smattme.eureka.client.wrapper.EurekaClientService;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
@@ -37,7 +35,6 @@ import org.slf4j.LoggerFactory;
 @WebListener
 public class RegistryStartup implements ServletContextListener {
 
-  EurekaClientService eurekaClientService = new EurekaClientService();
 
   private static final Logger LOG = LoggerFactory.getLogger(RegistryStartup.class);
   /**
@@ -62,7 +59,8 @@ public class RegistryStartup implements ServletContextListener {
    */
   public void contextDestroyed(ServletContextEvent arg0) {
     heartbeatScheduler.shutdownNow();
-    eurekaClientService.deRegister();
+
+    EurekaClientHelper.deRegister();
     LOG.info("Shutdown registry and eureka client");
   }
 
@@ -82,24 +80,7 @@ public class RegistryStartup implements ServletContextListener {
     LOG.info("Registry online");
     LOG.info("-------------------------------------------------------------------------------------------------");
 
-    
-    try {
-      Thread.sleep(5000);
-    } catch (InterruptedException e) {
-      e.printStackTrace();
-    }
+    EurekaClientHelper.register();
 
-    Thread myThread = new Thread(() -> {
-      try {
-        // Codice del thread
-        LOG.info("Thread started after 6 seconds");
-        eurekaClientService.registerInstance();
-
-      } catch (Exception e) {
-        e.printStackTrace();
-      }
-    });
-
-    myThread.start();
   }
 }

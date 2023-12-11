@@ -14,7 +14,6 @@
       <param-name>jersey.config.server.provider.packages</param-name>
       <param-value>tools.descartes.teastore.registry.rest</param-value>
     </init-param>
-    <load-on-startup>1</load-on-startup>
   </servlet>
   <servlet-mapping>
     <servlet-name>registryrest</servlet-name>
