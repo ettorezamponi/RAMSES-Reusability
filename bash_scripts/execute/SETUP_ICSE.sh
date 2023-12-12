@@ -114,8 +114,8 @@ done
 
 PrintSuccess "Pulling ramses-plan"
 sleep 2
-docker pull giamburrasca/ramses-plan:amd64
-docker run -P --name ramses-plan -d --network ramses-sas-net giamburrasca/ramses-plan:amd64
+docker pull giamburrasca/ramses-plan:arm64
+docker run -P --name ramses-plan -d --network ramses-sas-net giamburrasca/ramses-plan:arm64
 
 
 echo; PrintSuccess "DONE!"; echo
