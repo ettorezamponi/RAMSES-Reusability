@@ -19,11 +19,15 @@ public abstract class BaseLoadBalancer implements ReactorServiceInstanceLoadBala
         this.serviceInstanceListSupplierProvider = serviceInstanceListSupplierProvider;
     }
 
+    // Utilizza l'istanza di ServiceInstanceListSupplier per ottenere un elenco di istanze di servizio,
+    // quindi utilizza il metodo processInstanceResponse per elaborare la risposta.
+    // L'utilizzo di Mono suggerisce che la gestione delle chiamate è asincrona, possibilmente per adattarsi a un modello di programmazione reattiva
     @Override
     public Mono<Response<ServiceInstance>> choose(Request request) {
         return serviceInstanceListSupplierProvider.get(request).next().map(this::processInstanceResponse);
     }
 
+    // metodo astratto che deve essere implementato nelle sottoclassi di BaseLoadBalancer
     protected abstract Response<ServiceInstance> processInstanceResponse(List<ServiceInstance> serviceInstances);
 
     public String getServiceId() {
