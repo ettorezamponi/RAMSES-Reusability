@@ -26,8 +26,8 @@ import java.util.TimerTask;
 public class RequestsGenerator {
     @Value("${ADAPT}")
     private int adapt;
-    //@Value("${TRIAL_DURATION_MINUTES}")
-    private long trialDurationMinutes = 10;
+    @Value("${TRIAL_DURATION_MINUTES}")
+    private long trialDurationMinutes;
     @Value("${spring.task.execution.pool.core-size}")
     private int poolSize;
 

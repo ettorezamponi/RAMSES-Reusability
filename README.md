@@ -27,6 +27,8 @@ The whole Self-Adaptive System was developed, run and tested on a 2023 Apple Mac
 
 The **Java** version used by the project is version `16.0.2`.
 
+Currently, docker images are available for `arm64` and `amd64` architectures, but due to port forwarding limitations and the use of socat software (or similar), it has not been possible to run the entire project on linux or windows machines.
+
 ## Installation guide
 
 1. ### Install Docker
@@ -63,9 +65,13 @@ The **Java** version used by the project is version `16.0.2`.
 
 ## Scenarios
 
-In this chapter, four distinct test and development scenarios are outlined. Each scenario provides a unique context for evaluating and advancing the subject matter. The goal is to explore different situations, allowing for comprehensive testing and development considerations. The chapter delves into these scenarios to offer a nuanced understanding of the subject matter in various practical contexts, fostering a more robust approach to testing and development processes.
+In this chapter, four distinct test and development scenarios are outlined. Each scenario provides a unique context for evaluating and advancing the subject matter. 
 
-For simulation it's intended a script that automatically executes a complete order on the managed system, i.e., places an order, completes it with data, proceeds with payment for thefood delivery. This executes an order every 500 milliseconds, the total duration and other special configurations are explained in each of the following scenarios.
+The goal is to demonstrate and show all the adaptations that managing is capable of, allowing for comprehensive testing and development considerations. The chapter delves into these scenarios to offer a nuanced understanding of the subject matter in various practical contexts, fostering a more robust approach to testing and development processes.
+
+For simulation it's intended a script that automatically executes several interactions on the managed system, i.e., places an order, completes it with data, proceeds with payment for the food delivery. The simultion executes an order every 500 milliseconds, the total duration and other special configurations are explained in each of the following scenarios.
+
+In order to understand how a simulation is carried out or to be able to create an ad hoc test scenario, a [furthered guide](#scenario-creation) is proposed.
 
 * ### Scenario 1 - *UNREACHABLE SERVICE*
 
@@ -270,7 +276,28 @@ For simulation it's intended a script that automatically executes a complete ord
 
   In this same simulation, it happened to see both a change of weights as desired and the addition of a new instance. This is due to the random part of the simulation, fake purchases and various mathematical calculations which even in a real scenario cannot be controlled.
 
-# Troubleshooting and Known Issues
+## Scenario creation
+
+It is provided together with the managed system, a [REST client](./managed-system/rest-client) which simulates a large number of orders on the test food delivery service, used as a managed.
+
+This service initially activates the monitor and adaptations, both of which are deactivated by default as soon as managing is started.
+Then the actual interactions with the managed will begin, every approximately 0.5 seconds, the REST client proceeds to complete an entire order on the managed on which it is acting.
+
+In addition to the simple simulation, a number of [methods](./managed-system/rest-client/src/main/java/sefa/restclient/domain) are also offered that can modify and alter the behaviour of individual services in order to cause failures or slowdowns, in order to see how the managed is able to react.
+Possibilities include making a service fail and shut down, simply slowing it down for a certain amount of time, or changing the thresholds to be met for an individual service.
+All of these settings are to be managed via the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) file of the REST client.
+Within these configurations, each method can be activated via a boolean, as well as set which service to fail or after how many seconds to slow down a given instance.
+See how they were modified within the scenarios to create customised test solutions.
+
+Once we have our rest client set up properly, clean the GitHub configuration repo and run the new REST client in this way.
+
+1) Build the client with the command `gradle build` inside the REST client folder.
+2) Create de Docker image with the command `docker build -t restclient .` inside always the same root folder.
+3) Launch the setup [script](./bash_scripts/execute/SETUP_ICSE.sh) following the initial installation [guide](#installation-guide) without any scenarios.
+4) After all launch your new REST client through the command `docker run -P -d --network ramses-sas-net restclient`.
+
+
+## Troubleshooting and Known Issues
 
 1) A known issue on macOS involves the Actuator component, that sometimes cannot directly contact the Docker interface to run or stop containers. This results in the Instances Manager container to fail its booting process.
 	
