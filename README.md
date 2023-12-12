@@ -64,7 +64,8 @@ Currently, docker images are available for `arm64` and `amd64` architectures, bu
    ```
    
 ## Dasboard
-Once the application has been started, the only service we can interact with during the run is the RAMSES dashboard.
+Once the application has been started, the only service we can interact with during the run is the RAMSES dashboard, by clicking the localhost address (in Docker, ports of the image called *ramses-dashboard*).
+
 It is structured in three macro sections, focusing on managed system, adaptations and configurations.
 
 The first section of the dashboard, focuses on the Managed System, on its runtime architecture, and in particular on the data that RAMSES collected or computed about it.
