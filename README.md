@@ -62,6 +62,24 @@ Currently, docker images are available for `arm64` and `amd64` architectures, bu
    ```
    sh SETUP_ICSE.sh
    ```
+   
+## Dasboard
+Once the application has been started, the only service we can interact with during the run is the RAMSES dashboard.
+It is structured in three macro sections, focusing on managed system, adaptations and configurations.
+
+The first section of the dashboard, focuses on the Managed System, on its runtime architecture, and in particular on the data that RAMSES collected or computed about it.
+For both the service and its instances the current value and the history of values of each QoS indicator are shown. Moreover, in the case of the instances, also the latest Metrics Snapshot is displayed.
+
+![alt](./documents/images/dashboard.png)
+
+The second section of the dashboard shows the latest three adaptation options applied for each managed service, if any. Additionally, it shows the current phase of the loop.
+
+![alt](./documents/images/dashboard2.png)
+
+The third section allows the admin of the system to change the configuration parameters of the Monitor Component (i.e., the Monitor Scheduling Period) and of the Analyse Component (i.e., the Metrics Window Size, the Analysis Window Size, the QoS Satisfaction Rate, the failure rate and the unreachable rate). 
+It also allows to stop the MAPE-K loop, starting from the next iteration, or to simply stop RAMSES to perform adaptation, using it to simply monitor the Managed System.
+
+![alt](./documents/images/dashboard3.png)
 
 ## Scenarios
 
@@ -73,7 +91,7 @@ For simulation it's intended a script that automatically executes several intera
 
 In order to understand how a simulation is carried out or to be able to create an ad hoc test scenario, a [furthered guide](#scenario-creation) is proposed.
 
-* ### Scenario 1 - *UNREACHABLE SERVICE*
+* ### Scenario 1 - *SERVICE UNAVAILABLE*
 
   This represents the real case in which one of the services crashes suddenly, or perhaps due to a momentary disconnection, and thus becomes unreachable. 
   To simulate this scenario it makes one of the microservices unreachable by forcing its shutdown.
