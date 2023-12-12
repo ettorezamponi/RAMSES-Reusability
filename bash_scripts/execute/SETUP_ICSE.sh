@@ -102,7 +102,7 @@ docker pull giamburrasca/ramses-knowledge:$ARCH
 docker run -P --name ramses-knowledge -d --network ramses-sas-net giamburrasca/ramses-knowledge:$ARCH
 sleep 10
 
-declare -a ramsesarr=("ramses-analyse" "ramses-plan" "ramses-execute" "ramses-monitor" "ramses-dashboard")
+declare -a ramsesarr=("ramses-analyse" "ramses-execute" "ramses-monitor" "ramses-dashboard")
 for i in "${ramsesarr[@]}"
 do
    PrintSuccess "Pulling $i"
@@ -111,6 +111,11 @@ do
    echo
    sleep 2
 done
+
+PrintSuccess "Pulling ramses-plan"
+sleep 2
+docker pull giamburrasca/ramses-plan:amd64
+docker run -P --name ramses-plan -d --network ramses-sas-net giamburrasca/ramses-plan:amd64
 
 
 echo; PrintSuccess "DONE!"; echo
