@@ -23,7 +23,6 @@ ARCHIVE/*
 
 # Package Files #
 !*/*/*/gradle-wrapper.jar
-**/*.jar
 **/*.war
 **/*.nar
 **/*.ear
