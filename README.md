@@ -8,10 +8,11 @@ MSc final thesis project by Ettore Zamponi.
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
 ## Things to do before execute the code
 
-1) build with gradle the microservices inside the folder [libs](./libs)
+1) build with gradle the microservices inside the folder [libs](./libs) and [services-restapi](./managed-system/services-restapi).
 2) copy the jar in a new folder where the dependency request them
 3) * [config-manager](./actuators/config-manager) requires _config-parser.jar_
    * [managed-system](./managed-system) requires _config-parser.jar_ and _load-balancer.jar_
+   * [rest-client](./managed-system/rest-client) requires _services-restapi.jar_
    * [managing-system](./managing-system) requires _config-parser.jar_
    * [probe](./probe) requires _config-parser.jar_ and _prometheus-scraper.jar_
    * [simple-managed-system](./simple-managed-system) requires _config-parser.jar_ and _load-balancer.jar_
