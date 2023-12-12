@@ -318,28 +318,49 @@ Once we have our rest client set up properly, clean the GitHub configuration rep
 
 ## Troubleshooting and Known Issues
 
-1) A known issue on macOS involves the Actuator component, that sometimes cannot directly contact the Docker interface to run or stop containers. This results in the Instances Manager container to fail its booting process.
+### Portforwarding
+A known issue on macOS involves the Actuator component, that sometimes cannot directly contact the Docker interface to run or stop containers. This results in the Instances Manager container to fail its booting process.
 	
- 	To solve this issue, install [Homebrew](https://brew.sh) if you do not have it yet, update its packages with the following command.
+To solve this issue, install [Homebrew](https://brew.sh) if you do not have it yet, update its packages with the following command.
 
-	```
-	$ brew upgrade
-	```
-	
-	Install the latest versione of [Socat](http://www.dest-unreach.org/socat/) (1.8.0.0) with this command.
-	
-	```
-	$ brew install socat
-	```
-	
-	Run this command so that socat is used to expose the Docker daemon on a specific TCP port (in this 	case, port 2375) so that requests can be handled via Docker's local UNIX socket.
+```
+$ brew upgrade
+```
 
-	   
-	   $ socat -d TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock
+Install the latest versione of [Socat](http://www.dest-unreach.org/socat/) (1.8.0.0) with this command.
 
-	
-	If the path is not correct for the Docker configuration, follow this [forum question](https://forums.docker.com/t/is-a-missing-docker-sock-file-a-bug/134351) about.
+```
+$ brew install socat
+```
+
+Run this command so that socat is used to expose the Docker daemon on a specific TCP port (in this 	case, port 2375) so that requests can be handled via Docker's local UNIX socket.
+
+```
+$ socat -d TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock
+```
+
+If the path is not correct for the Docker configuration, follow this [forum question](https://forums.docker.com/t/is-a-missing-docker-sock-file-a-bug/134351) about.
    
-3) Clean the *application.properties* file in the configuration server repo on GitHub after each adaptation.
-4) Sometimes the Knowledge container is not able to find correctly all the service. Just try to restart the knowledge container, and only after its start-up, relaunch all remaining managing containers.
-   This is a problem of the Discovery Client not fast enough to register or unregister services. [SOLVED]
+### Configuration Repo
+Clean the *application.properties* file in the configuration server repo on GitHub after each adaptation.
+
+### Jar Dependencies
+It is necessary to provide the jar files of certain libraries in order to correctly import all the dependencies that each individual class needs.
+In order to do that, build with gradle the microservices inside the folder [libs](./libs) and [services-restapi](./managed-system/services-restapi).
+
+Create a new folder inside the following directories with the required jar files (see the image below as example).
+
+* [config-manager](./actuators/config-manager) requires _config-parser.jar_
+* [managed-system](./managed-system) requires _config-parser.jar_ and _load-balancer.jar_
+* [rest-client](./managed-system/rest-client) requires _services-restapi.jar_
+* [managing-system](./managing-system) requires _config-parser.jar_
+* [probe](./probe) requires _config-parser.jar_ and _prometheus-scraper.jar_
+* [simple-managed-system](./simple-managed-system) requires _config-parser.jar_ and _load-balancer.jar_
+
+![alt](./documents/images/jarexample.png)
+
+Once copied all in the correct directories, reload all gradle projects (if not recognized, link each gradle project through the _build.gradle_ file in each of them).
+
+### Knowledge Init
+Sometimes the Knowledge container is not able to find correctly all the service. Just try to restart the knowledge container, and only after its start-up, relaunch all remaining managing containers.
+This is a problem of the Discovery Client not fast enough to register or unregister services. [SOLVED]
