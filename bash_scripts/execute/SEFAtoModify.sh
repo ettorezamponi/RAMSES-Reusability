@@ -40,15 +40,15 @@ echo
 ##### LOAD GENERATOR ####
 #if $LOADGEN; then
 #  PrintSuccess "Setting up Load Generator"
-#  docker pull sbi98/sefa-load-generator:$ARCH
-#  docker run -P --name sefa-load-generator -d --network ramses-sas-net sbi98/sefa-load-generator:$ARCH
+#  docker pull giamburrasca/sefa-load-generator:$ARCH
+#  docker run -P --name sefa-load-generator -d --network ramses-sas-net giamburrasca/sefa-load-generator:$ARCH
 #  exit 0
 #fi
 
 ##### MYSQL #####
 PrintSuccess "Setting up MySQL Server"
-docker pull sbi98/mysql:$ARCH
-docker run -P --name mysql -d --network ramses-sas-net sbi98/mysql:$ARCH
+docker pull giamburrasca/mysql:$ARCH
+docker run -P --name mysql -d --network ramses-sas-net giamburrasca/mysql:$ARCH
 echo
 sleep 2
 
@@ -56,17 +56,17 @@ sleep 2
 echo; PrintSuccess "Setting up the Managed System, SEFA!"; echo
 
 PrintSuccess "Setting up Netflix Eureka Server"
-docker pull sbi98/sefa-eureka:$ARCH
-docker run -P --name sefa-eureka -d --network ramses-sas-net sbi98/sefa-eureka:$ARCH
+docker pull giamburrasca/sefa-eureka:$ARCH
+docker run -P --name sefa-eureka -d --network ramses-sas-net giamburrasca/sefa-eureka:$ARCH
 echo
 sleep 2
 
 PrintSuccess "Setting up Spring Config Server"
-#docker pull sbi98/sefa-configserver:$ARCH
+#docker pull giamburrasca/sefa-configserver:$ARCH
 #docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net config-server
 #PERSONALIZED CONFIG SERVER
-docker pull giamburrasca/sefa-configserver:v1.0
-docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-configserver:v1.0
+docker pull giamburrasca/sefa-configserver:$ARCH
+docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-configserver:$ARCH
 echo
 sleep 8
 
@@ -80,10 +80,10 @@ declare -a arr=("sefa-restaurant-service"
 for i in "${arr[@]}"
 do
    PrintSuccess "Setting up $i"
-   docker pull sbi98/$i:$ARCH
-   docker run -P --name $i -d --network ramses-sas-net sbi98/$i:$ARCH
-#   docker image tag sbi98/$i:$ARCH $i
-#   docker rmi sbi98/$i:$ARCH
+   docker pull giamburrasca/$i:$ARCH
+   docker run -P --name $i -d --network ramses-sas-net giamburrasca/$i:$ARCH
+#   docker image tag giamburrasca/$i:$ARCH $i
+#   docker rmi giamburrasca/$i:$ARCH
    echo
    sleep 1
 done
@@ -96,9 +96,9 @@ declare -a extra=("sefa-payment-proxy-2-service"
 for i in "${extra[@]}"
 do
    PrintSuccess "Pulling $i"
-   docker pull sbi98/$i:$ARCH
-#   docker image tag sbi98/$i:$ARCH $i
-#   docker rmi sbi98/$i:$ARCH
+   docker pull giamburrasca/$i:$ARCH
+#   docker image tag giamburrasca/$i:$ARCH $i
+#   docker rmi giamburrasca/$i:$ARCH
    echo
    sleep 1
 done
@@ -108,20 +108,20 @@ done
 echo; PrintSuccess "Setting up probe and actuators!"; echo
 
 PrintSuccess "Pulling Probe"
-docker pull sbi98/sefa-probe:arm64
-docker run -P --name sefa-probe -d --network ramses-sas-net sbi98/sefa-probe:arm64
+docker pull giamburrasca/sefa-probe:$ARCH
+#docker run -P --name sefa-probe -d --network ramses-sas-net giamburrasca/sefa-probe:arm64
 echo
 sleep 1
 
 PrintSuccess "Pulling sefa-instances-manager"
-docker pull giamburrasca/sefa-instances-manager:v0.8
-docker run -P --name sefa-instances-manager -d --network ramses-sas-net giamburrasca/sefa-instances-manager:v0.8
+docker pull giamburrasca/sefa-instances-manager:$ARCH
+#docker run -P --name sefa-instances-manager -d --network ramses-sas-net giamburrasca/sefa-instances-manager:v0.8
 echo
 sleep 3
 
 PrintSuccess "Pulling sefa-config-manager"
-docker pull giamburrasca/sefa-config-manager:v0.8
-docker run -P --name sefa-config-manager -e GITHUB_OAUTH=$GITHUB_OAUTH -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-config-manager:v0.8
+docker pull giamburrasca/sefa-config-manager:$ARCH
+#docker run -P --name sefa-config-manager -e GITHUB_OAUTH=$GITHUB_OAUTH -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-config-manager:v0.8
 echo
 sleep 2
 

@@ -133,3 +133,5 @@ if [[ $userInput =~ ^[1-4]$ ]]; then
 else
     echo "Enjoy RAMSES!"
 fi
+
+# API_GATEWAY_IP_PORT=localhost:32777 PROBE_URL=http://localhost:32789 DOCKER_ACTUATOR_URL=http://localhost:32791 EUREKA_IP_PORT=localhost:32770 java -jar rest-client-latest.jar

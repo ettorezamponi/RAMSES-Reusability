@@ -74,6 +74,7 @@ public class ExecuteService {
         Service service = knowledgeClient.getService(serviceId);
         if (!service.getCurrentImplementationId().equals(addInstanceOption.getServiceImplementationId()))
             throw new RuntimeException("Service implementation id mismatch. Expected: " + service.getCurrentImplementationId() + " Actual: " + addInstanceOption.getServiceImplementationId());
+
         StartNewInstancesResponse instancesResponse = actuatorAddInstances(addInstanceOption.getServiceImplementationId(), 1);
 
         if (instancesResponse.getDockerizedInstances().isEmpty())
@@ -84,12 +85,14 @@ public class ExecuteService {
         log.info("Adding instance to service " + serviceId + " with new instance " + newInstanceId);
         Map<String, Double> newWeights = addInstanceOption.getFinalWeights(newInstanceId);
         //log.info("*** NEW WEIGHTS= "+newWeights);
+
         knowledgeClient.notifyAddInstance(new AddInstanceRequest(serviceId, newInstancesAddress));
         if (newWeights != null) {
             for (String instanceToShutdownId : addInstanceOption.getInstancesToShutdownIds()) {
                 actuatorShutdownInstance(instanceToShutdownId);
                 knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
             }
+
             configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(service.getServiceId(), newWeights, addInstanceOption.getInstancesToShutdownIds()));
             knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
         }

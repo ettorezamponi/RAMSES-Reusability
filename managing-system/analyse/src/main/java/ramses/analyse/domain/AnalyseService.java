@@ -152,6 +152,7 @@ public class AnalyseService {
             boolean existsInstanceWithNewQoSValues = false;
             boolean atLeastOneBootingInstance = false;
             List<InstanceStats> instancesStats = new ArrayList<>();
+
             // Analyze all the instances
             for (Instance instance : service.getInstances()) {
                 if (instance.getCurrentStatus() == InstanceStatus.SHUTDOWN) {
@@ -187,6 +188,7 @@ public class AnalyseService {
                     continue;
                 }
 
+                // FailureRate over FRT?, unreachable over URT?, sum of them?
                 double failureRate = metrics.stream().reduce(0.0, (acc, m) -> acc + (m.isFailed() ? 1:0), Double::sum) / metrics.size();
                 double unreachableRate = metrics.stream().reduce(0.0, (acc, m) -> acc + (m.isUnreachable() ? 1:0), Double::sum) / metrics.size();
                 double inactiveRate = failureRate + unreachableRate;
@@ -205,6 +207,7 @@ public class AnalyseService {
                 instancesStats.add(new InstanceStats(instance, computeInstanceAvgResponseTime(instance, oldestActiveMetrics, latestActiveMetrics), computeInstanceAvailability(instance, oldestActiveMetrics, latestActiveMetrics)));
                 existsInstanceWithNewQoSValues = true;
             }
+
 
             if (instancesStats.isEmpty() && !atLeastOneBootingInstance) {
                 log.warn("{}: no active or booting instances. Forcing AddInstance option.", service.getServiceId());
@@ -326,10 +329,12 @@ public class AnalyseService {
      */
     private boolean computeAdaptationOptions(Service service, Map<String, Boolean> servicesRequiringOrCompletingAdaptation) {
         String serviceId = service.getServiceId();
+
         if (servicesRequiringOrCompletingAdaptation.containsKey(serviceId))
             return servicesRequiringOrCompletingAdaptation.get(serviceId);
         boolean hasForcedOptions = !servicesForcedAdaptationOptionsMap.get(serviceId).isEmpty();
         servicesRequiringOrCompletingAdaptation.put(serviceId, hasForcedOptions);
+
         if (servicesToSkip.contains(serviceId)) {
             log.warn("{}: the analysis decided to skip adaptation for this service.", serviceId);
             servicesRequiringOrCompletingAdaptation.put(serviceId, true);
