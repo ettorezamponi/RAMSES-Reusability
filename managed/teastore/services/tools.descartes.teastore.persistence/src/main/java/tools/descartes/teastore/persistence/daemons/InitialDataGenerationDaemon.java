@@ -26,6 +26,7 @@ import tools.descartes.teastore.persistence.repository.DataGenerator;
 import tools.descartes.teastore.registryclient.RegistryClient;
 import tools.descartes.teastore.registryclient.Service;
 import tools.descartes.teastore.registryclient.tracing.Tracing;
+import tools.ezamponi.EurekaClientHelper;
 
 /**
  * Application Lifecycle Listener implementation class for data generation.
@@ -54,6 +55,9 @@ public class InitialDataGenerationDaemon implements ServletContextListener {
    */
   public void contextDestroyed(ServletContextEvent event) {
     RegistryClient.getClient().unregister(event.getServletContext().getContextPath());
+
+    EurekaClientHelper.deRegister();
+    LOG.info("Shutdown persistence and eureka client");
   }
 
   /**
@@ -63,6 +67,7 @@ public class InitialDataGenerationDaemon implements ServletContextListener {
    */
   public void contextInitialized(ServletContextEvent event) {
     GlobalTracer.register(Tracing.init(Service.PERSISTENCE.getServiceName()));
+    //TODO check if the eureka goes also with the DB INITIALIZATION
     waitForDatabase();
     if (DataGenerator.GENERATOR.isDatabaseEmpty()) {
       LOG.info("Database is empty. Generating new database content");
@@ -75,6 +80,10 @@ public class InitialDataGenerationDaemon implements ServletContextListener {
     LOG.info("Persistence finished initializing database");
     RegistryClient.getClient().register(event.getServletContext().getContextPath());
     LOG.info("Persistence started registration daemon");
+
+    LOG.info("-------------------------------------------------------------------------------------------------");
+
+    EurekaClientHelper.register();
   }
 
   private void waitForDatabase() {

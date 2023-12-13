@@ -56,7 +56,7 @@ public class ImageProviderStartup implements ServletContextListener {
     SetupController.SETUP.teardown();
 
     EurekaClientHelper.deRegister();
-    LOG.info("Shutdown registry and eureka client");
+    LOG.info("Shutdown image eureka client");
   }
 
   /**

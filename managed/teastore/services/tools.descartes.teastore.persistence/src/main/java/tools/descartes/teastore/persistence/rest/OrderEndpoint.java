@@ -16,15 +16,15 @@ package tools.descartes.teastore.persistence.rest;
 import java.util.ArrayList;
 import java.util.List;
 
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
 
+import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 import tools.descartes.teastore.persistence.domain.OrderRepository;
 import tools.descartes.teastore.persistence.repository.DataGenerator;
 import tools.descartes.teastore.registryclient.util.AbstractCRUDEndpoint;
 import tools.descartes.teastore.entities.Order;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Persistence endpoint for for CRUD operations on orders.
@@ -109,6 +109,14 @@ public class OrderEndpoint extends AbstractCRUDEndpoint<Order> {
 			orders.add(new Order(o));
 		}
 		return orders;
+	}
+
+	@GET
+	@Path("/prometheus") // http://localhost:8080/tools.descartes.teastore.persistence/rest/orders/prometheus
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response getMetrics() {
+		String metrics = MetricsExporter.getMetrics();
+		return Response.ok(metrics).build();
 	}
 
 }

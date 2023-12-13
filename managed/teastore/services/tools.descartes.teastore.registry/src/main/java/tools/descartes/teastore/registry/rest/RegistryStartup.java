@@ -61,7 +61,7 @@ public class RegistryStartup implements ServletContextListener {
     heartbeatScheduler.shutdownNow();
 
     EurekaClientHelper.deRegister();
-    LOG.info("Shutdown registry and eureka client");
+    LOG.info("Shutdown registry eureka client");
   }
 
   /**

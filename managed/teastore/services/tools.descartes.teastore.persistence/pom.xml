@@ -68,6 +68,13 @@
 			<version>4.13.1</version>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Dependencies for RAMSES tools -->
+		<dependency>
+			<groupId>tools.ramses</groupId>
+			<artifactId>module</artifactId>
+			<version>1.0</version>
+		</dependency>
 	</dependencies>
 
 	<build>

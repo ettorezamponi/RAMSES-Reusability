@@ -60,7 +60,7 @@ public class AuthStartup implements ServletContextListener {
     RegistryClient.getClient().unregister(event.getServletContext().getContextPath());
 
     EurekaClientHelper.deRegister();
-    LOG.info("Shutdown registry and eureka client");
+    LOG.info("Shutdown auth eureka client");
   }
 
   /**
