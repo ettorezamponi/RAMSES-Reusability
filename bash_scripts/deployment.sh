@@ -22,6 +22,6 @@ sleep 5
 #docker run -P --name movie-service -d --network teastore movie
 sleep 2
 
-#REGISTRY TEASTORE
-docker run -p 8080:8080 --name registry -d --network teastore registry
+# TEASTORE
+docker run -p 8080:8080 --name registry -d --network teastore auth
 sleep 2

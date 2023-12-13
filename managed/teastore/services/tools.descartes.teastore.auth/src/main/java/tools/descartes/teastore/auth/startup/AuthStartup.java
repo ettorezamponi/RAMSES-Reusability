@@ -19,11 +19,14 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
 import io.opentracing.util.GlobalTracer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tools.descartes.teastore.registryclient.RegistryClient;
 import tools.descartes.teastore.registryclient.Service;
 import tools.descartes.teastore.registryclient.loadbalancers.ServiceLoadBalancer;
 import tools.descartes.teastore.registryclient.tracing.Tracing;
 import tools.descartes.teastore.registryclient.util.RESTClient;
+import tools.ezamponi.EurekaClientHelper;
 
 /**
  * Application Lifecycle Listener implementation class Registry Client Startup.
@@ -34,6 +37,7 @@ import tools.descartes.teastore.registryclient.util.RESTClient;
 @WebListener
 public class AuthStartup implements ServletContextListener {
 
+  private static final Logger LOG = LoggerFactory.getLogger(AuthStartup.class);
   private static final int REST_READ_TIMOUT = 1750;
 
   /**
@@ -54,6 +58,9 @@ public class AuthStartup implements ServletContextListener {
    */
   public void contextDestroyed(ServletContextEvent event) {
     RegistryClient.getClient().unregister(event.getServletContext().getContextPath());
+
+    EurekaClientHelper.deRegister();
+    LOG.info("Shutdown registry and eureka client");
   }
 
   /**
@@ -66,6 +73,9 @@ public class AuthStartup implements ServletContextListener {
     RESTClient.setGlobalReadTimeout(REST_READ_TIMOUT);
     ServiceLoadBalancer.preInitializeServiceLoadBalancers(Service.PERSISTENCE);
     RegistryClient.getClient().register(event.getServletContext().getContextPath());
+
+    LOG.info("Auth services online!");
+    EurekaClientHelper.register();
   }
 
 }

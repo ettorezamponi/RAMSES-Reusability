@@ -14,13 +14,8 @@
 
 package tools.descartes.teastore.auth.rest;
 
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.PUT;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import tools.descartes.teastore.auth.security.ShaSecurityProvider;
@@ -31,6 +26,7 @@ import tools.descartes.teastore.registryclient.Service;
 import tools.descartes.teastore.registryclient.rest.LoadBalancedCRUDOperations;
 import tools.descartes.teastore.registryclient.util.NotFoundException;
 import tools.descartes.teastore.registryclient.util.TimeoutException;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Rest endpoint for the store cart.
@@ -131,6 +127,14 @@ public class AuthCartRest {
       }
     }
     return Response.status(Response.Status.NOT_FOUND).build();
+  }
+
+  @GET
+  @Path("/prometheus") // http://localhost:8080/tools.descartes.teastore.auth/rest/cart/prometheus
+  @Produces(MediaType.TEXT_PLAIN)
+  public Response getMetrics() {
+    String metrics = MetricsExporter.getMetrics();
+    return Response.ok(metrics).build();
   }
 
 }

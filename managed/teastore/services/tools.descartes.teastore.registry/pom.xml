@@ -115,12 +115,12 @@
 			<version>1.4.20</version>
 		</dependency>
 
+		<!-- Dependencies for RAMSES tools -->
 		<dependency>
 			<groupId>tools.ramses</groupId>
 			<artifactId>module</artifactId>
 			<version>1.0</version>
 		</dependency>
-
 
 	</dependencies>
 
