@@ -17,7 +17,9 @@ package tools.descartes.teastore.webui.rest;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Rest endpoint for the store cart.
@@ -38,6 +40,14 @@ public class ReadyRest {
   @Path("isready")
   public Response isReady() {
     return Response.ok(true).build();
+  }
+
+  @GET
+  @Path("/prometheus") // http://localhost:8080/tools.descartes.teastore.webui/rest/ready/prometheus
+  @Produces(MediaType.TEXT_PLAIN)
+  public Response getMetrics() {
+    String metrics = MetricsExporter.getMetrics();
+    return Response.ok(metrics).build();
   }
 
 }

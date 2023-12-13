@@ -77,6 +77,7 @@ public class RegistryStartup implements ServletContextListener {
         Registry.getRegistryInstance().heartBeatCleanup();
       }
     }, HEARTBEAT_INTERVAL_MS, HEARTBEAT_INTERVAL_MS, TimeUnit.MILLISECONDS);
+
     LOG.info("Registry online");
     LOG.info("-------------------------------------------------------------------------------------------------");
 

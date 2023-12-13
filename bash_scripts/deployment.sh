@@ -23,5 +23,5 @@ sleep 5
 sleep 2
 
 # TEASTORE
-docker run -p 8080:8080 --name recommender -d --network teastore recommender
+docker run -p 8080:8080 --name webui -d --network teastore webui
 sleep 2

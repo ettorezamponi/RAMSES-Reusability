@@ -18,10 +18,13 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
 import io.opentracing.util.GlobalTracer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tools.descartes.teastore.registryclient.RegistryClient;
 import tools.descartes.teastore.registryclient.Service;
 import tools.descartes.teastore.registryclient.loadbalancers.ServiceLoadBalancer;
 import tools.descartes.teastore.registryclient.tracing.Tracing;
+import tools.ezamponi.EurekaClientHelper;
 
 /**
  * Application Lifecycle Listener implementation class Registry Client Startup.
@@ -30,6 +33,10 @@ import tools.descartes.teastore.registryclient.tracing.Tracing;
  */
 @WebListener
 public class WebuiStartup implements ServletContextListener {
+
+	private static final Logger LOG = LoggerFactory.getLogger(WebuiStartup.class);
+
+
 	/**
 	 * Empty constructor.
 	 */
@@ -43,6 +50,9 @@ public class WebuiStartup implements ServletContextListener {
      */
     public void contextDestroyed(ServletContextEvent event)  {
     	RegistryClient.getClient().unregister(event.getServletContext().getContextPath());
+
+		EurekaClientHelper.deRegister();
+		LOG.info("Shutdown registry eureka client");
     }
 
 	/**
@@ -54,6 +64,11 @@ public class WebuiStartup implements ServletContextListener {
     	ServiceLoadBalancer.preInitializeServiceLoadBalancers(Service.AUTH, Service.IMAGE,
     			Service.PERSISTENCE, Service.RECOMMENDER);
     	RegistryClient.getClient().register(event.getServletContext().getContextPath());
+
+		LOG.info("WebUI online");
+		LOG.info("-------------------------------------------------------------------------------------------------");
+
+		EurekaClientHelper.register();
     }
 
 }
