@@ -23,5 +23,5 @@ sleep 5
 sleep 2
 
 # TEASTORE
-docker run -p 8080:8080 --name persistence -d --network teastore persistence
+docker run -p 8080:8080 --name recommender -d --network teastore recommender
 sleep 2

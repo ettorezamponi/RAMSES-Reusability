@@ -27,6 +27,7 @@ import tools.descartes.teastore.registryclient.Service;
 import tools.descartes.teastore.registryclient.loadbalancers.ServiceLoadBalancer;
 import tools.descartes.teastore.registryclient.tracing.Tracing;
 import tools.descartes.teastore.registryclient.util.RESTClient;
+import tools.ezamponi.EurekaClientHelper;
 
 /**
  * Startup Handler for the Recommender Service.
@@ -59,6 +60,9 @@ public class RecommenderStartup implements ServletContextListener {
 	 */
 	public void contextDestroyed(ServletContextEvent event) {
 		RegistryClient.getClient().unregister(event.getServletContext().getContextPath());
+
+		EurekaClientHelper.deRegister();
+		LOG.info("Shutdown recommender eureka client");
 	}
 
 	/**
@@ -74,7 +78,8 @@ public class RecommenderStartup implements ServletContextListener {
 			TrainingSynchronizer.getInstance().retrieveDataAndRetrain();
 			RegistryClient.getClient().register(event.getServletContext().getContextPath());
 		}, Service.RECOMMENDER);
-		try {
+		//TODO check if it goes also with the uncomment DB waiting
+		/*try {
 			long looptime = (Long) new InitialContext().lookup("java:comp/env/recommenderLoopTime");
 			// if a looptime is specified, a retraining daemon is started
 			if (looptime > 0) {
@@ -85,7 +90,12 @@ public class RecommenderStartup implements ServletContextListener {
 			}
 		} catch (NamingException e) {
 			LOG.info("Recommender loop time not set. Disabling periodic retraining.");
-		}
+		}*/
+
+		LOG.info("Recommender online");
+		LOG.info("-------------------------------------------------------------------------------------------------");
+
+		EurekaClientHelper.register();
 
 	}
 

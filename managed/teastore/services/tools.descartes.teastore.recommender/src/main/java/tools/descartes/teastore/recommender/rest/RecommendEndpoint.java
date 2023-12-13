@@ -15,17 +15,15 @@ package tools.descartes.teastore.recommender.rest;
 
 import java.util.List;
 
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.QueryParam;
+import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import tools.descartes.teastore.recommender.algorithm.RecommenderSelector;
 import tools.descartes.teastore.entities.OrderItem;
 import tools.descartes.teastore.entities.Product;
 import tools.descartes.teastore.entities.User;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Recommender REST endpoint.
@@ -58,5 +56,13 @@ public class RecommendEndpoint {
 	public Response recommend(List<OrderItem> currentItems, @QueryParam("uid") final Long uid) {
 		List<Long> recommended = RecommenderSelector.getInstance().recommendProducts(uid, currentItems);
 		return Response.ok().entity(recommended).build();
+	}
+
+	@GET
+	@Path("/prometheus") // http://localhost:8080/tools.descartes.teastore.recommender/rest/recommend/prometheus
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response getMetrics() {
+		String metrics = MetricsExporter.getMetrics();
+		return Response.ok(metrics).build();
 	}
 }
