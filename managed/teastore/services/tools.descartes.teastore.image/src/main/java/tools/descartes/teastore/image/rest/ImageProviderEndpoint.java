@@ -21,11 +21,13 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
 import tools.descartes.teastore.entities.ImageSize;
 import tools.descartes.teastore.image.ImageProvider;
 import tools.descartes.teastore.image.setup.SetupController;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * The image provider REST endpoints for querying and controlling the image provider service.
@@ -110,6 +112,14 @@ public class ImageProviderEndpoint {
   @Path("setCacheSize")
   public Response setCacheSize(long cacheSize) {
     return Response.ok().entity(SetupController.SETUP.setCacheSize(cacheSize)).build();
+  }
+
+  @GET
+  @Path("/prometheus") // http://localhost:8080/tools.descartes.teastore.image/rest/image/prometheus
+  @Produces(MediaType.TEXT_PLAIN)
+  public Response getMetrics() {
+    String metrics = MetricsExporter.getMetrics();
+    return Response.ok(metrics).build();
   }
 
 }

@@ -18,11 +18,14 @@ import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
 
 import io.opentracing.util.GlobalTracer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import tools.descartes.teastore.registryclient.RegistryClient;
 import tools.descartes.teastore.registryclient.Service;
 import tools.descartes.teastore.registryclient.StartupCallback;
 import tools.descartes.teastore.registryclient.loadbalancers.ServiceLoadBalancer;
 import tools.descartes.teastore.registryclient.tracing.Tracing;
+import tools.ezamponi.EurekaClientHelper;
 
 /**
  * Application Lifecycle Listener implementation class Registry Client Startup.
@@ -33,7 +36,10 @@ import tools.descartes.teastore.registryclient.tracing.Tracing;
 @WebListener
 public class ImageProviderStartup implements ServletContextListener {
 
-  /**
+    private static final Logger LOG = LoggerFactory.getLogger(ImageProviderStartup.class);
+
+
+    /**
    * Empty constructor.
    */
   public ImageProviderStartup() {
@@ -48,6 +54,9 @@ public class ImageProviderStartup implements ServletContextListener {
   public void contextDestroyed(ServletContextEvent event) {
     RegistryClient.getClient().unregister(event.getServletContext().getContextPath());
     SetupController.SETUP.teardown();
+
+    EurekaClientHelper.deRegister();
+    LOG.info("Shutdown registry and eureka client");
   }
 
   /**
@@ -66,5 +75,10 @@ public class ImageProviderStartup implements ServletContextListener {
             RegistryClient.getClient().register(event.getServletContext().getContextPath());
           }
         }, Service.IMAGE);
+
+      LOG.info("Image online");
+      LOG.info("-------------------------------------------------------------------------------------------------");
+
+      EurekaClientHelper.register();
   }
 }

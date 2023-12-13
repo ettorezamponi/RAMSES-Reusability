@@ -23,5 +23,5 @@ sleep 5
 sleep 2
 
 # TEASTORE
-docker run -p 8080:8080 --name registry -d --network teastore auth
+docker run -p 8080:8080 --name registry -d --network teastore image
 sleep 2

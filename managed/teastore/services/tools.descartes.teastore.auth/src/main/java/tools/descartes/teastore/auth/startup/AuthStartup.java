@@ -75,6 +75,8 @@ public class AuthStartup implements ServletContextListener {
     RegistryClient.getClient().register(event.getServletContext().getContextPath());
 
     LOG.info("Auth services online!");
+    LOG.info("-------------------------------------------------------------------------------------------------");
+
     EurekaClientHelper.register();
   }
 
