@@ -79,13 +79,10 @@ public class RegistryREST {
 	}
 
 	@GET
-	@Path("/prometheus") // Specifica il path desiderato, ad esempio /services/prometheus
+	@Path("/prometheus") // http://localhost:8080/tools.descartes.teastore.registry/rest/services/prometheus
 	@Produces(MediaType.TEXT_PLAIN)
 	public Response getMetrics() {
-
 		String metrics = MetricsExporter.getMetrics();
-
-		// Restituisci la risposta con i dati delle metriche
 		return Response.ok(metrics).build();
 	}
 

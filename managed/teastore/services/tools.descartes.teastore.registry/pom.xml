@@ -47,8 +47,6 @@
 		</dependency>
 		<!-- Thanks for using https://jar-download.com -->
 
-
-
 		<!-- Internal Dependencies -->
 		<dependency>
 			<groupId>tools.descartes.teastore</groupId>
