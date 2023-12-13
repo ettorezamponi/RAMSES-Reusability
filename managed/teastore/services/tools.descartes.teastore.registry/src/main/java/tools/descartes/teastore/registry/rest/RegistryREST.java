@@ -21,8 +21,10 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Rest endpoint for the registry.
@@ -74,6 +76,17 @@ public class RegistryREST {
 	public Response getInstances(@PathParam("name") final String name) {
 		List<String> locations = Registry.getRegistryInstance().getLocations(name);
 		return Response.status(Response.Status.OK).entity(locations).build();
+	}
+
+	@GET
+	@Path("/prometheus") // Specifica il path desiderato, ad esempio /services/prometheus
+	@Produces(MediaType.TEXT_PLAIN)
+	public Response getMetrics() {
+
+		String metrics = MetricsExporter.getMetrics();
+
+		// Restituisci la risposta con i dati delle metriche
+		return Response.ok(metrics).build();
 	}
 
 }

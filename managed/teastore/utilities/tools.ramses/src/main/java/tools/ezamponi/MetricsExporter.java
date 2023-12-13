@@ -29,7 +29,6 @@ public class MetricsExporter {
     }
 
     @SuppressWarnings("checkstyle:designforextension")
-    @GET
     @Produces(MediaType.TEXT_PLAIN)
     public static String getMetrics() {
         MicrometerResource();
