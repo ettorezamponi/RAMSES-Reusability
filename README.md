@@ -87,7 +87,7 @@ The entire project was tested on Mac (Apple Silicon and Intel), Windows and Linu
    $ sh SETUP_ICSE.sh
    ```
 
-   To run the Bash script in **Windows**, you need a Bash interpreter such as the one provided by [Git Bash](https://gitforwindows.org) if you do not have it yet. During installation, be sure to select the 'Git Bash Here' option in the shell context selection window. Then launch 'GitBash' terminal and execute the script, otherwise windows is not able to interpret bash commands.
+   To run the Bash script in **Windows**, you need a Bash interpreter such as the one provided by [Git Bash](https://gitforwindows.org), if you do not have it yet. During installation, be sure to select the 'Git Bash Here' option in the shell context selection window. Then launch 'GitBash' terminal and execute the script, otherwise windows is not able to interpret bash commands.
 
    In **Linux** you may first have to assign permissions to the file via the command `sudo chmod +x SETUP_ICSE.sh`. 
    
