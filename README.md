@@ -63,7 +63,7 @@ The entire project was tested on Mac (Apple Silicon and Intel), Windows and Linu
     $ socat -d TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock
     ```
 
-    For Windows users, the command must be executed via the WSL shell (by default with Ubuntu distro, recommended).
+    For Windows users, the previous command must be executed via WSL shell (by default with Ubuntu distro, recommended).
    ```
    $ sudo wsl --install
    ```
@@ -369,7 +369,7 @@ Run this command so that socat is used to expose the Docker daemon on a specific
 $ socat -d TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock
 ```
 
-For Windows users, the command must be executed via the WSL shell (by default with Ubuntu distro, recommended).
+For Windows users, the previous command must be executed via WSL shell (by default with Ubuntu distro, recommended).
 ```
 $ sudo wsl --install
 ```
