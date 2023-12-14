@@ -7,16 +7,24 @@ PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 export GITHUB_REPOSITORY_URL = ...
 export GITHUB_OAUTH = ...
 
+PrintWarn "Please enter the architecture on which you are going to run the system ('arm64' or 'amd64'):"
+read ARCH
+
+if [ "$ARCH" == "arm64" ]; then
+    echo "Running script with selected architecture $ARCH."
+elif [ "$ARCH" == "amd64" ]; then
+    echo "Running script with selected architecture $ARCH."
+else
+    echo "Architecture not supported."
+    exit 1
+fi
+sleep 1
+
+
 if [[("${GITHUB_OAUTH}" = "") || ("${GITHUB_REPOSITORY_URL}" = "")]]; then
   PrintError "Env var GITHUB_OAUTH and GITHUB_REPOSITORY_URL must be set!"
   exit 1
 fi
-
-PrintWarn "Desired architecture not specified or unknown. Supported values are 'arm64' and 'amd64'. Using 'arm64' as default option"
-ARCH="arm64"
-PrintWarn "Running script with selceted architecture: ${ARCH}"
-sleep 3
-
 
 ##### Network #####
 docker network rm ramses-sas-net
@@ -45,7 +53,7 @@ PrintSuccess "Setting up Spring Config Server"
 docker pull giamburrasca/sefa-configserver:$ARCH
 docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-configserver:$ARCH
 echo
-sleep 8
+sleep 15 #time for configurations to be pulled
 
 declare -a arr=("sefa-restaurant-service"
                 "sefa-ordering-service"
