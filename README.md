@@ -17,11 +17,13 @@ In these scenarios, before each experiment is executed, the Managed System is fr
    3. [Load balancing configuration](#Scenario-3---load-balancing-configuration)
    4. [Handle slow service](#Scenario-4---handle-slow-service)
 5. [Scenario creation](#Scenario-creation)
-6. [Troubleshooting and Known Issues](#Troubleshooting-and-Known-Issues)
+6. [Project Dependencies](#Project-Dependencies)
+7. [Troubleshooting and Known Issues](#Troubleshooting-and-Known-Issues)
    1. [Portforwarding](#Portforwarding)
    2. [Configuration Repo](#Configuration-Repo)
    3. [Jar Dependencies](#Jar-Dependencies)
    4. [Knowledge Init](#Knowledge-Init)
+
 
 
 ## 1 Development Ambient
@@ -335,6 +337,12 @@ Once we have our rest client set up properly, clean the GitHub configuration rep
 3) Launch the setup [script](./bash_scripts/execute/SETUP_ICSE.sh) following the initial installation [guide](#installation-guide) without any scenarios.
 4) After all launch your new REST client through the command `docker run -P -d --network ramses-sas-net restclient`.
 
+## Project Dependencies
+
+Among the various dependencies of the project, the google [OR-Tools library](https://developers.google.com/optimization/install?hl=it) for solving the M-ILP problem is imported from outside in the [Plan](./managing-system/plan/or-tools) service.
+
+M-ILP (*Mixed-Integer Linear Programming*) is a branch of mathematical optimization that deals with problems where some of the decision variables are constrained to take only integer values, while others can take any real value.
+In this particular case, it is used to obtain the new weights of the existing instances and to determine the ones that should be shut down, if any.
 
 ## Troubleshooting and Known Issues
 
