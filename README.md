@@ -26,7 +26,7 @@ In these scenarios, before each experiment is executed, the Managed System is fr
 
 
 
-## 1 Development Ambient
+## Development Ambient
 Together with the actual code of both RAMSES and SEFA, we also provide a set of ready-to-use docker scenarios. By following the next steps, you can set up and run both systems on the same machine. 
 
 To begin with, install [Docker](https://www.docker.com/) on your machine and run it. After the installation, we suggest to configure it with the following minimum requirements:
@@ -45,6 +45,8 @@ The whole Self-Adaptive System was developed, run and tested on a 2023 Apple Mac
 The **Java** version used by the project is version `16.0.2`.
 
 Currently, docker images are available for `arm64` and `amd64` architectures, but due to port forwarding limitations and the use of socat software (or similar), it has not been possible to run the entire project on linux or windows machines.
+
+The entire project was tested on Mac (Apple Silicon and Intel), Windows and Linux.
 
 ## Installation guide
 
