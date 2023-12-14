@@ -42,9 +42,14 @@ Currently, docker images are available for `arm64` and `amd64` architectures, bu
     To be able to launch this command.
     ```
    $ socat -d TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock
-   ``` 
+   ```
 
-3. ### Create the configuration repo
+    For Windows or Linux system, use this command in case the previous one gives error.
+   ```
+   socat -d TCP-LISTEN:2375,range=0.0.0.0/0,reuseaddr,fork UNIX:/var/run/docker.sock
+   ```
+
+4. ### Create the configuration repo
 	The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration 	repository. You 	can do so by forking [our repository](https://github.com/ettorezamponi/config-server). Check that the `application.properties` file does not 	include any load balancer 		weight. If so, simply delete those lines and push on your repository.
 
 	Once you have created your configuration repository, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You 		can do so by following [this 	guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
@@ -56,7 +61,7 @@ Currently, docker images are available for `arm64` and `amd64` architectures, bu
    export GITHUB_OAUTH = ...
    ```
 
-4. ### Execute the script
+5. ### Execute the script
    
    	Finally run the ready-to-use script, [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh).
    ```
@@ -333,10 +338,15 @@ Install the latest versione of [Socat](http://www.dest-unreach.org/socat/) (1.8.
 $ brew install socat
 ```
 
-Run this command so that socat is used to expose the Docker daemon on a specific TCP port (in this 	case, port 2375) so that requests can be handled via Docker's local UNIX socket.
+Run this command so that socat is used to expose the Docker daemon on a specific TCP port (in this case, port 2375) so that requests can be handled via Docker's local UNIX socket.
 
 ```
 $ socat -d TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock
+```
+
+For Windows or Linux system, use this command in case the previous one gives error.
+```
+socat -d TCP-LISTEN:2375,range=0.0.0.0/0,reuseaddr,fork UNIX:/var/run/docker.sock
 ```
 
 If the path is not correct for the Docker configuration, follow this [forum question](https://forums.docker.com/t/is-a-missing-docker-sock-file-a-bug/134351) about.
