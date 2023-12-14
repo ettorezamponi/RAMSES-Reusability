@@ -1,15 +1,30 @@
 # RAMSES - ICSE2024 presentation
-MSc final thesis project by Ettore Zamponi.
 
 We present four scenarios that the actuator is able to recognise and apply to SEFA (application composed of microservices built ad-hoc).
 
 In these scenarios, before each experiment is executed, the Managed System is freshly de-ployed with one nominal instance per service (i.e., without any manipulation).
 
-Remember to clean the config-server on GitHub, after each adaptation, new weighted values for the adapted services are pushed into the application.properties file. Otherwise, when a new deployment of RAMSES is attempted, knowledge will find configuration incompatibilities and will not be able to be executed.
+1. [Development Ambient](#Development-Ambient)
+2. [Installation Guide](#Installation-guide)
+   1. [Install Docker](#Install-Docker)
+   2. [Launch the socat command](#Launch-the-socat-command)
+   3. [Create the configuration repo](#Create-the-configuration-repo)
+   4. [Execute the script](#Execute-the-script)
+3. [Dasboard](#Dasboard)
+4. [Scenarios](#Scenarios)
+   1. [Service unavailable](#Scenario-1)
+   2. [Changing implementation](#Scenario-2)
+   3. [Load balancing configuration](#Scenario-3)
+   4. [Handle slow service](#Scenario-4)
+5. [Scenario creation](#Scenario-creation)
+6. [Troubleshooting and Known Issues](#Troubleshooting-and-Known-Issues)
+   1. [Portforwarding](#Portforwarding)
+   2. [Configuration Repo](#Configuration-Repo)
+   3. [Jar Dependencies](#Jar-Dependencies)
+   4. [Knowledge Init](#Knowledge-Init)
 
-N.B. Pay attention to the github env var to be able to push on the correct config server!
 
-## Development Ambient
+## 1 Development Ambient
 Together with the actual code of both RAMSES and SEFA, we also provide a set of ready-to-use docker scenarios. By following the next steps, you can set up and run both systems on the same machine. 
 
 To begin with, install [Docker](https://www.docker.com/) on your machine and run it. After the installation, we suggest to configure it with the following minimum requirements:
@@ -37,7 +52,7 @@ Currently, docker images are available for `arm64` and `amd64` architectures, bu
 
 2. ### Launch the socat command
 
-	Launch the port forwarding command through Socat (or similar) as explained [here](#Troubleshooting-and-Known-Issues).
+    Launch the port forwarding command through Socat (or similar) as explained [here](#Troubleshooting-and-Known-Issues).
     
     To be able to launch this command.
     ```
@@ -49,7 +64,7 @@ Currently, docker images are available for `arm64` and `amd64` architectures, bu
    socat -d TCP-LISTEN:2375,range=0.0.0.0/0,reuseaddr,fork UNIX:/var/run/docker.sock
    ```
 
-4. ### Create the configuration repo
+3. ### Create the configuration repo
 	The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration 	repository. You 	can do so by forking [our repository](https://github.com/ettorezamponi/config-server). Check that the `application.properties` file does not 	include any load balancer 		weight. If so, simply delete those lines and push on your repository.
 
 	Once you have created your configuration repository, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You 		can do so by following [this 	guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
@@ -61,7 +76,7 @@ Currently, docker images are available for `arm64` and `amd64` architectures, bu
    export GITHUB_OAUTH = ...
    ```
 
-5. ### Execute the script
+4. ### Execute the script
    
    	Finally run the ready-to-use script, [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh).
    ```
@@ -352,7 +367,7 @@ socat -d TCP-LISTEN:2375,range=0.0.0.0/0,reuseaddr,fork UNIX:/var/run/docker.soc
 If the path is not correct for the Docker configuration, follow this [forum question](https://forums.docker.com/t/is-a-missing-docker-sock-file-a-bug/134351) about.
    
 ### Configuration Repo
-Clean the *application.properties* file in the configuration server repo on GitHub after each adaptation.
+Clean the *application.properties* file in the configuration server repo on GitHub after each adaptation. Otherwise, when a new deployment of RAMSES is attempted, knowledge will find configuration incompatibilities and will not be able to be executed.
 
 ### Jar Dependencies
 It is necessary to provide the jar files of certain libraries in order to correctly import all the dependencies that each individual class needs.
