@@ -60,15 +60,15 @@ The entire project was tested on Mac (Apple Silicon and Intel), Windows and Linu
     
     To be able to launch this command.
     ```
-   $ socat -d TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock
+    $ socat -d TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock
+    ```
+
+    For Windows users, all terminal commands must be executed via the WSL shell.
+   ```
+   $ sudo wsl --install
    ```
 
-    For Windows or Linux system, use this command in case the previous one gives error.
-   ```
-   socat -d TCP-LISTEN:2375,range=0.0.0.0/0,reuseaddr,fork UNIX:/var/run/docker.sock
-   ```
-
-3. ### Create the configuration repo
+4. ### Create the configuration repo
 	The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration 	repository. You 	can do so by forking [our repository](https://github.com/ettorezamponi/config-server). Check that the `application.properties` file does not 	include any load balancer 		weight. If so, simply delete those lines and push on your repository.
 
 	Once you have created your configuration repository, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You 		can do so by following [this 	guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
@@ -76,15 +76,15 @@ The entire project was tested on Mac (Apple Silicon and Intel), Windows and Linu
    	At this point, enter your configuration repo and access token into the [bash script](/bash_scripts/execute/SETUP_ICSE.sh) initial variables.
    	
    ```
-   export GITHUB_REPOSITORY_URL = ...
-   export GITHUB_OAUTH = ...
+   $ export GITHUB_REPOSITORY_URL = ...
+   $ export GITHUB_OAUTH = ...
    ```
 
-4. ### Execute the script
+5. ### Execute the script
    
    	Finally run the ready-to-use script, [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh).
    ```
-   sh SETUP_ICSE.sh
+   $ sh SETUP_ICSE.sh
    ```
    
 ## Dashboard
