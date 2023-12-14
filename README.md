@@ -10,7 +10,7 @@ In these scenarios, before each experiment is executed, the Managed System is fr
    2. [Launch the socat command](#Launch-the-socat-command)
    3. [Create the configuration repo](#Create-the-configuration-repo)
    4. [Execute the script](#Execute-the-script)
-3. [Dasboard](#Dasboard)
+3. [Dashboard](#Dashboard)
 4. [Scenarios](#Scenarios)
    1. [Service unavailable](#Scenario-1)
    2. [Changing implementation](#Scenario-2)
@@ -83,7 +83,7 @@ Currently, docker images are available for `arm64` and `amd64` architectures, bu
    sh SETUP_ICSE.sh
    ```
    
-## Dasboard
+## Dashboard
 Once the application has been started, the only service we can interact with during the run is the RAMSES dashboard, by clicking the localhost address (in Docker, ports of the image called *ramses-dashboard*).
 
 It is structured in three macro sections, focusing on managed system, adaptations and configurations.
@@ -367,7 +367,7 @@ socat -d TCP-LISTEN:2375,range=0.0.0.0/0,reuseaddr,fork UNIX:/var/run/docker.soc
 If the path is not correct for the Docker configuration, follow this [forum question](https://forums.docker.com/t/is-a-missing-docker-sock-file-a-bug/134351) about.
    
 ### Configuration Repo
-Clean the *application.properties* file in the configuration server repo on GitHub after each adaptation. Otherwise, when a new deployment of RAMSES is attempted, knowledge will find configuration incompatibilities and will not be able to be executed.
+Clean the *application.properties* file in the configuration server repo on GitHub ([link](#Create-the-configuration-repo) to create it) after each adaptation. Otherwise, when a new deployment of RAMSES is attempted, knowledge will find configuration incompatibilities and will not be able to be executed.
 
 ### Jar Dependencies
 It is necessary to provide the jar files of certain libraries in order to correctly import all the dependencies that each individual class needs.
