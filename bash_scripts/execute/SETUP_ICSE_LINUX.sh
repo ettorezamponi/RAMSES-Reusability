@@ -59,7 +59,7 @@ declare -a arr=("sefa-restaurant-service"
                 "sefa-ordering-service"
                 "sefa-payment-proxy-1-service"
                 "sefa-delivery-proxy-1-service"
-		            "sefa-web-service"
+		"sefa-web-service"
                 "sefa-api-gateway"
                 )
 for i in "${arr[@]}"
