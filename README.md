@@ -363,7 +363,7 @@ To solve this issue, install [Homebrew](https://brew.sh) if you do not have it y
 $ brew upgrade
 ```
 
-Install the latest versione of [Socat](http://www.dest-unreach.org/socat/) (1.8.0.0) with this command.
+Install the latest versione of [Socat](http://www.dest-unreach.org/socat/) (1.8.0.0 for Mac and 1.7.4.1 for Win/Linux) with this command.
 
 ```
 $ brew install socat
