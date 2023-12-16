@@ -27,7 +27,7 @@ import tools.descartes.teastore.entities.Order;
 import tools.ezamponi.MetricsExporter;
 
 /**
- * Persistence endpoint for for CRUD operations on orders.
+ * Persistence endpoint for CRUD operations on orders.
  * @author Joakim von Kistowski
  *
  */

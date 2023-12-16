@@ -1,17 +1,17 @@
 version: '3'
 services:
   registry:
-    image: descartesresearch/teastore-registry
+    image: registry
     expose:
       - "8080"
   db:
-    image: descartesresearch/teastore-db
+    image: teastore-db
     expose:
       - "3306"
     ports:
       - "3306:3306"
   persistence:
-    image: descartesresearch/teastore-persistence
+    image: persistence
     expose:
       - "8080"
     environment:
@@ -20,28 +20,28 @@ services:
       DB_HOST: "db"
       DB_PORT: "3306"
   auth:
-    image: descartesresearch/teastore-auth
+    image: auth
     expose:
       - "8080"
     environment:
       HOST_NAME: "auth"
       REGISTRY_HOST: "registry"
   image:
-    image: descartesresearch/teastore-image
+    image: image
     expose:
       - "8080"
     environment:
       HOST_NAME: "image"
       REGISTRY_HOST: "registry"
   recommender:
-    image: descartesresearch/teastore-recommender
+    image: recommender
     expose:
       - "8080"
     environment:
       HOST_NAME: "recommender"
       REGISTRY_HOST: "registry"
   webui:
-    image: descartesresearch/teastore-webui
+    image: webui
     expose:
       - "8080"
     environment:
