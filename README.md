@@ -44,9 +44,9 @@ The whole Self-Adaptive System was developed, run and tested on a 2023 Apple Mac
 
 The **Java** version used by the project is version `16.0.2`.
 
-Currently, docker images are available for `arm64` and `amd64` architectures, but due to port forwarding limitations and the use of socat software (or similar), it has not been possible to run the entire project on linux or windows machines.
+Currently, docker images are available for `arm64` and `amd64` architectures.
 
-The entire project was tested on Mac (Apple Silicon and Intel), Windows and Linux.
+The entire project was tested on Mac (Apple Silicon and Intel) and Windows.
 
 ## Installation guide
 
@@ -88,10 +88,6 @@ The entire project was tested on Mac (Apple Silicon and Intel), Windows and Linu
    ```
 
    To run the script in **Windows**, instead, you need a Bash interpreter such as the one provided by [Git Bash](https://gitforwindows.org), if you do not have it yet. During installation, be sure to select the 'Git Bash Here' option in the shell context selection window. Then launch 'GitBash' terminal and execute the script, otherwise windows is not able to interpret bash commands.
-
-   In **Linux** you may first have to assign permissions to the file via the command `sudo chmod +x SETUP_ICSE.sh`.
-
-   If you encounter input problem through CLI, launch the command `./SETUP_ICSE.sh`.
    
 ## Dashboard
 Once the application has been started, the only service we can interact with during the run is the RAMSES dashboard, by clicking the localhost address (in Docker, ports of the image called *ramses-dashboard*).
@@ -363,7 +359,7 @@ To solve this issue, install [Homebrew](https://brew.sh) if you do not have it y
 $ brew upgrade
 ```
 
-Install the latest versione of [Socat](http://www.dest-unreach.org/socat/) (1.8.0.0 for Mac and 1.7.4.1 for Win/Linux) with this command.
+Install the latest versione of [Socat](http://www.dest-unreach.org/socat/) (1.8.0.0 for Mac and 1.7.4.1 for Windows) with this command.
 
 ```
 $ brew install socat
