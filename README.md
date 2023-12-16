@@ -99,7 +99,7 @@ The entire project was tested on Mac (Apple Silicon and Intel), Windows and Linu
      ```
    * **LINUX**  
 
-     Here you have to install a package to be able tu emulate and run an ARM64 Docker image on the AMD64 architecture. Through the following command.
+     Here you have to install the [qemu-user-static](https://github.com/multiarch/qemu-user-static) package to be able tu emulate and run an ARM64 Docker image on the AMD64 architecture. Through the following command.
      ```
      $ sudo apt-get update
      $ sudo apt-get install qemu-user-static
