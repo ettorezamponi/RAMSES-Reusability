@@ -87,15 +87,19 @@ done
 ##### PROBE AND ACTUATORS #####
 echo; PrintSuccess "Setting up probe and actuators!"; echo
 
-declare -a pract=("sefa-probe" "sefa-instances-manager")
-for i in "${pract[@]}"
-do
-   PrintSuccess "Pulling $i"
-   docker pull giamburrasca/$i:$ARCH
-   docker run -P --name $i -d --network ramses-sas-net giamburrasca/$i:$ARCH
-   echo
-   sleep 1
-done
+
+PrintSuccess "Pulling sefa-probe"
+docker pull giamburrasca/sefa-probe:$ARCH
+docker run -P --name sefa-probe -d --network ramses-sas-net giamburrasca/sefa-probe:$ARCH
+echo
+sleep 1
+
+# https://www.cloudbees.com/blog/using-the-add-host-flag-for-dns-mapping-within-docker-containers
+PrintSuccess "Pulling sefa-instances-manager"
+docker pull giamburrasca/sefa-instances-manager:$ARCH
+docker run -P --name sefa-instances-manager -d --network ramses-sas-net --add-host=host.docker.internal:host-gateway giamburrasca/sefa-instances-manager:$ARCH
+echo
+sleep 1
 
 PrintSuccess "Pulling sefa-config-manager"
 docker pull giamburrasca/sefa-config-manager:$ARCH
@@ -104,7 +108,7 @@ echo
 
 ##### RAMSES #####
 echo; PrintSuccess "Setting up the Managing System, RAMSES!"; echo
-sleep 20
+sleep 15
 
 docker pull giamburrasca/ramses-knowledge:$ARCH
 docker run -P --name ramses-knowledge -d --network ramses-sas-net giamburrasca/ramses-knowledge:$ARCH
@@ -117,7 +121,7 @@ do
    docker pull giamburrasca/$i:$ARCH
    docker run -P --name $i -d --network ramses-sas-net giamburrasca/$i:$ARCH
    echo
-   sleep 2
+   sleep 3
 done
 
 PrintSuccess "Pulling ramses-plan"

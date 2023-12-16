@@ -6,28 +6,28 @@ In these scenarios, before each experiment is executed, the Managed System is fr
 
 1. [Development Ambient](#Development-Ambient)
 2. [Installation Guide](#Installation-guide)
-   1. [Install Docker](#Install-Docker)
-   2. [Launch the socat command](#Launch-the-socat-command)
-   3. [Create the configuration repo](#Create-the-configuration-repo)
-   4. [Execute the script](#Execute-the-script)
+    1. [Install Docker](#Install-Docker)
+    2. [Launch the socat command](#Launch-the-socat-command)
+    3. [Create the configuration repo](#Create-the-configuration-repo)
+    4. [Execute the script](#Execute-the-script)
 3. [Dashboard](#Dashboard)
 4. [Scenarios](#Scenarios)
-   1. [Service unavailable](#Scenario-1---service-unavailable)
-   2. [Changing implementation](#Scenario-2---changing-implementation)
-   3. [Load balancing configuration](#Scenario-3---load-balancing-configuration)
-   4. [Handle slow service](#Scenario-4---handle-slow-service)
+    1. [Service unavailable](#Scenario-1---service-unavailable)
+    2. [Changing implementation](#Scenario-2---changing-implementation)
+    3. [Load balancing configuration](#Scenario-3---load-balancing-configuration)
+    4. [Handle slow service](#Scenario-4---handle-slow-service)
 5. [Scenario creation](#Scenario-creation)
 6. [Project Dependencies](#Project-Dependencies)
 7. [Troubleshooting and Known Issues](#Troubleshooting-and-Known-Issues)
-   1. [Portforwarding](#Portforwarding)
-   2. [Configuration Repo](#Configuration-Repo)
-   3. [Jar Dependencies](#Jar-Dependencies)
-   4. [Knowledge Init](#Knowledge-Init)
+    1. [Portforwarding](#Portforwarding)
+    2. [Configuration Repo](#Configuration-Repo)
+    3. [Jar Dependencies](#Jar-Dependencies)
+    4. [Knowledge Init](#Knowledge-Init)
 
 
 
 ## Development Ambient
-Together with the actual code of both RAMSES and SEFA, we also provide a set of ready-to-use docker scenarios. By following the next steps, you can set up and run both systems on the same machine. 
+Together with the actual code of both RAMSES and SEFA, we also provide a set of ready-to-use docker scenarios. By following the next steps, you can set up and run both systems on the same machine.
 
 To begin with, install [Docker](https://www.docker.com/) on your machine and run it. After the installation, we suggest to configure it with the following minimum requirements:
 - **CPU**: 8
@@ -44,51 +44,66 @@ The whole Self-Adaptive System was developed, run and tested on a 2023 Apple Mac
 
 The **Java** version used by the project is version `16.0.2`.
 
-Currently, docker images are available for `arm64` and `amd64` architectures.
+Currently, docker images are available for `arm64` and `amd64` architectures, but due to port forwarding limitations and the use of socat software (or similar), it has not been possible to run the entire project on linux or windows machines.
 
-The entire project was tested on Mac (Apple Silicon and Intel) and Windows.
+The entire project was tested on Mac (Apple Silicon and Intel), Windows and Linux.
 
 ## Installation guide
 
 1. ### Install Docker
 
-	Docker Engine is required to launch all the microservices, follow this [link](https://www.docker.com/get-started/) to download and install it if you do not have 	it yet.
+   Docker Engine is required to launch all the microservices, follow this [link](https://www.docker.com/get-started/) to download and install it if you do not have 	it yet.
 
 2. ### Launch the socat command
 
-    Launch the port forwarding command through Socat (or similar) as explained [here](#Troubleshooting-and-Known-Issues).
-    
-    To be able to launch this command.
+   Launch the port forwarding command through Socat (or similar) as explained [here](#Troubleshooting-and-Known-Issues).
+
+   To be able to launch this command.
     ```
     $ socat -d TCP-LISTEN:2375,reuseaddr,fork UNIX:/var/run/docker.sock
     ```
 
-    For Windows users, the previous command must be executed via WSL shell (by default with Ubuntu distro, recommended).
+   For Windows users, the previous command must be executed via WSL shell (by default with Ubuntu distro, recommended).
    ```
    $ sudo wsl --install
    ```
 
 3. ### Create the configuration repo
-	The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration 	repository. You 	can do so by forking [our repository](https://github.com/ettorezamponi/config-server). Check that the `application.properties` file does not 	include any load balancer 		weight. If so, simply delete those lines and push on your repository.
+   The next step involves the creation of a GitHub repository (if you don’t have one yet) to be used by the _Managed System Config Server_ as the configuration 	repository. You 	can do so by forking [our repository](https://github.com/ettorezamponi/config-server). Check that the `application.properties` file does not 	include any load balancer 		weight. If so, simply delete those lines and push on your repository.
 
-	Once you have created your configuration repository, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You 		can do so by following [this 	guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
+   Once you have created your configuration repository, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You 		can do so by following [this 	guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
-   	At this point, enter your configuration repo and access token into the [bash script](/bash_scripts/execute/SETUP_ICSE.sh) initial variables.
-   	
+   At this point, enter your configuration repo and access token into the [bash script](/bash_scripts/execute/SETUP_ICSE.sh) (or in the [linux script](./bash_scripts/execute/SETUP_ICSE_LINUX.sh)) initial variables.
+
    ```
    $ export GITHUB_REPOSITORY_URL = ...
    $ export GITHUB_OAUTH = ...
    ```
 
 4. ### Execute the script
-   
-   In **Mac** you can run the ready-to-use script, [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh).
+
+   In **Mac** you can run the ready-to-use script, [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh) and follow the instructions.
    ```
    $ sh SETUP_ICSE.sh
    ```
 
-   To run the script in **Windows**, instead, you need a Bash interpreter such as the one provided by [Git Bash](https://gitforwindows.org), if you do not have it yet. During installation, be sure to select the 'Git Bash Here' option in the shell context selection window. Then launch 'GitBash' terminal and execute the script, otherwise windows is not able to interpret bash commands.
-   
+   To run the script in **Windows**, instead, you need a Bash interpreter such as the one provided by [Git Bash](https://gitforwindows.org), if you do not have it yet. 
+   During installation, be sure to select the 'Git Bash Here' option in the shell context selection window. 
+   Then launch 'GitBash' terminal and execute the script, otherwise windows is not able to interpret bash commands.
+
+   In **Linux** you have to install a package to be able tu emulate and run an ARM64 Docker image on an AMD64 architecture. Run this command.
+   ```
+   $ sudo apt-get install qemu-user-static
+   ```
+   At this point may first have to assign permissions to the file via the command.
+   ```
+   $ sudo chmod +x SETUP_ICSE_LINUX.sh
+   ```
+   Finally, launch the dedicated script [SETUP_ICSE_LINUX](./bash_scripts/execute/SETUP_ICSE_LINUX.sh) and follow the instructions. 
+   ```
+   ./SETUP_ICSE.sh`.
+   ```
+
 ## Dashboard
 Once the application has been started, the only service we can interact with during the run is the RAMSES dashboard, by clicking the localhost address (in Docker, ports of the image called *ramses-dashboard*).
 
@@ -103,14 +118,14 @@ The second section of the dashboard shows the latest three adaptation options ap
 
 ![alt](./documents/images/dashboard2.png)
 
-The third section allows the admin of the system to change the configuration parameters of the Monitor Component (i.e., the Monitor Scheduling Period) and of the Analyse Component (i.e., the Metrics Window Size, the Analysis Window Size, the QoS Satisfaction Rate, the failure rate and the unreachable rate). 
+The third section allows the admin of the system to change the configuration parameters of the Monitor Component (i.e., the Monitor Scheduling Period) and of the Analyse Component (i.e., the Metrics Window Size, the Analysis Window Size, the QoS Satisfaction Rate, the failure rate and the unreachable rate).
 It also allows to stop the MAPE-K loop, starting from the next iteration, or to simply stop RAMSES to perform adaptation, using it to simply monitor the Managed System.
 
 ![alt](./documents/images/dashboard3.png)
 
 ## Scenarios
 
-In this chapter, four distinct test and development scenarios are outlined. Each scenario provides a unique context for evaluating and advancing the subject matter. 
+In this chapter, four distinct test and development scenarios are outlined. Each scenario provides a unique context for evaluating and advancing the subject matter.
 
 The goal is to demonstrate and show all the adaptations that managing is capable of, allowing for comprehensive testing and development considerations. The chapter delves into these scenarios to offer a nuanced understanding of the subject matter in various practical contexts, fostering a more robust approach to testing and development processes.
 
@@ -120,9 +135,9 @@ In order to understand how a simulation is carried out or to be able to create a
 
 * ### Scenario 1 - *SERVICE UNAVAILABLE*
 
-  This represents the real case in which one of the services crashes suddenly, or perhaps due to a momentary disconnection, and thus becomes unreachable. 
+  This represents the real case in which one of the services crashes suddenly, or perhaps due to a momentary disconnection, and thus becomes unreachable.
   To simulate this scenario it makes one of the microservices unreachable by forcing its shutdown.
-  
+
   The managing will realise this situation, and will start (forced option) a new instance of the same service in order to resume the correct execution of the entire system as soon as possible.
 
   To do this, a *failure injection* implemented in the simulation (lasting 5 minutes) [rest-client](./managed-system/rest-client/src/main/java/sefa/restclient/domain/FailureInjectionService.java) code is used.
@@ -147,7 +162,7 @@ In order to understand how a simulation is carried out or to be able to create a
   The green one, instead, represent the performance after the adaptation, in this particular case, after that the managing added the new instance of *restaurant service*.
 
   In the graph we do not see a drop below the limit despite the forced shutdown of the service, this happens because each point that makes up the graph is an average of several orders executed by the simulation script.
-  Thus the moment when the instance is unavailable is balanced and reestablished by subsequent orders. 
+  Thus the moment when the instance is unavailable is balanced and reestablished by subsequent orders.
   For the availability, it creates a plot lower the precedent trend but still satisfactory. In fact, after the adjustment, the plot trend will tend to improve and re-establish on the initial values.
 
   ![alt](./documents/plotScenari/scenario1.png)
@@ -165,7 +180,7 @@ In order to understand how a simulation is carried out or to be able to create a
   This represents the most complete scenario in which the managing recognises a better implementation, stops the old container and starts the new one with higher benefits.
 
   To simulate the real case where a service is unable to meet certain specifications or begins to perform unsatisfactorily, at the beginning of the simulation, a very low Average Response Time threshold (150) is set such that it cannot be met by the *delivery service* instance, through the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) of the simulation.
-  After 120 seconds the threshold will be reset to a normal value, so that the newly instantiated service will be able to meet it. 
+  After 120 seconds the threshold will be reset to a normal value, so that the newly instantiated service will be able to meet it.
   ```
   CHANGE_THRESHOLD=Y
   MAX_ART_THRESHOLD=150
@@ -175,11 +190,11 @@ In order to understand how a simulation is carried out or to be able to create a
   ```
 
   In fact, the trend of the average response time does not meet the set limit by being above the threshold represented by the red line.
-  
+
   ![alt](./documents/plotScenari/scenario2-1.png)
 
   The managing notices the problem, and changes the implementation seeing that *delivery-proxy-2-service* has much better values than the first one, which is not working well.
-  
+
   These are the configuration of the three different potential instances of the *delivery-proxy-service* settled in the configuration file [system_architecture.json](./managing-system/knowledge/architecture_sla/sefa/system_architecture.json):
   ```
   "service_id":"DELIVERY-PROXY-SERVICE",
@@ -210,7 +225,7 @@ In order to understand how a simulation is carried out or to be able to create a
   Details: Goal: AverageResponseTime - Change DELIVERY-PROXY-SERVICE implementation from delivery-proxy-1-service to delivery-proxy-2-service. Changing implementation
   ```
   At this point the correct Average Response Time threshold will be restored to a normal value (in other cases, RAMSES will continue to allocate container to respect the unfeasible threshold) and the new implementation could satisfy it.
-  
+
   ![alt](./documents/plotScenari/scenario2-2.png)
 
   In the proposed graphs we do not see differences in trends before and after adjustment (as in the previous scenario changing colors) because when a new threshold is set, the graph is recalculated from scratch with the new data available. In other words, you get two graphs each with its threshold, and you only notice the trend of the service under examination and the threshold set during that time period.
@@ -221,7 +236,7 @@ In order to understand how a simulation is carried out or to be able to create a
   In particular, the *change load balancer weight* takes care of distributing the workload between different instances of the same service.
 
   In this scenario, managing and managed were deployed normally. During the simulation (10 minutes) the Average Response Time of the ordering-service is raised twice, after 90 seconds and after 180 seconds from the start of the simulation, settings its value in the [application.properties](./managed-system/rest-client/src/main/resources/application.properties) file.
-  
+
   ```
   FAKE_SLOW_ORDERING=Y
   
@@ -237,7 +252,7 @@ In order to understand how a simulation is carried out or to be able to create a
   By doing so, only one instance will not be able to maintain the average response time within the threshold, consequentially the managing will start another *ordering service* in addition to the existing ones. The *load weight balancing* function will take care of splitting the work and, very importantly, save any new weight changes in the GitHub repository used by the configuration server.
 
   The plot of the *ordering service* show the benefits of this adaptation: initially instantiating a new service when the first one is slowed and splitting the workload between the old and the new instance, indeed the blue peak represents the first slowdown in the average response time;
-  and then, changing the load balancing weights when only the first instance is slowed again entrusting more work to the instance that performs better, in fact the second one is not slowed down. 
+  and then, changing the load balancing weights when only the first instance is slowed again entrusting more work to the instance that performs better, in fact the second one is not slowed down.
 
   This graph represents the entire progress of the simulation, changing color to green after the second adaptation has been carried out.
 
@@ -261,9 +276,9 @@ In order to understand how a simulation is carried out or to be able to create a
 
   In this last scenario we see the last of the adaptation options that RAMSES is able to implement, namely *handleShutdownInstanceOption*.
 
-  We create a simulation (lasting 10 minutes) where after 90 seconds from the start we deliberately slow down the *ordering service* for one minute (after which it will be reset to normal values). 
-  This will cause the managing to start a new instance to help our slowed down service. 
-  
+  We create a simulation (lasting 10 minutes) where after 90 seconds from the start we deliberately slow down the *ordering service* for one minute (after which it will be reset to normal values).
+  This will cause the managing to start a new instance to help our slowed down service.
+
   As the previous scenarios, through the [application.properties](./managed-system/rest-client/src/main/resources/application.properties).
 
   ```
@@ -274,7 +289,7 @@ In order to understand how a simulation is carried out or to be able to create a
   ```
 
   After this, the workload will be handled by two instances that will divide the workload in half by setting weights (as seen in the previous scenario) resulting in the configuration repo as follows.
-  
+
   ```
   loadbalancing.ordering-service.sefa-ordering-service-42315_42315.weight=0.5
   loadbalancing.ordering-service.sefa-ordering-service_58086.weight=0.5
@@ -282,11 +297,11 @@ In order to understand how a simulation is carried out or to be able to create a
 
   At this point, after 260 seconds from the beginning, we lower the availability of one of the two instances of the 28%, so that the average availability of the entire ordering-service straddles the threshold.
   In this way, the managing will have to take note of the unfollowed threshold and act accordingly, in other words add another instances or change the load balancing weights again.
-  
+
   The managing, probably would change the load balancing weights assigning more work to the instance that performs better and has not been slowed down.
 
   After 400 seconds we will perform the same slowdown again to the same instance as before (the one with a lower workload).
-  
+
   Through the same properties file.
 
   ```
@@ -309,10 +324,10 @@ In order to understand how a simulation is carried out or to be able to create a
    ```
    loadbalancing.ordering-service.sefa-ordering-service-42315_42315.weight=1.0
    ```
-  
+
   The availability plot of the *ordering service* clearly shows the benefits of weight changes occurring twice, when the availability goes under the threshold.
-  
-  The first drop after 60 seconds is when a new instance of the *ordering service* is added. 
+
+  The first drop after 60 seconds is when a new instance of the *ordering service* is added.
   The first major drop below the threshold is the first time the service is slowed down in order to change the workload weights.
   And finally, when the process changes color to green, it happens following the last adaptation in which the managing proceeded to turn off the repeatedly slowed down instance. Consequently the performance of the service will tend to recover and have an upward curve.
   ![alt](./documents/plotScenari/scenario4.png)
@@ -352,14 +367,14 @@ In this particular case, it is used to obtain the new weights of the existing in
 
 ### Portforwarding
 A known issue on macOS involves the Actuator component, that sometimes cannot directly contact the Docker interface to run or stop containers. This results in the Instances Manager container to fail its booting process.
-	
+
 To solve this issue, install [Homebrew](https://brew.sh) if you do not have it yet, update its packages with the following command.
 
 ```
 $ brew upgrade
 ```
 
-Install the latest versione of [Socat](http://www.dest-unreach.org/socat/) (1.8.0.0 for Mac and 1.7.4.1 for Windows) with this command.
+Install the latest versione of [Socat](http://www.dest-unreach.org/socat/) (1.8.0.0 for Mac and 1.7.4.1 for Win/Linux) with this command.
 
 ```
 $ brew install socat
@@ -377,7 +392,7 @@ $ sudo wsl --install
 ```
 
 If the path is not correct for the Docker configuration, follow this [forum question](https://forums.docker.com/t/is-a-missing-docker-sock-file-a-bug/134351) about.
-   
+
 ### Configuration Repo
 Clean the *application.properties* file in the configuration server repo on GitHub ([link](#Create-the-configuration-repo) to create it) after each adaptation. Otherwise, when a new deployment of RAMSES is attempted, knowledge will find configuration incompatibilities and will not be able to be executed.
 
