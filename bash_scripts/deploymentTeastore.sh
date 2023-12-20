@@ -18,32 +18,25 @@ echo
 #docker run -P --name eureka -d --network teastore eureka
 
 # REGISTRY
-docker run --name registry -e "HOST_NAME=registry" -e "SERVICE_PORT=10000" -p 10000:8080 --network teastore -d descartesresearch/teastore-registry
-sleep 5
+docker run --name registry -p 1000:8080 --network teastore -d descartesresearch/teastore-registry
 
 #DB
 docker run --name db -p 3306:3306 --network teastore -d descartesresearch/teastore-db
-sleep 2
 
-# PERSISTENCE
-docker run --name persistence -e "REGISTRY_HOST=registry" -e "REGISTRY_PORT=10000" -e "HOST_NAME=persistence" -e "SERVICE_PORT=1111" -e "DB_HOST=db" -e "DB_PORT=3306" -p 1111:8080 --network teastore -d descartesresearch/teastore-persistence
-sleep 2
+#PERSISTENCE
+docker run --name persistence -e "REGISTRY_HOST=registry" -e "HOST_NAME=persistence" -e "DB_HOST=db" -e "DB_PORT=3306" -p 1111:8080 --network teastore -d descartesresearch/teastore-persistence
 
 #STORE/AUTH
-docker run --name auth -e "REGISTRY_HOST=registry" -e "REGISTRY_PORT=10000" -e "HOST_NAME=auth" -e "SERVICE_PORT=2222" -p 2222:8080 --network teastore -d descartesresearch/teastore-auth
-sleep 2
+docker run --name auth -e "REGISTRY_HOST=registry" -e "HOST_NAME=auth" -p 2222:8080 --network teastore -d descartesresearch/teastore-auth
 
 #RECOMMENDER
-docker run --name recommender -e "REGISTRY_HOST=registry" -e "REGISTRY_PORT=10000" -e "HOST_NAME=recommender" -e "SERVICE_PORT=3333" -p 3333:8080 --network teastore -d descartesresearch/teastore-recommender
-sleep 2
+docker run --name recommender -e "REGISTRY_HOST=registry" -e "HOST_NAME=recommender" -p 3333:8080 --network teastore -d descartesresearch/teastore-recommender
 
 #IMAGE
-docker run --name image -e "REGISTRY_HOST=registry" -e "REGISTRY_PORT=10000" -e "HOST_NAME=image" -e "SERVICE_PORT=4444" -p 4444:8080 --network teastore -d descartesresearch/teastore-image
-sleep 2
+docker run --name image -e "REGISTRY_HOST=registry" -e "HOST_NAME=image" -p 4444:8080 --network teastore -d descartesresearch/teastore-image
 
 #WEBUI
-docker run --name webui -e "REGISTRY_HOST=registry" -e "REGISTRY_PORT=10000" -e "HOST_NAME=webui" -e "SERVICE_PORT=8080" -p 8080:8080 --network teastore -d descartesresearch/teastore-webui
-sleep 5
+docker run --name webui -e "REGISTRY_HOST=registry" -e "HOST_NAME=webui" -p 8080:8080 --network teastore -d descartesresearch/teastore-webui
 
 PrintSuccess "All Teastore services are UP!"
 
