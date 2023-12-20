@@ -15,29 +15,31 @@ docker network create teastore
 echo
 
 # DISCOVERY SERVER
-#docker run -P --name eureka -d --network teastore eureka
+docker run -P --name sefa-eureka -d --network teastore eureka
+sleep 5
 
 # REGISTRY
-docker run --name registry -p 1000:8080 --network teastore -d descartesresearch/teastore-registry
+docker run --name registry -p 1000:8080 --network teastore -d teastore-registry
 
 #DB
-docker run --name db -p 3306:3306 --network teastore -d descartesresearch/teastore-db
+docker run --name db -p 3306:3306 --network teastore -d teastore-db
 
 #PERSISTENCE
-docker run --name persistence -e "REGISTRY_HOST=registry" -e "HOST_NAME=persistence" -e "DB_HOST=db" -e "DB_PORT=3306" -p 1111:8080 --network teastore -d descartesresearch/teastore-persistence
+docker run --name persistence -e "REGISTRY_HOST=registry" -e "HOST_NAME=persistence" -e "DB_HOST=db" -e "DB_PORT=3306" -p 1111:8080 --network teastore -d teastore-persistence
 
 #STORE/AUTH
-docker run --name auth -e "REGISTRY_HOST=registry" -e "HOST_NAME=auth" -p 2222:8080 --network teastore -d descartesresearch/teastore-auth
+docker run --name auth -e "REGISTRY_HOST=registry" -e "HOST_NAME=auth" -p 2222:8080 --network teastore -d teastore-auth
 
 #RECOMMENDER
-docker run --name recommender -e "REGISTRY_HOST=registry" -e "HOST_NAME=recommender" -p 3333:8080 --network teastore -d descartesresearch/teastore-recommender
+docker run --name recommender -e "REGISTRY_HOST=registry" -e "HOST_NAME=recommender" -p 3333:8080 --network teastore -d teastore-recommender
 
 #IMAGE
-docker run --name image -e "REGISTRY_HOST=registry" -e "HOST_NAME=image" -p 4444:8080 --network teastore -d descartesresearch/teastore-image
+docker run --name image -e "REGISTRY_HOST=registry" -e "HOST_NAME=image" -p 4444:8080 --network teastore -d teastore-image
 
 #WEBUI
-docker run --name webui -e "REGISTRY_HOST=registry" -e "HOST_NAME=webui" -p 8080:8080 --network teastore -d descartesresearch/teastore-webui
+docker run --name webui -e "REGISTRY_HOST=registry" -e "HOST_NAME=webui" -p 8080:8080 --network teastore -d teastore-webui
 
+sleep 10
 PrintSuccess "All Teastore services are UP!"
 
 
