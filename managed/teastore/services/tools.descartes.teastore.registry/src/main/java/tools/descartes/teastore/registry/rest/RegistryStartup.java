@@ -35,7 +35,7 @@ import org.slf4j.LoggerFactory;
 @WebListener
 public class RegistryStartup implements ServletContextListener {
 
-
+  ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
   private static final Logger LOG = LoggerFactory.getLogger(RegistryStartup.class);
   /**
    * Also set this accordingly in RegistryClientStartup.
@@ -81,7 +81,11 @@ public class RegistryStartup implements ServletContextListener {
     LOG.info("Registry online");
     LOG.info("-------------------------------------------------------------------------------------------------");
 
-    EurekaClientHelper.register();
+    executorService.schedule(() -> {
+      EurekaClientHelper.register();
+    }, 25, TimeUnit.SECONDS);
+
+    executorService.shutdown();
 
   }
 }

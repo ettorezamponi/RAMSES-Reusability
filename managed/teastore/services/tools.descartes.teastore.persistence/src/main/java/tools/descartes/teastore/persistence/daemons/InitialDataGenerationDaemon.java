@@ -28,6 +28,10 @@ import tools.descartes.teastore.registryclient.Service;
 import tools.descartes.teastore.registryclient.tracing.Tracing;
 import tools.ezamponi.EurekaClientHelper;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Application Lifecycle Listener implementation class for data generation.
  *
@@ -38,7 +42,7 @@ import tools.ezamponi.EurekaClientHelper;
 public class InitialDataGenerationDaemon implements ServletContextListener {
 
   private static final Logger LOG = LoggerFactory.getLogger(InitialDataGenerationDaemon.class);
-
+  ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
   private static final long DATABASE_OFFLINE_WAIT_MS = 2000;
 
   /**
@@ -83,7 +87,11 @@ public class InitialDataGenerationDaemon implements ServletContextListener {
 
     LOG.info("-------------------------------------------------------------------------------------------------");
 
-    EurekaClientHelper.register();
+    executorService.schedule(() -> {
+      EurekaClientHelper.register();
+    }, 25, TimeUnit.SECONDS);
+
+    executorService.shutdown();
   }
 
   private void waitForDatabase() {

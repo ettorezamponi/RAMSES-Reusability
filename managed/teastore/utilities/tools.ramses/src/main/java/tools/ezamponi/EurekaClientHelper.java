@@ -12,23 +12,11 @@ public class EurekaClientHelper {
     public static void register() {
 
         try {
-            Thread.sleep(5000);
-        } catch (InterruptedException e) {
+            LOG.info("Registration started after 5 seconds");
+            eurekaClientService.registerInstance();
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
-        Thread myThread = new Thread(() -> {
-            try {
-                // Codice del thread
-                LOG.info("Registration started after 5 seconds");
-                eurekaClientService.registerInstance();
-
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-
-        myThread.start();
     }
 
     public static void deRegister() {

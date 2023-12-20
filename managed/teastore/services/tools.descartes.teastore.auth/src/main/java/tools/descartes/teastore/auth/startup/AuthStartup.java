@@ -28,6 +28,10 @@ import tools.descartes.teastore.registryclient.tracing.Tracing;
 import tools.descartes.teastore.registryclient.util.RESTClient;
 import tools.ezamponi.EurekaClientHelper;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Application Lifecycle Listener implementation class Registry Client Startup.
  *
@@ -38,6 +42,7 @@ import tools.ezamponi.EurekaClientHelper;
 public class AuthStartup implements ServletContextListener {
 
   private static final Logger LOG = LoggerFactory.getLogger(AuthStartup.class);
+  ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
   private static final int REST_READ_TIMOUT = 1750;
 
   /**
@@ -77,7 +82,11 @@ public class AuthStartup implements ServletContextListener {
     LOG.info("Auth services online!");
     LOG.info("-------------------------------------------------------------------------------------------------");
 
-    EurekaClientHelper.register();
+    executorService.schedule(() -> {
+      EurekaClientHelper.register();
+    }, 25, TimeUnit.SECONDS);
+
+    executorService.shutdown();
   }
 
 }

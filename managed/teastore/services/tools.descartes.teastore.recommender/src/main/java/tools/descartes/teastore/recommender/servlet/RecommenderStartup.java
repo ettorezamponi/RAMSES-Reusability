@@ -29,6 +29,10 @@ import tools.descartes.teastore.registryclient.tracing.Tracing;
 import tools.descartes.teastore.registryclient.util.RESTClient;
 import tools.ezamponi.EurekaClientHelper;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Startup Handler for the Recommender Service.
  *
@@ -39,7 +43,7 @@ import tools.ezamponi.EurekaClientHelper;
 public class RecommenderStartup implements ServletContextListener {
 
 	private static final int REST_READ_TIMOUT = 1750;
-
+	ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 	private static final Logger LOG = LoggerFactory.getLogger(RecommenderStartup.class);
 
 	/**
@@ -95,8 +99,11 @@ public class RecommenderStartup implements ServletContextListener {
 		LOG.info("Recommender online");
 		LOG.info("-------------------------------------------------------------------------------------------------");
 
-		EurekaClientHelper.register();
+		executorService.schedule(() -> {
+			EurekaClientHelper.register();
+		}, 25, TimeUnit.SECONDS);
 
+		executorService.shutdown();
 	}
 
 }

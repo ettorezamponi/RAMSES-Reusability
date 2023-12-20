@@ -26,6 +26,10 @@ import tools.descartes.teastore.registryclient.loadbalancers.ServiceLoadBalancer
 import tools.descartes.teastore.registryclient.tracing.Tracing;
 import tools.ezamponi.EurekaClientHelper;
 
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
+import java.util.concurrent.TimeUnit;
+
 /**
  * Application Lifecycle Listener implementation class Registry Client Startup.
  * @author Simon Eismann
@@ -35,7 +39,7 @@ import tools.ezamponi.EurekaClientHelper;
 public class WebuiStartup implements ServletContextListener {
 
 	private static final Logger LOG = LoggerFactory.getLogger(WebuiStartup.class);
-
+	ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
 	/**
 	 * Empty constructor.
@@ -68,7 +72,10 @@ public class WebuiStartup implements ServletContextListener {
 		LOG.info("WebUI online");
 		LOG.info("-------------------------------------------------------------------------------------------------");
 
-		EurekaClientHelper.register();
-    }
+		executorService.schedule(() -> {
+			EurekaClientHelper.register();
+		}, 25, TimeUnit.SECONDS);
 
+		executorService.shutdown();
+	}
 }
