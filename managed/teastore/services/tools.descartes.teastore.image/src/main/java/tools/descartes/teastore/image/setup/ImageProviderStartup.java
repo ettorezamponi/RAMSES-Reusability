@@ -86,7 +86,7 @@ public class ImageProviderStartup implements ServletContextListener {
 
       executorService.schedule(() -> {
           EurekaClientHelper.register();
-      }, 25, TimeUnit.SECONDS);
+      }, 40, TimeUnit.SECONDS);
 
       executorService.shutdown();
   }

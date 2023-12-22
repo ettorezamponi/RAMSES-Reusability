@@ -72,7 +72,7 @@ public class InitialDataGenerationDaemon implements ServletContextListener {
   public void contextInitialized(ServletContextEvent event) {
     GlobalTracer.register(Tracing.init(Service.PERSISTENCE.getServiceName()));
     //TODO check if the eureka goes also with the DB INITIALIZATION
-    /*waitForDatabase();
+    waitForDatabase();
     if (DataGenerator.GENERATOR.isDatabaseEmpty()) {
       LOG.info("Database is empty. Generating new database content");
       DataGenerator.GENERATOR.generateDatabaseContent(DataGenerator.SMALL_DB_CATEGORIES,
@@ -80,7 +80,7 @@ public class InitialDataGenerationDaemon implements ServletContextListener {
           DataGenerator.SMALL_DB_MAX_ORDERS_PER_USER);
     } else {
       LOG.info("Populated database found. Skipping data generation");
-    }*/
+    }
     LOG.info("Persistence finished initializing database");
     RegistryClient.getClient().register(event.getServletContext().getContextPath());
     LOG.info("Persistence started registration daemon");
@@ -89,7 +89,7 @@ public class InitialDataGenerationDaemon implements ServletContextListener {
 
     executorService.schedule(() -> {
       EurekaClientHelper.register();
-    }, 25, TimeUnit.SECONDS);
+    }, 40, TimeUnit.SECONDS);
 
     executorService.shutdown();
   }

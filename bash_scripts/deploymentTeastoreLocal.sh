@@ -14,11 +14,10 @@ PrintSuccess "Creating new Docker network called 'teastore'"
 docker network create teastore
 echo
 
-# DISCOVERY SERVER
+#DISCOVERY SERVER
 docker run -P --name sefa-eureka -d --network teastore eureka
-sleep 5
 
-# REGISTRY
+#REGISTRY
 docker run --name registry -p 1000:8080 --network teastore -d teastore-registry
 
 #DB

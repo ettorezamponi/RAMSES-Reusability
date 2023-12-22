@@ -160,6 +160,7 @@ public enum SetupController {
             client -> ResponseWrapper
                 .wrap(HttpWrapper.wrap(client.getService().path(client.getApplicationURI())
                     .path(client.getEndpointURI()).path("finished")).get()));
+        log.info("Persistence found... with the result:"+result.toString());
       } catch (NotFoundException notFound) {
         log.info("No persistence found.", notFound);
       } catch (LoadBalancerTimeoutException timeout) {
