@@ -38,8 +38,15 @@ docker run --name image -e "REGISTRY_HOST=registry" -e "HOST_NAME=image" -p 4444
 #WEBUI
 docker run --name webui -e "REGISTRY_HOST=registry" -e "HOST_NAME=webui" -p 8080:8080 --network teastore -d teastore-webui
 
-sleep 25
-PrintSuccess "All Teastore services are UP!"
+sleep 60
+
+docker run -P --name teastore-probe -d --network teastore probe
+sleep 5
+
+docker run -P --name ramses-knowledge -d --network teastore knowledge
+
+
+PrintSuccess "EVERYTHING SET UP!"
 
 
 # this example does not configure the PROXY_NAME and PROXY_PORT variables for the WebUI,
