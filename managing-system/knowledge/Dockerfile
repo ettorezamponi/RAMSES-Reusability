@@ -7,7 +7,7 @@ COPY architecture_sla ./architecture_sla
 
 EXPOSE 58005
 ENV MYSQL_SERVER=mysql
-ENV CONFIGURATION_PATH=/app/architecture_sla/sefa
+ENV CONFIGURATION_PATH=/app/architecture_sla/teastore
 ENV PROBE_URL=http://sefa-probe:58020
 
 ENTRYPOINT ["java","-jar","/app/spring-boot-application.jar"]

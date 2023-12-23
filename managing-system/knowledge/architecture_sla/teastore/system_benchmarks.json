@@ -1,0 +1,112 @@
+{
+	"services" : [
+		{
+			"service_id":"TEASTORE-AUTH",
+			"implementations" : [
+				{
+					"implementation_id" : "teastore-auth",
+					"adaptation_benchmarks" : [
+						{
+							"name": "average_response_time",
+							"benchmark": 100
+						},
+						{
+							"name": "availability",
+							"benchmark": 0.91
+						}
+					]
+				}
+			]
+		},
+		{
+			"service_id":"TEASTORE-IMAGE",
+			"implementations" : [
+				{
+					"implementation_id" : "teastore-image",
+					"adaptation_benchmarks" : [
+						{
+							"name": "average_response_time",
+							"benchmark": 100
+						},
+						{
+							"name": "availability",
+							"benchmark": 0.91
+						}
+					]
+				}
+			]
+		},
+		{
+			"service_id":"TEASTORE-PERSISTENCE",
+			"implementations" : [
+				{
+					"implementation_id" : "teastore-persistence",
+					"adaptation_benchmarks" : [
+						{
+							"name": "average_response_time",
+							"benchmark": 100
+						},
+						{
+							"name": "availability",
+							"benchmark": 0.91
+						}
+					]
+				}
+			]
+		},
+		{
+			"service_id":"TEASTORE-RECOMMENDER",
+			"implementations" : [
+				{
+					"implementation_id" : "teastore-recommender",
+					"adaptation_benchmarks" : [
+						{
+							"name": "average_response_time",
+							"benchmark": 100
+						},
+						{
+							"name": "availability",
+							"benchmark": 0.91
+						}
+					]
+				}
+			]
+		},
+		{
+			"service_id":"TEASTORE-REGISTRY",
+			"implementations" : [
+				{
+					"implementation_id" : "teastore-registry",
+					"adaptation_benchmarks" : [
+						{
+							"name": "average_response_time",
+							"benchmark": 100
+						},
+						{
+							"name": "availability",
+							"benchmark": 0.91
+						}
+					]
+				}
+			]
+		},
+		{
+			"service_id":"TEASTORE-WEBUI",
+			"implementations" : [
+				{
+					"implementation_id" : "teastore-webui",
+					"adaptation_benchmarks" : [
+						{
+							"name": "average_response_time",
+							"benchmark": 100
+						},
+						{
+							"name": "availability",
+							"benchmark": 0.91
+						}
+					]
+				}
+			]
+		}
+	]
+}

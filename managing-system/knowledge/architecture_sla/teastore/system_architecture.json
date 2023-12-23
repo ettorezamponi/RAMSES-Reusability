@@ -1,0 +1,82 @@
+{
+	"services"	: [
+		{
+			"service_id":"TEASTORE-AUTH",
+			"implementations" : [
+				{
+					"implementation_id" : "teastore-auth",
+					"implementation_trust" : 1,
+					"preference" : 1,
+					"instance_load_shutdown_threshold" : 0.4
+				}
+
+			],
+			"dependencies" : []
+		},
+		{
+			"service_id":"TEASTORE-IMAGE",
+			"implementations" : [
+				{
+					"implementation_id" : "teastore-image",
+					"implementation_trust" : 1,
+					"preference" : 1,
+					"instance_load_shutdown_threshold" : 0.4
+				}
+
+			],
+			"dependencies" : []
+		},
+		{
+			"service_id":"TEASTORE-PERSISTENCE",
+			"implementations" : [
+				{
+					"implementation_id" : "teastore-persistence",
+					"implementation_trust" : 1,
+					"preference" : 1,
+					"instance_load_shutdown_threshold" : 0.4
+				}
+
+			],
+			"dependencies" : []
+		},
+		{
+			"service_id":"TEASTORE-RECOMMENDER",
+			"implementations" : [
+				{
+					"implementation_id" : "teastore-recommender",
+					"implementation_trust" : 1,
+					"preference" : 1,
+					"instance_load_shutdown_threshold" : 0.4
+				}
+
+			],
+			"dependencies" : []
+		},
+		{
+			"service_id":"TEASTORE-REGISTRY",
+			"implementations" : [
+				{
+					"implementation_id" : "teastore-registry",
+					"implementation_trust" : 1,
+					"preference" : 1,
+					"instance_load_shutdown_threshold" : 0.4
+				}
+
+			],
+			"dependencies" : []
+		},
+		{
+			"service_id":"TEASTORE-WEBUI",
+			"implementations" : [
+				{
+					"implementation_id" : "teastore-webui",
+					"implementation_trust" : 1,
+					"preference" : 1,
+					"instance_load_shutdown_threshold" : 0.4
+				}
+
+			],
+			"dependencies" : []
+		}
+	]
+}

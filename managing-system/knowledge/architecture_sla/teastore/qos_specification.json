@@ -1,0 +1,94 @@
+{
+	"services"	: [
+		{
+			"service_id":"TEASTORE-AUTH",
+			"qos" : [
+				{
+					"name" : "availability",
+					"weight" : 0.5,
+					"min_threshold" : 0.8
+				},
+				{
+					"name" : "average_response_time",
+					"weight" : 0.5,
+					"max_threshold": 900
+				}
+			]
+		},
+		{
+			"service_id":"TEASTORE-IMAGE",
+			"qos" : [
+				{
+					"name" : "availability",
+					"weight" : 0.5,
+					"min_threshold" : 0.8
+				},
+				{
+					"name" : "average_response_time",
+					"weight" : 0.5,
+					"max_threshold": 900
+				}
+			]
+		},
+		{
+			"service_id" : "TEASTORE-PERSISTENCE",
+			"qos" : [
+				{
+					"name" : "availability",
+					"weight" : 0.5,
+					"min_threshold" : 0.8
+				},
+				{
+					"name" : "average_response_time",
+					"weight" : 0.5,
+					"max_threshold": 900
+				}
+			]
+		},
+		{
+			"service_id" : "TEASTORE-RECOMMENDER",
+			"qos" : [
+				{
+					"name" : "availability",
+					"weight" : 0.5,
+					"min_threshold" : 0.8
+				},
+				{
+					"name" : "average_response_time",
+					"weight" : 0.5,
+					"max_threshold": 900
+				}
+			]
+		},
+		{
+			"service_id" : "TEASTORE-REGISTRY",
+			"qos" : [
+				{
+					"name" : "availability",
+					"weight" : 0.5,
+					"min_threshold" : 0.8
+				},
+				{
+					"name" : "average_response_time",
+					"weight" : 0.5,
+					"max_threshold": 900
+				}
+			]
+		},
+		{
+			"service_id" : "TEASTORE-WEBUI",
+			"qos" : [
+				{
+					"name" : "availability",
+					"weight" : 0.5,
+					"min_threshold" : 0.8
+				},
+				{
+					"name" : "average_response_time",
+					"weight" : 0.5,
+					"max_threshold": 900
+				}
+			]
+		}
+	]
+}
