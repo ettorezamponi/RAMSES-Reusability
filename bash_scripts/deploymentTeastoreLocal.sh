@@ -22,6 +22,7 @@ docker run --name registry -p 1000:8080 --network teastore -d teastore-registry
 
 #DB
 docker run --name db -p 3306:3306 --network teastore -d teastore-db
+docker run -P --name knowledge-db --network teastore -d knowledge-db
 
 #PERSISTENCE
 docker run --name persistence -e "REGISTRY_HOST=registry" -e "HOST_NAME=persistence" -e "DB_HOST=db" -e "DB_PORT=3306" -p 1111:8080 --network teastore -d teastore-persistence
