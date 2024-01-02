@@ -6,7 +6,7 @@ MSc final thesis project by Ettore Zamponi.
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
-## Things to do before execute the code
+## Things to do before build the code
 
 1) build with gradle the microservices inside the folder [libs](./libs) and [services-restapi](./managed-system/services-restapi).
 2) copy the jar in a new folder where the dependency request them
