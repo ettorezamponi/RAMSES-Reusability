@@ -39,9 +39,22 @@
 
     <!-- EUREKA -->
     <dependency>
-      <groupId>com.smattme</groupId>
-      <artifactId>eureka-client-wrapper</artifactId>
-      <version>1.0.0</version>
+      <groupId>com.netflix.eureka</groupId>
+      <artifactId>eureka-client</artifactId>
+      <version>1.9.14</version>
+    </dependency>
+
+    <dependency>
+      <groupId>javax.inject</groupId>
+      <artifactId>javax.inject</artifactId>
+      <version>1</version>
+    </dependency>
+
+    <!-- LOGGER -->
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.7.25</version>
     </dependency>
 
     <!-- PROMETHEUS -->

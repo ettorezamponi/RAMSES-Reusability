@@ -2,7 +2,7 @@ package tools.ezamponi;
 
 import com.netflix.appinfo.InstanceInfo;
 import com.netflix.appinfo.MyDataCenterInstanceConfig;
-import com.smattme.eureka.client.wrapper.EurekaClientService;
+import tools.ezamponi.EurekaClientService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
