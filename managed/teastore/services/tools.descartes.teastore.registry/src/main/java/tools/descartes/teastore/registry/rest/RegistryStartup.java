@@ -17,7 +17,7 @@ package tools.descartes.teastore.registry.rest;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
-import tools.ezamponi.EurekaClientHelper;
+import tools.ezamponi.MyEurekaClientHelper;
 
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
@@ -60,7 +60,7 @@ public class RegistryStartup implements ServletContextListener {
   public void contextDestroyed(ServletContextEvent arg0) {
     heartbeatScheduler.shutdownNow();
 
-    EurekaClientHelper.deRegister();
+    MyEurekaClientHelper.deRegister();
     LOG.info("Shutdown registry eureka client");
   }
 
@@ -82,7 +82,7 @@ public class RegistryStartup implements ServletContextListener {
     LOG.info("-------------------------------------------------------------------------------------------------");
 
     executorService.schedule(() -> {
-      EurekaClientHelper.register();
+      MyEurekaClientHelper.register();
     }, 40, TimeUnit.SECONDS);
 
     executorService.shutdown();

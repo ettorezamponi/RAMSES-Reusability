@@ -25,7 +25,7 @@ import tools.descartes.teastore.registryclient.Service;
 import tools.descartes.teastore.registryclient.StartupCallback;
 import tools.descartes.teastore.registryclient.loadbalancers.ServiceLoadBalancer;
 import tools.descartes.teastore.registryclient.tracing.Tracing;
-import tools.ezamponi.EurekaClientHelper;
+import tools.ezamponi.MyEurekaClientHelper;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -60,7 +60,7 @@ public class ImageProviderStartup implements ServletContextListener {
     RegistryClient.getClient().unregister(event.getServletContext().getContextPath());
     SetupController.SETUP.teardown();
 
-    EurekaClientHelper.deRegister();
+    MyEurekaClientHelper.deRegister();
     LOG.info("Shutdown image eureka client");
   }
 
@@ -85,7 +85,7 @@ public class ImageProviderStartup implements ServletContextListener {
       LOG.info("-------------------------------------------------------------------------------------------------");
 
       executorService.schedule(() -> {
-          EurekaClientHelper.register();
+          MyEurekaClientHelper.register();
       }, 40, TimeUnit.SECONDS);
 
       executorService.shutdown();

@@ -3,12 +3,13 @@ package tools.ezamponi;
 import com.netflix.appinfo.ApplicationInfoManager;
 import com.netflix.appinfo.EurekaInstanceConfig;
 import com.netflix.appinfo.InstanceInfo;
-import com.netflix.appinfo.PropertiesInstanceConfig;
+import com.netflix.appinfo.MyDataCenterInfo;
 import com.netflix.appinfo.providers.EurekaConfigBasedInstanceInfoProvider;
 import com.netflix.discovery.DiscoveryClient;
 import com.netflix.discovery.EurekaClient;
 import com.netflix.discovery.EurekaClientConfig;
 import tools.ezamponi.config.CustomEurekaClientConfig;
+import tools.ezamponi.config.MyEurekaInstanceConfig;
 import tools.ezamponi.config.WebAppInstanceConfig;
 import tools.ezamponi.util.ConfigurationUtil;
 import org.slf4j.Logger;
@@ -16,17 +17,17 @@ import org.slf4j.LoggerFactory;
 
 import java.util.Properties;
 
-public class EurekaClientService {
+public class MyEurekaClientService {
 
     private CustomEurekaClientConfig eurekaClientConfig;
     private WebAppInstanceConfig webAppInstanceConfig;
     private EurekaClient eurekaClient;
-    private Logger logger = LoggerFactory.getLogger(EurekaClientService.class);
+    private Logger logger = LoggerFactory.getLogger(MyEurekaClientService.class);
     private Properties properties;
     private static final String CONFIG_NAME = "eureka-client";
 
 
-    public EurekaClientService() {
+    public MyEurekaClientService() {
         properties = ConfigurationUtil.loadCascadedProperties(CONFIG_NAME);
         this.webAppInstanceConfig = new WebAppInstanceConfig(properties);
         this.eurekaClientConfig = new CustomEurekaClientConfig();
@@ -42,15 +43,18 @@ public class EurekaClientService {
     }
 
 
+
     /**
      * this is the entry point for registering
      * the app with the Eureka Server
      */
     public void registerInstance() {
-        logger.info("registering this app with eureka server");
+        logger.info("registering this app with eureka server NEWWWWWW");
         ApplicationInfoManager applicationInfoManager = initializeApplicationInfoManager(webAppInstanceConfig);
         initializeEurekaClient(applicationInfoManager, eurekaClientConfig);
         applicationInfoManager.setInstanceStatus(InstanceInfo.InstanceStatus.UP);
+
+        //logger.info(InstanceInfo.Builder.newBuilder().setInstanceId());
     }
 
 

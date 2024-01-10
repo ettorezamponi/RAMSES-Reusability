@@ -26,7 +26,7 @@ import tools.descartes.teastore.persistence.repository.DataGenerator;
 import tools.descartes.teastore.registryclient.RegistryClient;
 import tools.descartes.teastore.registryclient.Service;
 import tools.descartes.teastore.registryclient.tracing.Tracing;
-import tools.ezamponi.EurekaClientHelper;
+import tools.ezamponi.MyEurekaClientHelper;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -60,7 +60,7 @@ public class InitialDataGenerationDaemon implements ServletContextListener {
   public void contextDestroyed(ServletContextEvent event) {
     RegistryClient.getClient().unregister(event.getServletContext().getContextPath());
 
-    EurekaClientHelper.deRegister();
+    MyEurekaClientHelper.deRegister();
     LOG.info("Shutdown persistence and eureka client");
   }
 
@@ -88,7 +88,7 @@ public class InitialDataGenerationDaemon implements ServletContextListener {
     LOG.info("-------------------------------------------------------------------------------------------------");
 
     executorService.schedule(() -> {
-      EurekaClientHelper.register();
+      MyEurekaClientHelper.register();
     }, 40, TimeUnit.SECONDS);
 
     executorService.shutdown();

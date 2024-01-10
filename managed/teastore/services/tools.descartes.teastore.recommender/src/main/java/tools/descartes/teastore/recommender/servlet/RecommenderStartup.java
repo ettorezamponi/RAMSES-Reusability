@@ -13,8 +13,6 @@
  */
 package tools.descartes.teastore.recommender.servlet;
 
-import javax.naming.InitialContext;
-import javax.naming.NamingException;
 import jakarta.servlet.ServletContextEvent;
 import jakarta.servlet.ServletContextListener;
 import jakarta.servlet.annotation.WebListener;
@@ -27,7 +25,7 @@ import tools.descartes.teastore.registryclient.Service;
 import tools.descartes.teastore.registryclient.loadbalancers.ServiceLoadBalancer;
 import tools.descartes.teastore.registryclient.tracing.Tracing;
 import tools.descartes.teastore.registryclient.util.RESTClient;
-import tools.ezamponi.EurekaClientHelper;
+import tools.ezamponi.MyEurekaClientHelper;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -65,7 +63,7 @@ public class RecommenderStartup implements ServletContextListener {
 	public void contextDestroyed(ServletContextEvent event) {
 		RegistryClient.getClient().unregister(event.getServletContext().getContextPath());
 
-		EurekaClientHelper.deRegister();
+		MyEurekaClientHelper.deRegister();
 		LOG.info("Shutdown recommender eureka client");
 	}
 
@@ -100,7 +98,7 @@ public class RecommenderStartup implements ServletContextListener {
 		LOG.info("-------------------------------------------------------------------------------------------------");
 
 		executorService.schedule(() -> {
-			EurekaClientHelper.register();
+			MyEurekaClientHelper.register();
 		}, 40, TimeUnit.SECONDS);
 
 		executorService.shutdown();

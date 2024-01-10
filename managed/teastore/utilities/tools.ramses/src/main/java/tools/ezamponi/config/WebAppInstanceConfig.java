@@ -17,24 +17,6 @@ public class WebAppInstanceConfig extends MyDataCenterInstanceConfig {
         this.properties = properties;
     }
 
-//    public String getAppname() {
-//        return "smatt-sample-service";
-//    }
-//
-//    @Override
-//    public String getStatusPageUrl() {
-//        return "http://localhost:9005/actuator/info";
-//    }
-//
-//    @Override
-//    public String getHomePageUrl() {
-//        return "http://localhost:9005/";
-//    }
-//
-//    @Override
-//    public String getHealthCheckUrl() {
-//        return "http://localhost:9005/actuator/health";
-//    }
 
     @Override
     public String getHostName(boolean refresh) {

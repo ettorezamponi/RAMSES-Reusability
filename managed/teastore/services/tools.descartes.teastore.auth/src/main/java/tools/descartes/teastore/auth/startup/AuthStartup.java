@@ -26,7 +26,7 @@ import tools.descartes.teastore.registryclient.Service;
 import tools.descartes.teastore.registryclient.loadbalancers.ServiceLoadBalancer;
 import tools.descartes.teastore.registryclient.tracing.Tracing;
 import tools.descartes.teastore.registryclient.util.RESTClient;
-import tools.ezamponi.EurekaClientHelper;
+import tools.ezamponi.MyEurekaClientHelper;
 
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -44,6 +44,7 @@ public class AuthStartup implements ServletContextListener {
   private static final Logger LOG = LoggerFactory.getLogger(AuthStartup.class);
   ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
   private static final int REST_READ_TIMOUT = 1750;
+
 
   /**
    * Also set this accordingly in RegistryClientStartup.
@@ -64,7 +65,7 @@ public class AuthStartup implements ServletContextListener {
   public void contextDestroyed(ServletContextEvent event) {
     RegistryClient.getClient().unregister(event.getServletContext().getContextPath());
 
-    EurekaClientHelper.deRegister();
+    MyEurekaClientHelper.deRegister();
     LOG.info("Shutdown auth eureka client");
   }
 
@@ -83,7 +84,7 @@ public class AuthStartup implements ServletContextListener {
     LOG.info("-------------------------------------------------------------------------------------------------");
 
     executorService.schedule(() -> {
-      EurekaClientHelper.register();
+      MyEurekaClientHelper.register();
     }, 40, TimeUnit.SECONDS);
 
     executorService.shutdown();
