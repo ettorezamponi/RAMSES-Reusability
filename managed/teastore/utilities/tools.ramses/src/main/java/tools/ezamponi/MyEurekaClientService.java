@@ -49,7 +49,7 @@ public class MyEurekaClientService {
      * the app with the Eureka Server
      */
     public void registerInstance() {
-        logger.info("registering this app with eureka server NEWWWWWW");
+        logger.info("registering this app with eureka server");
         ApplicationInfoManager applicationInfoManager = initializeApplicationInfoManager(webAppInstanceConfig);
         initializeEurekaClient(applicationInfoManager, eurekaClientConfig);
         applicationInfoManager.setInstanceStatus(InstanceInfo.InstanceStatus.UP);

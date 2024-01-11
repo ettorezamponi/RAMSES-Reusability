@@ -2,6 +2,9 @@ package tools.ezamponi.config;
 
 import com.netflix.appinfo.MyDataCenterInstanceConfig;
 import com.netflix.appinfo.PropertiesInstanceConfig;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import tools.ezamponi.MyEurekaClientService;
 import tools.ezamponi.util.InetUtils;
 import tools.ezamponi.util.InetUtilsProperties;
 
@@ -11,6 +14,7 @@ public class WebAppInstanceConfig extends MyDataCenterInstanceConfig {
 
     private static final String HOST_NAME = "eureka.hostname";
     private Properties properties;
+    private Logger logger = LoggerFactory.getLogger(MyEurekaClientService.class);
 
 
     public WebAppInstanceConfig(Properties properties) {
@@ -23,13 +27,14 @@ public class WebAppInstanceConfig extends MyDataCenterInstanceConfig {
         return properties.getProperty(HOST_NAME, "localhost");
     }
 
-    @Override
+    // this prevented the id from being set correctly via properties
+    /*@Override
     public String getInstanceId() {
         InetUtilsProperties target = new InetUtilsProperties();
         InetUtils utils = new InetUtils(target);
         InetUtils.HostInfo hostInfo = utils.findFirstNonLoopbackHostInfo();
         return hostInfo.getHostname() + ":" + getVirtualHostName() + ":" + getNonSecurePort();
-    }
+    }*/
 
 
 }
