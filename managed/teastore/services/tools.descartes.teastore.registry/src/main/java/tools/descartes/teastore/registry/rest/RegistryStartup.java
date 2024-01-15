@@ -83,7 +83,7 @@ public class RegistryStartup implements ServletContextListener {
 
     executorService.schedule(() -> {
       MyEurekaClientHelper.register();
-    }, 40, TimeUnit.SECONDS);
+    }, 50, TimeUnit.SECONDS);
 
     executorService.shutdown();
 

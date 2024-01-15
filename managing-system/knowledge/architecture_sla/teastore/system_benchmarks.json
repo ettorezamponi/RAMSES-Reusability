@@ -4,7 +4,7 @@
 			"service_id":"TEASTORE-AUTH",
 			"implementations" : [
 				{
-					"implementation_id" : "teastore-auth",
+					"implementation_id" : "auth",
 					"adaptation_benchmarks" : [
 						{
 							"name": "average_response_time",
@@ -22,7 +22,7 @@
 			"service_id":"TEASTORE-IMAGE",
 			"implementations" : [
 				{
-					"implementation_id" : "teastore-image",
+					"implementation_id" : "image",
 					"adaptation_benchmarks" : [
 						{
 							"name": "average_response_time",
@@ -40,7 +40,7 @@
 			"service_id":"TEASTORE-PERSISTENCE",
 			"implementations" : [
 				{
-					"implementation_id" : "teastore-persistence",
+					"implementation_id" : "persistence",
 					"adaptation_benchmarks" : [
 						{
 							"name": "average_response_time",
@@ -58,7 +58,7 @@
 			"service_id":"TEASTORE-RECOMMENDER",
 			"implementations" : [
 				{
-					"implementation_id" : "teastore-recommender",
+					"implementation_id" : "recommender",
 					"adaptation_benchmarks" : [
 						{
 							"name": "average_response_time",
@@ -76,7 +76,7 @@
 			"service_id":"TEASTORE-REGISTRY",
 			"implementations" : [
 				{
-					"implementation_id" : "teastore-registry",
+					"implementation_id" : "registry",
 					"adaptation_benchmarks" : [
 						{
 							"name": "average_response_time",
@@ -94,7 +94,7 @@
 			"service_id":"TEASTORE-WEBUI",
 			"implementations" : [
 				{
-					"implementation_id" : "teastore-webui",
+					"implementation_id" : "webui",
 					"adaptation_benchmarks" : [
 						{
 							"name": "average_response_time",

@@ -23,8 +23,10 @@ public class ConfigurationParser {
         InstanceInfo configInstance = getConfigServerInstance();
         String url = configInstance.getHomePageUrl() + "config-server/default/main/" + serviceId.toLowerCase() + ".properties";
         log.debug("Fetching configuration from " + url);
+        //Fetching configuration from http://sefa-configserver:58888/config-server/default/main/restaurant-service.properties
         ServiceConfiguration serviceConfiguration = new ServiceConfiguration(serviceId);
         ResponseEntity<String> response = new RestTemplate().getForEntity(url, String.class);
+        // # Each custom property MUST be in the form: # PROPERTY_PARENT.SERVICE_ID.SERVICE_APP_NAME.[INSTANCE_ID | global].PROPERTY_ELEMENT[.PROPERTY_ELEMENT]* = PROPERTY_VALUE
         String[] lines = Arrays.stream(response.getBody().split("\n")).filter(line -> line.matches("([\\w\\.-])+=.+")).toArray(String[]::new);
         for (String line : lines) {
             try {
@@ -49,6 +51,7 @@ public class ConfigurationParser {
     public ServiceConfiguration parseGlobalProperties(ServiceConfiguration configuration, String serviceId, String serviceImplementationId) {
         InstanceInfo configInstance = getConfigServerInstance();
         String url = configInstance.getHomePageUrl() + "config-server/default/main/application.properties";
+        //  http://sefa-configserver:58888/config-server/default/main/application.properties
         ResponseEntity<String> response = new RestTemplate().getForEntity(url, String.class);
         String[] lines = Arrays.stream(response.getBody().split("\n")).filter(line -> line.matches("([\\w\\.-])+=.+")).toArray(String[]::new);
         for (String line : lines) {
@@ -86,6 +89,8 @@ public class ConfigurationParser {
 
     private InstanceInfo getConfigServerInstance() {
         return discoveryClient.getApplication("CONFIG-SERVER").getInstances().get(0);
+        // InstanceInfo [instanceId = config-server, appName = CONFIG-SERVER, hostName = sefa-configserver, status = UP, ipAddr = 172.21.0.4, port = 58888,
+        // securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@22ab4431
     }
 
 }

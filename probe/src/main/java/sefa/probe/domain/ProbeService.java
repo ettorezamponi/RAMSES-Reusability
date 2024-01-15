@@ -85,6 +85,7 @@ public class ProbeService {
     }
 
     public ServiceConfiguration getServiceConfiguration(String serviceId, String currentImplementationId) {
+        // TEASTORE-AUTH, auth
         return configurationParser.parsePropertiesAndCreateConfiguration(serviceId, currentImplementationId);
     }
 

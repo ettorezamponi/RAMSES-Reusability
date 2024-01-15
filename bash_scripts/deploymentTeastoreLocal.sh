@@ -39,7 +39,7 @@ docker run --name image -e "REGISTRY_HOST=registry" -e "HOST_NAME=image" -p 4444
 #WEBUI
 docker run --name webui -e "REGISTRY_HOST=registry" -e "HOST_NAME=webui" -p 8080:8080 --network teastore -d teastore-webui
 
-sleep 60
+sleep 70
 
 docker run -P --name teastore-probe -d --network teastore probe
 sleep 5
