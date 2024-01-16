@@ -44,8 +44,7 @@ sleep 70
 docker run -P --name teastore-probe -d --network teastore probe
 docker run -p 8081:8081 --name maven-configserver -d --network teastore configserver
 
-
-sleep 5
+sleep 50
 
 docker run -P --name ramses-knowledge -d --network teastore knowledge
 

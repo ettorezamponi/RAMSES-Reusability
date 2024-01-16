@@ -41,9 +41,6 @@ public class ConfigMavenServer extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         String fileName = request.getPathInfo().substring(1);
-        System.out.println("REQUEST: "+request);
-        System.out.println("RESPONSE: "+response);
-        System.out.println("FILENAME: "+fileName);
 
         try {
             String configuration = readGitHubProperties(fileName);
