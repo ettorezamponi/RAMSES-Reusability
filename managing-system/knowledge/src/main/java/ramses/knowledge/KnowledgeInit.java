@@ -47,7 +47,7 @@ public class KnowledgeInit implements InitializingBean {
         // parse from json what SHOULD BE in the architecture runtime
         FileReader architectureReader = new FileReader(ResourceUtils.getFile(configDirPath+"/system_architecture.json"));
         List<Service> serviceList = SystemArchitectureParser.parse(architectureReader);
-        log.info("SERVICE LIST: "+serviceList);
+        //log.info("SERVICE LIST: "+serviceList);
         FileReader qoSReader = new FileReader(ResourceUtils.getFile(configDirPath+"/qos_specification.json"));
         Map<String, List<QoSSpecification>> servicesQoS = QoSParser.parse(qoSReader);
         FileReader benchmarkReader = new FileReader(ResourceUtils.getFile(configDirPath+"/system_benchmarks.json"));
@@ -59,11 +59,11 @@ public class KnowledgeInit implements InitializingBean {
 
         serviceList.forEach(service -> {
             ServiceInfo serviceInfo = probeSystemRuntimeArchitecture.get(service.getServiceId());
-            //log.info("SERVICE= "+service);
-            log.info("ACTUAL SERVICE ID= "+service.getServiceId());
+            //log.info("SERVICE= " + service);
+            log.info("ACTUAL SERVICE ID= " + service.getServiceId());
             // ServiceInfo(serviceId=RESTAURANT-SERVICE, currentImplementationId=restaurant-service, instances=[restaurant-service@sefa-restaurant-service:58085])
             if (serviceInfo == null)
-                throw new RuntimeException("Service " + service.getServiceId() + "not found in the system  runtime architecture");
+                throw new RuntimeException("Service " + service.getServiceId() + " not found in the system  runtime architecture");
             List<String> instances = serviceInfo.getInstances();
             if (instances == null || instances.isEmpty()){
                 throw new RuntimeException("No instances found for service " + service.getServiceId());
