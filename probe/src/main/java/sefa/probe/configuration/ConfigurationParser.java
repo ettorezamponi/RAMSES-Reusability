@@ -55,8 +55,7 @@ public class ConfigurationParser {
         //String url = configInstance.getHomePageUrl() + "config-server/default/main/application.properties";
         //  http://sefa-configserver:58888/config-server/default/main/application.properties
 
-        String url = "http://maven-configserver:8081/configserver/" + serviceId.toLowerCase() + ".properties";
-        log.debug("Fetching configuration from " + url);
+        String url = "http://maven-configserver:8081/configserver/application.properties";
         ResponseEntity<String> response = new RestTemplate().getForEntity(url, String.class);
         String[] lines = Arrays.stream(response.getBody().split("\n")).filter(line -> line.matches("([\\w\\.-])+=.+")).toArray(String[]::new);
         for (String line : lines) {

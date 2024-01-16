@@ -19,8 +19,7 @@ import java.util.Scanner;
 public class ConfigMavenServer extends HttpServlet {
     // http://localhost:8081/configserver/ordering-service.properties
 
-    private static final String GITHUB_BASE_URL = "https://raw.githubusercontent.com/ettorezamponi/config-server/main/";
-
+    private static final String GITHUB_BASE_URL = "https://raw.githubusercontent.com/ettorezamponi/teastore-configserver/main/";
     public static void main(String[] args) {
         Server server = new Server(8081);
 
