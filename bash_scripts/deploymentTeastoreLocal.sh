@@ -42,7 +42,7 @@ docker run --name webui -e "REGISTRY_HOST=registry" -e "HOST_NAME=webui" -p 8080
 sleep 70
 
 docker run -P --name teastore-probe -d --network teastore probe
-docker run -p 8081:8081 --name config -d --network teastore configserver
+docker run -p 8081:8081 --name maven-configserver -d --network teastore configserver
 
 
 sleep 5
