@@ -1,11 +1,14 @@
-# Usa un'immagine di base con Java
-FROM openjdk:11-jre-slim
+# Usa un'immagine di base con una versione di Java compatibile con il tuo progetto Maven
+FROM openjdk:11
 
-# Crea una directory per l'app
+# Copia il file .jar del tuo progetto nella directory /app
+COPY target/configserver-1.0-SNAPSHOT.jar /app/configserver.jar
+
+# Imposta la directory di lavoro all'interno del contenitore
 WORKDIR /app
 
-# Copia i file necessari
-COPY target/*.jar /app/configserver.jar
+# Esponi la porta su cui il tuo server sarà in ascolto
+EXPOSE 8081
 
-# Comando di avvio dell'app
+# Comando per avviare l'applicazione quando il contenitore viene eseguito
 CMD ["java", "-jar", "configserver.jar"]

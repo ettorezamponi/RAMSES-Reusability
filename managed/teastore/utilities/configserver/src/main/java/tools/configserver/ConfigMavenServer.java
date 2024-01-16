@@ -1,72 +1,77 @@
 package tools.configserver;
 
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
-import com.sun.net.httpserver.HttpServer;
-import org.apache.http.client.methods.CloseableHttpResponse;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.CloseableHttpClient;
-import org.apache.http.impl.client.HttpClients;
-import org.apache.http.util.EntityUtils;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.eclipse.jetty.server.Server;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
 
 import java.io.IOException;
-import java.io.OutputStream;
-import java.net.InetSocketAddress;
+import java.io.InputStream;
+import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Scanner;
 
-public class ConfigMavenServer {
+@WebServlet("/configserver/*")
+public class ConfigMavenServer extends HttpServlet {
+    // http://localhost:8081/configserver/ordering-service.properties
 
-    public static void main(String[] args) throws IOException {
+    private static final String GITHUB_BASE_URL = "https://raw.githubusercontent.com/ettorezamponi/config-server/main/";
 
+    public static void main(String[] args) {
+        Server server = new Server(8081);
 
-        int port = 8081;
+        ServletContextHandler contextHandler = new ServletContextHandler(ServletContextHandler.SESSIONS);
+        contextHandler.setContextPath("/");
 
-        HttpServer server = HttpServer.create(new InetSocketAddress(port), 0);
-        server.createContext("/configserver", new ConfigServerHandler());
-        server.setExecutor(null); // Usa l'executor predefinito
-        server.start();
+        contextHandler.addServlet(new ServletHolder(new ConfigMavenServer()), "/configserver/*");
 
+        server.setHandler(contextHandler);
+
+        try {
+            server.start();
+            server.join();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    static class ConfigServerHandler implements HttpHandler {
-        @Override
-        public void handle(HttpExchange exchange) throws IOException {
-            String requestPath = exchange.getRequestURI().getPath();
-            String fileName = requestPath.substring(requestPath.lastIndexOf("/") + 1);
+    @Override
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String fileName = request.getPathInfo().substring(1);
+        System.out.println("REQUEST: "+request);
+        System.out.println("RESPONSE: "+response);
+        System.out.println("FILENAME: "+fileName);
 
-            try {
-                String configuration = readGitHubProperties(fileName);
-                sendResponse(exchange, configuration);
-            } catch (IOException e) {
-                e.printStackTrace();
-                sendResponse(exchange, "Errore durante la lettura del file.");
-            } catch (URISyntaxException e) {
-                throw new RuntimeException(e);
-            }
+        try {
+            String configuration = readGitHubProperties(fileName);
+            response.getWriter().write(configuration);
+        } catch (IOException | URISyntaxException e) {
+            e.printStackTrace();
+            response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+            response.getWriter().write("Errore durante la lettura del file.");
         }
+    }
 
-        private String readGitHubProperties(String fileName) throws IOException, URISyntaxException {
-            // Costruisci l'URL GitHub utilizzando l'URL base della tua repo e il nome del file
-            String githubUrl = "https://raw.githubusercontent.com/ettorezamponi/config-server/main/" + fileName;
+    private String readGitHubProperties(String fileName) throws IOException, URISyntaxException {
+        String githubUrl = GITHUB_BASE_URL + fileName;
+        URI uri = new URI(githubUrl);
+        System.out.println("URL TO REACH: "+uri);
+        try {
+            HttpURLConnection connection = (HttpURLConnection) uri.toURL().openConnection();
+            connection.setRequestMethod("GET");
 
-            URI uri = new URI(githubUrl);
-            HttpGet httpGet = new HttpGet(uri);
+            try (InputStream inputStream = connection.getInputStream();
+                 Scanner scanner = new Scanner(inputStream)) {
 
-            try (CloseableHttpClient httpClient = HttpClients.createDefault();
-                 CloseableHttpResponse response = httpClient.execute(httpGet)) {
-
-                String responseBody = EntityUtils.toString(response.getEntity());
-                return responseBody;
+                scanner.useDelimiter("\\A");
+                return scanner.hasNext() ? scanner.next() : "";
             }
-        }
-
-        private void sendResponse(HttpExchange exchange, String response) throws IOException {
-            exchange.sendResponseHeaders(200, response.length());
-            try (OutputStream os = exchange.getResponseBody()) {
-                os.write(response.getBytes());
-            }
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 }
-
