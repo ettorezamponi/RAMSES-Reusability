@@ -17,7 +17,7 @@ import java.util.Scanner;
 
 @WebServlet("/configserver/*")
 public class ConfigMavenServer extends HttpServlet {
-    // http://localhost:8081/configserver/ordering-service.properties
+    // http://localhost:8081/configserver/teastore-auth.properties
 
     private static final String GITHUB_BASE_URL = "https://raw.githubusercontent.com/ettorezamponi/teastore-configserver/main/";
     public static void main(String[] args) {

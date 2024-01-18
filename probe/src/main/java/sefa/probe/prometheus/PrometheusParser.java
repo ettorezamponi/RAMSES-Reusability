@@ -25,11 +25,11 @@ public class PrometheusParser {
         InstanceMetricsSnapshot instanceMetricsSnapshot = new InstanceMetricsSnapshot(instanceInfo.getAppName(), instanceInfo.getInstanceId());
         List<MetricFamily> metricFamilies;
         try {
-            URL url = new URL(instanceInfo.getHomePageUrl());
+            URL url = new URL(instanceInfo.getHealthCheckUrl());
             log.info("INSTANCE INFO:" + instanceInfo);
             // [instanceId = payment-proxy-1-service@sefa-payment-proxy-1-service:58090, appName = PAYMENT-PROXY-SERVICE,
             // hostName = sefa-payment-proxy-1-service, status = UP, ipAddr = 172.22.0.7, port = 58090, securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@7d942
-            url = new URL(url, actuatorRelativePath+"/prometheus");
+            //url = new URL(url, actuatorRelativePath+"/prometheus");
             log.debug("URL TO GIVE TO PROMETHEUS:" + url);
             PrometheusScraper scraper = new PrometheusScraper(url);
             metricFamilies = scraper.scrape();

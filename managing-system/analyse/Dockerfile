@@ -6,7 +6,7 @@ ENTRYPOINT ["java","-jar","/app/spring-boot-application.jar"]
 
 ENV KNOWLEDGE_URL=http://ramses-knowledge:58005
 ENV PLAN_URL=http://ramses-plan:58003
-ENV PROBE_URL=http://sefa-probe:58020
+ENV PROBE_URL=http://teastore-probe:58020
 ENV SERVER_PORT=58002
 ENV SCHEDULING_PERIOD=5000
 ENV QOS_SATISFACTION_RATE=0.6

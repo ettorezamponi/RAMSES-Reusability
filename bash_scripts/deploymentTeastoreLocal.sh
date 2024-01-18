@@ -14,6 +14,10 @@ PrintSuccess "Creating new Docker network called 'teastore'"
 docker network create teastore
 echo
 
+sleep 2
+PrintSuccess "Setting up Teastore"
+sleep 1
+
 #DISCOVERY SERVER
 docker run -P --name sefa-eureka -d --network teastore eureka
 
@@ -39,14 +43,51 @@ docker run --name image -e "REGISTRY_HOST=registry" -e "HOST_NAME=image" -p 4444
 #WEBUI
 docker run --name webui -e "REGISTRY_HOST=registry" -e "HOST_NAME=webui" -p 8080:8080 --network teastore -d teastore-webui
 
-sleep 70
+durata_timer=60
+
+while [ $durata_timer -gt 0 ]; do
+    # Stampa il tempo rimanente
+    printf "\rRemaining timer for set up RAMSES: %02d:%02d" $((durata_timer/60)) $((durata_timer%60))
+
+    # Attendi 1 secondo
+    sleep 1
+
+    # Riduci il tempo rimanente di 1 secondo
+    durata_timer=$((durata_timer-1))
+done
+
+# Alla fine del timer, vai a capo per migliorare la leggibilità
+echo
 
 docker run -P --name teastore-probe -d --network teastore probe
 docker run -p 8081:8081 --name maven-configserver -d --network teastore configserver
 
-sleep 50
+durata_timer=50
 
-docker run -P --name ramses-knowledge -d --network teastore knowledge
+while [ $durata_timer -gt 0 ]; do
+    # Stampa il tempo rimanente
+    printf "\rRemaining timer for MAPE-K loop: %02d:%02d" $((durata_timer/60)) $((durata_timer%60))
+
+    # Attendi 1 secondo
+    sleep 1
+
+    # Riduci il tempo rimanente di 1 secondo
+    durata_timer=$((durata_timer-1))
+done
+echo
+
+docker run -P --name ramses-knowledge -d --network teastore ramses-knowledge
+
+sleep 15
+
+declare -a ramsesarr=("ramses-analyse" "ramses-plan" "ramses-execute" "ramses-monitor" "ramses-dashboard")
+for i in "${ramsesarr[@]}"
+do
+   PrintSuccess "Running $i"
+   docker run -P --name $i -d --network teastore $i
+   echo
+   sleep 2
+done
 
 PrintSuccess "EVERYTHING SET UP!"
 

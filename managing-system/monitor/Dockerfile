@@ -6,7 +6,7 @@ ENTRYPOINT ["java","-jar","/app/spring-boot-application.jar"]
 ENV EUREKA_IP_PORT=sefa-eureka:58082
 ENV KNOWLEDGE_URL=http://ramses-knowledge:58005
 ENV ANALYSE_URL=http://ramses-analyse:58002
-ENV PROBE_URL=http://sefa-probe:58020
+ENV PROBE_URL=http://teastore-probe:58020
 ENV SERVER_PORT=58001
 ENV SCHEDULING_PERIOD=5000
 EXPOSE 58001
