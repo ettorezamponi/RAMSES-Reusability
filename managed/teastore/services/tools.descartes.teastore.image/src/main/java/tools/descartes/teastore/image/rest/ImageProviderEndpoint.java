@@ -115,7 +115,7 @@ public class ImageProviderEndpoint {
   }
 
   @GET
-  @Path("/prometheus") // http://localhost:8080/tools.descartes.teastore.image/rest/image/prometheus
+  @Path("/prometheus") // http://localhost:4444/tools.descartes.teastore.image/rest/image/prometheus
   @Produces(MediaType.TEXT_PLAIN)
   public Response getMetrics() {
     String metrics = MetricsExporter.getMetrics();
