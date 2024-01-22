@@ -42,7 +42,7 @@ public class ProbeService {
             log.error("Service {} not found in Eureka", serviceId);
             return instanceMetricsSnapshots;
         }
-        log.debug("APPLICATION FOUNDED: " + application);
+        //log.debug("APPLICATION FOUNDED: " + application);
         application.getInstances().forEach(instance -> {
             if (invalidIteration.get()) return;
             InstanceMetricsSnapshot instanceMetricsSnapshot;

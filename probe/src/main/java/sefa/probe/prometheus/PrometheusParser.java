@@ -32,8 +32,9 @@ public class PrometheusParser {
             //url = new URL(url, actuatorRelativePath+"/prometheus");
             log.debug("URL TO GIVE TO PROMETHEUS:" + url);
             PrometheusScraper scraper = new PrometheusScraper(url);
+            log.debug("STEP OVVVEEE");
             metricFamilies = scraper.scrape();
-            //log.info("METRICS FAMILIES: " + metricFamilies.toString());
+            log.debug("METRICS FAMILIES: " + metricFamilies.toString());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

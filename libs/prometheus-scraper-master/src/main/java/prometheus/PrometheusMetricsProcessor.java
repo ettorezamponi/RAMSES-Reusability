@@ -48,6 +48,7 @@ public abstract class PrometheusMetricsProcessor<T> {
 
         try {
             PrometheusMetricDataParser<T> parser = createPrometheusMetricDataParser();
+            log.debug("PARSEr.PARSE STARTED");
             T metricFamily = parser.parse(); // prime the pump
 
             while (metricFamily != null) {
@@ -60,6 +61,7 @@ public abstract class PrometheusMetricsProcessor<T> {
                 int metricIndex = 0;
 
                 for (prometheus.types.Metric metric : convertedMetricFamily.getMetrics()) {
+                    log.debug("METRIC ADDING DURING THE WALK: " + metric);
                     switch (convertedMetricFamily.getType()) {
                         case COUNTER:
                             walker.walkCounterMetric(convertedMetricFamily, (Counter) metric, metricIndex);
