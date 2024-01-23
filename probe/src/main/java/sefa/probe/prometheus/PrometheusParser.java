@@ -26,7 +26,7 @@ public class PrometheusParser {
         List<MetricFamily> metricFamilies;
         try {
             URL url = new URL(instanceInfo.getHealthCheckUrl());
-            log.info("INSTANCE INFO:" + instanceInfo);
+            //log.info("INSTANCE INFO:" + instanceInfo);
             // [instanceId = payment-proxy-1-service@sefa-payment-proxy-1-service:58090, appName = PAYMENT-PROXY-SERVICE,
             // hostName = sefa-payment-proxy-1-service, status = UP, ipAddr = 172.22.0.7, port = 58090, securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@7d942
             //url = new URL(url, actuatorRelativePath+"/prometheus");
@@ -46,7 +46,7 @@ public class PrometheusParser {
             log.info("PROPERTY NAME: " + propertyName);
             //MetricType metricType = elem.getType(); //e.g. GAUGE
             metricFamily.getMetrics().forEach(metric -> { //e.g., one metric is the http_server_requests_seconds for the endpoint X
-                //log.info("METRIC: " + metric); --> "METRIC: prometheus.types.Gauge@8663d4a"
+                log.info("METRIC: " + metric); //--> "METRIC: prometheus.types.Gauge@8663d4a"
                 Map<String, String> labels = metric.getLabels();
                 switch (propertyName) {
                     case PrometheusMetrics.HTTP_REQUESTS_TIME ->
