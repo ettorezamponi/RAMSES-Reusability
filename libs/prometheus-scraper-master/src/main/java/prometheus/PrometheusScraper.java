@@ -119,42 +119,34 @@ public class PrometheusScraper {
     }
 
     public void scrape(PrometheusMetricsWalker walker) throws IOException {
-        log.debug("SCRAPE 1");
         OpenConnectionDetails connectionDetails = openConnection(this.url);
         if (connectionDetails == null || connectionDetails.inputStream == null) {
             throw new IOException("Failed to open the connection to the Prometheus endpoint");
         }
-        log.debug("SCRAPE 2");
 
         try (InputStream inputStream = connectionDetails.inputStream) {
             String contentType = connectionDetails.contentType;
-            log.debug("SCRAPE 3");
             // if we were given a content type - we use it always. If we were not given a content type,
             // then use the one given to the constructor (if one was given).
             if (contentType == null || contentType.contains("unknown")) {
                 contentType = this.knownDataFormat.getContentType();
-                log.debug("SCRAPE 4");
             }
 
             PrometheusMetricsProcessor<?> processor;
 
             if (contentType.contains("application/vnd.google.protobuf")) {
                 processor = new BinaryPrometheusMetricsProcessor(inputStream, walker);
-                log.debug("SCRAPE 5");
             } else if (contentType.contains("text/plain")) {
                 processor = new TextPrometheusMetricsProcessor(inputStream, walker);
-                log.debug("SCRAPE 6");
             } else {
                 // unknown - since all Prometheus endpoints are required to support text, try it
                 log.debugf("Unknown content type for URL [%s]. Trying text format.", url);
                 processor = new TextPrometheusMetricsProcessor(inputStream, walker);
-                log.debug("SCRAPE 7");
             }
 
             log.debug("PROCESSOR: " + processor);
 
             processor.walk();
-            log.debug("SCRAPE 8");
         }
     }
 
