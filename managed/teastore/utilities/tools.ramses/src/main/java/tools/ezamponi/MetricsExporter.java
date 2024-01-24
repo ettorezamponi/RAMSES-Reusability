@@ -3,6 +3,7 @@ package tools.ezamponi;
 import io.micrometer.core.instrument.binder.jvm.*;
 import io.micrometer.core.instrument.binder.system.FileDescriptorMetrics;
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
+import io.micrometer.core.instrument.binder.system.DiskSpaceMetrics;
 import io.micrometer.prometheus.PrometheusConfig;
 import io.micrometer.prometheus.PrometheusMeterRegistry;
 import jakarta.ws.rs.GET;
@@ -10,6 +11,8 @@ import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import java.io.File;
 
 // TODO make it reachable through "/actuator/prometheus" and not tools.descartes.ecc
 public class MetricsExporter {
@@ -23,7 +26,7 @@ public class MetricsExporter {
         new JvmGcMetrics().bindTo(prometheusRegistry);
         new ProcessorMetrics().bindTo(prometheusRegistry);
         new JvmThreadMetrics().bindTo(prometheusRegistry);
-
+        new DiskSpaceMetrics(new File("/")).bindTo(prometheusRegistry);
     }
 
     @SuppressWarnings("checkstyle:designforextension")
