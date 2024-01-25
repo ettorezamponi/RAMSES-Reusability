@@ -84,8 +84,9 @@ public class InstancesManagerService {
 
         //addInstances("teastore-webui", 1);
         //stopInstance("auth", 8080);
-        addInstances("teastore-registry", 1);
+        addInstances("teastore-persistence", 1);
 
+        //TODO CRASHA SEMPRE A MENO CHE NON FACCIAMO RIPARTIRE IL VECCHIO CONTAINER
 
         switch (currentProfile) {
             case "PerfectInstance" -> simulationInstanceParamsMap.put(currentProfile, List.of(
@@ -136,7 +137,8 @@ public class InstancesManagerService {
         }
         for (int i = 0; i < numberOfInstances; i++) {
             int randomPort = getRandomPort();
-            ExposedPort exposedRandomPort = ExposedPort.tcp(randomPort); // intern port of the container
+            String dockerName;
+            ExposedPort exposedRandomPort = ExposedPort.tcp(8080); // intern port of the container
             Ports portBindings = new Ports();
             portBindings.bind(exposedRandomPort, Ports.Binding.bindIpAndPort("0.0.0.0", randomPort));
 
@@ -147,13 +149,18 @@ public class InstancesManagerService {
             //per il registry abbiamo bisogno di avere lo stesso nome e così funziona
             String containerName = serviceImplementationName.split("-")[1];
 
+            if (containerName.contains("registry"))
+                dockerName = containerName;
+            else
+                dockerName = containerName + "-" + randomPort;
+
             HostConfig hostConfig = new HostConfig();
             hostConfig.withPortBindings(portBindings);
             hostConfig.withNetworkMode("teastore");
             List<String> envVars = buildContainerEnvVariables(containerName, randomPort, simulationInstanceParamsList.get(i % simulationInstanceParamsList.size()));
             String newContainerId = dockerClient.createContainerCmd(imageName)
                     .withImage(imageName)
-                    .withName(containerName)
+                    .withName(dockerName)
                     .withEnv(envVars)
                     .withExposedPorts(exposedRandomPort)
                     .withHostConfig(hostConfig)
@@ -257,8 +264,13 @@ public class InstancesManagerService {
         envVars.add("API_GATEWAY_IP_PORT="+(apiGatewayIpPort == null ? localIp+":58081" : apiGatewayIpPort));
         String mySqlIpPort = env.getProperty("MYSQL_IP_PORT");
         envVars.add("MYSQL_IP_PORT="+(mySqlIpPort == null ? localIp+":3306" : mySqlIpPort)); */
+        if (!containerName.contains("registry")) {
+           envVars.add("REGISTRY_HOST=" + env.getProperty("REGISTRY_HOST"));
+        }
+        if (containerName.contains("persistence"))
+            envVars.add("DB_HOST="+env.getProperty("DB_HOST"));
         envVars.add("SERVER_PORT="+serverPort);
-        envVars.add("HOST="+containerName);
+        envVars.add("HOST_NAME="+containerName);
         envVars.add("SLEEP_MEAN="+simulationInstanceParams.getSleepDuration()*1000);
         envVars.add("SLEEP_VARIANCE="+simulationInstanceParams.getSleepVariance());
         envVars.add("EXCEPTION_PROBABILITY="+simulationInstanceParams.getExceptionProbability());
@@ -300,5 +312,24 @@ public class InstancesManagerService {
         } catch (NotFoundException|NotModifiedException e){
             log.warn("Error removing 'REGISTRY container' \nWith the following error: " + e);
         }
+    }
+
+    private String chooseHostName(String serviceToAdd) {
+        String hostName = null;
+
+        if (serviceToAdd.contains("persistence"))
+            hostName = "persistence";
+        if (serviceToAdd.contains("auth"))
+            hostName = "auth";
+        if (serviceToAdd.contains("recommender"))
+            hostName = "recommender";
+        if (serviceToAdd.contains("image"))
+            hostName = "image";
+        if (serviceToAdd.contains("webui"))
+            hostName = "webui";
+        else
+            log.info("IMPOSSIBLE TO SET THE CORRECT HOST_NAME VARIABLE");
+
+        return hostName;
     }
 }
