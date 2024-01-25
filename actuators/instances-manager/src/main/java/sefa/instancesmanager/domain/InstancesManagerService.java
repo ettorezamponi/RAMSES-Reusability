@@ -53,7 +53,7 @@ public class InstancesManagerService {
         dockerClient = DockerClientBuilder.getInstance(config).build();
         List<Container> containers = dockerClient.listContainersCmd().exec();
         for (Container container : containers) {
-            log.warn("\nContainer name: {} \n\tports: {}", Arrays.stream(container.getNames()).findFirst().orElse("N/A"), Arrays.toString(container.getPorts()));
+            log.warn("\nContainer name: {} \nports: {}", Arrays.stream(container.getNames()).findFirst().orElse("N/A"), Arrays.toString(container.getPorts()));
         }
 
         //Container name: /sefa-delivery-proxy-1-service
@@ -81,6 +81,10 @@ public class InstancesManagerService {
                 .getId();
         dockerClient.startContainerCmd(newContainerId).exec();
         log.debug("**** START NEW IMAGE ****");*/
+
+        //addInstances("teastore-webui", 1);
+        //stopInstance("auth", 8080);
+        addInstances("teastore-registry", 1);
 
         switch (currentProfile) {
             case "PerfectInstance" -> simulationInstanceParamsMap.put(currentProfile, List.of(
@@ -110,7 +114,8 @@ public class InstancesManagerService {
 
 
     public List<ServiceContainerInfo> addInstances(String serviceImplementationName, int numberOfInstances) {
-        String imageName = "giamburrasca/sefa-"+serviceImplementationName+":"+arch;
+        //String imageName = "giamburrasca/sefa-"+serviceImplementationName+":"+arch;
+        String imageName = serviceImplementationName;
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
         synchronized (lock) {
@@ -121,13 +126,25 @@ public class InstancesManagerService {
         }
         for (int i = 0; i < numberOfInstances; i++) {
             int randomPort = getRandomPort();
-            ExposedPort exposedRandomPort = ExposedPort.tcp(randomPort);
+            ExposedPort exposedRandomPort = ExposedPort.tcp(randomPort); // intern port of the container
             Ports portBindings = new Ports();
             portBindings.bind(exposedRandomPort, Ports.Binding.bindIpAndPort("0.0.0.0", randomPort));
-            String containerName = "sefa-" + serviceImplementationName + "-" + randomPort;
+
+            //String containerName = "sefa-" + serviceImplementationName + "-" + randomPort;
+            //String containerName = serviceImplementationName + "-" + randomPort;
+            // TODO problema che esiste già un altro container con lo stesso nome
+            String containerName = serviceImplementationName.split("-")[1];
+
+            if (containerName.contains("registry")) {
+                if (numberOfInstances > 1) {
+                    numberOfInstances = 1;
+                }
+                deleteRegistry();
+            }
+
             HostConfig hostConfig = new HostConfig();
             hostConfig.withPortBindings(portBindings);
-            hostConfig.withNetworkMode("ramses-sas-net");
+            hostConfig.withNetworkMode("teastore");
             List<String> envVars = buildContainerEnvVariables(containerName, randomPort, simulationInstanceParamsList.get(i % simulationInstanceParamsList.size()));
             String newContainerId = dockerClient.createContainerCmd(imageName)
                     .withImage(imageName)
@@ -263,5 +280,10 @@ public class InstancesManagerService {
         } catch (IOException e) {
             throw new RuntimeException("Impossible to get local IP address", e);
         }
+    }
+
+    private void deleteRegistry() {
+        dockerClient.removeContainerCmd("registry").withForce(true).exec();
+        log.info("Registry container removed after crash to be able to instantiate a new one!");
     }
 }
