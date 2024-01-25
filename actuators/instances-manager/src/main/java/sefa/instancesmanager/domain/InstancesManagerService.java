@@ -135,11 +135,12 @@ public class InstancesManagerService {
             // TODO problema che esiste già un altro container con lo stesso nome
             String containerName = serviceImplementationName.split("-")[1];
 
+            // Registry should have the same name, so completly delete the previous one
             if (containerName.contains("registry")) {
                 if (numberOfInstances > 1) {
                     numberOfInstances = 1;
                 }
-                deleteRegistry();
+                deleteTeastoreRegistry();
             }
 
             HostConfig hostConfig = new HostConfig();
@@ -202,6 +203,10 @@ public class InstancesManagerService {
                 dockerClient.stopContainerCmd(container.getId()).exec();
             } catch (NotFoundException|NotModifiedException e){
                 log.warn("Container {} already removed", container.getId());
+            }
+            // We can have only one registry container
+            if (container.getId().contains("registry")) {
+                deleteTeastoreRegistry();
             }
             return;
         } else if (containers.size() == 0) {
@@ -282,8 +287,12 @@ public class InstancesManagerService {
         }
     }
 
-    private void deleteRegistry() {
-        dockerClient.removeContainerCmd("registry").withForce(true).exec();
-        log.info("Registry container removed after crash to be able to instantiate a new one!");
+    private void deleteTeastoreRegistry() {
+        try {
+            dockerClient.removeContainerCmd("registry").withForce(true).exec();
+            log.info("Registry container removed after crash to be able to instantiate a new one!");
+        } catch (NotFoundException|NotModifiedException e){
+            log.warn("Error removing 'REGISTRY container' \nWith the following error: " + e);
+        }
     }
 }
