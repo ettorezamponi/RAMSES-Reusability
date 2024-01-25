@@ -86,6 +86,7 @@ public class InstancesManagerService {
         //stopInstance("auth", 8080);
         addInstances("teastore-registry", 1);
 
+
         switch (currentProfile) {
             case "PerfectInstance" -> simulationInstanceParamsMap.put(currentProfile, List.of(
                     // (failureRate, sleepDuration, sleepVariance)
@@ -118,6 +119,15 @@ public class InstancesManagerService {
         String imageName = serviceImplementationName;
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
+
+        // Registry should have the same name, so completly delete the previous one
+        if (serviceImplementationName.contains("registry")) {
+            if (numberOfInstances > 1) {
+                numberOfInstances = 1;
+            }
+            deleteTeastoreRegistry();
+        }
+
         synchronized (lock) {
             if (serviceImplementationName.equalsIgnoreCase("restaurant-service") || serviceImplementationName.startsWith("payment-proxy"))
                 simulationInstanceParamsList = simulationInstanceParamsMap.get(currentProfile);
@@ -133,15 +143,9 @@ public class InstancesManagerService {
             //String containerName = "sefa-" + serviceImplementationName + "-" + randomPort;
             //String containerName = serviceImplementationName + "-" + randomPort;
             // TODO problema che esiste già un altro container con lo stesso nome
-            String containerName = serviceImplementationName.split("-")[1];
 
-            // Registry should have the same name, so completly delete the previous one
-            if (containerName.contains("registry")) {
-                if (numberOfInstances > 1) {
-                    numberOfInstances = 1;
-                }
-                deleteTeastoreRegistry();
-            }
+            //per il registry abbiamo bisogno di avere lo stesso nome e così funziona
+            String containerName = serviceImplementationName.split("-")[1];
 
             HostConfig hostConfig = new HostConfig();
             hostConfig.withPortBindings(portBindings);
@@ -289,6 +293,8 @@ public class InstancesManagerService {
 
     private void deleteTeastoreRegistry() {
         try {
+            //TODO capire se questo ulteriore controllo può esser utile oppure crea problemi
+            //if(!dockerClient.inspectContainerCmd("registry").exec().getState().getRunning()){}
             dockerClient.removeContainerCmd("registry").withForce(true).exec();
             log.info("Registry container removed after crash to be able to instantiate a new one!");
         } catch (NotFoundException|NotModifiedException e){
