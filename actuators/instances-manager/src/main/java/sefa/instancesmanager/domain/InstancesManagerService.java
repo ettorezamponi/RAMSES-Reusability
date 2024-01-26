@@ -84,7 +84,7 @@ public class InstancesManagerService {
 
         //addInstances("teastore-webui", 1);
         //stopInstance("auth", 8080);
-        addInstances("teastore-persistence", 1);
+        addInstances("teastore-recommender", 1);
 
         //TODO CRASHA SEMPRE A MENO CHE NON FACCIAMO RIPARTIRE IL VECCHIO CONTAINER
 
@@ -120,14 +120,16 @@ public class InstancesManagerService {
         String imageName = serviceImplementationName;
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
+        Boolean special = false;
 
         //per il registry abbiamo bisogno di avere lo stesso nome e così funziona
         String containerName = serviceImplementationName.split("-")[1];
         log.info("CONTAINER NAME: "+containerName);
+        checkContainer(containerName, special);
 
-        // Registry should have the same name, so completly delete the previous one
+            // Registry should have the same name, so completly delete the previous one
         //TODO theoretically persistence service could have more than one implementation
-        if (containerName.contains("registry") || containerName.contains("persistence")) {
+        if (special) {
             if (numberOfInstances > 1) {
                 numberOfInstances = 1;
             }
@@ -151,7 +153,7 @@ public class InstancesManagerService {
             //String containerName = "sefa-" + serviceImplementationName + "-" + randomPort;
             //String containerName = serviceImplementationName + "-" + randomPort;
 
-            if (containerName.contains("registry") || containerName.contains("persistence"))
+            if (special)
                 dockerName = containerName;
             else
                 dockerName = containerName + "-" + randomPort;
@@ -309,6 +311,12 @@ public class InstancesManagerService {
             log.info("{} container removed after crash to be able to instantiate a new one!", containerToDelete);
         } catch (NotFoundException|NotModifiedException e){
             log.warn("Error removing 'REGISTRY container' \nWith the following error: " + e);
+        }
+    }
+
+    private void checkContainer(String containerName, Boolean bool){
+        if (containerName.contains("registry") || containerName.contains("persistence") || containerName.contains("recommender")) {
+            bool = true;
         }
     }
 }
