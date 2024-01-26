@@ -84,7 +84,7 @@ public class InstancesManagerService {
 
         //addInstances("teastore-webui", 1);
         //stopInstance("auth", 8080);
-        addInstances("teastore-recommender", 1);
+        addInstances("teastore-image", 1);
 
         //TODO CRASHA SEMPRE A MENO CHE NON FACCIAMO RIPARTIRE IL VECCHIO CONTAINER
 
@@ -124,10 +124,13 @@ public class InstancesManagerService {
 
         //per il registry abbiamo bisogno di avere lo stesso nome e così funziona
         String containerName = serviceImplementationName.split("-")[1];
-        log.info("CONTAINER NAME: "+containerName);
-        checkContainer(containerName, special);
+        log.info("CONTAINER NAME: " + containerName);
 
-            // Registry should have the same name, so completly delete the previous one
+        if (containerName.contains("registry") || containerName.contains("persistence") || containerName.contains("recommender") || containerName.contains("image")) {
+            special = true;
+        }
+
+        // Registry should have the same name, so completly delete the previous one
         //TODO theoretically persistence service could have more than one implementation
         if (special) {
             if (numberOfInstances > 1) {
@@ -314,9 +317,4 @@ public class InstancesManagerService {
         }
     }
 
-    private void checkContainer(String containerName, Boolean bool){
-        if (containerName.contains("registry") || containerName.contains("persistence") || containerName.contains("recommender")) {
-            bool = true;
-        }
-    }
 }
