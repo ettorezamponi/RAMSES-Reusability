@@ -84,7 +84,7 @@ public class InstancesManagerService {
 
         //addInstances("teastore-webui", 1);
         //stopInstance("auth", 8080);
-        addInstances("teastore-webui", 1);
+        //addInstances("teastore-webui", 1);
 
         //TODO CRASHA SEMPRE A MENO CHE NON FACCIAMO RIPARTIRE IL VECCHIO CONTAINER
 
