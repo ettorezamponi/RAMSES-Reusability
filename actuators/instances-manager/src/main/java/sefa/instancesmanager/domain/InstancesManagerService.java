@@ -121,12 +121,18 @@ public class InstancesManagerService {
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
 
+        //per il registry abbiamo bisogno di avere lo stesso nome e così funziona
+        String containerName = serviceImplementationName.split("-")[1];
+        log.info("CONTAINER NAME: "+containerName);
+
         // Registry should have the same name, so completly delete the previous one
-        if (serviceImplementationName.contains("registry")) {
+        //TODO theoretically persistence service could have more than one implementation
+        if (containerName.contains("registry") || containerName.contains("persistence")) {
             if (numberOfInstances > 1) {
                 numberOfInstances = 1;
             }
-            deleteTeastoreRegistry();
+            deleteContainer(containerName);
+            log.info("Deleted {} container", containerName);
         }
 
         synchronized (lock) {
@@ -144,12 +150,8 @@ public class InstancesManagerService {
 
             //String containerName = "sefa-" + serviceImplementationName + "-" + randomPort;
             //String containerName = serviceImplementationName + "-" + randomPort;
-            // TODO problema che esiste già un altro container con lo stesso nome
 
-            //per il registry abbiamo bisogno di avere lo stesso nome e così funziona
-            String containerName = serviceImplementationName.split("-")[1];
-
-            if (containerName.contains("registry"))
+            if (containerName.contains("registry") || containerName.contains("persistence"))
                 dockerName = containerName;
             else
                 dockerName = containerName + "-" + randomPort;
@@ -214,10 +216,6 @@ public class InstancesManagerService {
                 dockerClient.stopContainerCmd(container.getId()).exec();
             } catch (NotFoundException|NotModifiedException e){
                 log.warn("Container {} already removed", container.getId());
-            }
-            // We can have only one registry container
-            if (container.getId().contains("registry")) {
-                deleteTeastoreRegistry();
             }
             return;
         } else if (containers.size() == 0) {
@@ -303,33 +301,14 @@ public class InstancesManagerService {
         }
     }
 
-    private void deleteTeastoreRegistry() {
+    private void deleteContainer(String containerToDelete) {
         try {
             //TODO capire se questo ulteriore controllo può esser utile oppure crea problemi
             //if(!dockerClient.inspectContainerCmd("registry").exec().getState().getRunning()){}
-            dockerClient.removeContainerCmd("registry").withForce(true).exec();
-            log.info("Registry container removed after crash to be able to instantiate a new one!");
+            dockerClient.removeContainerCmd(containerToDelete).withForce(true).exec();
+            log.info("{} container removed after crash to be able to instantiate a new one!", containerToDelete);
         } catch (NotFoundException|NotModifiedException e){
             log.warn("Error removing 'REGISTRY container' \nWith the following error: " + e);
         }
-    }
-
-    private String chooseHostName(String serviceToAdd) {
-        String hostName = null;
-
-        if (serviceToAdd.contains("persistence"))
-            hostName = "persistence";
-        if (serviceToAdd.contains("auth"))
-            hostName = "auth";
-        if (serviceToAdd.contains("recommender"))
-            hostName = "recommender";
-        if (serviceToAdd.contains("image"))
-            hostName = "image";
-        if (serviceToAdd.contains("webui"))
-            hostName = "webui";
-        else
-            log.info("IMPOSSIBLE TO SET THE CORRECT HOST_NAME VARIABLE");
-
-        return hostName;
     }
 }
