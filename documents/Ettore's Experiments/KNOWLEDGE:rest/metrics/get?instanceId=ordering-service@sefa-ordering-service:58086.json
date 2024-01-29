@@ -1,0 +1,4544 @@
+[
+  {
+    "id": 1,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 1,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 36.84286581,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.208380251,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 106,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 106
+      },
+      "payment": {
+        "id": 2,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 189.90829542,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 111,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 111
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 2,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 129,
+            "totalDuration": 77060.70982599999,
+            "maxDuration": 1702.486793
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 1,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 105,
+            "totalDuration": 222209.04156,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 3,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 126,
+            "totalDuration": 60508.536601,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 1.0,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.941741056E9,
+    "timestamp": "2024-01-29T09:04:04.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 7,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 3,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 65.200706323,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.208380251,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 216,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 216
+      },
+      "payment": {
+        "id": 4,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 289.922924163,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 219,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 219
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 13,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 250,
+            "totalDuration": 163594.910745,
+            "maxDuration": 1702.486793
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 12,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 215,
+            "totalDuration": 355221.16325000004,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 14,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 239,
+            "totalDuration": 126275.991795,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.4829744103939036,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.94020096E9,
+    "timestamp": "2024-01-29T09:04:10.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 12,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 5,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 91.554669461,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.208380251,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 321,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 321
+      },
+      "payment": {
+        "id": 6,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 379.207783953,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 324,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 324
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 26,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 354,
+            "totalDuration": 228572.59493999998,
+            "maxDuration": 1702.486793
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 25,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 319,
+            "totalDuration": 469860.27643,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 27,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 343,
+            "totalDuration": 191804.955118,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.31727483916216614,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.938820608E9,
+    "timestamp": "2024-01-29T09:04:16.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 14,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 7,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 115.540450137,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.208380251,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 415,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 415
+      },
+      "payment": {
+        "id": 8,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 468.059250618,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 421,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 421
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 30,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 446,
+            "totalDuration": 293537.034349,
+            "maxDuration": 1702.486793
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 29,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 414,
+            "totalDuration": 580723.768195,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 31,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 433,
+            "totalDuration": 247506.825437,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.3228426507802861,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.937526272E9,
+    "timestamp": "2024-01-29T09:04:21.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 19,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 9,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 140.72916294,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.208380251,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 516,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 516
+      },
+      "payment": {
+        "id": 10,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 552.322723447,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 521,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 521
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 40,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 545,
+            "totalDuration": 354035.68904,
+            "maxDuration": 1702.486793
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 39,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 516,
+            "totalDuration": 694567.564621,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 41,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 537,
+            "totalDuration": 304957.36571,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.25435956095803824,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.936154112E9,
+    "timestamp": "2024-01-29T09:04:26.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 23,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 11,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 163.374372498,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 581,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 581
+      },
+      "payment": {
+        "id": 12,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 640.015946859,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 587,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 587
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 52,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 619,
+            "totalDuration": 431506.348121,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 51,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 581,
+            "totalDuration": 802321.905505,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 53,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 607,
+            "totalDuration": 358114.962191,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.2063321415660201,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.935093248E9,
+    "timestamp": "2024-01-29T09:04:31.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 26,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 13,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 188.93509676,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 678,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 678
+      },
+      "payment": {
+        "id": 14,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 728.878070671,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 684,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 684
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 57,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 710,
+            "totalDuration": 491936.78768199997,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 56,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 678,
+            "totalDuration": 918973.310374,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 58,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 697,
+            "totalDuration": 414909.111206,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.22202398735982865,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.933753856E9,
+    "timestamp": "2024-01-29T09:04:36.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 32,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 15,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 214.135052937,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 780,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 780
+      },
+      "payment": {
+        "id": 16,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 810.55143133,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 786,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 786
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 71,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 817,
+            "totalDuration": 554424.834422,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 70,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 780,
+            "totalDuration": 1025142.174008,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 72,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 800,
+            "totalDuration": 479257.63856399996,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.21290633061046757,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.932320256E9,
+    "timestamp": "2024-01-29T09:04:42.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 34,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 17,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 239.010356989,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 884,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 884
+      },
+      "payment": {
+        "id": 18,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 891.757123414,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 889,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 889
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 75,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 919,
+            "totalDuration": 613756.4637450001,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 74,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 883,
+            "totalDuration": 1132633.513895,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 76,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 906,
+            "totalDuration": 540862.146468,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.1862576511456175,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.931013632E9,
+    "timestamp": "2024-01-29T09:04:47.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 39,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 19,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 263.700594834,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 985,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 985
+      },
+      "payment": {
+        "id": 20,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 974.08425424,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 991,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 991
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 85,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1013,
+            "totalDuration": 671687.9004009999,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 84,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 985,
+            "totalDuration": 1239212.5404830002,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 86,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1001,
+            "totalDuration": 599124.1379959999,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.21412674336197168,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.929670144E9,
+    "timestamp": "2024-01-29T09:04:52.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 43,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 21,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 289.115999267,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1088,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1088
+      },
+      "payment": {
+        "id": 22,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 1058.678627573,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1094,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1094
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 94,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1114,
+            "totalDuration": 732952.8851879999,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 93,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1088,
+            "totalDuration": 1349732.962493,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 95,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1107,
+            "totalDuration": 657814.68802,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.22499522010750653,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.92832256E9,
+    "timestamp": "2024-01-29T09:04:57.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 47,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 23,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 313.387073405,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1189,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1189
+      },
+      "payment": {
+        "id": 24,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 1140.468456777,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1194,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1194
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 103,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1219,
+            "totalDuration": 796510.1158469999,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 102,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1189,
+            "totalDuration": 1457503.155246,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 104,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1214,
+            "totalDuration": 711973.7239989999,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.18228301580991338,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.926962688E9,
+    "timestamp": "2024-01-29T09:05:02.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 52,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 25,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 338.816276123,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1293,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1293
+      },
+      "payment": {
+        "id": 26,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 1229.455302545,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1297,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1297
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 116,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1329,
+            "totalDuration": 862133.209119,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 115,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1293,
+            "totalDuration": 1573488.13744,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 117,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1319,
+            "totalDuration": 770721.264148,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.21098147185203475,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.925627392E9,
+    "timestamp": "2024-01-29T09:05:07.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 53,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 27,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 363.93155297,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1393,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1393
+      },
+      "payment": {
+        "id": 28,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 1317.647124549,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1399,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1399
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 119,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1430,
+            "totalDuration": 929230.256444,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 118,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1393,
+            "totalDuration": 1685911.2902469998,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 120,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1414,
+            "totalDuration": 825753.6345129999,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.2482154544297287,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.924324864E9,
+    "timestamp": "2024-01-29T09:05:12.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 59,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 29,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 389.325273855,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1498,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1498
+      },
+      "payment": {
+        "id": 30,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 1405.389500169,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1501,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1501
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 130,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1536,
+            "totalDuration": 991203.1183069999,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 129,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1498,
+            "totalDuration": 1801111.374434,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 131,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1525,
+            "totalDuration": 883983.286332,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.21467039815305916,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.922862592E9,
+    "timestamp": "2024-01-29T09:05:18.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 63,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 31,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 413.98251324,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1596,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1596
+      },
+      "payment": {
+        "id": 32,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 1489.528399339,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1600,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1600
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 139,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1626,
+            "totalDuration": 1051221.247296,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 138,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1596,
+            "totalDuration": 1908877.583487,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 140,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1609,
+            "totalDuration": 931524.717229,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.19847525587671935,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.921613312E9,
+    "timestamp": "2024-01-29T09:05:23.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 67,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 33,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 439.573296705,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1696,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1696
+      },
+      "payment": {
+        "id": 34,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 1574.072754459,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1700,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1700
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 148,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1730,
+            "totalDuration": 1117473.973792,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 147,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1696,
+            "totalDuration": 2019645.789923,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 149,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1717,
+            "totalDuration": 990381.546213,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.16532949804739777,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.920306688E9,
+    "timestamp": "2024-01-29T09:05:28.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 71,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 35,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 464.003496793,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1785,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1785
+      },
+      "payment": {
+        "id": 36,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 1650.905840623,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1790,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1790
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 157,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1823,
+            "totalDuration": 1180461.112984,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 156,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1785,
+            "totalDuration": 2117270.154842,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 158,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1808,
+            "totalDuration": 1056210.90757,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.15145985857710004,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.919069696E9,
+    "timestamp": "2024-01-29T09:05:33.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 74,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 37,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 488.535275305,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1860,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1860
+      },
+      "payment": {
+        "id": 38,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 1743.180197841,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1865,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1865
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 165,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1892,
+            "totalDuration": 1243717.369596,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 164,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1859,
+            "totalDuration": 2236191.5550220003,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 166,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1876,
+            "totalDuration": 1112523.427807,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.2432876464284204,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.918008832E9,
+    "timestamp": "2024-01-29T09:05:38.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 80,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 39,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 513.119020819,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1961,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1961
+      },
+      "payment": {
+        "id": 40,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 1827.400896381,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 1966,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 1966
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 179,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1992,
+            "totalDuration": 1306269.2335090002,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 178,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1961,
+            "totalDuration": 2346284.206869,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 180,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1982,
+            "totalDuration": 1174523.073627,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.16838525590251716,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.916673536E9,
+    "timestamp": "2024-01-29T09:05:43.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 84,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 41,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 538.609231628,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2067,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2067
+      },
+      "payment": {
+        "id": 42,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 1909.233165507,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2070,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2070
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 188,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2098,
+            "totalDuration": 1371497.196417,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 187,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2067,
+            "totalDuration": 2456223.702836,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 189,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2089,
+            "totalDuration": 1229171.178116,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.12513060643680354,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.915313664E9,
+    "timestamp": "2024-01-29T09:05:48.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 87,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 43,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 563.426182893,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2169,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2169
+      },
+      "payment": {
+        "id": 44,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 1997.617288927,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2174,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2174
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 193,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2198,
+            "totalDuration": 1435471.360655,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 192,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2169,
+            "totalDuration": 2568451.700809,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 194,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2194,
+            "totalDuration": 1277874.689226,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.12357452000704801,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.913941504E9,
+    "timestamp": "2024-01-29T09:05:54.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 92,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 45,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 588.040986278,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2269,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2269
+      },
+      "payment": {
+        "id": 46,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 2085.637398749,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2273,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2273
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 206,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2301,
+            "totalDuration": 1505536.522685,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 205,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2268,
+            "totalDuration": 2682652.681616,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 207,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2292,
+            "totalDuration": 1326917.603626,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.1599328372884367,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.91263488E9,
+    "timestamp": "2024-01-29T09:05:59.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 96,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 47,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 612.58036703,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2371,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2371
+      },
+      "payment": {
+        "id": 48,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 2172.865620391,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2376,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2376
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 215,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2406,
+            "totalDuration": 1572568.031628,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 214,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2371,
+            "totalDuration": 2795078.615799,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 216,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2398,
+            "totalDuration": 1376220.200971,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.1447230211691322,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.911279104E9,
+    "timestamp": "2024-01-29T09:06:04.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 100,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 49,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 637.607980253,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2475,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2475
+      },
+      "payment": {
+        "id": 50,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 2261.248005313,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2479,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2479
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 224,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2512,
+            "totalDuration": 1637859.467835,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 223,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2475,
+            "totalDuration": 2907391.693142,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 225,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2498,
+            "totalDuration": 1432699.069041,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.1396223141398385,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.909915136E9,
+    "timestamp": "2024-01-29T09:06:09.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 103,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 51,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 662.40829126,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2575,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2575
+      },
+      "payment": {
+        "id": 52,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 2348.823546604,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2580,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2580
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 229,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2609,
+            "totalDuration": 1701060.3097809998,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 228,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2575,
+            "totalDuration": 3017965.2053179997,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 230,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2595,
+            "totalDuration": 1481423.396436,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.14709952442567006,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.90857984E9,
+    "timestamp": "2024-01-29T09:06:14.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 107,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 53,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 687.447522319,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2678,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2678
+      },
+      "payment": {
+        "id": 54,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 2434.765632475,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2682,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2682
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 238,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2704,
+            "totalDuration": 1762288.198722,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 237,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2678,
+            "totalDuration": 3130486.581782,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 239,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2694,
+            "totalDuration": 1529419.53426,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.1391818698439104,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.907281408E9,
+    "timestamp": "2024-01-29T09:06:19.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 110,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 55,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 711.498963331,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2777,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2777
+      },
+      "payment": {
+        "id": 56,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 2517.225717018,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2783,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2783
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 246,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2810,
+            "totalDuration": 1827275.292711,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 245,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2777,
+            "totalDuration": 3236971.565759,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 247,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2795,
+            "totalDuration": 1589599.2347880001,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.1751475979880031,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.905921536E9,
+    "timestamp": "2024-01-29T09:06:24.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 115,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 57,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 736.152248388,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2879,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2879
+      },
+      "payment": {
+        "id": 58,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 2604.354632768,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2887,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2887
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 256,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2912,
+            "totalDuration": 1892478.7877000002,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 255,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2879,
+            "totalDuration": 3344775.095725,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 257,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2894,
+            "totalDuration": 1639169.764771,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.12215160215020972,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.904598528E9,
+    "timestamp": "2024-01-29T09:06:29.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 118,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 59,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 761.794385604,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2983,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2983
+      },
+      "payment": {
+        "id": 60,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 2689.950293758,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 2988,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 2988
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 264,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3010,
+            "totalDuration": 1953396.1458460002,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 263,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2983,
+            "totalDuration": 3460060.996102,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 265,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 2999,
+            "totalDuration": 1685550.976578,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.11325975758530109,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.903267328E9,
+    "timestamp": "2024-01-29T09:06:34.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 124,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 61,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 785.460306117,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 3071,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 3071
+      },
+      "payment": {
+        "id": 62,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 2775.232041589,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 3076,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 3076
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 278,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3107,
+            "totalDuration": 2025379.122041,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 277,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3071,
+            "totalDuration": 3568339.331276,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 279,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3093,
+            "totalDuration": 1741538.2258960002,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.11375433247548994,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.902050816E9,
+    "timestamp": "2024-01-29T09:06:39.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 127,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 63,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 810.849056544,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 3167,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 3167
+      },
+      "payment": {
+        "id": 64,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 2863.202479096,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 3171,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 3171
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 283,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3192,
+            "totalDuration": 2086758.319403,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 282,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3167,
+            "totalDuration": 3684469.037457,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 284,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3189,
+            "totalDuration": 1791040.488463,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.12359774184470378,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.900822016E9,
+    "timestamp": "2024-01-29T09:06:45.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 132,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 65,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 835.322426516,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 3268,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 3268
+      },
+      "payment": {
+        "id": 66,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 2949.514529467,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 3274,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 3274
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 296,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3305,
+            "totalDuration": 2156031.376897,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 295,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3268,
+            "totalDuration": 3794281.399179,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 297,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3294,
+            "totalDuration": 1844766.688824,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.12452857623598862,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.899433472E9,
+    "timestamp": "2024-01-29T09:06:50.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 136,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 67,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 860.834241064,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.430713,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 3371,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 3371
+      },
+      "payment": {
+        "id": 68,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 3033.286675666,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 4.371252711,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 3375,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 3375
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 301,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3403,
+            "totalDuration": 2217129.554426,
+            "maxDuration": 1940.1573759999999
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 300,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 500,
+            "count": 5,
+            "totalDuration": 5543.35996,
+            "maxDuration": 1409.212584
+          },
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3366,
+            "totalDuration": 3900192.443226,
+            "maxDuration": 4624.892586
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 302,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 500,
+            "count": 8,
+            "totalDuration": 3948.888792,
+            "maxDuration": 626.390542
+          },
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3384,
+            "totalDuration": 1895025.959807,
+            "maxDuration": 3614.577876
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.1572650532480909,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.897815552E9,
+    "timestamp": "2024-01-29T09:06:55.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 139,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 69,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 863.969886067,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 0.572557417,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 3384,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 3384
+      },
+      "payment": {
+        "id": 70,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 3040.152430918,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 1.882771543,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 3384,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 3384
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 306,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3412,
+            "totalDuration": 2222052.836637,
+            "maxDuration": 1576.793334
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 305,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 500,
+            "count": 18,
+            "totalDuration": 18791.521883,
+            "maxDuration": 1409.212584
+          },
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3366,
+            "totalDuration": 3900192.443226,
+            "maxDuration": 2119.205167
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 307,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 500,
+            "count": 28,
+            "totalDuration": 9876.340548,
+            "maxDuration": 673.1950009999999
+          },
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3384,
+            "totalDuration": 1895025.959807,
+            "maxDuration": 1620.6943760000001
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.04759328819303452,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.892724224E9,
+    "timestamp": "2024-01-29T09:08:05.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 142,
+    "serviceId": "ORDERING-SERVICE",
+    "instanceId": "ordering-service@sefa-ordering-service:58086",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {
+      "delivery": {
+        "id": 71,
+        "name": "delivery",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 863.969886067,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 0.0,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 3384,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 3384
+      },
+      "payment": {
+        "id": 72,
+        "name": "payment",
+        "state": "CLOSED",
+        "bufferedCallsCount": {
+          "SUCCESSFUL": 100,
+          "FAILED": 0
+        },
+        "callDuration": {
+          "SUCCESSFUL": 3040.152430918,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callMaxDuration": {
+          "SUCCESSFUL": 0.0,
+          "FAILED": 0.0,
+          "IGNORED": 0.0
+        },
+        "callCount": {
+          "SUCCESSFUL": 3384,
+          "FAILED": 0,
+          "IGNORED": 0
+        },
+        "slowCallCount": {
+          "SUCCESSFUL": 0,
+          "FAILED": 0
+        },
+        "notPermittedCallsCount": 0,
+        "failureRate": 0.0,
+        "slowCallRate": 0.0,
+        "totalCallsCount": 3384
+      }
+    },
+    "httpMetrics": {
+      "POST@/rest": {
+        "id": 309,
+        "endpoint": "/rest",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3412,
+            "totalDuration": 2222052.836637,
+            "maxDuration": 0.0
+          }
+        }
+      },
+      "POST@/rest/{cartId}/confirmOrder": {
+        "id": 308,
+        "endpoint": "/rest/{cartId}/confirmOrder",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 500,
+            "count": 18,
+            "totalDuration": 18791.521883,
+            "maxDuration": 1409.212584
+          },
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3366,
+            "totalDuration": 3900192.443226,
+            "maxDuration": 0.0
+          }
+        }
+      },
+      "POST@/rest/{cartId}/addItem": {
+        "id": 310,
+        "endpoint": "/rest/{cartId}/addItem",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 500,
+            "count": 28,
+            "totalDuration": 9876.340548,
+            "maxDuration": 673.1950009999999
+          },
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 3384,
+            "totalDuration": 1895025.959807,
+            "maxDuration": 0.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.03361901495639658,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.891220992E9,
+    "timestamp": "2024-01-29T09:09:01.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  }
+]

@@ -44,14 +44,17 @@ public class ProbeService {
         }
         //log.debug("APPLICATION FOUNDED: " + application);
         application.getInstances().forEach(instance -> {
+            //log.info("INSTANCE INSIDE THE FOR EACH: " + instance);
+            //  InstanceInfo [instanceId = auth@teastore-auth:2222, appName = TEASTORE-AUTH, hostName = localhost, status = UP,
+            //  ipAddr = 172.26.0.7, port = 2222, securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@aadf951
             if (invalidIteration.get()) return;
             InstanceMetricsSnapshot instanceMetricsSnapshot;
             try {
                 instanceMetricsSnapshot = prometheusParser.parse(instance); //usually cpuUsage, diskTotalSpace, diskFreeSpace
-                log.debug("INSTANCE METRIC SNAPSHOT: " + instanceMetricsSnapshots);
+                //log.debug("INSTANCE METRIC SNAPSHOT: " + instanceMetricsSnapshots);
                 instanceMetricsSnapshot.applyTimestamp();
-                log.debug("Adding metric for instance {}", instanceMetricsSnapshot.getInstanceId());
                 instanceMetricsSnapshots.add(instanceMetricsSnapshot);
+                log.debug("Added metric for instance {}", instanceMetricsSnapshot.getInstanceId());
             } catch (Exception e) {
                 log.warn("Error adding metrics for {}. Note that it might have been shutdown by the executor. Creating a snapshot with status UNREACHABLE", instance.getInstanceId());
                 log.warn("The exception is: " + e.getMessage());

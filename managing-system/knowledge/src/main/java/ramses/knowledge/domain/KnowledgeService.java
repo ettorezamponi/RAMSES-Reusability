@@ -100,7 +100,7 @@ public class KnowledgeService {
                     log.info("INSTANCE FOUND:" + instance);
                     if (instance == null)
                         throw new RuntimeException("Instance " +metricsSnapshot.getInstanceId()+" not found in service "+metricsSnapshot.getServiceId());
-                    // If the instance has been shutdown, skip its metrics snapshot in the buffer. Next buffer won't contain its metrics snapshots.
+                        // If the instance has been shutdown, skip its metrics snapshot in the buffer. Next buffer won't contain its metrics snapshots.
                     if (instance.getCurrentStatus() != InstanceStatus.SHUTDOWN) {
                         if (!instance.getLatestInstanceMetricsSnapshot().equals(metricsSnapshot)) {
                             metricsRepository.save(metricsSnapshot);

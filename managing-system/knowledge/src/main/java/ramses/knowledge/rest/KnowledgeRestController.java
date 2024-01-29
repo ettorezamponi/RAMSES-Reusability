@@ -209,6 +209,7 @@ public class KnowledgeRestController {
         return history;
     }
 
+    // http://localhost:55018/rest/metrics/getLatest?serviceId=ORDERING-SERVICE
     @GetMapping("/metrics/getLatest")
     public List<InstanceMetricsSnapshot> getLatestMetrics(@RequestParam(required = false) String serviceId, @RequestParam(required = false) String instanceId) {
         if (serviceId == null && instanceId == null)
@@ -222,6 +223,7 @@ public class KnowledgeRestController {
     }
 
 
+    // http://localhost:55018/rest/metrics/get?instanceId=ordering-service@sefa-ordering-service:58086
     @GetMapping("/metrics/get")
     public List<InstanceMetricsSnapshot> getMetrics(
             @RequestParam(required = false) String instanceId,
