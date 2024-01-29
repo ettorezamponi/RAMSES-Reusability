@@ -44,7 +44,20 @@ PrintSuccess "Setting up Spring Config Server"
 docker pull giamburrasca/sefa-configserver:$ARCH
 docker run -P --name sefa-configserver -e GITHUB_REPOSITORY_URL=$GITHUB_REPOSITORY_URL -d --network ramses-sas-net giamburrasca/sefa-configserver:$ARCH
 echo
-sleep 15
+
+durata_timer=15
+
+while [ $durata_timer -gt 0 ]; do
+    # Stampa il tempo rimanente
+    printf "\rRemaining timer for SEFA: %02d:%02d" $((durata_timer/60)) $((durata_timer%60))
+
+    # Attendi 1 secondo
+    sleep 1
+
+    # Riduci il tempo rimanente di 1 secondo
+    durata_timer=$((durata_timer-1))
+done
+echo
 
 declare -a arr=("sefa-restaurant-service"
                 "sefa-ordering-service"
@@ -94,8 +107,19 @@ docker run -P --name sefa-config-manager -e GITHUB_OAUTH=$GITHUB_OAUTH -e GITHUB
 echo
 
 ##### RAMSES #####
-echo; PrintSuccess "Setting up the Managing System, RAMSES!"; echo
-sleep 10
+durata_timer=10
+
+while [ $durata_timer -gt 0 ]; do
+    # Stampa il tempo rimanente
+    printf "\rRemaining timer for MAPE-K loop: %02d:%02d" $((durata_timer/60)) $((durata_timer%60))
+
+    # Attendi 1 secondo
+    sleep 1
+
+    # Riduci il tempo rimanente di 1 secondo
+    durata_timer=$((durata_timer-1))
+done
+echo
 
 docker pull giamburrasca/ramses-knowledge:$ARCH
 docker run -P --name ramses-knowledge -d --network ramses-sas-net giamburrasca/ramses-knowledge:$ARCH

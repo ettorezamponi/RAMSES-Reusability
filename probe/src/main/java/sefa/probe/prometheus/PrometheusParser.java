@@ -76,7 +76,7 @@ public class PrometheusParser {
                     case PrometheusMetrics.CB_FAILURE_RATE ->
                             instanceMetricsSnapshot.addCircuitBreakerFailureRate(labels.get("name"), ((Gauge) metric).getValue());
                     default -> {
-                        log.warn("PropertyName not founded for the metric: ", metric.getLabels());
+                        //log.warn("PropertyName not founded for the metric: ", metric.getLabels());
                     }
                 }
             });
@@ -90,7 +90,9 @@ public class PrometheusParser {
     }
 
     private void handleHttpServerRequestsTotalDurationMs(Map<String, HttpEndpointMetrics> httpMetricsMap, Histogram metric) {
+        log.info("HANDLE HTTP REQUEST TOTAL DURATION LAUNCHED");
         Map<String, String> labels = metric.getLabels();//e.g. labels' key for http_server_requests_seconds are [exception, method, uri, status]
+        log.info("HTTP LABELS: "+labels);
         if (isAnExcludedUrl(labels.get("uri")))
             return;
         HttpEndpointMetrics metrics = httpMetricsMap.getOrDefault(labels.get("method") + "@" + labels.get("uri"), new HttpEndpointMetrics(labels.get("uri"), labels.get("method")));
@@ -99,6 +101,7 @@ public class PrometheusParser {
     }
 
     private void handleHttpServerRequestsMaxDuration(Map<String, HttpEndpointMetrics> httpMetricsMap, Gauge metric) {
+        log.info("HANDLE HTTP REQUEST MAX DURATION LAUNCHED");
         Map<String, String> labels = metric.getLabels();//e.g. labels' key for http_server_requests_seconds are [exception, method, uri, status]
         if (isAnExcludedUrl(labels.get("uri")))
             return;

@@ -1,0 +1,19 @@
+[
+  {
+    "id": null,
+    "serviceId": "TEASTORE-AUTH",
+    "instanceId": "auth@teastore-auth:2222",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {},
+    "cpuUsage": 0.08161157024793389,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 6.250909696E9,
+    "timestamp": "2024-01-29T14:19:21.651+00:00",
+    "active": true,
+    "shutdown": false,
+    "failed": false,
+    "unreachable": false,
+    "booting": false
+  }
+]

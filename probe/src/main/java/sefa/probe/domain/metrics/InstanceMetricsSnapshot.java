@@ -29,7 +29,6 @@ public class InstanceMetricsSnapshot {
     private Double cpuUsage;
     private Double diskTotalSpace;
     private Double diskFreeSpace;
-
     private Date timestamp;
 
     public InstanceMetricsSnapshot(String serviceId, String instanceId) {
@@ -48,8 +47,7 @@ public class InstanceMetricsSnapshot {
         if (!instanceId.equals(that.instanceId)) return false;
         if (status != that.status) return false;
         if (status == InstanceStatus.UNREACHABLE) return false;
-        if (!Objects.equals(circuitBreakerMetrics, that.circuitBreakerMetrics))
-            return false;
+        if (!Objects.equals(circuitBreakerMetrics, that.circuitBreakerMetrics)) return false;
         return Objects.equals(httpMetrics, that.httpMetrics);
     }
 

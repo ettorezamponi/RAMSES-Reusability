@@ -53,42 +53,45 @@ public class CartActionServlet extends AbstractUIServlet {
 	@Override
 	protected void handleGETRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, LoadBalancerTimeoutException {
-		for (Object paramo : request.getParameterMap().keySet()) {
-			String param = (String) paramo;
-			if (param.contains("addToCart")) {
-				long productID = Long.parseLong(request.getParameter("productid"));
-				SessionBlob blob = LoadBalancedStoreOperations.addProductToCart(getSessionBlob(request), productID);
-				saveSessionBlob(blob, response);
-				redirect("/cart", response, MESSAGECOOKIE, String.format(ADDPRODUCT, productID));
-				break;
-			} else if (param.contains("removeProduct")) {
-				long productID = Long.parseLong(param.substring("removeProduct_".length()));
-				SessionBlob blob = LoadBalancedStoreOperations.removeProductFromCart(getSessionBlob(request),
-						productID);
-				saveSessionBlob(blob, response);
-				redirect("/cart", response, MESSAGECOOKIE, String.format(REMOVEPRODUCT, productID));
-				break;
-			} else if (param.contains("updateCartQuantities")) {
-				List<OrderItem> orderItems = getSessionBlob(request).getOrderItems();
-				updateOrder(request, orderItems, response);
-				redirect("/cart", response, MESSAGECOOKIE, CARTUPDATED);
-				break;
-			} else if (param.contains("proceedtoCheckout")) {
-				if (LoadBalancedStoreOperations.isLoggedIn(getSessionBlob(request))) {
+		try {
+			for (Object paramo : request.getParameterMap().keySet()) {
+				String param = (String) paramo;
+				if (param.contains("addToCart")) {
+					long productID = Long.parseLong(request.getParameter("productid"));
+					SessionBlob blob = LoadBalancedStoreOperations.addProductToCart(getSessionBlob(request), productID);
+					saveSessionBlob(blob, response);
+					redirect("/cart", response, MESSAGECOOKIE, String.format(ADDPRODUCT, productID));
+					break;
+				} else if (param.contains("removeProduct")) {
+					long productID = Long.parseLong(param.substring("removeProduct_".length()));
+					SessionBlob blob = LoadBalancedStoreOperations.removeProductFromCart(getSessionBlob(request),
+							productID);
+					saveSessionBlob(blob, response);
+					redirect("/cart", response, MESSAGECOOKIE, String.format(REMOVEPRODUCT, productID));
+					break;
+				} else if (param.contains("updateCartQuantities")) {
 					List<OrderItem> orderItems = getSessionBlob(request).getOrderItems();
 					updateOrder(request, orderItems, response);
-					redirect("/order", response);
-				} else {
-					redirect("/login", response);
+					redirect("/cart", response, MESSAGECOOKIE, CARTUPDATED);
+					break;
+				} else if (param.contains("proceedtoCheckout")) {
+					if (LoadBalancedStoreOperations.isLoggedIn(getSessionBlob(request))) {
+						List<OrderItem> orderItems = getSessionBlob(request).getOrderItems();
+						updateOrder(request, orderItems, response);
+						redirect("/order", response);
+					} else {
+						redirect("/login", response);
+					}
+					break;
+				} else if (param.contains("confirm")) {
+					confirmOrder(request, response);
+					break;
 				}
-				break;
-			} else if (param.contains("confirm")) {
-				confirmOrder(request, response);
-				break;
+
 			}
+		} finally {
 
 		}
-
 	}
 
 	/**
