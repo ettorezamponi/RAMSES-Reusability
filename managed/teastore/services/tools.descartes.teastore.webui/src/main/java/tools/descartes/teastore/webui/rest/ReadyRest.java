@@ -17,8 +17,10 @@ package tools.descartes.teastore.webui.rest;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 import tools.ezamponi.MetricsExporter;
 
 /**
@@ -45,8 +47,8 @@ public class ReadyRest {
   @GET
   @Path("/prometheus") // http://localhost:8080/tools.descartes.teastore.webui/rest/ready/prometheus
   @Produces(MediaType.TEXT_PLAIN)
-  public Response getMetrics() {
-    String metrics = MetricsExporter.getMetrics();
+  public Response getMetrics(@Context UriInfo uriInfo) {
+    String metrics = MetricsExporter.getMetrics(uriInfo);
     return Response.ok(metrics).build();
   }
 

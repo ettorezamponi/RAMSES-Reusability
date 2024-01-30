@@ -21,9 +21,11 @@ import jakarta.ws.rs.PUT;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.Response.Status;
+import jakarta.ws.rs.core.UriInfo;
 import tools.ezamponi.MetricsExporter;
 
 /**
@@ -81,8 +83,8 @@ public class RegistryREST {
 	@GET
 	@Path("/prometheus") // http://localhost:8080/tools.descartes.teastore.registry/rest/services/prometheus
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response getMetrics() {
-		String metrics = MetricsExporter.getMetrics();
+	public Response getMetrics(@Context UriInfo uriInfo) {
+		String metrics = MetricsExporter.getMetrics(uriInfo);
 		return Response.ok(metrics).build();
 	}
 
