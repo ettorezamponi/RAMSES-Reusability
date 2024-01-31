@@ -15,7 +15,11 @@ import jakarta.ws.rs.core.UriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
 
 // TODO make it reachable through "/actuator/prometheus" and not tools.descartes.ecc
 public class MetricsExporter {
@@ -36,10 +40,7 @@ public class MetricsExporter {
     @Produces(MediaType.TEXT_PLAIN)
     public static String getMetrics(UriInfo uriInfo) {
         MicrometerResource();
-
-        String melodyPath = convertUri(uriInfo);
-
-        String melodyMetrics = fetchExternalMetrics(melodyPath);
+        String melodyMetrics = fetchExternalMetrics(convertUri(uriInfo));
         return prometheusRegistry.scrape() + "\n" + melodyMetrics;
     }
 
@@ -51,19 +52,42 @@ public class MetricsExporter {
     }
 
     private static String fetchExternalMetrics(String url) {
-        try {
-            Client client = ClientBuilder.newClient();
-            Response response = client.target(url).request().get();
+        //TODO aggiungi il blocco try-catch
+        Client client = ClientBuilder.newClient();
+        Response response = client.target(url).request().get();
 
-            if (response.getStatus() == 200) {
-                return response.readEntity(String.class);
+        if (response.getStatus() == 200) {
+            System.out.println("RESPONSE 200, EXTERNAL MELODY METRICS FETCHED");
+            return response.readEntity(String.class);
+        } else {
+            LOG.error("Error during javamelody response with error: {}", response.getStatus());
+            return "ERROR WITH MELODY METRICS";
+        }
+    }
+
+   /* public static String fetchExternalMetrics(String url) {
+        try {
+            URL urlObject = new URL(url);
+            HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
+
+            int statusCode = connection.getResponseCode();
+
+            if (statusCode == 200) {
+                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
+                StringBuilder response = new StringBuilder();
+                String line;
+
+                while ((line = reader.readLine()) != null) {
+                    response.append(line);
+                }
+
+                reader.close();
+                return response.toString();
             } else {
-                LOG.error("Error during javamelody response with error: {}", response.getStatus());
+                return "HTTP request failed with status code: " + statusCode;
             }
         } catch (Exception e) {
-            LOG.error("Error during metrics exporting: ", e);
+            return "Error during HTTP request: " + e.getMessage();
         }
-
-        return "Error during the try-catch block";
-    }
+    }*/
 }

@@ -42,8 +42,6 @@ public class MyEurekaClientService {
         eurekaClient = new DiscoveryClient(applicationInfoManager, clientConfig);
     }
 
-
-
     /**
      * this is the entry point for registering
      * the app with the Eureka Server

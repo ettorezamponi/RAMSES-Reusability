@@ -16,9 +16,11 @@ package tools.descartes.teastore.recommender.rest;
 import java.util.List;
 
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import jakarta.ws.rs.core.UriInfo;
 import tools.descartes.teastore.recommender.algorithm.RecommenderSelector;
 import tools.descartes.teastore.entities.OrderItem;
 import tools.descartes.teastore.entities.Product;
@@ -61,8 +63,8 @@ public class RecommendEndpoint {
 	@GET
 	@Path("/prometheus") // http://localhost:8080/tools.descartes.teastore.recommender/rest/recommend/prometheus
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response getMetrics() {
-		String metrics = MetricsExporter.getMetrics();
+	public Response getMetrics(@Context UriInfo uriInfo) {
+		String metrics = MetricsExporter.getMetrics(uriInfo);
 		return Response.ok(metrics).build();
 	}
 }

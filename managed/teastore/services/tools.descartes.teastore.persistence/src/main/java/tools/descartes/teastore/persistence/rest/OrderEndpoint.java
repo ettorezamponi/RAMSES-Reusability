@@ -18,8 +18,10 @@ import java.util.List;
 
 import jakarta.ws.rs.*;
 
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import jakarta.ws.rs.core.UriInfo;
 import tools.descartes.teastore.persistence.domain.OrderRepository;
 import tools.descartes.teastore.persistence.repository.DataGenerator;
 import tools.descartes.teastore.registryclient.util.AbstractCRUDEndpoint;
@@ -114,8 +116,8 @@ public class OrderEndpoint extends AbstractCRUDEndpoint<Order> {
 	@GET
 	@Path("/prometheus") // http://localhost:8080/tools.descartes.teastore.persistence/rest/orders/prometheus
 	@Produces(MediaType.TEXT_PLAIN)
-	public Response getMetrics() {
-		String metrics = MetricsExporter.getMetrics();
+	public Response getMetrics(@Context UriInfo uriInfo) {
+		String metrics = MetricsExporter.getMetrics(uriInfo);
 		return Response.ok(metrics).build();
 	}
 

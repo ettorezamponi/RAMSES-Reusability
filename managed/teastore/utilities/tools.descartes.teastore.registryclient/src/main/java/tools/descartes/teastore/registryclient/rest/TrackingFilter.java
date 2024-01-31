@@ -60,7 +60,9 @@ public class TrackingFilter implements Filter {
   public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
       throws IOException, ServletException {
     try (Scope scope = Tracing.extractCurrentSpan((HttpServletRequest) request)) {
+      //System.out.println("CTRLINST in registry client: "+CTRLINST.isMonitoringEnabled());
       if (!CTRLINST.isMonitoringEnabled()) {
+        System.out.println("BEFORE REQUEST:"+request+"\n RESPONSE:"+response);
         chain.doFilter(request, response);
         return;
       }

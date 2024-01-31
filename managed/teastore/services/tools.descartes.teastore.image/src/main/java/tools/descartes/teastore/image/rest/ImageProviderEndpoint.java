@@ -21,9 +21,11 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import jakarta.ws.rs.core.UriInfo;
 import tools.descartes.teastore.entities.ImageSize;
 import tools.descartes.teastore.image.ImageProvider;
 import tools.descartes.teastore.image.setup.SetupController;
@@ -117,8 +119,8 @@ public class ImageProviderEndpoint {
   @GET
   @Path("/prometheus") // http://localhost:4444/tools.descartes.teastore.image/rest/image/prometheus
   @Produces(MediaType.TEXT_PLAIN)
-  public Response getMetrics() {
-    String metrics = MetricsExporter.getMetrics();
+  public Response getMetrics(@Context UriInfo uriInfo) {
+    String metrics = MetricsExporter.getMetrics(uriInfo);
     return Response.ok(metrics).build();
   }
 

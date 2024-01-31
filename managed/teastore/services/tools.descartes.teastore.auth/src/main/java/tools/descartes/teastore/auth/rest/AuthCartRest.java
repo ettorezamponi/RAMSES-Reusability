@@ -15,9 +15,11 @@
 package tools.descartes.teastore.auth.rest;
 
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 
+import jakarta.ws.rs.core.UriInfo;
 import tools.descartes.teastore.auth.security.ShaSecurityProvider;
 import tools.descartes.teastore.entities.OrderItem;
 import tools.descartes.teastore.entities.Product;
@@ -132,8 +134,8 @@ public class AuthCartRest {
   @GET
   @Path("/prometheus") // http://localhost:8080/tools.descartes.teastore.auth/rest/cart/prometheus
   @Produces(MediaType.TEXT_PLAIN)
-  public Response getMetrics() {
-    String metrics = MetricsExporter.getMetrics();
+  public Response getMetrics(@Context UriInfo uriInfo) {
+    String metrics = MetricsExporter.getMetrics(uriInfo);
     return Response.ok(metrics).build();
   }
 
