@@ -62,6 +62,16 @@ public class TrackingFilter implements Filter {
     try (Scope scope = Tracing.extractCurrentSpan((HttpServletRequest) request)) {
       //System.out.println("CTRLINST in registry client: "+CTRLINST.isMonitoringEnabled());
       if (!CTRLINST.isMonitoringEnabled()) {
+/*
+
+        if (url.contains("prometheus")){
+          System.out.println("URL DOFILTER CONTAINS MONITORING");
+          ((HttpServletResponse) response).setStatus(HttpServletResponse.SC_OK);
+          chain.doFilter(request, response);
+          return;
+        }
+*/
+
         System.out.println("BEFORE REQUEST:"+request+"\n RESPONSE:"+response);
         chain.doFilter(request, response);
         return;

@@ -17,8 +17,11 @@ import org.slf4j.LoggerFactory;
 
 import java.io.BufferedReader;
 import java.io.File;
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
+import java.net.URI;
+import java.net.URISyntaxException;
 import java.net.URL;
 
 // TODO make it reachable through "/actuator/prometheus" and not tools.descartes.ecc
@@ -40,19 +43,35 @@ public class MetricsExporter {
     @Produces(MediaType.TEXT_PLAIN)
     public static String getMetrics(UriInfo uriInfo) {
         MicrometerResource();
-        String melodyMetrics = fetchExternalMetrics(convertUri(uriInfo));
-        return prometheusRegistry.scrape() + "\n" + melodyMetrics;
+        String metrics = prometheusRegistry.scrape() + "\n" + fetchExternalMetrics(uriInfo);
+
+        return metrics;
     }
 
     private static String convertUri (UriInfo uriInfo){
+        // I received the old port to change
+        String baseUri = uriInfo.getBaseUri().toString();
+        URI uri = null;
+        String oldPort;
+        try {
+            uri = new URI(baseUri);
+            oldPort = String.valueOf(uri.getPort());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException(e);
+        }
+
+        // I managed to reach the correct url to pass to fetching method
         String path = uriInfo.getBaseUri().toString()
-                .replace("rest/","monitoring?format=prometheus&includeLastValue=true"); // "http://localhost:8080/tools.descartes.teastore.webui/rest/"
-        System.out.println("For the service "+uriInfo.getBaseUri()+" the MELODY PATH is "+path);
+                .replaceFirst("rest/","monitoring?format=prometheus&includeLastValue=true") // "http://localhost:8080/tools.descartes.teastore.webui/rest/"
+                .replace(oldPort, "8080");
+        System.out.println("For the service "+uriInfo.getBaseUri()+" the MELODY PATH to give to probe is:\n"+path);
         return path;
     }
 
-    private static String fetchExternalMetrics(String url) {
+    public static String fetchExternalMetrics(UriInfo uriInfo) {
         //TODO aggiungi il blocco try-catch
+        String url = convertUri(uriInfo);
+
         Client client = ClientBuilder.newClient();
         Response response = client.target(url).request().get();
 
@@ -65,29 +84,4 @@ public class MetricsExporter {
         }
     }
 
-   /* public static String fetchExternalMetrics(String url) {
-        try {
-            URL urlObject = new URL(url);
-            HttpURLConnection connection = (HttpURLConnection) urlObject.openConnection();
-
-            int statusCode = connection.getResponseCode();
-
-            if (statusCode == 200) {
-                BufferedReader reader = new BufferedReader(new InputStreamReader(connection.getInputStream()));
-                StringBuilder response = new StringBuilder();
-                String line;
-
-                while ((line = reader.readLine()) != null) {
-                    response.append(line);
-                }
-
-                reader.close();
-                return response.toString();
-            } else {
-                return "HTTP request failed with status code: " + statusCode;
-            }
-        } catch (Exception e) {
-            return "Error during HTTP request: " + e.getMessage();
-        }
-    }*/
 }

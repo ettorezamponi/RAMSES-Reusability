@@ -13,6 +13,7 @@
  */
 package tools.descartes.teastore.image.rest;
 
+import java.io.IOException;
 import java.util.HashMap;
 import java.util.stream.Collectors;
 
@@ -39,6 +40,8 @@ import tools.ezamponi.MetricsExporter;
 @Produces({ "application/json" })
 @Consumes({ "application/json" })
 public class ImageProviderEndpoint {
+
+  String melodyMetrics = null;
 
   /**
    * Queries the image provider for the given product IDs in the given size, provided as strings.

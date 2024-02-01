@@ -23,6 +23,8 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import tools.ezamponi.MetricsExporter;
 
+import java.io.IOException;
+
 /**
  * Rest endpoint for the store cart.
  *
