@@ -140,4 +140,81 @@
     "failed": false,
     "booting": false
   }
+],
+
+[
+  {
+    "id": 48,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 105,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1191,
+            "totalDuration": 18897.193443,
+            "maxDuration": 334.229625
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 106,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1191,
+            "totalDuration": 5579.857301,
+            "maxDuration": 135.830125
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 108,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1176,
+            "totalDuration": 3929.102371,
+            "maxDuration": 54.021291999999995
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 107,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1146,
+            "totalDuration": 1431.874202,
+            "maxDuration": 24.252458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.2772493251193205,
+    "diskTotalSpace": 6.2671097856E10,
+    "diskFreeSpace": 1.0789244928E10,
+    "timestamp": "2024-02-02T15:19:50.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  }
 ]

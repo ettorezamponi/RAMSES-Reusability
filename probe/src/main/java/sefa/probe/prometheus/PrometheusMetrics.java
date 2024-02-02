@@ -4,7 +4,10 @@ public class PrometheusMetrics {
     public static final String CPU_USAGE = "system_cpu_usage";
     public static final String DISK_TOTAL_SPACE = "disk_total_bytes";
     public static final String DISK_FREE_SPACE = "disk_free_bytes";
-    public static final String HTTP_REQUESTS_TIME = "http_server_requests_seconds";
+
+    //public static final String HTTP_REQUESTS_TIME = "http_server_requests_seconds";
+    public static final String HTTP_REQUESTS_TIME = "javamelody_http_duration_millis";
+
     public static final String HTTP_REQUESTS_MAX_TIME = "http_server_requests_seconds_max";
     public static final String CB_BUFFERED_CALLS = "resilience4j_circuitbreaker_buffered_calls";
     public static final String CB_STATE = "resilience4j_circuitbreaker_state";

@@ -33,12 +33,33 @@ public class PrometheusParser {
             log.debug("URL TO GIVE TO PROMETHEUS:" + url);
             PrometheusScraper scraper = new PrometheusScraper(url);
             metricFamilies = scraper.scrape();
-            log.debug("METRICS FAMILIES: " + metricFamilies.toString());
+
+            /*metricFamilies.forEach(metricFamily -> {
+                String metricName = metricFamily.getName();
+                System.out.println("Metric Family Name: " + metricName);
+            });*/
+            //Metric Family Name: jvm_buffer_count_buffers
+            //Metric Family Name: jvm_threads_peak_threads
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
         Map<String, HttpEndpointMetrics> httpMetricsMap = new HashMap<>();
+
+        /*Integer httpTotalDuration=0;
+        Long httpTotalRequest;
+
+        metricFamilies.forEach(metricFamily -> {
+            String propertyName = metricFamily.getName();
+            metricFamily.getMetrics().forEach(metric -> {
+                if ("javamelody_http_duration_millis".equals(propertyName))
+                    if (metric instanceof Counter) {
+                        httpTotalDuration = (int) ((Counter) metric).getValue();
+                    }
+                if ("javamelody_tomcat_request_count".equals(propertyName))
+                    httpTotalDuration = metric;
+            });
+        });*/
 
         metricFamilies.forEach(metricFamily -> {
             String propertyName = metricFamily.getName(); //e.g. http_server_requests_seconds

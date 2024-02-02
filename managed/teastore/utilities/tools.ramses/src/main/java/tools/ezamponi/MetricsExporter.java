@@ -62,7 +62,7 @@ public class MetricsExporter {
 
         // I managed to reach the correct url to pass to fetching method
         String path = uriInfo.getBaseUri().toString()
-                .replaceFirst("rest/","monitoring?format=prometheus&includeLastValue=true") // "http://localhost:8080/tools.descartes.teastore.webui/rest/"
+                .replaceFirst("rest/","monitoring?format=prometheus&includeLastValue=true&includeLastValue=true") // "http://localhost:8080/tools.descartes.teastore.webui/rest/"
                 .replace(oldPort, "8080");
         System.out.println("For the service "+uriInfo.getBaseUri()+" the MELODY PATH to give to probe is:\n"+path);
         return path;
@@ -76,7 +76,6 @@ public class MetricsExporter {
         Response response = client.target(url).request().get();
 
         if (response.getStatus() == 200) {
-            System.out.println("RESPONSE 200, EXTERNAL MELODY METRICS FETCHED");
             return response.readEntity(String.class);
         } else {
             LOG.error("Error during javamelody response with error: {}", response.getStatus());
