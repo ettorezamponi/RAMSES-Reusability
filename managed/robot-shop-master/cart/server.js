@@ -23,6 +23,40 @@ const counter = new promClient.Counter({
     registers: [register]
 });
 
+const Eureka = require('eureka-js-client').Eureka;
+
+// example configuration
+const client = new Eureka({
+    // application instance information
+    instance: {
+        app: 'rs-cart',
+        instanceId: 'cart',
+        hostName: 'localhost',
+        ipAddr: '127.0.0.1',
+        port:  {
+            '$': 3001,
+            '@enabled': 'true',
+        },
+        vipAddress: 'jq.test.something.com',
+        statusPageUrl: 'http://localhost:3001/info',
+        dataCenterInfo:  {
+            '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
+            name: 'MyOwn',
+        }
+    },
+    eureka: {
+        // eureka server host / port
+        host: 'eureka',
+        port: 58082,
+        servicePath: '/eureka/apps/'
+    },
+});
+
+client.logger.level('debug');
+
+client.start(function(error){
+    console.log(error || 'complete')
+});
 
 var redisConnected = false;
 

@@ -57,9 +57,10 @@ services:
   cart:
     build:
       context: cart
-    image: ${REPO}/rs-cart:${TAG}
+    image: rs-cart:${TAG}
     depends_on:
       - redis
+      - eureka
     networks:
       - robot-shop
     healthcheck:
@@ -69,6 +70,18 @@ services:
       retries: 3
     logging:
       <<: *logging
+
+
+  eureka:
+    build: eureka
+    image: eureka
+    networks:
+      - robot-shop
+    container_name: eureka
+    ports:
+      - "58082:58082"
+
+
   mysql:
     build:
       context: mysql
