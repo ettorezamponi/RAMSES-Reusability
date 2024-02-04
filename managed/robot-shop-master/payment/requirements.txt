@@ -5,3 +5,5 @@ pika
 prometheus_client
 opentracing
 instana
+eureka-client
+py_eureka_client

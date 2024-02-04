@@ -127,9 +127,10 @@ services:
   payment:
     build:
       context: payment
-    image: ${REPO}/rs-payment:${TAG}
+    image: rs-payment:${TAG}
     depends_on:
       - rabbitmq
+      - eureka
     networks:
       - robot-shop
     healthcheck:

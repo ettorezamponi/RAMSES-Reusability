@@ -1,3 +1,5 @@
+# export PATH="/Users/ettorezamponi/Library/Python/3.9/bin"
+
 import random
 
 import instana
@@ -14,9 +16,17 @@ from flask import Response
 from flask import request
 from flask import jsonify
 from rabbitmq import Publisher
+
 # Prometheus
 import prometheus_client
 from prometheus_client import Counter, Histogram
+
+import py_eureka_client.eureka_client as eureka_client
+your_rest_server_port = 3050
+# The flowing code will register your server to eureka server and also start to send heartbeat every 30 seconds
+eureka_client.init(eureka_server="http://eureka:58082/eureka/",
+                   app_name="rs-payment",
+                   instance_port=your_rest_server_port)
 
 app = Flask(__name__)
 app.logger.setLevel(logging.INFO)
