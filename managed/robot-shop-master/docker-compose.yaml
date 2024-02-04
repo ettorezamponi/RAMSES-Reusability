@@ -1,5 +1,13 @@
 version: '3'
 services:
+  eureka:
+    build: eureka
+    image: eureka
+    networks:
+      - robot-shop
+    container_name: eureka
+    ports:
+      - "58082:58082"
   mongodb:
     build:
       context: mongo
@@ -70,17 +78,6 @@ services:
       retries: 3
     logging:
       <<: *logging
-
-
-  eureka:
-    build: eureka
-    image: eureka
-    networks:
-      - robot-shop
-    container_name: eureka
-    ports:
-      - "58082:58082"
-
 
   mysql:
     build:
