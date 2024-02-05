@@ -197,8 +197,6 @@ public class KnowledgeRestController {
         return ResponseEntity.ok("Response time threshold updated");
     }
 
-
-
     // Inspection endpoints
     @GetMapping("/chosenAdaptationOptionsHistory")
     public Map<String, List<AdaptationOption>> getChosenAdaptationOptionsHistory(@RequestParam int n) {

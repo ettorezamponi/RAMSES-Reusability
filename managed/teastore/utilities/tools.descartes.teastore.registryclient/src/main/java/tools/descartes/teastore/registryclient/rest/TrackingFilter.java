@@ -72,7 +72,7 @@ public class TrackingFilter implements Filter {
         }
 */
 
-        System.out.println("BEFORE REQUEST:"+request+"\n RESPONSE:"+response);
+        //System.out.println("BEFORE REQUEST:"+request+"\n RESPONSE:"+response);
         chain.doFilter(request, response);
         return;
       }

@@ -26,7 +26,7 @@ public class PrometheusParser {
         List<MetricFamily> metricFamilies;
         try {
             URL url = new URL(instanceInfo.getHealthCheckUrl());
-            //log.info("INSTANCE INFO:" + instanceInfo);
+            // log.info("INSTANCE INFO:" + instanceInfo);
             // [instanceId = payment-proxy-1-service@sefa-payment-proxy-1-service:58090, appName = PAYMENT-PROXY-SERVICE,
             // hostName = sefa-payment-proxy-1-service, status = UP, ipAddr = 172.22.0.7, port = 58090, securePort = 443, dataCenterInfo = com.netflix.appinfo.MyDataCenterInfo@7d942
             //url = new URL(url, actuatorRelativePath+"/prometheus");
@@ -46,32 +46,23 @@ public class PrometheusParser {
 
         Map<String, HttpEndpointMetrics> httpMetricsMap = new HashMap<>();
 
-        /*Integer httpTotalDuration=0;
-        Long httpTotalRequest;
-
-        metricFamilies.forEach(metricFamily -> {
-            String propertyName = metricFamily.getName();
-            metricFamily.getMetrics().forEach(metric -> {
-                if ("javamelody_http_duration_millis".equals(propertyName))
-                    if (metric instanceof Counter) {
-                        httpTotalDuration = (int) ((Counter) metric).getValue();
-                    }
-                if ("javamelody_tomcat_request_count".equals(propertyName))
-                    httpTotalDuration = metric;
-            });
-        });*/
-
         metricFamilies.forEach(metricFamily -> {
             String propertyName = metricFamily.getName(); //e.g. http_server_requests_seconds
-            log.info("PROPERTY NAME: " + propertyName); // e.g. jvm_classes_unloaded_classes_total
+            //log.info("PROPERTY NAME: " + propertyName); // e.g. jvm_classes_unloaded_classes_total
+
+            if ((propertyName).contains("javamelody_http_duration_millis_total")) {
+                log.info("HTTP DURATION FAMILY: " + metricFamily);
+                log.info("\n METRICS " + (metricFamily.getMetrics()) + "\n NAME:" + metricFamily.getName()+ "\n HELP:" + metricFamily.getHelp()+ "\n TYPE:" + metricFamily.getType()+ "\n CLASS:" + metricFamily.getClass());//+ ((Gauge)metric).getValue());
+            }
+
             //MetricType metricType = elem.getType(); e.g. GAUGE
             metricFamily.getMetrics().forEach(metric -> { //e.g., one metric is the http_server_requests_seconds for the endpoint X
                 //log.info("METRIC: " + metric); e.g. METRIC: prometheus.types.Gauge@8663d4a
                 Map<String, String> labels = metric.getLabels();
-                log.info("METRIC LABEL: " + metric.getLabels() );
+                //log.info("METRIC LABEL: " + metric.getLabels() ); // e.g., {area=nonheap, id=CodeHeap 'profiled nmethods'},nullnull OPPURE {},nullnull
                 switch (propertyName) {
                     case PrometheusMetrics.HTTP_REQUESTS_TIME ->
-                            handleHttpServerRequestsTotalDurationMs(httpMetricsMap, (Histogram) metric);
+                        handleHttpServerRequestsTotalDurationMs(httpMetricsMap, (Histogram) metric);
                     case PrometheusMetrics.HTTP_REQUESTS_MAX_TIME ->
                             handleHttpServerRequestsMaxDuration(httpMetricsMap, (Gauge) metric);
                     case PrometheusMetrics.DISK_FREE_SPACE ->
@@ -113,7 +104,7 @@ public class PrometheusParser {
     private void handleHttpServerRequestsTotalDurationMs(Map<String, HttpEndpointMetrics> httpMetricsMap, Histogram metric) {
         log.info("HANDLE HTTP REQUEST TOTAL DURATION LAUNCHED");
         Map<String, String> labels = metric.getLabels();//e.g. labels' key for http_server_requests_seconds are [exception, method, uri, status]
-        log.info("HTTP LABELS: "+labels);
+        log.info("HTTP LABELS: "+labels); // e.g., {exception=None, method=GET, outcome=SUCCESS, status=200, uri=/actuator/prometheus}
         if (isAnExcludedUrl(labels.get("uri")))
             return;
         HttpEndpointMetrics metrics = httpMetricsMap.getOrDefault(labels.get("method") + "@" + labels.get("uri"), new HttpEndpointMetrics(labels.get("uri"), labels.get("method")));

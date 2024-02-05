@@ -1,5 +1,6 @@
 package tools.ezamponi;
 
+import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.binder.jvm.*;
 import io.micrometer.core.instrument.binder.system.FileDescriptorMetrics;
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
@@ -23,12 +24,14 @@ import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 // TODO make it reachable through "/actuator/prometheus" and not tools.descartes.ecc
 public class MetricsExporter {
     private static final Logger LOG = LoggerFactory.getLogger(MetricsExporter.class);
     static PrometheusMeterRegistry prometheusRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
-
+    private static Number initialHttpMean=0;
 
     public static void MicrometerResource() {
         new ClassLoaderMetrics().bindTo(prometheusRegistry);
@@ -37,14 +40,44 @@ public class MetricsExporter {
         new ProcessorMetrics().bindTo(prometheusRegistry);
         new JvmThreadMetrics().bindTo(prometheusRegistry);
         new DiskSpaceMetrics(new File("/")).bindTo(prometheusRegistry);
+        Gauge.builder("http_server_requests_seconds", () -> initialHttpMean)
+                .description("HTTP milliseconds total duration requests")
+                .register(prometheusRegistry);
     }
 
     @SuppressWarnings("checkstyle:designforextension")
     @Produces(MediaType.TEXT_PLAIN)
     public static String getMetrics(UriInfo uriInfo) {
         MicrometerResource();
-        String metrics = prometheusRegistry.scrape() + "\n" + fetchExternalMetrics(uriInfo);
 
+        //TODO remember that http javamelody metrics is in milliseconds
+        Double httpTotalTimeRequests = extractMetricValue(fetchExternalMetrics(uriInfo), "javamelody_http_duration_millis");
+        Double httpNoOfRequests = extractMetricValue(fetchExternalMetrics(uriInfo), "javamelody_http_hits_count");
+        Double httpMean = httpTotalTimeRequests/httpNoOfRequests;
+        System.out.println("LA MEDIA CALCOLATA CON I VALORI E': " + httpMean + "CHE VIENE DA: " +httpTotalTimeRequests + httpNoOfRequests);
+        try {
+            if (prometheusRegistry.get("http_server_requests_seconds") != null)
+                prometheusRegistry.remove(prometheusRegistry.get("http_server_requests_seconds").gauge());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        Double actualValue = 0.0;
+        Double httpMaxDurationRequest = extractMetricValue(fetchExternalMetrics(uriInfo), "javamelody_tomcat_max_time_millis\\{tomcat_name=\"http_nio_8080\"\\}");
+        System.out.println("MAX DURATION REQUEST: " + httpMaxDurationRequest);
+        if (httpMaxDurationRequest > actualValue)
+            actualValue = httpMaxDurationRequest;
+        try {
+            if (prometheusRegistry.get("http_server_requests_seconds_max") != null)
+                prometheusRegistry.remove(prometheusRegistry.get("http_server_requests_seconds_max").gauge());
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+
+        prometheusRegistry.gauge("http_server_requests_seconds", httpMean);
+        prometheusRegistry.gauge("http_server_requests_seconds_max", actualValue);
+
+        String metrics = prometheusRegistry.scrape();// + "\n" + fetchExternalMetrics(uriInfo);
         return metrics;
     }
 
@@ -80,6 +113,18 @@ public class MetricsExporter {
         } else {
             LOG.error("Error during javamelody response with error: {}", response.getStatus());
             return "ERROR WITH MELODY METRICS";
+        }
+    }
+
+    private static Double extractMetricValue(String metricsString, String metricName) {
+        String patternString = metricName + "\\s(\\d+)";
+        Pattern pattern = Pattern.compile(patternString);
+        Matcher matcher = pattern.matcher(metricsString);
+
+        if (matcher.find()) {
+            return Double.parseDouble(matcher.group(1));
+        } else {
+            return (double) -1;
         }
     }
 
