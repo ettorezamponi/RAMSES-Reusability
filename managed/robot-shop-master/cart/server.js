@@ -30,7 +30,7 @@ const client = new Eureka({
     // application instance information
     instance: {
         app: 'rs-cart',
-        instanceId: 'cart:3001',
+        instanceId: 'cart@rs-cart:3001',
         hostName: 'localhost',
         ipAddr: '127.0.0.1',
         port:  {

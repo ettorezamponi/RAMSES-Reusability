@@ -51,3 +51,5 @@ docker run -d --name dispatch --network robot-shop rs-dispatch:2.1.0
 
 # Start Web container (DO catalogue, user, shipping, payment)
 docker run -d --name web --network robot-shop -e KEY=${INSTANA_AGENT_KEY} --health-cmd="curl -H 'X-INSTANA-SYNTHETIC: 1' -f http://localhost:8080/health" --health-interval=10s --health-timeout=10s --health-retries=3 -p 8080:8080 rs-web:2.1.0
+
+PrintSuccess"ROBOT-SHOP RUNNING!"
