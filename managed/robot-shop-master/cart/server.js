@@ -7,7 +7,7 @@ instana({
     }
 });
 
-const redis = require('redis');
+const redis = require('ioredis');
 const request = require('request');
 const bodyParser = require('body-parser');
 const express = require('express');
@@ -30,7 +30,7 @@ const client = new Eureka({
     // application instance information
     instance: {
         app: 'rs-cart',
-        instanceId: 'cart',
+        instanceId: 'cart:3001',
         hostName: 'localhost',
         ipAddr: '127.0.0.1',
         port:  {
@@ -54,9 +54,15 @@ const client = new Eureka({
 
 client.logger.level('debug');
 
-client.start(function(error){
-    console.log(error || 'complete')
-});
+setTimeout(async function () {
+    try {
+        await client.start(function (error) {
+            console.log(error || 'complete');
+        });
+    } catch (error) {
+        console.error("ERROR DURING EUREKA REGISTRATION")
+    }
+}, 10000);
 
 var redisConnected = false;
 
