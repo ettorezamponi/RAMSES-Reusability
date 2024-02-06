@@ -14,7 +14,7 @@ docker network create robot-shop
 echo
 
 # Start Eureka container
-docker run -d -p 58082:58082 --name eureka --network robot-shop eureka
+docker run -d -p 58082:58082 --name sefa-eureka --network robot-shop eureka
 
 # Start MongoDB container
 docker run -d --name mongodb --network robot-shop rs-mongodb:2.1.0
@@ -52,7 +52,7 @@ docker run -d --name dispatch --network robot-shop rs-dispatch:2.1.0
 # Start Web container (DO catalogue, user, shipping, payment)
 docker run -d --name web --network robot-shop -e KEY=${INSTANA_AGENT_KEY} --health-cmd="curl -H 'X-INSTANA-SYNTHETIC: 1' -f http://localhost:8080/health" --health-interval=10s --health-timeout=10s --health-retries=3 -p 8080:8080 rs-web:2.1.0
 
-PrintSuccess"ROBOT-SHOP RUNNING!"
+PrintSuccess "ROBOT-SHOP RUNNING!"
 
 durata_timer=20
 
@@ -76,4 +76,16 @@ docker run -p 8081:8081 --name maven-configserver -d --network robot-shop rs-con
 sleep 10
 
 docker run -P --name ramses-knowledge -d --network robot-shop rs-knowledge
+
+sleep 15
+
+docker run -P --name ramses-analyse -d --network robot-shop rs-analyse
+docker run -P --name ramses-plan -d --network robot-shop rs-plan
+docker run -P --name ramses-execute -d --network robot-shop rs-execute
+sleep 2
+docker run -P --name ramses-monitor -d --network robot-shop rs-monitor
+docker run -P --name ramses-dashboard -d --network robot-shop rs-dashboard
+
+
+PrintSuccess "EVERYTHING SET UP!"
 
