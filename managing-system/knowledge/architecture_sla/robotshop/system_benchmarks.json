@@ -1,0 +1,41 @@
+{
+	"services" : [
+		{
+			"service_id":"RS-CART",
+			"implementations" : [
+				{
+					"implementation_id" : "cart",
+					"adaptation_benchmarks" : [
+						{
+							"name": "average_response_time",
+							"benchmark": 200
+						},
+						{
+							"name": "availability",
+							"benchmark": 0.92
+						}
+					]
+				}
+			]
+		},
+		{
+			"service_id":"RS-PAYMENT",
+			"implementations" : [
+				{
+					"implementation_id" : "payment",
+					"adaptation_benchmarks" : [
+						{
+							"name": "average_response_time",
+							"benchmark": 450
+						},
+						{
+							"name": "availability",
+							"benchmark": 0.9
+						}
+
+					]
+				}
+			]
+		}
+	]
+}

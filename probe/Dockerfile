@@ -4,6 +4,6 @@ WORKDIR /app
 COPY build/libs/*-latest.jar ./spring-boot-application.jar
 ENTRYPOINT ["java","-jar","/app/spring-boot-application.jar"]
 ENV HOST=sefa-probe
-ENV EUREKA_IP_PORT=sefa-eureka:58082
+ENV EUREKA_IP_PORT=eureka:58082
 ENV SERVER_PORT 58020
 EXPOSE 58020

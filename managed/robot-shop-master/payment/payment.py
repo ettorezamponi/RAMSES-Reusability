@@ -23,10 +23,14 @@ from prometheus_client import Counter, Histogram
 
 import py_eureka_client.eureka_client as eureka_client
 # The flowing code will register your server to eureka server and also start to send heartbeat every 30 seconds
+# https://github.com/keijack/python-eureka-client/blob/main/py_eureka_client/eureka_client.py
 eureka_client.init(eureka_server="http://eureka:58082/eureka/",
                    app_name="rs-payment",
                    instance_id="payment@rs-payment:3050",
-                   instance_port=3050)
+                   instance_port=3050,
+                   instance_host="localhost",
+                   vip_adr="payment",
+                   duration_in_secs=10)
 
 app = Flask(__name__)
 app.logger.setLevel(logging.INFO)

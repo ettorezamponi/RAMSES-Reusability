@@ -1,0 +1,29 @@
+{
+	"services"	: [
+		{
+			"service_id":"RS-CART",
+			"implementations" : [
+				{
+					"implementation_id" : "cart",
+					"implementation_trust" : 1,
+					"preference" : 1,
+					"instance_load_shutdown_threshold" : 0.4
+				}
+
+			],
+			"dependencies" : []
+		},
+		{
+			"service_id":"RS-PAYMENT",
+			"implementations" : [
+				{
+					"implementation_id" : "payment",
+					"implementation_trust" : 1,
+					"preference" : 1,
+					"instance_load_shutdown_threshold" : 0.4
+				}
+			],
+			"dependencies" : []
+		}
+	]
+}
