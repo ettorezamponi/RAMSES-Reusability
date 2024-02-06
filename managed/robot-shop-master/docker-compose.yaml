@@ -34,7 +34,7 @@ services:
   catalogue:
     build:
       context: catalogue
-    image: ${REPO}/rs-catalogue:${TAG}
+    image: rs-catalogue:${TAG}
     depends_on:
       - mongodb
     networks:
@@ -49,7 +49,7 @@ services:
   user:
     build:
       context: user
-    image: ${REPO}/rs-user:${TAG}
+    image: rs-user:${TAG}
     depends_on:
       - mongodb
       - redis
@@ -107,7 +107,7 @@ services:
   ratings:
     build:
       context: ratings
-    image: ${REPO}/rs-ratings:${TAG}
+    image: rs-ratings:${TAG}
     environment:
       APP_ENV: prod
     networks:
@@ -143,7 +143,7 @@ services:
   dispatch:
     build:
       context: dispatch
-    image: ${REPO}/rs-dispatch:${TAG}
+    image: rs-dispatch:${TAG}
     depends_on:
       - rabbitmq
     networks:
@@ -156,7 +156,7 @@ services:
       args:
         # agent key to download tracing libs
         KEY: ${INSTANA_AGENT_KEY}
-    image: ${REPO}/rs-web:${TAG}
+    image: rs-web:${TAG}
     depends_on:
       - catalogue
       - user
