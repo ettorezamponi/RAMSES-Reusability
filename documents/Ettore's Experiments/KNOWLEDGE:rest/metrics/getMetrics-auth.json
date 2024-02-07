@@ -1,0 +1,338 @@
+// http://localhost:55049/rest/metrics/get?instanceId=auth@teastore-auth:2222
+
+[
+  {
+    "id": 1,
+    "serviceId": "TEASTORE-AUTH",
+    "instanceId": "auth@teastore-auth:2222",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 1,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 411,
+            "totalDuration": 411000.0,
+            "maxDuration": 705000.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.8461538461538461,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.2063819776E10,
+    "timestamp": "2024-02-07T14:12:23.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 8,
+    "serviceId": "TEASTORE-AUTH",
+    "instanceId": "auth@teastore-auth:2222",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 8,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 417,
+            "totalDuration": 417000.0,
+            "maxDuration": 705000.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.9512195121951219,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.2063782912E10,
+    "timestamp": "2024-02-07T14:12:29.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 13,
+    "serviceId": "TEASTORE-AUTH",
+    "instanceId": "auth@teastore-auth:2222",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 13,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 385,
+            "totalDuration": 385000.0,
+            "maxDuration": 705.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.8148148148148148,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.202127872E10,
+    "timestamp": "2024-02-07T14:27:12.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 18,
+    "serviceId": "TEASTORE-AUTH",
+    "instanceId": "auth@teastore-auth:2222",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 18,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 379,
+            "totalDuration": 379000.0,
+            "maxDuration": 705.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.7391304347826086,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.197913088E10,
+    "timestamp": "2024-02-07T14:43:09.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 26,
+    "serviceId": "TEASTORE-AUTH",
+    "instanceId": "auth@teastore-auth:2222",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 26,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 366,
+            "totalDuration": 366000.0,
+            "maxDuration": 705.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.8666666666666666,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.1979094016E10,
+    "timestamp": "2024-02-07T14:43:15.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 30,
+    "serviceId": "TEASTORE-AUTH",
+    "instanceId": "auth@teastore-auth:2222",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 30,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 359,
+            "totalDuration": 359000.0,
+            "maxDuration": 705.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.875,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.1979061248E10,
+    "timestamp": "2024-02-07T14:43:20.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 36,
+    "serviceId": "TEASTORE-AUTH",
+    "instanceId": "auth@teastore-auth:2222",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 36,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 0,
+            "count": 0,
+            "totalDuration": 0.0,
+            "maxDuration": 705.0
+          },
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 341,
+            "totalDuration": 341000.0,
+            "maxDuration": 0.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.8076923076923077,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.1936905216E10,
+    "timestamp": "2024-02-07T14:48:19.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 41,
+    "serviceId": "TEASTORE-AUTH",
+    "instanceId": "auth@teastore-auth:2222",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 41,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 500,
+            "count": 333,
+            "totalDuration": 333000.0,
+            "maxDuration": 705.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.8863636363636364,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.1894761472E10,
+    "timestamp": "2024-02-07T14:52:05.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 44,
+    "serviceId": "TEASTORE-AUTH",
+    "instanceId": "auth@teastore-auth:2222",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 44,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 362,
+            "totalDuration": 362000.0,
+            "maxDuration": 752.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.6857142857142857,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.1894700032E10,
+    "timestamp": "2024-02-07T14:52:24.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 49,
+    "serviceId": "TEASTORE-AUTH",
+    "instanceId": "auth@teastore-auth:2222",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 49,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 500,
+            "count": 361,
+            "totalDuration": 361000.0,
+            "maxDuration": 0.0
+          },
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 0,
+            "count": 0,
+            "totalDuration": 0.0,
+            "maxDuration": 752.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.7647058823529412,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.1894634496E10,
+    "timestamp": "2024-02-07T14:52:30.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  }
+]
