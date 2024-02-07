@@ -54,6 +54,7 @@
     "failed": false,
     "booting": false
   },
+  // SENZA GENERATE OUTCOME E STATUS
   [
     {
       "id": 13,
@@ -86,5 +87,47 @@
       "unreachable": false,
       "failed": false,
       "booting": false
-    }
-  ]
+    },
+
+    //CON GENERATE OUTCOME AND STATUS
+    [
+      {
+        "id": 49,
+        "serviceId": "TEASTORE-AUTH",
+        "instanceId": "auth@teastore-auth:2222",
+        "status": "ACTIVE",
+        "circuitBreakerMetrics": {},
+        "httpMetrics": {
+          "GET@/???": {
+            "id": 49,
+            "endpoint": "/???",
+            "httpMethod": "GET",
+            "outcomeMetrics": {
+              "SERVER_ERROR": {
+                "outcome": "SERVER_ERROR",
+                "status": 500,
+                "count": 361,
+                "totalDuration": 361000.0,
+                "maxDuration": 0.0
+              },
+              "SUCCESS": {
+                "outcome": "SUCCESS",
+                "status": 0,
+                "count": 0,
+                "totalDuration": 0.0,
+                "maxDuration": 752.0
+              }
+            }
+          }
+        },
+        "cpuUsage": 0.7647058823529412,
+        "diskTotalSpace": 1.17782851584E11,
+        "diskFreeSpace": 3.1894634496E10,
+        "timestamp": "2024-02-07T14:52:30.000+00:00",
+        "active": true,
+        "shutdown": false,
+        "unreachable": false,
+        "failed": false,
+        "booting": false
+      }
+    ]

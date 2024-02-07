@@ -21,6 +21,8 @@ import java.util.Random;
 public class PrometheusParser {
     @Value("${ACTUATOR_RELATIVE_PATH}")
     private String actuatorRelativePath;
+    String outcome;
+    String status;
 
     public InstanceMetricsSnapshot parse(InstanceInfo instanceInfo) {
         InstanceMetricsSnapshot instanceMetricsSnapshot = new InstanceMetricsSnapshot(instanceInfo.getAppName(), instanceInfo.getInstanceId());
@@ -48,13 +50,10 @@ public class PrometheusParser {
         Map<String, HttpEndpointMetrics> httpMetricsMap = new HashMap<>();
 
         metricFamilies.forEach(metricFamily -> {
-            String propertyName = metricFamily.getName(); //e.g. http_server_requests_seconds
+            String propertyName = metricFamily.getName(); // e.g. http_server_requests_seconds
             //log.info("PROPERTY NAME: " + propertyName); // e.g. jvm_classes_unloaded_classes_total
-
-            if ((propertyName).contains("javamelody_http_duration_millis_total")) {
-                log.info("HTTP DURATION FAMILY: " + metricFamily);
-                log.info("\n METRICS " + (metricFamily.getMetrics()) + "\n NAME:" + metricFamily.getName()+ "\n HELP:" + metricFamily.getHelp()+ "\n TYPE:" + metricFamily.getType()+ "\n CLASS:" + metricFamily.getClass());//+ ((Gauge)metric).getValue());
-            }
+            //TODO vedi se utilizzare questa funzione random adeguatamente
+            //generateOutcomeStatus();
 
             //MetricType metricType = elem.getType(); e.g. GAUGE
             metricFamily.getMetrics().forEach(metric -> { //e.g., one metric is the http_server_requests_seconds for the endpoint X
@@ -102,24 +101,26 @@ public class PrometheusParser {
         return url.contains("/actuator/");
     }
 
-    // Method modified to make a fake Histogram metric from the estimated value from javaMelody
-    private void handleHttpServerRequestsTotalDurationForJM(Map<String, HttpEndpointMetrics> httpMetricsMap, Gauge metric) {
-        //TODO aggioungere un random per generare l'URI
-        String outcome;
-        String status;
+    private void generateOutcomeStatus() {
         if (new Random().nextInt(4) == 0) { // numero casuale da 0 a 3, 25% che sia 0
             outcome = "SERVER_ERROR";
             status = "500";
+            log.info("ERROR GENERATED FOR HTTP METRICS");
         } else {
             outcome = "SUCCESS";
             status = "200";
+            log.info("SUCCESS GENERATED FOR HTTP METRICS");
         }
+    }
+
+    // Method modified to make a fake Histogram metric from the estimated value from javaMelody
+    private void handleHttpServerRequestsTotalDurationForJM(Map<String, HttpEndpointMetrics> httpMetricsMap, Gauge metric) {
         Histogram histogram = new Histogram.Builder()
                 .setName(metric.getName())
                 .addLabel("exception", "None")
                 .addLabel("method", "GET")
-                .addLabel("outcome", outcome)
-                .addLabel("status", status)
+                .addLabel("outcome", "SUCCESS")
+                .addLabel("status", "200")
                 .addLabel("uri", "/???")
                 .setSampleCount(Math.round(metric.getValue()))
                 .build();
@@ -128,9 +129,6 @@ public class PrometheusParser {
         Map<String, String> labels = histogram.getLabels();
         log.info("HTTP LABELS: " + labels);
 
-        // In questa riga, stai cercando di ottenere un'istanza di HttpEndpointMetrics dalla mappa httpMetricsMap
-        // utilizzando una chiave costruita combinando il metodo HTTP (labels.get("method")) e l'URI (labels.get("uri")).
-        // Se l'istanza non esiste, crei una nuova istanza di HttpEndpointMetrics con i valori di URI e metodo attuali.
         HttpEndpointMetrics metrics = httpMetricsMap.getOrDefault(labels.get("method") + "@" + labels.get("uri"), new HttpEndpointMetrics(labels.get("uri"), labels.get("method")));
         metrics.addOrSetOutcomeMetricsDetails(labels.get("outcome"), Integer.parseInt(labels.get("status")), (int) histogram.getSampleCount(), histogram.getSampleCount() * 1000);
         httpMetricsMap.putIfAbsent(labels.get("method") + "@" + labels.get("uri"), metrics);
