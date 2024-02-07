@@ -139,10 +139,10 @@
     "unreachable": false,
     "failed": false,
     "booting": false
-  }
-],
+  },
 
-[
+
+
   {
     "id": 48,
     "serviceId": "RESTAURANT-SERVICE",

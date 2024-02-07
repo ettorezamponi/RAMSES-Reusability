@@ -14,6 +14,7 @@ import java.net.URL;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 @Slf4j
 @Controller
@@ -104,12 +105,21 @@ public class PrometheusParser {
     // Method modified to make a fake Histogram metric from the estimated value from javaMelody
     private void handleHttpServerRequestsTotalDurationForJM(Map<String, HttpEndpointMetrics> httpMetricsMap, Gauge metric) {
         //TODO aggioungere un random per generare l'URI
+        String outcome;
+        String status;
+        if (new Random().nextInt(4) == 0) { // numero casuale da 0 a 3, 25% che sia 0
+            outcome = "SERVER_ERROR";
+            status = "500";
+        } else {
+            outcome = "SUCCESS";
+            status = "200";
+        }
         Histogram histogram = new Histogram.Builder()
                 .setName(metric.getName())
                 .addLabel("exception", "None")
                 .addLabel("method", "GET")
-                .addLabel("outcome", "SUCCESS")
-                .addLabel("status", "200")
+                .addLabel("outcome", outcome)
+                .addLabel("status", status)
                 .addLabel("uri", "/???")
                 .setSampleCount(Math.round(metric.getValue()))
                 .build();
@@ -118,6 +128,9 @@ public class PrometheusParser {
         Map<String, String> labels = histogram.getLabels();
         log.info("HTTP LABELS: " + labels);
 
+        // In questa riga, stai cercando di ottenere un'istanza di HttpEndpointMetrics dalla mappa httpMetricsMap
+        // utilizzando una chiave costruita combinando il metodo HTTP (labels.get("method")) e l'URI (labels.get("uri")).
+        // Se l'istanza non esiste, crei una nuova istanza di HttpEndpointMetrics con i valori di URI e metodo attuali.
         HttpEndpointMetrics metrics = httpMetricsMap.getOrDefault(labels.get("method") + "@" + labels.get("uri"), new HttpEndpointMetrics(labels.get("uri"), labels.get("method")));
         metrics.addOrSetOutcomeMetricsDetails(labels.get("outcome"), Integer.parseInt(labels.get("status")), (int) histogram.getSampleCount(), histogram.getSampleCount() * 1000);
         httpMetricsMap.putIfAbsent(labels.get("method") + "@" + labels.get("uri"), metrics);
@@ -141,10 +154,28 @@ public class PrometheusParser {
         Map<String, String> labels = gauge.getLabels();//e.g. labels' key for http_server_requests_seconds are [exception, method, uri, status]
 
         HttpEndpointMetrics metrics = httpMetricsMap.getOrDefault(labels.get("method") + "@" + labels.get("uri"), new HttpEndpointMetrics(labels.get("uri"), labels.get("method")));
-        metrics.addOrSetOutcomeMetricsMaxDuration(labels.get("outcome"), gauge.getValue()*1000);
+        metrics.addOrSetOutcomeMetricsMaxDuration(labels.get("outcome"), gauge.getValue()); //yet in milliseconds
         httpMetricsMap.putIfAbsent(labels.get("method") + "@" + labels.get("uri"), metrics);
 
         log.info("MAX HTTP METRICS CREATED: "+metrics);
+    }
+
+    private void handleHttpServerRequestsTotalDurationMs(Map<String, HttpEndpointMetrics> httpMetricsMap, Histogram metric) {
+        Map<String, String> labels = metric.getLabels();//e.g. labels' key for http_server_requests_seconds are [exception, method, uri, status]
+        if (isAnExcludedUrl(labels.get("uri")))
+            return;
+        HttpEndpointMetrics metrics = httpMetricsMap.getOrDefault(labels.get("method") + "@" + labels.get("uri"), new HttpEndpointMetrics(labels.get("uri"), labels.get("method")));
+        metrics.addOrSetOutcomeMetricsDetails(labels.get("outcome"), Integer.parseInt(labels.get("status")), (int) metric.getSampleCount(), metric.getSampleSum()*1000);
+        httpMetricsMap.putIfAbsent(labels.get("method") + "@" + labels.get("uri"), metrics);
+    }
+
+    private void handleHttpServerRequestsMaxDuration(Map<String, HttpEndpointMetrics> httpMetricsMap, Gauge metric) {
+        Map<String, String> labels = metric.getLabels();//e.g. labels' key for http_server_requests_seconds are [exception, method, uri, status]
+        if (isAnExcludedUrl(labels.get("uri")))
+            return;
+        HttpEndpointMetrics metrics = httpMetricsMap.getOrDefault(labels.get("method") + "@" + labels.get("uri"), new HttpEndpointMetrics(labels.get("uri"), labels.get("method")));
+        metrics.addOrSetOutcomeMetricsMaxDuration(labels.get("outcome"), metric.getValue()*1000);
+        httpMetricsMap.putIfAbsent(labels.get("method") + "@" + labels.get("uri"), metrics);
     }
 
 }

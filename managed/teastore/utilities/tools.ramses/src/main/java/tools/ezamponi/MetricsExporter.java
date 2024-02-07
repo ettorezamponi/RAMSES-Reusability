@@ -2,7 +2,6 @@ package tools.ezamponi;
 
 import io.micrometer.core.instrument.Gauge;
 import io.micrometer.core.instrument.binder.jvm.*;
-import io.micrometer.core.instrument.binder.system.FileDescriptorMetrics;
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
 import io.micrometer.core.instrument.binder.system.DiskSpaceMetrics;
 import io.micrometer.prometheus.PrometheusConfig;
@@ -16,14 +15,9 @@ import jakarta.ws.rs.core.UriInfo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.BufferedReader;
 import java.io.File;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.net.URL;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -40,6 +34,7 @@ public class MetricsExporter {
         new ProcessorMetrics().bindTo(prometheusRegistry);
         new JvmThreadMetrics().bindTo(prometheusRegistry);
         new DiskSpaceMetrics(new File("/")).bindTo(prometheusRegistry);
+
         Gauge.builder("http_server_requests_seconds", () -> initialHttpMean)
                 .description("HTTP milliseconds total duration requests")
                 .register(prometheusRegistry);
@@ -54,6 +49,9 @@ public class MetricsExporter {
         Double httpTotalTimeRequests = extractMetricValue(fetchExternalMetrics(uriInfo), "javamelody_http_duration_millis");
         Double httpNoOfRequests = extractMetricValue(fetchExternalMetrics(uriInfo), "javamelody_http_hits_count");
         Double httpMean = httpTotalTimeRequests/httpNoOfRequests;
+        if (httpMean.isNaN())
+            httpMean = (double) 0;
+
         System.out.println("LA MEDIA CALCOLATA CON I VALORI E': " + httpMean + "CHE VIENE DA: " +httpTotalTimeRequests + httpNoOfRequests);
         try {
             if (prometheusRegistry.get("http_server_requests_seconds") != null)
@@ -127,5 +125,4 @@ public class MetricsExporter {
             return (double) -1;
         }
     }
-
 }

@@ -1,3 +1,5 @@
+// http://localhost:55018/rest/metrics/get?instanceId=ordering-service@sefa-ordering-service:58086
+
 [
   {
     "id": 1,

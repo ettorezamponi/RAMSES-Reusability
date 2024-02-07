@@ -17,5 +17,74 @@
     "failed": false,
     "unreachable": false,
     "booting": false
-  }
-]
+  },
+
+// AFTER MONITOR ENABLED
+
+[
+  {
+    "id": 8,
+    "serviceId": "TEASTORE-AUTH",
+    "instanceId": "auth@teastore-auth:2222",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 8,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 417,
+            "totalDuration": 417000.0,
+            "maxDuration": 705000.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.9512195121951219,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.2063782912E10,
+    "timestamp": "2024-02-07T14:12:29.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  [
+    {
+      "id": 13,
+      "serviceId": "TEASTORE-AUTH",
+      "instanceId": "auth@teastore-auth:2222",
+      "status": "ACTIVE",
+      "circuitBreakerMetrics": {},
+      "httpMetrics": {
+        "GET@/???": {
+          "id": 13,
+          "endpoint": "/???",
+          "httpMethod": "GET",
+          "outcomeMetrics": {
+            "SUCCESS": {
+              "outcome": "SUCCESS",
+              "status": 200,
+              "count": 385,
+              "totalDuration": 385000.0,
+              "maxDuration": 705.0
+            }
+          }
+        }
+      },
+      "cpuUsage": 0.8148148148148148,
+      "diskTotalSpace": 1.17782851584E11,
+      "diskFreeSpace": 3.202127872E10,
+      "timestamp": "2024-02-07T14:27:12.000+00:00",
+      "active": true,
+      "shutdown": false,
+      "unreachable": false,
+      "failed": false,
+      "booting": false
+    }
+  ]
