@@ -54,37 +54,37 @@ docker run -d --name web --network robot-shop -e KEY=${INSTANA_AGENT_KEY} --heal
 
 PrintSuccess "ROBOT-SHOP RUNNING!"
 
-durata_timer=20
-
-while [ $durata_timer -gt 0 ]; do
-    # Stampa il tempo rimanente
-    printf "\rRemaining timer for set up RAMSES: %02d:%02d" $((durata_timer/60)) $((durata_timer%60))
-
-    # Attendi 1 secondo
-    sleep 1
-
-    # Riduci il tempo rimanente di 1 secondo
-    durata_timer=$((durata_timer-1))
-done
-
-docker run -P --name knowledge-db --network robot-shop -d knowledge-db
-sleep 10
-docker run -P --name rs-probe -d --network robot-shop rs-probe
-docker run -p 8081:8081 --name maven-configserver -d --network robot-shop rs-configserver
-#docker run -P --name teastore-instancesmanager -d --network teastore instances-manager
-
-sleep 10
-
-docker run -P --name ramses-knowledge -d --network robot-shop rs-knowledge
-
-sleep 15
-
-docker run -P --name ramses-analyse -d --network robot-shop rs-analyse
-docker run -P --name ramses-plan -d --network robot-shop rs-plan
-docker run -P --name ramses-execute -d --network robot-shop rs-execute
-sleep 2
-docker run -P --name ramses-monitor -d --network robot-shop rs-monitor
-docker run -P --name ramses-dashboard -d --network robot-shop rs-dashboard
+#durata_timer=20
+#
+#while [ $durata_timer -gt 0 ]; do
+#    # Stampa il tempo rimanente
+#    printf "\rRemaining timer for set up RAMSES: %02d:%02d" $((durata_timer/60)) $((durata_timer%60))
+#
+#    # Attendi 1 secondo
+#    sleep 1
+#
+#    # Riduci il tempo rimanente di 1 secondo
+#    durata_timer=$((durata_timer-1))
+#done
+#
+#docker run -P --name knowledge-db --network robot-shop -d knowledge-db
+#sleep 10
+#docker run -P --name rs-probe -d --network robot-shop rs-probe
+#docker run -p 8081:8081 --name maven-configserver -d --network robot-shop rs-configserver
+##docker run -P --name teastore-instancesmanager -d --network teastore instances-manager
+#
+#sleep 10
+#
+#docker run -P --name ramses-knowledge -d --network robot-shop rs-knowledge
+#
+#sleep 15
+#
+#docker run -P --name ramses-analyse -d --network robot-shop rs-analyse
+#docker run -P --name ramses-plan -d --network robot-shop rs-plan
+#docker run -P --name ramses-execute -d --network robot-shop rs-execute
+#sleep 2
+#docker run -P --name ramses-monitor -d --network robot-shop rs-monitor
+#docker run -P --name ramses-dashboard -d --network robot-shop rs-dashboard
 
 
 PrintSuccess "EVERYTHING SET UP!"

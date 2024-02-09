@@ -16,10 +16,14 @@ from flask import Response
 from flask import request
 from flask import jsonify
 from rabbitmq import Publisher
+# Metrics
+import psutil
 
 # Prometheus
 import prometheus_client
-from prometheus_client import Counter, Histogram
+from prometheus_client import Counter
+from prometheus_client import Gauge
+from prometheus_client import Histogram
 
 import py_eureka_client.eureka_client as eureka_client
 # The flowing code will register your server to eureka server and also start to send heartbeat every 30 seconds
@@ -43,23 +47,90 @@ PromMetrics = {}
 PromMetrics['SOLD_COUNTER'] = Counter('sold_count', 'Running count of items sold')
 PromMetrics['AUS'] = Histogram('units_sold', 'Avergae Unit Sale', buckets=(1, 2, 5, 10, 100))
 PromMetrics['AVS'] = Histogram('cart_value', 'Avergae Value Sale', buckets=(100, 200, 500, 1000, 2000, 5000, 10000))
-
+# Added for RAMSES
+PromMetrics['SYSTEM_CPU_USAGE'] = Gauge('system_cpu_usage', 'System CPU Usage')
+PromMetrics['DISK_TOTAL_BYTES'] = Gauge('disk_total_bytes', 'Total Disk Bytes')
+PromMetrics['DISK_FREE_BYTES'] = Gauge('disk_free_bytes', 'Free Disk Bytes')
+PromMetrics['HTTP_SERVER_REQUESTS_SECONDS_MAX'] = Gauge(
+    'http_server_requests_seconds_max',
+    'HTTP Server Requests Duration (seconds, max)',
+    labelnames=['exception', 'method', 'outcome', 'status', 'uri'],
+)
+PromMetrics['HTTP_SERVER_REQUESTS_SECONDS'] = Histogram(
+    'http_server_requests_seconds',
+    'HTTP Server Requests Duration (seconds)',
+    labelnames=['exception', 'method', 'outcome', 'status', 'uri'],
+    buckets=(1, 2, 5, 10, 30, 60, float('inf'))
+)
+PromMetrics['HTTP_SERVER_REQUESTS_SECONDS_MAX'].labels(
+    exception='None',
+    method='-',
+    outcome='-',
+    status='-',
+    uri='-',
+).set(0)
+max_value = float('-inf')
 
 @app.errorhandler(Exception)
 def exception_handler(err):
     app.logger.error(str(err))
     return str(err), 500
 
+
 @app.route('/health', methods=['GET'])
 def health():
-    return 'OK'
+    global max_value
+    try:
+        start_time = time.time()
+        print("AZIONE CALCOLATA, ")
+        duration_seconds = time.time() - start_time
+
+    # TODO update the exception label
+        exception = 'None'
+        method = request.method
+        uri = request.path
+
+        PromMetrics['HTTP_SERVER_REQUESTS_SECONDS'].labels(
+            exception=exception, method=method, outcome='SUCCESS', status='200', uri=uri
+        ).observe(duration_seconds)
+
+        if duration_seconds > max_value:
+            PromMetrics['HTTP_SERVER_REQUESTS_SECONDS_MAX'].labels(
+                exception=exception,
+                method=method,
+                outcome='SUCCESS',
+                status='200',
+                uri=uri,
+            ).set(duration_seconds)
+            max_value = duration_seconds
+
+        return f'Ok! Max value: {max_value}, Last response {duration_seconds}'
+
+    except Exception as e:
+        start_time = time.time()
+        print("AZIONE CALCOLATA, ")
+        duration_error_seconds = time.time() - start_time
+
+        method = request.method
+        uri = request.path
+        PromMetrics['HTTP_SERVER_REQUESTS_SECONDS'].labels(
+            exception='None', method=method, outcome='SERVER_ERROR', status='500', uri=uri
+        ).observe(duration_error_seconds)
+
+        return 'Internal Server Error:', e
+
 
 # Prometheus
 @app.route('/metrics', methods=['GET'])
 def metrics():
-    res = []
-    for m in PromMetrics.values():
-        res.append(prometheus_client.generate_latest(m))
+    cpu_usage_percent = psutil.cpu_percent(interval=1)/100
+    PromMetrics['SYSTEM_CPU_USAGE'].set(cpu_usage_percent)
+
+    disk_usage = psutil.disk_usage('/')
+    PromMetrics['DISK_TOTAL_BYTES'].set(disk_usage.total)
+    PromMetrics['DISK_FREE_BYTES'].set(disk_usage.free)
+
+    res = [prometheus_client.generate_latest(m) for m in PromMetrics.values()]
 
     return Response(res, mimetype='text/plain')
 

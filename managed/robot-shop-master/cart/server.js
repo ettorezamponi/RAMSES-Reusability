@@ -43,6 +43,7 @@ const diskFreeSpace = new promClient.Gauge({
     help: 'Total free disk space',
     registers: [register]
 });
+// TODO aggiungi le stesse labels
 const httpMaxRequest = new promClient.Gauge({
     name: 'http_server_requests_seconds_max',
     help: 'Max HTTP duration request',
@@ -77,7 +78,6 @@ async function updateMetrics() {
     } catch (error) {
         console.error('Errore durante la lettura dello spazio su disco:', error);
     }
-    // HTTP metrics
 };
 // Usa il middleware response-time per ottenere la durata delle richieste
 app.use(responseTime());
@@ -118,6 +118,7 @@ const client = new Eureka({
         },
         vipAddress: 'cart',
         statusPageUrl: 'http://localhost:3001/info',
+        healthCheckUrl: 'http://localhost:8080/api/cart/metrics',
         dataCenterInfo:  {
             '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
             name: 'MyOwn',
