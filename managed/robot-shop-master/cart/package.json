@@ -15,6 +15,7 @@
     "express": "^4.15.4",
     "express-pino-logger": "^4.0.0",
     "ioredis": "^5.3.2",
+    "pidusage": "^3.0.2",
     "pino": "^5.10.8",
     "pino-pretty": "^2.5.0",
     "prom-client": "^11.5.3",

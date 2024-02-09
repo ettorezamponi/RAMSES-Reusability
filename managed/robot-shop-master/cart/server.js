@@ -22,6 +22,35 @@ const counter = new promClient.Counter({
     help: 'running count of items added to cart',
     registers: [register]
 });
+const cpuUsageMetric = new promClient.Gauge({
+    name: 'system_cpu_usage',
+    help: 'System CPU usage from this service',
+    registers: [register]
+});
+const diskTotalSpace = new promClient.Gauge({
+    name: 'disk_total_bytes',
+    help: 'Total disk space',
+    registers: [register]
+});
+const diskFreeSpace = new promClient.Gauge({
+    name: 'disk_free_bytes',
+    help: 'Total free disk space',
+    registers: [register]
+});
+const httpMaxRequest = new promClient.Gauge({
+    name: 'http_server_requests_seconds_max',
+    help: 'Max HTTP duration request',
+    registers: [register]
+});
+const httpServerRequest = new promClient.Histogram({
+    name: 'http_server_requests_seconds',
+    help: 'Max HTTP duration request',
+    labelName: ['exception', 'None'],
+    labelName: ['method', 'GET'],
+    labelName: ['outcome', 'SUCCESS'],
+    labelName: ['status', '200'],
+    registers: [register]
+});
 
 const Eureka = require('eureka-js-client').Eureka;
 
