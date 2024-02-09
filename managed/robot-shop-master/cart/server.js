@@ -51,12 +51,11 @@ const httpMaxRequest = new promClient.Gauge({
 const httpServerRequest = new promClient.Histogram({
     name: 'http_server_requests_seconds',
     help: 'Max HTTP duration request',
-    labelName: ['exception', 'None'],
-    labelName: ['method', 'GET'],
-    labelName: ['uri', '/???'],
-    labelName: ['status', '200'],
+    labelNames: ['exception', 'method', 'uri', 'status'],
     registers: [register]
 });
+
+const app = express();
 
 async function updateMetrics() {
     // CPU metrics
@@ -80,10 +79,28 @@ async function updateMetrics() {
     }
     // HTTP metrics
 };
+// Usa il middleware response-time per ottenere la durata delle richieste
+app.use(responseTime());
+// Middleware per catturare automaticamente le metriche delle richieste HTTP
+app.use((req, res, next) => {
+    const start = new Date();
+
+    res.on('finish', () => {
+        const end = new Date();
+        const durationInSeconds = (end - start) / 1000;
+
+        // Aggiorna la metrica httpMaxRequest
+        httpMaxRequest.set(durationInSeconds);
+
+        // Aggiorna la metrica httpServerRequest con le label corrispondenti
+        httpServerRequest.labels('None', req.method, req.originalUrl, res.statusCode).observe(durationInSeconds);
+    });
+
+    next();
+});
+
 
 const Eureka = require('eureka-js-client').Eureka;
-
-// example configuration
 const client = new Eureka({
     // application instance information
     instance: {
@@ -136,8 +153,6 @@ const expLogger = expPino({
     logger: logger
 });
 
-const app = express();
-
 app.use(expLogger);
 
 app.use((req, res, next) => {
@@ -172,10 +187,10 @@ app.get('/health', (req, res) => {
 });
 
 // Prometheus
-app.get('/metrics', (req, res) => {
+app.get('/metrics', async (req, res) => {
     updateMetrics();
     res.header('Content-Type', 'text/plain');
-    res.send(register.metrics());
+    res.send(await register.metrics());
 });
 
 
