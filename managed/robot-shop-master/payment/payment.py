@@ -31,8 +31,9 @@ import py_eureka_client.eureka_client as eureka_client
 eureka_client.init(eureka_server="http://sefa-eureka:58082/eureka/",
                    app_name="rs-payment",
                    instance_id="payment@rs-payment:3050",
-                   instance_port=3050,
+                   instance_port=8080,
                    instance_host="localhost",
+                   health_check_url="http://payment:8080/api/payment/metrics",
                    vip_adr="payment")
 
 app = Flask(__name__)

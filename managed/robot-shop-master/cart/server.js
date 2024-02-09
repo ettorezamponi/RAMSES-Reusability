@@ -118,7 +118,8 @@ const client = new Eureka({
         },
         vipAddress: 'cart',
         statusPageUrl: 'http://localhost:3001/info',
-        healthCheckUrl: 'http://localhost:8080/api/cart/metrics',
+        //TODO aggiusta metriche prese dal probe
+        healthCheckUrl: 'http://cart:8080/api/cart/metrics',
         dataCenterInfo:  {
             '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
             name: 'MyOwn',
