@@ -69,7 +69,8 @@ PromMetrics['HTTP_SERVER_REQUESTS_SECONDS_MAX'].labels(
     status='-',
     uri='-',
 ).set(0)
-max_value = float('-inf')
+max_value1 = float('-inf')
+max_value2 = float('-inf')
 
 @app.errorhandler(Exception)
 def exception_handler(err):
@@ -79,13 +80,12 @@ def exception_handler(err):
 
 @app.route('/health', methods=['GET'])
 def health():
-    global max_value
+    global max_value1
     try:
         start_time = time.time()
         print("AZIONE CALCOLATA, ")
         duration_seconds = time.time() - start_time
 
-    # TODO update the exception label
         exception = 'None'
         method = request.method
         uri = request.path
@@ -94,7 +94,7 @@ def health():
             exception=exception, method=method, outcome='SUCCESS', status='200', uri=uri
         ).observe(duration_seconds)
 
-        if duration_seconds > max_value:
+        if duration_seconds > max_value1:
             PromMetrics['HTTP_SERVER_REQUESTS_SECONDS_MAX'].labels(
                 exception=exception,
                 method=method,
@@ -102,9 +102,9 @@ def health():
                 status='200',
                 uri=uri,
             ).set(duration_seconds)
-            max_value = duration_seconds
+            max_value1 = duration_seconds
 
-        return f'Ok! Max value: {max_value}, Last response {duration_seconds}'
+        return f'Ok! Max value: {max_value1}, Last response {duration_seconds}'
 
     except Exception as e:
         start_time = time.time()
@@ -137,6 +137,8 @@ def metrics():
 
 @app.route('/pay/<id>', methods=['POST'])
 def pay(id):
+    global max_value2
+    start_time = time.time()
     app.logger.info('payment for {}'.format(id))
     cart = request.get_json()
     app.logger.info(cart)
@@ -204,6 +206,26 @@ def pay(id):
         return str(err), 500
     if req.status_code != 200:
         return 'order history update error', req.status_code
+
+    duration_seconds = time.time() - start_time
+
+    exception = 'None'
+    method = request.method
+    uri = request.path
+
+    PromMetrics['HTTP_SERVER_REQUESTS_SECONDS'].labels(
+        exception=exception, method=method, outcome='SUCCESS', status='200', uri=uri
+    ).observe(duration_seconds)
+
+    if duration_seconds > max_value2:
+        PromMetrics['HTTP_SERVER_REQUESTS_SECONDS_MAX'].labels(
+            exception=exception,
+            method=method,
+            outcome='SUCCESS',
+            status='200',
+            uri=uri,
+        ).set(duration_seconds)
+        max_value2 = duration_seconds
 
     return jsonify({ 'orderid': orderid })
 
