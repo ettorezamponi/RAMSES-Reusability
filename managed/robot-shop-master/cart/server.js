@@ -81,6 +81,7 @@ async function updateMetrics() {
 };
 // Usa il middleware response-time per ottenere la durata delle richieste
 app.use(responseTime());
+let maxDuration = 0;
 // Middleware per catturare automaticamente le metriche delle richieste HTTP
 app.use((req, res, next) => {
     const start = new Date();
@@ -89,8 +90,11 @@ app.use((req, res, next) => {
         const end = new Date();
         const durationInSeconds = (end - start) / 1000;
 
-        // Aggiorna la metrica httpMaxRequest
-        httpMaxRequest.set(durationInSeconds);
+        if (durationInSeconds > maxDuration) {
+            maxDuration = durationInSeconds;
+            // Aggiorna la metrica httpMaxRequest
+            httpMaxRequest.set(durationInSeconds);
+        }
 
         // Aggiorna la metrica httpServerRequest con le label corrispondenti
         httpServerRequest.labels('None', req.method, req.originalUrl, res.statusCode).observe(durationInSeconds);
