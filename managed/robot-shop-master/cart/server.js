@@ -17,11 +17,17 @@ const expPino = require('express-pino-logger');
 const promClient = require('prom-client');
 const Registry = promClient.Registry;
 const register = new Registry();
+// Modules to collect metrics
+const pidusage = require('pidusage');
+const diskusage = require('diskusage');
+const responseTime = require('response-time');
+
 const counter = new promClient.Counter({
     name: 'items_added',
     help: 'running count of items added to cart',
     registers: [register]
 });
+//TODO a volte il valore della cpu è zero!!
 const cpuUsageMetric = new promClient.Gauge({
     name: 'system_cpu_usage',
     help: 'System CPU usage from this service',
@@ -47,10 +53,33 @@ const httpServerRequest = new promClient.Histogram({
     help: 'Max HTTP duration request',
     labelName: ['exception', 'None'],
     labelName: ['method', 'GET'],
-    labelName: ['outcome', 'SUCCESS'],
+    labelName: ['uri', '/???'],
     labelName: ['status', '200'],
     registers: [register]
 });
+
+async function updateMetrics() {
+    // CPU metrics
+    try {
+        const stats = await pidusage(process.pid);
+        const cpuUsagePercent = stats.cpu;
+        cpuUsageMetric.set(cpuUsagePercent);
+    } catch (error) {
+        console.error('Errore durante la lettura della CPU Usage:', error);
+    }
+    // Disk space metrics
+    try {
+        const diskInfo = diskusage.checkSync('/');
+        const totalDiskSpace = diskInfo.total;
+        const freeDiskSpace = diskInfo.available;
+
+        diskTotalSpace.set(totalDiskSpace);
+        diskFreeSpace.set(freeDiskSpace);
+    } catch (error) {
+        console.error('Errore durante la lettura dello spazio su disco:', error);
+    }
+    // HTTP metrics
+};
 
 const Eureka = require('eureka-js-client').Eureka;
 
@@ -144,6 +173,7 @@ app.get('/health', (req, res) => {
 
 // Prometheus
 app.get('/metrics', (req, res) => {
+    updateMetrics();
     res.header('Content-Type', 'text/plain');
     res.send(register.metrics());
 });
