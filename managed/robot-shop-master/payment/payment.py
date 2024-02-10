@@ -63,13 +63,7 @@ PromMetrics['HTTP_SERVER_REQUESTS_SECONDS'] = Histogram(
     labelnames=['exception', 'method', 'outcome', 'status', 'uri'],
     buckets=(1, 2, 5, 10, 30, 60, float('inf'))
 )
-PromMetrics['HTTP_SERVER_REQUESTS_SECONDS_MAX'].labels(
-    exception='None',
-    method='-',
-    outcome='-',
-    status='-',
-    uri='-',
-).set(0)
+
 max_value1 = float('-inf')
 max_value2 = float('-inf')
 

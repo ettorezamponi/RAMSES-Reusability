@@ -1,0 +1,100 @@
+[
+  {
+    "id": 12,
+    "serviceId": "RS-PAYMENT",
+    "instanceId": "payment@rs-payment:8080",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/health": {
+        "id": 22,
+        "endpoint": "/health",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 16,
+            "totalDuration": 0.78582763671875,
+            "maxDuration": 0.15807151794433594
+          }
+        }
+      },
+      "-@-": {
+        "id": 23,
+        "endpoint": "-",
+        "httpMethod": "-",
+        "outcomeMetrics": {
+          "-": {
+            "outcome": "-",
+            "status": 0,
+            "count": 0,
+            "totalDuration": 0.0,
+            "maxDuration": 0.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.03,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0586503168E10,
+    "timestamp": "2024-02-10T11:50:49.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  }
+
+
+
+// CART
+
+
+  {
+    "id": 27,
+    "serviceId": "RS-CART",
+    "instanceId": "cart@rs-cart:8080",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/health": {
+        "id": 52,
+        "endpoint": "/health",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 22,
+            "totalDuration": 23.000000000000004,
+            "maxDuration": 4.0
+          }
+        }
+      },
+      "GET@/metrics": {
+        "id": 53,
+        "endpoint": "/metrics",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 16,
+            "totalDuration": 87.00000000000003,
+            "maxDuration": 51.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.49504950495049505,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0586290176E10,
+    "timestamp": "2024-02-10T11:51:48.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  }
+]

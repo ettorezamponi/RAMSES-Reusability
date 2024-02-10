@@ -43,16 +43,16 @@ const diskFreeSpace = new promClient.Gauge({
     help: 'Total free disk space',
     registers: [register]
 });
-// TODO aggiungi le stesse labels
 const httpMaxRequest = new promClient.Gauge({
     name: 'http_server_requests_seconds_max',
     help: 'Max HTTP duration request',
+    labelNames: ['exception','method','outcome','status','uri'],
     registers: [register]
 });
 const httpServerRequest = new promClient.Histogram({
     name: 'http_server_requests_seconds',
     help: 'Max HTTP duration request',
-    labelNames: ['exception', 'method', 'uri', 'status'],
+    labelNames: ['exception','method','outcome','status','uri'],
     registers: [register]
 });
 
@@ -82,7 +82,6 @@ async function updateMetrics() {
 // Usa il middleware response-time per ottenere la durata delle richieste
 app.use(responseTime());
 let maxDuration = 0;
-// Middleware per catturare automaticamente le metriche delle richieste HTTP
 app.use((req, res, next) => {
     const start = new Date();
 
@@ -93,11 +92,11 @@ app.use((req, res, next) => {
         if (durationInSeconds > maxDuration) {
             maxDuration = durationInSeconds;
             // Aggiorna la metrica httpMaxRequest
-            httpMaxRequest.set(durationInSeconds);
+            httpMaxRequest.labels('None', req.method,'SUCCESS',res.statusCode, req.originalUrl).set(durationInSeconds);
         }
 
         // Aggiorna la metrica httpServerRequest con le label corrispondenti
-        httpServerRequest.labels('None', req.method, req.originalUrl, res.statusCode).observe(durationInSeconds);
+        httpServerRequest.labels('None', req.method,'SUCCESS',res.statusCode, req.originalUrl).observe(durationInSeconds);
     });
 
     next();
@@ -113,7 +112,7 @@ const client = new Eureka({
         hostName: 'localhost',
         ipAddr: '127.0.0.1',
         port:  {
-            '$': 8080,
+            '$': 8001,
             '@enabled': 'true',
         },
         vipAddress: 'cart',

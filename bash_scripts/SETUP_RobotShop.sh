@@ -73,11 +73,33 @@ docker run -P --name rs-probe -d --network robot-shop rs-probe
 docker run -p 8081:8081 --name maven-configserver -d --network robot-shop rs-configserver
 #docker run -P --name teastore-instancesmanager -d --network teastore instances-manager
 
-sleep 10
+durata_timer=10
+
+while [ $durata_timer -gt 0 ]; do
+    # Stampa il tempo rimanente
+    printf "\rRemaining timer for set up the Knowledge: %02d:%02d" $((durata_timer/60)) $((durata_timer%60))
+
+    # Attendi 1 secondo
+    sleep 1
+
+    # Riduci il tempo rimanente di 1 secondo
+    durata_timer=$((durata_timer-1))
+done
 
 docker run -P --name ramses-knowledge -d --network robot-shop rs-knowledge
 
-sleep 15
+durata_timer=15
+
+while [ $durata_timer -gt 0 ]; do
+    # Stampa il tempo rimanente
+    printf "\rRemaining timer for set up the remaining MAPE services: %02d:%02d" $((durata_timer/60)) $((durata_timer%60))
+
+    # Attendi 1 secondo
+    sleep 1
+
+    # Riduci il tempo rimanente di 1 secondo
+    durata_timer=$((durata_timer-1))
+done
 
 docker run -P --name ramses-analyse -d --network robot-shop rs-analyse
 docker run -P --name ramses-plan -d --network robot-shop rs-plan
