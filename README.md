@@ -6,11 +6,23 @@ MSc final thesis project by Ettore Zamponi.
 ![Docker](https://img.shields.io/badge/docker-%230db7ed.svg?style=for-the-badge&logo=docker&logoColor=white)
 ![MySQL](https://img.shields.io/badge/mysql-%2300f.svg?style=for-the-badge&logo=mysql&logoColor=white)
 ![IntelliJ IDEA](https://img.shields.io/badge/IntelliJIDEA-000000.svg?style=for-the-badge&logo=intellij-idea&logoColor=white)
-## Implementing *Descartes TeaStore* as managed system
+## Implementing *Instana Robot Shop* as managed system
 
-The TeaStore is a micro-service reference and test application developed by the Descartes Research Group at the University of Würzburg. The TeaStore emulates a basic web store for automatically generated, fictitious teas, tea accessories and supplies. As it is primarily a test application, it features UI elements for database generation and service resetting in addition to the store itself.
+Stan's Robot Shop is a sample microservice application you can use as a sandbox to test and learn containerised application orchestration and monitoring techniques. This sample microservice application has been built using these technologies:
 
-This branch is about adapting [TeaStore](https://github.com/DescartesResearch/TeaStore/tree/master) in RAMSES with the implementation of manual Eureka registration or Prometheus extrapolation technique.
+- NodeJS (Express)
+- Java (Spring Boot)
+- Python (Flask)
+- Golang
+- PHP (Apache)
+- MongoDB
+- Redis
+- MySQL (Maxmind data)
+- RabbitMQ
+- Nginx
+- AngularJS (1.x)
+
+This branch is about adapting [RobotShop](https://github.com/instana/robot-shop) in RAMSES with the implementation of manual Eureka registration and Prometheus extrapolation technique.
 
 ---
 
