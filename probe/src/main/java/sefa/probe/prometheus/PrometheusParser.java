@@ -121,7 +121,7 @@ public class PrometheusParser {
                 .addLabel("method", "GET")
                 .addLabel("outcome", "SUCCESS")
                 .addLabel("status", "200")
-                .addLabel("uri", "/???")
+                .addLabel("uri", "/generic")
                 .setSampleCount(Math.round(metric.getValue()))
                 .build();
 
@@ -144,7 +144,7 @@ public class PrometheusParser {
                 .addLabel("method", "GET")
                 .addLabel("outcome", "SUCCESS")
                 .addLabel("status", "200")
-                .addLabel("uri", "/???")
+                .addLabel("uri", "/generic")
                 .setValue(metric.getValue())
                 .build();
 
