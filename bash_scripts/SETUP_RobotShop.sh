@@ -58,7 +58,7 @@ durata_timer=20
 
 while [ $durata_timer -gt 0 ]; do
     # Stampa il tempo rimanente
-    printf "\rRemaining timer for set up RAMSES: %02d:%02d" $((durata_timer/60)) $((durata_timer%60))
+    printf "\rRemaining timer for set up RAMSES: %02d:%02d \r" $((durata_timer/60)) $((durata_timer%60))
 
     # Attendi 1 secondo
     sleep 1
@@ -77,7 +77,7 @@ durata_timer=10
 
 while [ $durata_timer -gt 0 ]; do
     # Stampa il tempo rimanente
-    printf "\rRemaining timer for set up the Knowledge: %02d:%02d" $((durata_timer/60)) $((durata_timer%60))
+    printf "\rRemaining timer for set up the Knowledge: %02d:%02d \r" $((durata_timer/60)) $((durata_timer%60))
 
     # Attendi 1 secondo
     sleep 1
@@ -92,7 +92,7 @@ durata_timer=15
 
 while [ $durata_timer -gt 0 ]; do
     # Stampa il tempo rimanente
-    printf "\rRemaining timer for set up the remaining MAPE services: %02d:%02d" $((durata_timer/60)) $((durata_timer%60))
+    printf "\rRemaining timer for set up the remaining MAPE services: %02d:%02d \r" $((durata_timer/60)) $((durata_timer%60))
 
     # Attendi 1 secondo
     sleep 1

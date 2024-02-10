@@ -81,7 +81,8 @@ async function updateMetrics() {
 };
 // Usa il middleware response-time per ottenere la durata delle richieste
 app.use(responseTime());
-let maxDuration = 0;
+let maxDurationSuccess = 0;
+let maxDurationError = 0;
 app.use((req, res, next) => {
     const start = new Date();
 
@@ -89,14 +90,21 @@ app.use((req, res, next) => {
         const end = new Date();
         const durationInSeconds = (end - start) / 1000;
 
-        if (durationInSeconds > maxDuration) {
-            maxDuration = durationInSeconds;
-            // Aggiorna la metrica httpMaxRequest
+        const randomValue = Math.random()
+        if (durationInSeconds > maxDurationError && randomValue < 0.25) {
+            maxDurationError = durationInSeconds;
+            httpMaxRequest.labels('None', req.method, 'SERVER_ERROR', '500', req.originalUrl).set(durationInSeconds);
+
+        } else if (durationInSeconds > maxDurationSuccess ) {
+            maxDurationSuccess = durationInSeconds;
             httpMaxRequest.labels('None', req.method,'SUCCESS',res.statusCode, req.originalUrl).set(durationInSeconds);
         }
 
-        // Aggiorna la metrica httpServerRequest con le label corrispondenti
-        httpServerRequest.labels('None', req.method,'SUCCESS',res.statusCode, req.originalUrl).observe(durationInSeconds);
+        if (randomValue < 0.25) {
+            httpServerRequest.labels('None', req.method, 'SERVER_ERROR', '500', req.originalUrl).observe(durationInSeconds);
+        } else {
+            httpServerRequest.labels('None', req.method, 'SUCCESS', res.statusCode, req.originalUrl).observe(durationInSeconds);
+        }
     });
 
     next();
