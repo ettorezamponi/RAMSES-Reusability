@@ -111,3 +111,6 @@ sleep 3
 
 PrintSuccess "EVERYTHING SET UP!"
 
+# LOAD GENERATOR (understand other env var and configuration)
+# docker run --name restclient -e HOST=http://web:8080 --network robot-shop -d rs-restclient
+
