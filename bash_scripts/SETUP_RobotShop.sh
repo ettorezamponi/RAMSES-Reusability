@@ -85,7 +85,7 @@ docker run -P --name ramses-execute -d --network robot-shop rs-execute
 sleep 2
 docker run -P --name ramses-monitor -d --network robot-shop rs-monitor
 docker run -P --name ramses-dashboard -d --network robot-shop rs-dashboard
-
+sleep 3
 
 PrintSuccess "EVERYTHING SET UP!"
 

@@ -109,17 +109,17 @@ const client = new Eureka({
     // application instance information
     instance: {
         app: 'rs-cart',
-        instanceId: 'cart@rs-cart:3001',
+        instanceId: 'cart@rs-cart:8080',
         hostName: 'localhost',
         ipAddr: '127.0.0.1',
         port:  {
-            '$': 3001,
+            '$': 8080,
             '@enabled': 'true',
         },
         vipAddress: 'cart',
-        statusPageUrl: 'http://localhost:3001/info',
+        statusPageUrl: 'http://localhost:8080/api/cart/metrics',
         //TODO aggiusta metriche prese dal probe
-        healthCheckUrl: 'http://cart:8080/api/cart/metrics',
+        healthCheckUrl: 'http://cart:8080/metrics',
         dataCenterInfo:  {
             '@class': 'com.netflix.appinfo.InstanceInfo$DefaultDataCenterInfo',
             name: 'MyOwn',
