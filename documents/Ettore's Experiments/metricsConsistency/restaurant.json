@@ -1,0 +1,1187 @@
+// http://localhost:55013/rest/metrics/get?instanceId=restaurant-service@sefa-restaurant-service:58085 after 60-90 seconds
+[
+  {
+    "id": 3,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 3,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 123,
+            "totalDuration": 13965.190211,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 4,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 123,
+            "totalDuration": 3259.521006,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 6,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 93,
+            "totalDuration": 1083.706167,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 5,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 78,
+            "totalDuration": 1106.894122,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.0,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0579339264E10,
+    "timestamp": "2024-02-12T10:35:29.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 8,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 15,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 222,
+            "totalDuration": 14855.860006,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 16,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 222,
+            "totalDuration": 3881.7153829999997,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 18,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 203,
+            "totalDuration": 1791.032382,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 17,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 177,
+            "totalDuration": 1339.543164,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.6453844663734194,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0577995776E10,
+    "timestamp": "2024-02-12T10:35:35.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 11,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 21,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 319,
+            "totalDuration": 15399.172254,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 22,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 319,
+            "totalDuration": 4125.935090999999,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 24,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 293,
+            "totalDuration": 2077.815299,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 23,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 273,
+            "totalDuration": 1455.4473759999998,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.37034863178819166,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0576676864E10,
+    "timestamp": "2024-02-12T10:35:41.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 15,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 32,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 401,
+            "totalDuration": 16213.225296,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 33,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 401,
+            "totalDuration": 4602.022051,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 35,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 377,
+            "totalDuration": 2680.777039,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 34,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 355,
+            "totalDuration": 1632.300459,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.45730384411959946,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.05755136E10,
+    "timestamp": "2024-02-12T10:35:46.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 19,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 41,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 499,
+            "totalDuration": 16631.084052,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 42,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 499,
+            "totalDuration": 4845.296683,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 44,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 470,
+            "totalDuration": 2950.6461289999997,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 43,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 453,
+            "totalDuration": 1745.6960800000002,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.3554002476326252,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0574067712E10,
+    "timestamp": "2024-02-12T10:35:52.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 23,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 50,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 600,
+            "totalDuration": 16972.796795000002,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 51,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 599,
+            "totalDuration": 5013.5188069999995,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 53,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 574,
+            "totalDuration": 3199.459334,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 52,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 554,
+            "totalDuration": 1830.551123,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.2680501826904877,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0572650496E10,
+    "timestamp": "2024-02-12T10:35:57.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 28,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 60,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 696,
+            "totalDuration": 17272.885298999998,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 61,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 696,
+            "totalDuration": 5178.362019,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 63,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 668,
+            "totalDuration": 3374.1907069999997,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 62,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 653,
+            "totalDuration": 1905.2302539999998,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.24081049702348212,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.057129472E10,
+    "timestamp": "2024-02-12T10:36:02.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 31,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 66,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 793,
+            "totalDuration": 17585.989007999997,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 67,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 793,
+            "totalDuration": 5337.938686,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 69,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 772,
+            "totalDuration": 3633.580883,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 68,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 747,
+            "totalDuration": 1973.090086,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.23948873211840768,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.056996352E10,
+    "timestamp": "2024-02-12T10:36:08.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 36,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 78,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 892,
+            "totalDuration": 17886.281713,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 79,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 892,
+            "totalDuration": 5491.4481000000005,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 81,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 859,
+            "totalDuration": 3776.393344,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 80,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 849,
+            "totalDuration": 2045.446752,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.23497914828031055,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0568513536E10,
+    "timestamp": "2024-02-12T10:36:13.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 39,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 84,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 988,
+            "totalDuration": 18468.911001,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 85,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 988,
+            "totalDuration": 5697.712382,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 87,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 965,
+            "totalDuration": 4031.768219,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 86,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 942,
+            "totalDuration": 2165.73279,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.28330660532133634,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0567071744E10,
+    "timestamp": "2024-02-12T10:36:18.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 43,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 93,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1080,
+            "totalDuration": 18920.554753,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 94,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1080,
+            "totalDuration": 5902.227129,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 96,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1051,
+            "totalDuration": 4316.901054,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 95,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1032,
+            "totalDuration": 2387.598921,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.27601047337271073,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0565871616E10,
+    "timestamp": "2024-02-12T10:36:23.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 48,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 105,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1173,
+            "totalDuration": 19153.532633000003,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 106,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1173,
+            "totalDuration": 6021.980541,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 108,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1153,
+            "totalDuration": 4498.081717,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 107,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1131,
+            "totalDuration": 2456.8893,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.2381945827801304,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0564487168E10,
+    "timestamp": "2024-02-12T10:36:29.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 50,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 110,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1276,
+            "totalDuration": 19463.476386,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 111,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1276,
+            "totalDuration": 6217.176372,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 113,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1245,
+            "totalDuration": 4678.597132,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 112,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1232,
+            "totalDuration": 2514.151049,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.20611811674625846,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0562988032E10,
+    "timestamp": "2024-02-12T10:36:34.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 56,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 123,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1372,
+            "totalDuration": 19706.486384,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 124,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1372,
+            "totalDuration": 6353.973374,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 126,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1348,
+            "totalDuration": 4871.634758,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 125,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1328,
+            "totalDuration": 2582.1827129999997,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.22983467941007113,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.05615872E10,
+    "timestamp": "2024-02-12T10:36:39.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 59,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 129,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1470,
+            "totalDuration": 19929.648427,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 130,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1469,
+            "totalDuration": 6488.996795,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 132,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1452,
+            "totalDuration": 5064.945006,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 131,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1423,
+            "totalDuration": 2636.014755,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.2411098049530781,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.056019456E10,
+    "timestamp": "2024-02-12T10:36:44.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 63,
+    "serviceId": "RESTAURANT-SERVICE",
+    "instanceId": "restaurant-service@sefa-restaurant-service:58085",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/rest/customer/restaurants": {
+        "id": 140,
+        "endpoint": "/rest/customer/restaurants",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1568,
+            "totalDuration": 20180.868098000003,
+            "maxDuration": 307.22175000000004
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/menu": {
+        "id": 141,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/menu",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1568,
+            "totalDuration": 6618.136626,
+            "maxDuration": 102.753333
+          }
+        }
+      },
+      "GET@/rest/customer/restaurants/{restaurantId}/item/{itemId}": {
+        "id": 143,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/item/{itemId}",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1540,
+            "totalDuration": 5193.402628000001,
+            "maxDuration": 45.692875
+          }
+        }
+      },
+      "POST@/rest/customer/restaurants/{restaurantId}/notify": {
+        "id": 142,
+        "endpoint": "/rest/customer/restaurants/{restaurantId}/notify",
+        "httpMethod": "POST",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1520,
+            "totalDuration": 2683.571918,
+            "maxDuration": 128.728458
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.1886547372468726,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0558789632E10,
+    "timestamp": "2024-02-12T10:36:49.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  }
+]

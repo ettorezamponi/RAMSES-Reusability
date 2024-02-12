@@ -1,0 +1,41 @@
+[
+  {
+    "id": 2,
+    "serviceId": "TEASTORE-PERSISTENCE",
+    "instanceId": "persistence@teastore-persistence:1111",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 2,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 0,
+            "count": 0,
+            "totalDuration": 0.0,
+            "maxDuration": 1076.0
+          },
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 1,
+            "totalDuration": 1000.0,
+            "maxDuration": 0.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.9038461538461539,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0138707968E10,
+    "timestamp": "2024-02-12T10:45:21.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  }
+]

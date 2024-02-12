@@ -1,0 +1,439 @@
+[
+  {
+    "id": 3,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 3,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 4,
+            "totalDuration": 4000.0,
+            "maxDuration": 317.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.915129151291513,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0138691584E10,
+    "timestamp": "2024-02-12T10:45:21.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 7,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 7,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 6,
+            "totalDuration": 6000.0,
+            "maxDuration": 2056.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.8343558282208589,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0138580992E10,
+    "timestamp": "2024-02-12T10:45:28.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 16,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 16,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 500,
+            "count": 5,
+            "totalDuration": 5000.0,
+            "maxDuration": 0.0
+          },
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 0,
+            "count": 0,
+            "totalDuration": 0.0,
+            "maxDuration": 2056.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.5909090909090909,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0134247424E10,
+    "timestamp": "2024-02-12T10:45:59.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 31,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 31,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 6,
+            "totalDuration": 6000.0,
+            "maxDuration": 2056.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.7857142857142857,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0107291648E10,
+    "timestamp": "2024-02-12T10:48:06.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 32,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 32,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 7,
+            "totalDuration": 7000.0,
+            "maxDuration": 2056.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.9220779220779222,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.010643968E10,
+    "timestamp": "2024-02-12T10:49:24.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 35,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 35,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 8,
+            "totalDuration": 8000.0,
+            "maxDuration": 2056.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.8,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0105563136E10,
+    "timestamp": "2024-02-12T10:50:43.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 39,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 39,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 7,
+            "totalDuration": 7000.0,
+            "maxDuration": 2056.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.76,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0105182208E10,
+    "timestamp": "2024-02-12T10:51:17.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 46,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 46,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 0,
+            "count": 0,
+            "totalDuration": 0.0,
+            "maxDuration": 2056.0
+          },
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 6,
+            "totalDuration": 6000.0,
+            "maxDuration": 0.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.9038461538461539,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0100217856E10,
+    "timestamp": "2024-02-12T10:52:09.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 47,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 47,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 500,
+            "count": 7,
+            "totalDuration": 7000.0,
+            "maxDuration": 2056.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.7222222222222222,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0100160512E10,
+    "timestamp": "2024-02-12T10:52:10.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 49,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 49,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 6,
+            "totalDuration": 6000.0,
+            "maxDuration": 2056.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.8157894736842105,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0100078592E10,
+    "timestamp": "2024-02-12T10:52:14.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 55,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 55,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SERVER_ERROR": {
+            "outcome": "SERVER_ERROR",
+            "status": 0,
+            "count": 0,
+            "totalDuration": 0.0,
+            "maxDuration": 2056.0
+          },
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 5,
+            "totalDuration": 5000.0,
+            "maxDuration": 0.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.8,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0095429632E10,
+    "timestamp": "2024-02-12T10:53:24.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 87,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 69,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 6,
+            "totalDuration": 6000.0,
+            "maxDuration": 2056.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.611111111111111,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0088503296E10,
+    "timestamp": "2024-02-12T10:57:55.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  },
+  {
+    "id": 91,
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "instanceId": "recommender@teastore-recommender:3333",
+    "status": "ACTIVE",
+    "circuitBreakerMetrics": {},
+    "httpMetrics": {
+      "GET@/???": {
+        "id": 73,
+        "endpoint": "/???",
+        "httpMethod": "GET",
+        "outcomeMetrics": {
+          "SUCCESS": {
+            "outcome": "SUCCESS",
+            "status": 200,
+            "count": 7,
+            "totalDuration": 7000.0,
+            "maxDuration": 2056.0
+          }
+        }
+      }
+    },
+    "cpuUsage": 0.6111111111111112,
+    "diskTotalSpace": 1.17782851584E11,
+    "diskFreeSpace": 3.0085361664E10,
+    "timestamp": "2024-02-12T11:01:18.000+00:00",
+    "active": true,
+    "shutdown": false,
+    "unreachable": false,
+    "failed": false,
+    "booting": false
+  }
+]

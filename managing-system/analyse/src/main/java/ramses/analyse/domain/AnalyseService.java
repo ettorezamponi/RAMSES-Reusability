@@ -70,17 +70,17 @@ public class AnalyseService {
     private PlanClient planClient;
 
     public AnalyseService(
-        @Value("${ANALYSIS_WINDOW_SIZE}") int analysisWindowSize,
-        @Value("${METRICS_WINDOW_SIZE}") int metricsWindowSize,
+        //@Value("${ANALYSIS_WINDOW_SIZE}") int analysisWindowSize,
+        //@Value("${METRICS_WINDOW_SIZE}") int metricsWindowSize,
         @Value("${FAILURE_RATE_THRESHOLD}") double failureRateThreshold,
         @Value("${UNREACHABLE_RATE_THRESHOLD}") double unreachableRateThreshold,
         @Value("${QOS_SATISFACTION_RATE}") double qosSatisfactionRate,
         @Value("${MAX_BOOT_TIME_SECONDS}") long maxBootTimeSeconds
     ) {
-        if (analysisWindowSize < 1)
+        /*if (analysisWindowSize < 1)
             throw new IllegalArgumentException("Analysis window size must be greater than 0");
         if (metricsWindowSize < 2)
-            throw new IllegalArgumentException("Metrics window size must be greater than 1.");
+            throw new IllegalArgumentException("Metrics window size must be greater than 1.");*/
         if (failureRateThreshold < 0 || failureRateThreshold > 1)
             throw new IllegalArgumentException("Failure rate threshold must be between 0 and 1.");
         if (unreachableRateThreshold < 0 || unreachableRateThreshold > 1)
@@ -91,8 +91,8 @@ public class AnalyseService {
             throw new IllegalArgumentException("Qos satisfaction rate must be between 0 and 1.");
         if (maxBootTimeSeconds < 1)
             throw new IllegalArgumentException("Max boot time seconds must be greater than 0.");
-        this.analysisWindowSize = analysisWindowSize;
-        this.metricsWindowSize = metricsWindowSize;
+        this.analysisWindowSize = 1;
+        this.metricsWindowSize = 2;
         this.failureRateThreshold = failureRateThreshold;
         this.unreachableRateThreshold = unreachableRateThreshold;
         this.qosSatisfactionRate = qosSatisfactionRate;

@@ -94,6 +94,9 @@ public class MonitorService {
 
                 threads.forEach(thread -> {
                     try {
+                        // La lista threads viene utilizzata per tenere traccia dei thread creati e il
+                        // metodo join() viene chiamato su ciascun thread per assicurarsi che il thread
+                        // principale attenda il completamento di tutti i thread creati prima di procedere oltre
                         thread.join();
                     } catch (InterruptedException e) {
                         log.error(e.getMessage());
