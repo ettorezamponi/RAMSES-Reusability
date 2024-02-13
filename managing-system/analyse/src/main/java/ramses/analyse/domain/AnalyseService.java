@@ -187,21 +187,28 @@ public class AnalyseService {
                     continue;
                 }
 
-                double failureRate = metrics.stream().reduce(0.0, (acc, m) -> acc + (m.isFailed() ? 1:0), Double::sum) / metrics.size();
+                double failureRate = metrics.stream()
+                        .reduce(0.0, // Valore iniziale dell'accumulatore
+                        (acc, m) -> acc + (m.isFailed() ? 1 : 0), // Funzione di accumulazione
+                        Double::sum) // Funzione di combinazione
+                        / metrics.size(); // Divisione per il numero totale di metriche
                 double unreachableRate = metrics.stream().reduce(0.0, (acc, m) -> acc + (m.isUnreachable() ? 1:0), Double::sum) / metrics.size();
                 double inactiveRate = failureRate + unreachableRate;
 
-                if (unreachableRate >= unreachableRateThreshold || failureRate >= failureRateThreshold || inactiveRate >= 1) { //in ordine di probabilità
+                //in ordine di probabilità
+                if (unreachableRate >= unreachableRateThreshold || failureRate >= failureRateThreshold || inactiveRate >= 1) {
                     log.debug("{}: Rates conditions of instance {} not satisfied.", service.getServiceId(), instance.getInstanceId());
                     servicesForcedAdaptationOptionsMap.get(service.getServiceId()).add(new ShutdownInstanceOption(service.getServiceId(), service.getCurrentImplementationId(), instance.getInstanceId(), "Instance failed or unreachable", true));
                     servicesToSkip.add(service.getServiceId());
                     continue;
                 }
 
-                List<InstanceMetricsSnapshot> activeMetrics = metrics.stream().filter(instanceMetricsSnapshot -> instanceMetricsSnapshot.isActive() && instanceMetricsSnapshot.getHttpMetrics().size()>0).toList(); //la lista contiene almeno un elemento grazie all'inactive rate
+                // la lista contiene almeno un elemento grazie all'inactive rate, conterrà solo le istanze di InstanceMetricsSnapshot che sono attive e hanno almeno una metrica HTTP
+                List<InstanceMetricsSnapshot> activeMetrics = metrics.stream().filter(instanceMetricsSnapshot -> instanceMetricsSnapshot.isActive() && instanceMetricsSnapshot.getHttpMetrics().size()>0).toList();
 
-                InstanceMetricsSnapshot oldestActiveMetrics = activeMetrics.get(activeMetrics.size() - 1);
-                InstanceMetricsSnapshot latestActiveMetrics = activeMetrics.get(0);
+                InstanceMetricsSnapshot oldestActiveMetrics = activeMetrics.get(activeMetrics.size() - 1); // ultima metrica
+                InstanceMetricsSnapshot latestActiveMetrics = activeMetrics.get(0); // prima metrica
+                // CUORE DI RAMSES CHE CALCOLA ART E AVAILABILITY
                 instancesStats.add(new InstanceStats(instance, computeInstanceAvgResponseTime(instance, oldestActiveMetrics, latestActiveMetrics), computeInstanceAvailability(instance, oldestActiveMetrics, latestActiveMetrics)));
                 existsInstanceWithNewQoSValues = true;
             }
@@ -244,9 +251,11 @@ public class AnalyseService {
             if (instanceStats.isFromNewData()) { // only for the instances with a full metrics window
                 newInstancesValues.put(instanceId, new HashMap<>());
                 QoSCollection currentInstanceQoSCollection = instanceStats.getInstance().getQoSCollection();
+                // Creazione di una nuova istanza di QoSHistory.Value per la metrica AverageResponseTime
                 QoSHistory.Value newInstanceValue;
                 newInstanceValue = currentInstanceQoSCollection.createNewQoSValue(AverageResponseTime.class, instanceStats.getAverageResponseTime(), now);
                 newInstancesValues.get(instanceId).put(AverageResponseTime.class, newInstanceValue);
+                // Same per l'availability
                 newInstanceValue = currentInstanceQoSCollection.createNewQoSValue(Availability.class, instanceStats.getAvailability(), now);
                 newInstancesValues.get(instanceId).put(Availability.class, newInstanceValue);
             }
@@ -430,6 +439,7 @@ public class AnalyseService {
         for (String endpoint : latestActiveMetrics.getHttpMetrics().keySet()) {
             successfulRequestsDuration += latestActiveMetrics.getHttpMetrics().get(endpoint).getTotalDurationOfSuccessful();
             successfulRequestsCount += latestActiveMetrics.getHttpMetrics().get(endpoint).getTotalCountOfSuccessful();
+            System.out.println("TOTALE DURATA E RICHIESTE HTTP *NUOVE* per il servizio "+instance.getInstanceId()+": "+successfulRequestsDuration+", "+successfulRequestsCount);
             HttpEndpointMetrics oldestEndpointMetrics = oldestActiveMetrics.getHttpMetrics().get(endpoint);
             if (oldestEndpointMetrics != null) {
                 successfulRequestsDuration -= oldestEndpointMetrics.getTotalDurationOfSuccessful();

@@ -94,13 +94,14 @@ public class KnowledgeService {
                 Set<Instance> currentlyActiveInstances = new HashSet<>();
                 for (InstanceMetricsSnapshot metricsSnapshot : metricsList) {
                     Service service = servicesMap.get(metricsSnapshot.getServiceId());
-                    if (!Objects.equals(metricsSnapshot.getServiceImplementationId(), service.getCurrentImplementationId())) //Skip the metricsSnapshot if it is not related to the current implementation
+                    //Skip the metricsSnapshot if it is not related to the current implementation
+                    if (!Objects.equals(metricsSnapshot.getServiceImplementationId(), service.getCurrentImplementationId()))
                         continue;
                     Instance instance = service.getInstance(metricsSnapshot.getInstanceId());
                     log.info("INSTANCE FOUND:" + instance);
                     if (instance == null)
-                        throw new RuntimeException("Instance " +metricsSnapshot.getInstanceId()+" not found in service "+metricsSnapshot.getServiceId());
                         // If the instance has been shutdown, skip its metrics snapshot in the buffer. Next buffer won't contain its metrics snapshots.
+                        throw new RuntimeException("Instance " +metricsSnapshot.getInstanceId()+" not found in service "+metricsSnapshot.getServiceId());
                     if (instance.getCurrentStatus() != InstanceStatus.SHUTDOWN) {
                         if (!instance.getLatestInstanceMetricsSnapshot().equals(metricsSnapshot)) {
                             metricsRepository.save(metricsSnapshot);
@@ -204,7 +205,10 @@ public class KnowledgeService {
     public List<InstanceMetricsSnapshot> getLatestNMetricsOfCurrentInstance(String serviceId, String instanceId, int n) {
         QoSCollection qosCollection = servicesMap.get(serviceId).getInstance(instanceId).getQoSCollection();
         QoSHistory.Value availabilityLatestValue = qosCollection.getQoSHistory(Availability.class).getLatestValue();
+        System.out.println("LATEST AVAILABILITY VALUE: "+availabilityLatestValue);
         QoSHistory.Value artLatestValue = qosCollection.getQoSHistory(AverageResponseTime.class).getLatestValue();
+        System.out.println("LATEST ART VALUE: "+artLatestValue);
+
         if (availabilityLatestValue == null)
             availabilityLatestValue = qosCollection.getQoSHistory(Availability.class).getCurrentValue();
         if (artLatestValue == null)
