@@ -85,6 +85,10 @@ public class AuthUserActionsRest {
     System.out.println("PLACE ORDER AVVIATO");
 
     if (new ShaSecurityProvider().validate(blob) == null || blob.getOrderItems().isEmpty()) {
+      // Histogram metrics
+      long duration = System.currentTimeMillis()-startTime;
+      Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/placeOrder");
+      addTimer.record(duration, TimeUnit.MILLISECONDS);
       return Response.status(Response.Status.NOT_FOUND).build();
     }
 
@@ -103,8 +107,16 @@ public class AuthUserActionsRest {
       orderId = LoadBalancedCRUDOperations.sendEntityForCreation(Service.PERSISTENCE, "orders",
           Order.class, blob.getOrder());
     } catch (LoadBalancerTimeoutException e) {
+      // Histogram metrics
+      long duration = System.currentTimeMillis()-startTime;
+      Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/placeOrder");
+      addTimer.record(duration, TimeUnit.MILLISECONDS);
       return Response.status(408).build();
     } catch (NotFoundException e) {
+      // Histogram metrics
+      long duration = System.currentTimeMillis()-startTime;
+      Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/placeOrder");
+      addTimer.record(duration, TimeUnit.MILLISECONDS);
       return Response.status(404).build();
     }
     for (OrderItem item : blob.getOrderItems()) {
@@ -113,8 +125,16 @@ public class AuthUserActionsRest {
         LoadBalancedCRUDOperations.sendEntityForCreation(Service.PERSISTENCE, "orderitems",
             OrderItem.class, item);
       } catch (TimeoutException e) {
+        // Histogram metrics
+        long duration = System.currentTimeMillis()-startTime;
+        Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/placeOrder");
+        addTimer.record(duration, TimeUnit.MILLISECONDS);
         return Response.status(408).build();
       } catch (NotFoundException e) {
+        // Histogram metrics
+        long duration = System.currentTimeMillis()-startTime;
+        Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/placeOrder");
+        addTimer.record(duration, TimeUnit.MILLISECONDS);
         return Response.status(404).build();
       }
     }
@@ -152,6 +172,10 @@ public class AuthUserActionsRest {
       user = LoadBalancedCRUDOperations.getEntityWithProperties(Service.PERSISTENCE, "users",
           User.class, "name", name);
     } catch (TimeoutException e) {
+      // Histogram metrics
+      long duration = System.currentTimeMillis()-startTime;
+      Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/login");
+      addTimer.record(duration,TimeUnit.MILLISECONDS);
       return Response.status(408).build();
     } catch (NotFoundException e) {
       return Response.status(Response.Status.OK).entity(blob).build();

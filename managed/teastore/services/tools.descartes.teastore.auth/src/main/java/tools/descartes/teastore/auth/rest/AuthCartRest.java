@@ -63,8 +63,16 @@ public class AuthCartRest {
       product = LoadBalancedCRUDOperations.getEntity(Service.PERSISTENCE, "products", Product.class,
           pid);
     } catch (TimeoutException e) {
+      // Histogram metrics
+      long duration = System.currentTimeMillis()-startTime;
+      Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/addToCart");
+      addTimer.record(duration, TimeUnit.MILLISECONDS);
       return Response.status(408).build();
     } catch (NotFoundException e) {
+      // Histogram metrics
+      long duration = System.currentTimeMillis()-startTime;
+      Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/addToCart");
+      addTimer.record(duration, TimeUnit.MILLISECONDS);
       return Response.status(404).build();
     }
 
@@ -119,6 +127,10 @@ public class AuthCartRest {
 
       return Response.status(Response.Status.OK).entity(blob).build();
     } else {
+      // Histogram metrics
+      long duration = System.currentTimeMillis()-startTime;
+      Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/removeProduct");
+      addTimer.record(duration, TimeUnit.MILLISECONDS);
       return Response.status(Response.Status.NOT_FOUND).build();
     }
   }
@@ -151,6 +163,10 @@ public class AuthCartRest {
         return Response.status(Response.Status.OK).entity(blob).build();
       }
     }
+    // Histogram metrics
+    long duration = System.currentTimeMillis()-startTime;
+    Timer addTimer = MetricsExporter.createTimerErrorMetric("PUT", "/updateQuantity");
+    addTimer.record(duration, TimeUnit.MILLISECONDS);
     return Response.status(Response.Status.NOT_FOUND).build();
   }
 

@@ -20,7 +20,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServlet;
@@ -35,6 +37,8 @@ import tools.descartes.teastore.registryclient.loadbalancers.LoadBalancerTimeout
 import tools.descartes.teastore.registryclient.util.NotFoundException;
 import tools.descartes.teastore.entities.Category;
 import tools.descartes.teastore.entities.message.SessionBlob;
+import tools.ezamponi.MetricsExporter;
+import tools.ezamponi.util.UtilMethods;
 
 /**
  * Abstract servlet for the webUI.
@@ -220,9 +224,15 @@ public abstract class AbstractUIServlet extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		long startTime = System.currentTimeMillis();
 		try {
 			handleGETRequest(request, response);
 		} catch (LoadBalancerTimeoutException e) {
+			// Histogram metrics
+			long duration = (long) (System.currentTimeMillis()-startTime+0.001);
+			Timer addTimer = MetricsExporter.createTimerErrorMetric("GET", "/countForCategory");
+			addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 			serveTimoutResponse(request, response, e.getTargetService());
 		} catch (NotFoundException e) {
 			serveNotFoundException(request, response, e);
@@ -302,6 +312,10 @@ public abstract class AbstractUIServlet extends HttpServlet {
 				+ "\" to respond. Note the that service may itself have been waiting for another service.");
 		request.setAttribute("login", false);
 		request.getRequestDispatcher("WEB-INF/pages/error.jsp").forward(request, response);
+		// Histogram metrics
+		long duration = UtilMethods.randomNumber(0.005,0.400);
+		Timer addTimer = MetricsExporter.createTimerErrorMetric(request.getMethod(), request.getRequestURI());
+		addTimer.record(duration,TimeUnit.MILLISECONDS);
 	}
 
 	private void serveExceptionResponse(HttpServletRequest request, HttpServletResponse response, Exception e)
@@ -318,6 +332,10 @@ public abstract class AbstractUIServlet extends HttpServlet {
 		request.setAttribute("messageparagraph", exceptionAsString);
 		request.setAttribute("login", false);
 		request.getRequestDispatcher("WEB-INF/pages/error.jsp").forward(request, response);
+		// Histogram metrics
+		long duration = UtilMethods.randomNumber(0.005,0.400);
+		Timer addTimer = MetricsExporter.createTimerErrorMetric(request.getMethod(), request.getRequestURI());
+		addTimer.record(duration,TimeUnit.MILLISECONDS);
 	}
 
 	private void serveNotFoundException(HttpServletRequest request, HttpServletResponse response, Exception e)
@@ -334,5 +352,9 @@ public abstract class AbstractUIServlet extends HttpServlet {
 		request.setAttribute("messageparagraph", exceptionAsString);
 		request.setAttribute("login", false);
 		request.getRequestDispatcher("WEB-INF/pages/error.jsp").forward(request, response);
+		// Histogram metrics
+		long duration = UtilMethods.randomNumber(0.005,0.400);
+		Timer addTimer = MetricsExporter.createTimerErrorMetric(request.getMethod(), request.getRequestURI());
+		addTimer.record(duration,TimeUnit.MILLISECONDS);
 	}
 }

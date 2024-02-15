@@ -109,7 +109,8 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 		long startTime = System.currentTimeMillis();
 
 		if (categoryId == null) {
-			long duration = UtilMethods.randomNumber(0.015,0.400);
+			// Histogram metrics
+			long duration = System.currentTimeMillis()-startTime;
 			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForCategory");
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 
@@ -138,6 +139,10 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 	public Response countForCategory(@PathParam("category") final Long categoryId) {
 		long startTime = System.currentTimeMillis();
 		if (categoryId == null) {
+			// Histogram metrics
+			long duration = (long) (System.currentTimeMillis()-startTime+0.001);
+			Timer addTimer = MetricsExporter.createTimerErrorMetric("GET", "/countForCategory");
+			addTimer.record(duration, TimeUnit.MILLISECONDS);
 			return Response.status(404).build();
 		}
 		long count = ProductRepository.REPOSITORY.getProductCount(categoryId);
@@ -149,6 +154,10 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 
 			return Response.ok(String.valueOf(count)).build();
 		}
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerErrorMetric("GET", "/countForCategory");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
 		return Response.status(404).build();
 	}
 }
