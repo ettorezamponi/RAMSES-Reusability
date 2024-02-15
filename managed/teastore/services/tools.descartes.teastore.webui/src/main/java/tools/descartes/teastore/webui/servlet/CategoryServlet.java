@@ -18,6 +18,9 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
+
+import io.micrometer.core.instrument.Timer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -34,6 +37,7 @@ import tools.descartes.teastore.registryclient.rest.ResponseWrapper;
 import tools.descartes.teastore.entities.Category;
 import tools.descartes.teastore.entities.ImageSizePreset;
 import tools.descartes.teastore.entities.Product;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Servlet implementation for the web view of "Category".
@@ -61,6 +65,7 @@ public class CategoryServlet extends AbstractUIServlet {
   @Override
   protected void handleGETRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException, LoadBalancerTimeoutException {
+    long startTime = System.currentTimeMillis();
     if (request.getParameter("category") != null) {
       checkforCookie(request, response);
       long categoryID = Long.parseLong(request.getParameter("category"));
@@ -115,6 +120,10 @@ public class CategoryServlet extends AbstractUIServlet {
     } else {
       redirect("/", response);
     }
+    // Histogram metrics
+    long duration = System.currentTimeMillis()-startTime;
+    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/category");
+    addTimer.record(duration, TimeUnit.MILLISECONDS);
   }
 
   /**

@@ -15,6 +15,9 @@
 package tools.descartes.teastore.webui.servlet;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import io.micrometer.core.instrument.Timer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -24,6 +27,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import tools.descartes.teastore.registryclient.loadbalancers.LoadBalancerTimeoutException;
 import tools.descartes.teastore.registryclient.rest.LoadBalancedImageOperations;
 import tools.descartes.teastore.entities.ImageSizePreset;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Servlet implementation for the web view of "Database".
@@ -47,11 +51,16 @@ public class DataBaseServlet extends AbstractUIServlet {
 	@Override
 	protected void handleGETRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, LoadBalancerTimeoutException {
+		long startTime = System.currentTimeMillis();
 		checkforCookie(request, response);
 		request.setAttribute("storeIcon", 
 				LoadBalancedImageOperations.getWebImage("icon", ImageSizePreset.ICON.getSize()));
 		request.setAttribute("title", "TeaStore Database");
 		request.getRequestDispatcher("WEB-INF/pages/database.jsp").forward(request, response);
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/database");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
 	}
 
 

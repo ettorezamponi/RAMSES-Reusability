@@ -145,4 +145,16 @@ public class MetricsExporter {
 
         return timer;
     }
+    public static Timer createTimerErrorMetric(String method, String uri) {
+        Timer timer = Timer.builder("http_server_requests")
+                .tags("exception", "None",
+                        "method", method,
+                        "outcome", "SERVER_ERROR",
+                        "status", "500",
+                        "uri", uri)
+                .publishPercentileHistogram()
+                .register(MetricsExporter.prometheusRegistry);
+
+        return timer;
+    }
 }

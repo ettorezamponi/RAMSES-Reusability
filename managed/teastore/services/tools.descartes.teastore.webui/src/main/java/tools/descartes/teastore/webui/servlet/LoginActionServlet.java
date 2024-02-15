@@ -14,6 +14,9 @@
 package tools.descartes.teastore.webui.servlet;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import io.micrometer.core.instrument.Timer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -23,6 +26,7 @@ import jakarta.servlet.http.HttpServletResponse;
 import tools.descartes.teastore.registryclient.loadbalancers.LoadBalancerTimeoutException;
 import tools.descartes.teastore.registryclient.rest.LoadBalancedStoreOperations;
 import tools.descartes.teastore.entities.message.SessionBlob;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Servlet for handling the login actions.
@@ -57,6 +61,7 @@ public class LoginActionServlet extends AbstractUIServlet {
 	@Override
 	protected void handlePOSTRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, LoadBalancerTimeoutException {
+		long startTime = System.currentTimeMillis();
 		boolean login = false;
 		if (request.getParameter("username") != null && request.getParameter("password") != null) {
 			SessionBlob blob = LoadBalancedStoreOperations.login(getSessionBlob(request),
@@ -85,6 +90,10 @@ public class LoginActionServlet extends AbstractUIServlet {
 		} else {
 			handleGETRequest(request, response);
 		}
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("POST", "/loginAction");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
 
 	}
 

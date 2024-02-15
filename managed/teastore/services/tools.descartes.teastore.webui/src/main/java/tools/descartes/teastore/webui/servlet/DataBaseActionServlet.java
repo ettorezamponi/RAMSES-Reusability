@@ -16,7 +16,9 @@ package tools.descartes.teastore.webui.servlet;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -32,6 +34,7 @@ import tools.descartes.teastore.registryclient.Service;
 import tools.descartes.teastore.registryclient.loadbalancers.LoadBalancerTimeoutException;
 import tools.descartes.teastore.registryclient.loadbalancers.ServiceLoadBalancer;
 import tools.descartes.teastore.registryclient.rest.LoadBalancedImageOperations;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Servlet implementation for handling the data base action.
@@ -56,7 +59,7 @@ public class DataBaseActionServlet extends AbstractUIServlet {
 	@Override
 	protected void handleGETRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, LoadBalancerTimeoutException {
-
+		long startTime = System.currentTimeMillis();
 		if (request.getParameter("confirm") != null) {
 
 			String[] infos = extractOrderInformation(request);
@@ -94,6 +97,10 @@ public class DataBaseActionServlet extends AbstractUIServlet {
 		} else {
 			redirect("/", response);
 		}
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/databaseAction");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
 	}
 
 	/**

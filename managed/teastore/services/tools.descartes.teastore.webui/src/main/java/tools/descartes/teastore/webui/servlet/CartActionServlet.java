@@ -18,7 +18,9 @@ import java.io.IOException;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -29,6 +31,7 @@ import tools.descartes.teastore.registryclient.loadbalancers.LoadBalancerTimeout
 import tools.descartes.teastore.registryclient.rest.LoadBalancedStoreOperations;
 import tools.descartes.teastore.entities.OrderItem;
 import tools.descartes.teastore.entities.message.SessionBlob;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Servlet for handling all cart actions.
@@ -53,6 +56,7 @@ public class CartActionServlet extends AbstractUIServlet {
 	@Override
 	protected void handleGETRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, LoadBalancerTimeoutException {
+		long startTime = System.currentTimeMillis();
 		try {
 			for (Object paramo : request.getParameterMap().keySet()) {
 				String param = (String) paramo;
@@ -90,7 +94,10 @@ public class CartActionServlet extends AbstractUIServlet {
 
 			}
 		} finally {
-
+			// Histogram metrics
+			long duration = System.currentTimeMillis()-startTime;
+			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/cartAction");
+			addTimer.record(duration, TimeUnit.MILLISECONDS);
 		}
 	}
 

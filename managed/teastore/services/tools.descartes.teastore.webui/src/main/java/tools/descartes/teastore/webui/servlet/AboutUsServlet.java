@@ -16,7 +16,9 @@ package tools.descartes.teastore.webui.servlet;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -27,6 +29,7 @@ import tools.descartes.teastore.registryclient.loadbalancers.LoadBalancerTimeout
 import tools.descartes.teastore.registryclient.rest.LoadBalancedImageOperations;
 import tools.descartes.teastore.registryclient.rest.LoadBalancedStoreOperations;
 import tools.descartes.teastore.entities.ImageSizePreset;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Servlet implementation for the web view of "About us".
@@ -50,6 +53,7 @@ public class AboutUsServlet extends AbstractUIServlet {
   @Override
   protected void handleGETRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException, LoadBalancerTimeoutException {
+    long startTime = System.currentTimeMillis();
     checkforCookie(request, response);
     HashMap<String, String> portraits = LoadBalancedImageOperations
         .getWebImages(Arrays.asList("andreBauer", "johannesGrohmann", "joakimKistowski",
@@ -68,6 +72,10 @@ public class AboutUsServlet extends AbstractUIServlet {
     request.setAttribute("login", LoadBalancedStoreOperations.isLoggedIn(getSessionBlob(request)));
 
     request.getRequestDispatcher("WEB-INF/pages/about.jsp").forward(request, response);
+    // Histogram metrics
+    long duration = System.currentTimeMillis()-startTime;
+    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/aboutUs");
+    addTimer.record(duration, TimeUnit.MILLISECONDS);
   }
 
 }

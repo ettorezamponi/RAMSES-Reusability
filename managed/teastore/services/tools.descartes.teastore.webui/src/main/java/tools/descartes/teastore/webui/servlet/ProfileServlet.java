@@ -14,7 +14,9 @@
 package tools.descartes.teastore.webui.servlet;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -31,6 +33,7 @@ import tools.descartes.teastore.entities.Category;
 import tools.descartes.teastore.entities.ImageSizePreset;
 import tools.descartes.teastore.entities.Order;
 import tools.descartes.teastore.entities.User;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Servlet implementation for the web view of "Profile".
@@ -55,6 +58,7 @@ public class ProfileServlet extends AbstractUIServlet {
   @Override
   protected void handleGETRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException, LoadBalancerTimeoutException {
+    long startTime = System.currentTimeMillis();
     checkforCookie(request, response);
     if (!LoadBalancedStoreOperations.isLoggedIn(getSessionBlob(request))) {
       redirect("/", response);
@@ -75,6 +79,11 @@ public class ProfileServlet extends AbstractUIServlet {
 
       request.getRequestDispatcher("WEB-INF/pages/profile.jsp").forward(request, response);
     }
+    // Histogram metrics
+    long duration = System.currentTimeMillis()-startTime;
+    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/profile");
+    addTimer.record(duration, TimeUnit.MILLISECONDS);
+
   }
 
 }

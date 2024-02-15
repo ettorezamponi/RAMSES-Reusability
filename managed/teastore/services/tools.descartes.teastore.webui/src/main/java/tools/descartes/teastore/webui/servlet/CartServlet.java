@@ -19,7 +19,9 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -37,6 +39,7 @@ import tools.descartes.teastore.entities.ImageSizePreset;
 import tools.descartes.teastore.entities.OrderItem;
 import tools.descartes.teastore.entities.Product;
 import tools.descartes.teastore.entities.message.SessionBlob;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Servlet implementation for the web view of "Cart".
@@ -60,6 +63,7 @@ public class CartServlet extends AbstractUIServlet {
   @Override
   protected void handleGETRequest(HttpServletRequest request, HttpServletResponse response)
       throws ServletException, IOException, LoadBalancerTimeoutException {
+    long startTime = System.currentTimeMillis();
     checkforCookie(request, response);
     SessionBlob blob = getSessionBlob(request);
 
@@ -102,6 +106,10 @@ public class CartServlet extends AbstractUIServlet {
 
     request.getRequestDispatcher("WEB-INF/pages/cart.jsp").forward(request, response);
 
+    // Histogram metrics
+    long duration = System.currentTimeMillis()-startTime;
+    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/cart");
+    addTimer.record(duration, TimeUnit.MILLISECONDS);
   }
 
 }

@@ -15,6 +15,9 @@
 package tools.descartes.teastore.webui.servlet;
 
 import java.io.IOException;
+import java.util.concurrent.TimeUnit;
+
+import io.micrometer.core.instrument.Timer;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
@@ -28,6 +31,7 @@ import tools.descartes.teastore.registryclient.rest.LoadBalancedImageOperations;
 import tools.descartes.teastore.registryclient.rest.LoadBalancedStoreOperations;
 import tools.descartes.teastore.entities.Category;
 import tools.descartes.teastore.entities.ImageSizePreset;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Servlet implementation for the web view of "Error page".
@@ -51,7 +55,7 @@ public class ErrorServlet extends AbstractUIServlet {
 	@Override
 	protected void handleGETRequest(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException, LoadBalancerTimeoutException {
-
+		long startTime = System.currentTimeMillis();
 		Integer statusCode = (Integer) request.getAttribute("javax.servlet.error.status_code");
 
 		if (statusCode == null) {
@@ -68,6 +72,10 @@ public class ErrorServlet extends AbstractUIServlet {
 			request.getRequestDispatcher("WEB-INF/pages/error.jsp").forward(request, response);
 
 		}
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerErrorMetric("GET", "/error");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
 	}
 
 }
