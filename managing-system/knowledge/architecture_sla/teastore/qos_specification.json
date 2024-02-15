@@ -6,12 +6,12 @@
 				{
 					"name" : "availability",
 					"weight" : 0.5,
-					"min_threshold" : 0.8
+					"min_threshold" : 0.95
 				},
 				{
 					"name" : "average_response_time",
 					"weight" : 0.5,
-					"max_threshold": 900
+					"max_threshold": 200
 				}
 			]
 		},
@@ -21,12 +21,12 @@
 				{
 					"name" : "availability",
 					"weight" : 0.5,
-					"min_threshold" : 0.8
+					"min_threshold" : 0.95
 				},
 				{
 					"name" : "average_response_time",
 					"weight" : 0.5,
-					"max_threshold": 900
+					"max_threshold": 400
 				}
 			]
 		},
@@ -36,12 +36,12 @@
 				{
 					"name" : "availability",
 					"weight" : 0.5,
-					"min_threshold" : 0.8
+					"min_threshold" : 0.95
 				},
 				{
 					"name" : "average_response_time",
 					"weight" : 0.5,
-					"max_threshold": 900
+					"max_threshold": 70
 				}
 			]
 		},
@@ -51,12 +51,12 @@
 				{
 					"name" : "availability",
 					"weight" : 0.5,
-					"min_threshold" : 0.8
+					"min_threshold" : 0.95
 				},
 				{
 					"name" : "average_response_time",
 					"weight" : 0.5,
-					"max_threshold": 900
+					"max_threshold": 70
 				}
 			]
 		},
@@ -66,12 +66,12 @@
 				{
 					"name" : "availability",
 					"weight" : 0.5,
-					"min_threshold" : 0.8
+					"min_threshold" : 0.95
 				},
 				{
 					"name" : "average_response_time",
 					"weight" : 0.5,
-					"max_threshold": 900
+					"max_threshold": 70
 				}
 			]
 		},
@@ -81,12 +81,12 @@
 				{
 					"name" : "availability",
 					"weight" : 0.5,
-					"min_threshold" : 0.8
+					"min_threshold" : 0.95
 				},
 				{
 					"name" : "average_response_time",
 					"weight" : 0.5,
-					"max_threshold": 1000000
+					"max_threshold": 250
 				}
 			]
 		}
