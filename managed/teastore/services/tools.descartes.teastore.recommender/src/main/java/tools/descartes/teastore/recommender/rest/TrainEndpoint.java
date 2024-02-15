@@ -13,6 +13,7 @@
  */
 package tools.descartes.teastore.recommender.rest;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
@@ -22,6 +23,9 @@ import tools.descartes.teastore.recommender.algorithm.IRecommender;
 import tools.descartes.teastore.recommender.servlet.TrainingSynchronizer;
 import tools.descartes.teastore.entities.Order;
 import tools.descartes.teastore.entities.OrderItem;
+import tools.ezamponi.MetricsExporter;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * REST endpoint to trigger the (re)training of the Recommender.
@@ -49,11 +53,17 @@ public class TrainEndpoint {
 	 */
 	@GET
 	public Response train() {
+		long startTime = System.currentTimeMillis();
 		try {
 			long start = System.currentTimeMillis();
 			long number = TrainingSynchronizer.getInstance().retrieveDataAndRetrain();
 			long time = System.currentTimeMillis() - start;
 			if (number != -1) {
+				// Histogram metrics
+				long duration = System.currentTimeMillis()-startTime;
+				Timer addTimer = MetricsExporter.createTimerMetric("GET", "/train");
+				addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 				return Response.ok("The (re)train was succesfully done. It took " + time + "ms and " + number
 						+ " of Orderitems were retrieved from the database.").build();
 			}

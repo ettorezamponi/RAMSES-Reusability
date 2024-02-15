@@ -15,7 +15,9 @@ package tools.descartes.teastore.recommender.rest;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -27,6 +29,7 @@ import tools.descartes.teastore.recommender.algorithm.RecommenderSelector;
 import tools.descartes.teastore.entities.OrderItem;
 import tools.descartes.teastore.entities.Product;
 import tools.descartes.teastore.entities.User;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Recommender REST endpoint for single recommendation.
@@ -59,9 +62,15 @@ public class RecommendSingleEndpoint {
 		if (item == null) {
 			throw new NullPointerException("OrderItem must not be null.");
 		}
+		long startTime = System.currentTimeMillis();
 		LinkedList<OrderItem> list = new LinkedList<OrderItem>();
 		list.add(item);
 		List<Long> recommended = RecommenderSelector.getInstance().recommendProducts(uid, list);
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("POST", "/recommendsingle");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 		return Response.ok().entity(recommended).build();
 	}
 }

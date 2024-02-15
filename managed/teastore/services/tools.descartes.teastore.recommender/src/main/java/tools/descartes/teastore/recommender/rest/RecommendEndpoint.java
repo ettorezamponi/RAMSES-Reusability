@@ -14,7 +14,9 @@
 package tools.descartes.teastore.recommender.rest;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -56,7 +58,13 @@ public class RecommendEndpoint {
 	 */
 	@POST
 	public Response recommend(List<OrderItem> currentItems, @QueryParam("uid") final Long uid) {
+		long startTime = System.currentTimeMillis();
 		List<Long> recommended = RecommenderSelector.getInstance().recommendProducts(uid, currentItems);
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("POST", "/recommend");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 		return Response.ok().entity(recommended).build();
 	}
 
