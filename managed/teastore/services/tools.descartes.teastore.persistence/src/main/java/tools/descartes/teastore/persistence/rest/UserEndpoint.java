@@ -15,7 +15,9 @@ package tools.descartes.teastore.persistence.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -26,6 +28,7 @@ import tools.descartes.teastore.persistence.domain.UserRepository;
 import tools.descartes.teastore.persistence.repository.DataGenerator;
 import tools.descartes.teastore.registryclient.util.AbstractCRUDEndpoint;
 import tools.descartes.teastore.entities.User;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Persistence endpoint for CRUD operations on Categories.
@@ -106,6 +109,8 @@ public class UserEndpoint extends AbstractCRUDEndpoint<User> {
 	@GET
 	@Path("name/{name}")
 	public Response findById(@PathParam("name") final String name) {
+		long startTime = System.currentTimeMillis();
+
 		if (name == null || name.isEmpty()) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
@@ -113,6 +118,11 @@ public class UserEndpoint extends AbstractCRUDEndpoint<User> {
 		if (entity == null) {
 			return Response.status(Status.NOT_FOUND).build();
 		}
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/findUserById");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 		return Response.ok(new User(entity)).build();
 	}
 }

@@ -15,7 +15,9 @@ package tools.descartes.teastore.persistence.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -26,6 +28,8 @@ import tools.descartes.teastore.persistence.domain.ProductRepository;
 import tools.descartes.teastore.persistence.repository.DataGenerator;
 import tools.descartes.teastore.registryclient.util.AbstractCRUDEndpoint;
 import tools.descartes.teastore.entities.Product;
+import tools.ezamponi.MetricsExporter;
+import tools.ezamponi.util.UtilMethods;
 
 /**
  * Persistence endpoint for for CRUD operations on products.
@@ -101,7 +105,14 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 	public List<Product> listAllForCategory(@PathParam("category") final Long categoryId,
 			@QueryParam("start") final Integer startPosition,
 			@QueryParam("max") final Integer maxResult) {
+
+		long startTime = System.currentTimeMillis();
+
 		if (categoryId == null) {
+			long duration = UtilMethods.randomNumber(0.015,0.400);
+			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForCategory");
+			addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 			return listAll(startPosition, maxResult);
 		}
 		List<Product> products = new ArrayList<Product>();
@@ -109,6 +120,11 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 				parseIntQueryParam(startPosition), parseIntQueryParam(maxResult))) {
 			products.add(new Product(p));
 		}
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForCategory");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 		return products;
 	}
 	
@@ -120,11 +136,17 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 	@GET
 	@Path("count/{category:[0-9][0-9]*}")
 	public Response countForCategory(@PathParam("category") final Long categoryId) {
+		long startTime = System.currentTimeMillis();
 		if (categoryId == null) {
 			return Response.status(404).build();
 		}
 		long count = ProductRepository.REPOSITORY.getProductCount(categoryId);
 		if (count >= 0) {
+			// Histogram metrics
+			long duration = System.currentTimeMillis()-startTime;
+			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/countForCategory");
+			addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 			return Response.ok(String.valueOf(count)).build();
 		}
 		return Response.status(404).build();

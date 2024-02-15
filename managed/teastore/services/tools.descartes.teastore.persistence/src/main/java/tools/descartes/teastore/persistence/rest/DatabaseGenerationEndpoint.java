@@ -14,7 +14,9 @@
 package tools.descartes.teastore.persistence.rest;
 
 import java.util.concurrent.Executors;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -28,6 +30,7 @@ import org.slf4j.LoggerFactory;
 import tools.descartes.teastore.persistence.repository.CacheManager;
 import tools.descartes.teastore.persistence.repository.DataGenerator;
 import tools.descartes.teastore.registryclient.RegistryClient;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Persistence endpoint for generating new database content.
@@ -54,6 +57,9 @@ public class DatabaseGenerationEndpoint {
 			@QueryParam("products") final Integer products,
 			@QueryParam("users") final Integer users,
 			@QueryParam("orders") final Integer orders) {
+
+		long startTime = System.currentTimeMillis();
+
 		LOG.info("Received database generation command for Persistence at "
 			+ RegistryClient.getClient().getMyServiceInstanceServer() + ".");
 		if (DataGenerator.GENERATOR.isMaintenanceMode()) {
@@ -86,6 +92,11 @@ public class DatabaseGenerationEndpoint {
 				+ productCount + " products per category, "
 				+ userCount + " users, "
 				+ maxOrderCount + " max orders per user.";
+
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/generatedb");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
 		return Response.ok(message).build();
 	}
 

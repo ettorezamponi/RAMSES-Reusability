@@ -15,7 +15,9 @@ package tools.descartes.teastore.persistence.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.ws.rs.*;
 
 import jakarta.ws.rs.core.Context;
@@ -27,6 +29,7 @@ import tools.descartes.teastore.persistence.repository.DataGenerator;
 import tools.descartes.teastore.registryclient.util.AbstractCRUDEndpoint;
 import tools.descartes.teastore.entities.Order;
 import tools.ezamponi.MetricsExporter;
+import tools.ezamponi.util.UtilMethods;
 
 /**
  * Persistence endpoint for CRUD operations on orders.
@@ -102,7 +105,14 @@ public class OrderEndpoint extends AbstractCRUDEndpoint<Order> {
 	public List<Order> listAllForUser(@PathParam("user") final Long userId,
 			@QueryParam("start") final Integer startPosition,
 			@QueryParam("max") final Integer maxResult) {
+
+		long startTime = System.currentTimeMillis();
+
 		if (userId == null) {
+			long duration = UtilMethods.randomNumber(0.015,0.700);
+			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForUser");
+			addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 			return listAll(startPosition, maxResult);
 		}
 		List<Order> orders = new ArrayList<Order>();
@@ -110,6 +120,10 @@ public class OrderEndpoint extends AbstractCRUDEndpoint<Order> {
 				parseIntQueryParam(startPosition), parseIntQueryParam(maxResult))) {
 			orders.add(new Order(o));
 		}
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForUser");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
 		return orders;
 	}
 

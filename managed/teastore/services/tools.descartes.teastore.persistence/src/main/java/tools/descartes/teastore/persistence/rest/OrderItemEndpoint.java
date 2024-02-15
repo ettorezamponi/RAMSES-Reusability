@@ -15,7 +15,9 @@ package tools.descartes.teastore.persistence.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.PathParam;
@@ -25,6 +27,8 @@ import tools.descartes.teastore.persistence.domain.OrderItemRepository;
 import tools.descartes.teastore.persistence.repository.DataGenerator;
 import tools.descartes.teastore.registryclient.util.AbstractCRUDEndpoint;
 import tools.descartes.teastore.entities.OrderItem;
+import tools.ezamponi.MetricsExporter;
+import tools.ezamponi.util.UtilMethods;
 
 /**
  * Persistence endpoint for for CRUD operations on orders.
@@ -100,7 +104,14 @@ public class OrderItemEndpoint extends AbstractCRUDEndpoint<OrderItem> {
 	public List<OrderItem> listAllForProduct(@PathParam("product") final Long productId,
 			@QueryParam("start") final Integer startPosition,
 			@QueryParam("max") final Integer maxResult) {
+
+		long startTime = System.currentTimeMillis();
+
 		if (productId == null) {
+			long duration = UtilMethods.randomNumber(0.015,0.500);
+			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForProduct");
+			addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 			return listAll(startPosition, maxResult);
 		}
 		List<OrderItem> orderItems = new ArrayList<OrderItem>();
@@ -108,6 +119,11 @@ public class OrderItemEndpoint extends AbstractCRUDEndpoint<OrderItem> {
 				parseIntQueryParam(startPosition), parseIntQueryParam(maxResult))) {
 			orderItems.add(new OrderItem(oi));
 		}
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForProduct");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 		return orderItems;
 	}
 	
@@ -123,7 +139,14 @@ public class OrderItemEndpoint extends AbstractCRUDEndpoint<OrderItem> {
 	public List<OrderItem> listAllForOrder(@PathParam("order") final Long orderId,
 			@QueryParam("start") final Integer startPosition,
 			@QueryParam("max") final Integer maxResult) {
+
+		long startTime = System.currentTimeMillis();
+
 		if (orderId == null) {
+			long duration = UtilMethods.randomNumber(0.015,0.400);
+			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForOrder");
+			addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 			return listAll(startPosition, maxResult);
 		}
 		List<OrderItem> orderItems = new ArrayList<OrderItem>();
@@ -131,6 +154,11 @@ public class OrderItemEndpoint extends AbstractCRUDEndpoint<OrderItem> {
 				parseIntQueryParam(startPosition), parseIntQueryParam(maxResult))) {
 			orderItems.add(new OrderItem(oi));
 		}
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForOrder");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 		return orderItems;
 	}
 }
