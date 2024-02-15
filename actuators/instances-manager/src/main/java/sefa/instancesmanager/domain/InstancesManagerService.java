@@ -117,21 +117,23 @@ public class InstancesManagerService {
 
     public List<ServiceContainerInfo> addInstances(String serviceImplementationName, int numberOfInstances) {
         //String imageName = "giamburrasca/sefa-"+serviceImplementationName+":"+arch;
-        String imageName = serviceImplementationName;
+        String containerName = serviceImplementationName;
+        String imageName = "teastore-"+serviceImplementationName;
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
         Boolean special = false;
 
         //per il registry abbiamo bisogno di avere lo stesso nome e così funziona
-        String containerName = serviceImplementationName.split("-")[1];
-        log.info("CONTAINER NAME: " + containerName);
+        //String containerName = serviceImplementationName.split("-")[1];
+        log.info("CONTAINER DA STARTARE NAME: " + containerName);
 
-        if (containerName.contains("registry") || containerName.contains("persistence") || containerName.contains("recommender") || containerName.contains("image")) {
+        //TODO trattare tutti i conteiner ugualmente ri-assegnando lo stesso nome??
+        if (containerName.contains("registry") || containerName.contains("persistence") || containerName.contains("recommender") || containerName.contains("image") || containerName.contains("webui")) {
             special = true;
         }
 
         // Registry should have the same name, so completly delete the previous one
-        //TODO theoretically persistence service could have more than one implementation
+        //TODO theoretically persistence service could have more than one implementation, rimane fuori solo AUTH dallo special...
         if (special) {
             if (numberOfInstances > 1) {
                 numberOfInstances = 1;
@@ -148,6 +150,9 @@ public class InstancesManagerService {
         }
         for (int i = 0; i < numberOfInstances; i++) {
             int randomPort = getRandomPort();
+            //TODO --DA CHIEDERE-- per qualche secondo si hanno problemi con eureka avendo due istanze registrate con il nome webui@teastore-webui:8080
+            if(serviceImplementationName.contains("webui"))
+                randomPort = 8080;
             String dockerName;
             ExposedPort exposedRandomPort = ExposedPort.tcp(8080); // intern port of the container
             Ports portBindings = new Ports();

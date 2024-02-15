@@ -60,8 +60,9 @@ done
 echo
 
 docker run -P --name teastore-probe -d --network teastore probe
-docker run -P --name teastore-instancesmanager -d --network teastore instances-manager
-docker run -p 8081:8081 --name maven-configserver -d --network teastore configserver
+docker run -P --name teastore-instances-manager -d --network teastore instances-manager
+docker run -P --name teastore-config-manager -d --network teastore actuator-configmanager
+docker run -p 8081:8081 --name maven-config-server -d --network teastore configserver
 
 durata_timer=50
 

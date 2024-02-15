@@ -62,10 +62,10 @@ public class PrometheusParser {
                 Map<String, String> labels = metric.getLabels();
                 //log.info("METRIC LABEL: " + metric.getLabels() ); // e.g., {area=nonheap, id=CodeHeap 'profiled nmethods'},nullnull OPPURE {},nullnull
                 switch (propertyName) {
-                    case JavamelodyMetrics.HTTP_REQUESTS_TIME ->
+                    case PrometheusMetrics.HTTP_REQUESTS_TIME ->
                             handleHttpServerRequestsTotalDurationMs(httpMetricsMap, (Histogram) metric);
-                    case JavamelodyMetrics.HTTP_REQUESTS_MAX_TIME ->
-                            handleHttpServerRequestsMaxDurationForJM(httpMetricsMap, (Gauge) metric);
+                    case PrometheusMetrics.HTTP_REQUESTS_MAX_TIME ->
+                            handleHttpServerRequestsMaxDuration(httpMetricsMap, (Gauge) metric);
                     case PrometheusMetrics.DISK_FREE_SPACE ->
                             instanceMetricsSnapshot.setDiskFreeSpace(((Gauge) metric).getValue());
                     case PrometheusMetrics.DISK_TOTAL_SPACE ->
@@ -144,44 +144,9 @@ public class PrometheusParser {
         return uris[randomIndex];
     }
 
-    // Method modified to make a fake Histogram metric from the estimated value from javaMelody
-    private void handleHttpServerRequestsMaxDurationForJM(Map<String, HttpEndpointMetrics> httpMetricsMap, Gauge metric) {
-        Gauge gauge = new Gauge.Builder()
-                .setName(metric.getName())
-                .addLabel("exception", "None")
-                .addLabel("method", "GET")
-                .addLabel("outcome", "SUCCESS")
-                .addLabel("status", "200")
-                .addLabel("uri", "/generic")
-                .setValue(metric.getValue())
-                .build();
-
-        //log.info("HANDLE HTTP REQUEST MAX DURATION LAUNCHED");
-        Map<String, String> labels = gauge.getLabels();//e.g. labels' key for http_server_requests_seconds are [exception, method, uri, status]
-
-        HttpEndpointMetrics metrics = httpMetricsMap.getOrDefault(labels.get("method") + "@" + labels.get("uri"), new HttpEndpointMetrics(labels.get("uri"), labels.get("method")));
-        metrics.addOrSetOutcomeMetricsMaxDuration(labels.get("outcome"), gauge.getValue()); //yet in milliseconds
-        httpMetricsMap.putIfAbsent(labels.get("method") + "@" + labels.get("uri"), metrics);
-
-        //log.info("MAX HTTP METRICS CREATED: "+metrics);
-    }
-
-    private void handleHttpServerRequestsTimer(Map<String, HttpEndpointMetrics> httpMetricsMap, Timer metric) {
-        System.out.print("TAG IN TIMER: "+metric.getId().getTags());
-
-/*
-        Map<String, String> labels = metric.getLabels();//e.g. labels' key for http_server_requests_seconds are [exception, method, uri, status]
-        if (isAnExcludedUrl(labels.get("uri")))
-            return;
-        HttpEndpointMetrics metrics = httpMetricsMap.getOrDefault(labels.get("method") + "@" + labels.get("uri"), new HttpEndpointMetrics(labels.get("uri"), labels.get("method")));
-        metrics.addOrSetOutcomeMetricsDetails(labels.get("outcome"), Integer.parseInt(labels.get("status")), (int) metric.getSampleCount(), metric.getSampleSum()*1000);
-        httpMetricsMap.putIfAbsent(labels.get("method") + "@" + labels.get("uri"), metrics);
-*/
-    }
-
     private void handleHttpServerRequestsTotalDurationMs(Map<String, HttpEndpointMetrics> httpMetricsMap, Histogram metric) {
         Map<String, String> labels = metric.getLabels();//e.g. labels' key for http_server_requests_seconds are [exception, method, uri, status]
-        System.out.println("TIMER LABELS: "+labels);
+        //System.out.println("TIMER LABELS: "+labels);
         if (isAnExcludedUrl(labels.get("uri")))
             return;
         HttpEndpointMetrics metrics = httpMetricsMap.getOrDefault(labels.get("method") + "@" + labels.get("uri"), new HttpEndpointMetrics(labels.get("uri"), labels.get("method")));
