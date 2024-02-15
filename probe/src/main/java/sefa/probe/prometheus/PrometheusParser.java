@@ -1,6 +1,7 @@
 package sefa.probe.prometheus;
 
 import com.netflix.appinfo.InstanceInfo;
+import io.micrometer.core.instrument.Timer;
 import sefa.probe.domain.metrics.HttpEndpointMetrics;
 import sefa.probe.domain.metrics.InstanceMetricsSnapshot;
 import lombok.extern.slf4j.Slf4j;
@@ -62,7 +63,7 @@ public class PrometheusParser {
                 //log.info("METRIC LABEL: " + metric.getLabels() ); // e.g., {area=nonheap, id=CodeHeap 'profiled nmethods'},nullnull OPPURE {},nullnull
                 switch (propertyName) {
                     case JavamelodyMetrics.HTTP_REQUESTS_TIME ->
-                        handleHttpServerRequestsTotalDurationForJM(httpMetricsMap, (Gauge) metric);
+                            handleHttpServerRequestsTotalDurationMs(httpMetricsMap, (Histogram) metric);
                     case JavamelodyMetrics.HTTP_REQUESTS_MAX_TIME ->
                             handleHttpServerRequestsMaxDurationForJM(httpMetricsMap, (Gauge) metric);
                     case PrometheusMetrics.DISK_FREE_SPACE ->
@@ -136,6 +137,13 @@ public class PrometheusParser {
         //log.info("HTTP METRICS CREATED: "+metrics);
     }
 
+    private String getRandomUri() {
+        String[] uris = {"/cartAction", "/loginAction", "/product", "/category"};
+        Random random = new Random();
+        int randomIndex = random.nextInt(uris.length);
+        return uris[randomIndex];
+    }
+
     // Method modified to make a fake Histogram metric from the estimated value from javaMelody
     private void handleHttpServerRequestsMaxDurationForJM(Map<String, HttpEndpointMetrics> httpMetricsMap, Gauge metric) {
         Gauge gauge = new Gauge.Builder()
@@ -158,8 +166,22 @@ public class PrometheusParser {
         //log.info("MAX HTTP METRICS CREATED: "+metrics);
     }
 
+    private void handleHttpServerRequestsTimer(Map<String, HttpEndpointMetrics> httpMetricsMap, Timer metric) {
+        System.out.print("TAG IN TIMER: "+metric.getId().getTags());
+
+/*
+        Map<String, String> labels = metric.getLabels();//e.g. labels' key for http_server_requests_seconds are [exception, method, uri, status]
+        if (isAnExcludedUrl(labels.get("uri")))
+            return;
+        HttpEndpointMetrics metrics = httpMetricsMap.getOrDefault(labels.get("method") + "@" + labels.get("uri"), new HttpEndpointMetrics(labels.get("uri"), labels.get("method")));
+        metrics.addOrSetOutcomeMetricsDetails(labels.get("outcome"), Integer.parseInt(labels.get("status")), (int) metric.getSampleCount(), metric.getSampleSum()*1000);
+        httpMetricsMap.putIfAbsent(labels.get("method") + "@" + labels.get("uri"), metrics);
+*/
+    }
+
     private void handleHttpServerRequestsTotalDurationMs(Map<String, HttpEndpointMetrics> httpMetricsMap, Histogram metric) {
         Map<String, String> labels = metric.getLabels();//e.g. labels' key for http_server_requests_seconds are [exception, method, uri, status]
+        System.out.println("TIMER LABELS: "+labels);
         if (isAnExcludedUrl(labels.get("uri")))
             return;
         HttpEndpointMetrics metrics = httpMetricsMap.getOrDefault(labels.get("method") + "@" + labels.get("uri"), new HttpEndpointMetrics(labels.get("uri"), labels.get("method")));

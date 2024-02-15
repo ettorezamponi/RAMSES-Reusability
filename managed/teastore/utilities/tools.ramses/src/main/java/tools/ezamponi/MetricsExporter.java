@@ -1,6 +1,6 @@
 package tools.ezamponi;
 
-import io.micrometer.core.instrument.Gauge;
+import io.micrometer.core.instrument.Timer;
 import io.micrometer.core.instrument.binder.jvm.*;
 import io.micrometer.core.instrument.binder.system.ProcessorMetrics;
 import io.micrometer.core.instrument.binder.system.DiskSpaceMetrics;
@@ -24,7 +24,7 @@ import java.util.regex.Pattern;
 // TODO make it reachable through "/actuator/prometheus" and not tools.descartes.ecc
 public class MetricsExporter {
     private static final Logger LOG = LoggerFactory.getLogger(MetricsExporter.class);
-    static PrometheusMeterRegistry prometheusRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
+    public static PrometheusMeterRegistry prometheusRegistry = new PrometheusMeterRegistry(PrometheusConfig.DEFAULT);
     private static Number initialHttpMean=0;
 
     public static void MicrometerResource() {
@@ -35,9 +35,16 @@ public class MetricsExporter {
         new JvmThreadMetrics().bindTo(prometheusRegistry);
         new DiskSpaceMetrics(new File("/")).bindTo(prometheusRegistry);
 
+/*
         Gauge.builder("http_server_requests_seconds", () -> initialHttpMean)
                 .description("HTTP milliseconds total duration requests")
                 .register(prometheusRegistry);
+*/
+
+        /*Timer.builder("CIAOCIAOCIAO")
+                .tags("exception","","method","","outcome","","status","","uri","")
+                .publishPercentileHistogram()
+                .register(prometheusRegistry);*/
     }
 
     @SuppressWarnings("checkstyle:designforextension")
@@ -45,7 +52,7 @@ public class MetricsExporter {
     public static String getMetrics(UriInfo uriInfo) {
         MicrometerResource();
 
-        //TODO remember that http javamelody metrics is in milliseconds
+        /*//TODO remember that http javamelody metrics is in milliseconds
         Double httpTotalTimeRequests = extractMetricValue(fetchExternalMetrics(uriInfo), "javamelody_http_duration_millis");
         Double httpNoOfRequests = extractMetricValue(fetchExternalMetrics(uriInfo), "javamelody_http_hits_count");
         Double httpMean = httpTotalTimeRequests/httpNoOfRequests;
@@ -73,7 +80,7 @@ public class MetricsExporter {
         }
 
         prometheusRegistry.gauge("http_server_requests_seconds", httpMean);
-        prometheusRegistry.gauge("http_server_requests_seconds_max", actualValue);
+        prometheusRegistry.gauge("http_server_requests_seconds_max", actualValue);*/
 
         String metrics = prometheusRegistry.scrape();// + "\n" + fetchExternalMetrics(uriInfo);
         return metrics;
@@ -124,5 +131,18 @@ public class MetricsExporter {
         } else {
             return (double) -1;
         }
+    }
+
+    public static Timer createTimerMetric(String method, String uri) {
+        Timer timer = Timer.builder("http_server_requests")
+                .tags("exception", "None",
+                        "method", method,
+                        "outcome", "SUCCESS",
+                        "status", "200",
+                        "uri", uri)
+                .publishPercentileHistogram()
+                .register(MetricsExporter.prometheusRegistry);
+
+        return timer;
     }
 }

@@ -16,7 +16,9 @@ package tools.descartes.teastore.auth.rest;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
@@ -36,6 +38,7 @@ import tools.descartes.teastore.registryclient.loadbalancers.LoadBalancerTimeout
 import tools.descartes.teastore.registryclient.rest.LoadBalancedCRUDOperations;
 import tools.descartes.teastore.registryclient.util.NotFoundException;
 import tools.descartes.teastore.registryclient.util.TimeoutException;
+import tools.ezamponi.MetricsExporter;
 
 /**
  * Rest endpoint for the store user actions.
@@ -77,6 +80,10 @@ public class AuthUserActionsRest {
       @QueryParam("creditCardCompany") String creditCardCompany,
       @QueryParam("creditCardNumber") String creditCardNumber,
       @QueryParam("creditCardExpiryDate") String creditCardExpiryDate) {
+
+    long startTime = System.currentTimeMillis();
+    System.out.println("PLACE ORDER AVVIATO");
+
     if (new ShaSecurityProvider().validate(blob) == null || blob.getOrderItems().isEmpty()) {
       return Response.status(Response.Status.NOT_FOUND).build();
     }
@@ -114,6 +121,11 @@ public class AuthUserActionsRest {
     blob.setOrder(new Order());
     blob.getOrderItems().clear();
     blob = new ShaSecurityProvider().secure(blob);
+    // Histogram metrics
+    long duration = System.currentTimeMillis()-startTime;
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/placeOrder");
+    addTimer.record(duration, TimeUnit.MILLISECONDS);
+
     return Response.status(Response.Status.OK).entity(blob).build();
   }
 
@@ -132,6 +144,9 @@ public class AuthUserActionsRest {
   @Path("login")
   public Response login(SessionBlob blob, @QueryParam("name") String name,
       @QueryParam("password") String password) {
+
+    long startTime = System.currentTimeMillis();
+
     User user;
     try {
       user = LoadBalancedCRUDOperations.getEntityWithProperties(Service.PERSISTENCE, "users",
@@ -147,8 +162,18 @@ public class AuthUserActionsRest {
       blob.setUID(user.getId());
       blob.setSID(new RandomSessionIdGenerator().getSessionId());
       blob = new ShaSecurityProvider().secure(blob);
+      // Histogram metrics
+      long duration = System.currentTimeMillis()-startTime;
+      Timer addTimer = MetricsExporter.createTimerMetric("POST", "/login");
+      addTimer.record(duration,TimeUnit.MILLISECONDS);
+
       return Response.status(Response.Status.OK).entity(blob).build();
     }
+    // Histogram metrics
+    long duration = System.currentTimeMillis()-startTime;
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/login");
+    addTimer.record(duration,TimeUnit.MILLISECONDS);
+
     return Response.status(Response.Status.OK).entity(blob).build();
   }
 
@@ -162,10 +187,16 @@ public class AuthUserActionsRest {
   @POST
   @Path("logout")
   public Response logout(SessionBlob blob) {
+    long startTime = System.currentTimeMillis();
     blob.setUID(null);
     blob.setSID(null);
     blob.setOrder(new Order());
     blob.getOrderItems().clear();
+    // Histogram metrics
+    long duration = System.currentTimeMillis()-startTime;
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/logout");
+    addTimer.record(duration,TimeUnit.MILLISECONDS);
+
     return Response.status(Response.Status.OK).entity(blob).build();
   }
 

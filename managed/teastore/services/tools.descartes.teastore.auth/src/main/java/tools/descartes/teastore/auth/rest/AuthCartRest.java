@@ -14,6 +14,7 @@
 
 package tools.descartes.teastore.auth.rest;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
@@ -29,6 +30,8 @@ import tools.descartes.teastore.registryclient.rest.LoadBalancedCRUDOperations;
 import tools.descartes.teastore.registryclient.util.NotFoundException;
 import tools.descartes.teastore.registryclient.util.TimeoutException;
 import tools.ezamponi.MetricsExporter;
+
+import java.util.concurrent.TimeUnit;
 
 /**
  * Rest endpoint for the store cart.
@@ -53,6 +56,8 @@ public class AuthCartRest {
   @POST
   @Path("add/{pid}")
   public Response addProductToCart(SessionBlob blob, @PathParam("pid") final Long pid) {
+    long startTime = System.currentTimeMillis();
+
     Product product;
     try {
       product = LoadBalancedCRUDOperations.getEntity(Service.PERSISTENCE, "products", Product.class,
@@ -76,6 +81,12 @@ public class AuthCartRest {
     item.setUnitPriceInCents(product.getListPriceInCents());
     blob.getOrderItems().add(item);
     blob = new ShaSecurityProvider().secure(blob);
+    // Histogram metrics
+    long duration = System.currentTimeMillis()-startTime;
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/addToCart");
+    addTimer.record(duration,TimeUnit.MILLISECONDS);
+    //System.out.println("TIMER CREATO con tempo: "+duration);
+
     return Response.status(Response.Status.OK).entity(blob).build();
   }
 
@@ -91,6 +102,7 @@ public class AuthCartRest {
   @POST
   @Path("remove/{pid}")
   public Response removeProductFromCart(SessionBlob blob, @PathParam("pid") final Long pid) {
+    long startTime = System.currentTimeMillis();
     OrderItem toRemove = null;
     for (OrderItem item : blob.getOrderItems()) {
       if (item.getProductId() == pid) {
@@ -100,6 +112,11 @@ public class AuthCartRest {
     if (toRemove != null) {
       blob.getOrderItems().remove(toRemove);
       blob = new ShaSecurityProvider().secure(blob);
+      // Histogram metrics
+      long duration = System.currentTimeMillis()-startTime;
+      Timer addTimer = MetricsExporter.createTimerMetric("POST", "/removeProduct");
+      addTimer.record(duration,TimeUnit.MILLISECONDS);
+
       return Response.status(Response.Status.OK).entity(blob).build();
     } else {
       return Response.status(Response.Status.NOT_FOUND).build();
@@ -121,10 +138,16 @@ public class AuthCartRest {
   @Path("{pid}")
   public Response updateQuantity(SessionBlob blob, @PathParam("pid") final Long pid,
       @QueryParam("quantity") int quantity) {
+    long startTime = System.currentTimeMillis();
     for (OrderItem item : blob.getOrderItems()) {
       if (item.getProductId() == pid) {
         item.setQuantity(quantity);
         blob = new ShaSecurityProvider().secure(blob);
+        // Histogram metrics
+        long duration = System.currentTimeMillis()-startTime;
+        Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/updateQuantity");
+        addTimer.record(duration,TimeUnit.MILLISECONDS);
+
         return Response.status(Response.Status.OK).entity(blob).build();
       }
     }
