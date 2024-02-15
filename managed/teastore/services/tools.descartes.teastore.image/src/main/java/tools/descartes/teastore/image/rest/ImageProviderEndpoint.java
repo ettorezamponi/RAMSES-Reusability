@@ -15,8 +15,11 @@ package tools.descartes.teastore.image.rest;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Random;
+import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.ws.rs.Consumes;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
@@ -31,6 +34,7 @@ import tools.descartes.teastore.entities.ImageSize;
 import tools.descartes.teastore.image.ImageProvider;
 import tools.descartes.teastore.image.setup.SetupController;
 import tools.ezamponi.MetricsExporter;
+import tools.ezamponi.util.UtilMethods;
 
 /**
  * The image provider REST endpoints for querying and controlling the image provider service.
@@ -51,6 +55,9 @@ public class ImageProviderEndpoint {
   @POST
   @Path("getProductImages")
   public Response getProductImages(HashMap<Long, String> images) {
+    long duration = UtilMethods.randomNumber(0.005,0.600);
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/getProductImages");
+    addTimer.record(duration, TimeUnit.MILLISECONDS);
     return Response.ok()
         .entity(ImageProvider.IP.getProductImages(images.entrySet().parallelStream().collect(
             Collectors.toMap(e -> e.getKey(), e -> ImageSize.parseImageSize(e.getValue())))))
@@ -65,6 +72,9 @@ public class ImageProviderEndpoint {
   @POST
   @Path("getWebImages")
   public Response getWebUIImages(HashMap<String, String> images) {
+    long duration = UtilMethods.randomNumber(0.005,0.400);
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/getWebImages");
+    addTimer.record(duration, TimeUnit.MILLISECONDS);
     return Response.ok()
         .entity(ImageProvider.IP.getWebUIImages(images.entrySet().parallelStream().collect(
             Collectors.toMap(e -> e.getKey(), e -> ImageSize.parseImageSize(e.getValue())))))
@@ -79,7 +89,13 @@ public class ImageProviderEndpoint {
   @GET
   @Path("regenerateImages")
   public Response regenerateImages() {
+    long startTime = System.currentTimeMillis();
     SetupController.SETUP.reconfiguration();
+    // Histogram metrics
+    long duration = System.currentTimeMillis()-startTime;
+    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/regenerateImages");
+    addTimer.record(duration,TimeUnit.MILLISECONDS);
+
     return Response.ok().build();
   }
 
