@@ -14,7 +14,9 @@
 package tools.descartes.teastore.registry.rest;
 
 import java.util.List;
+import java.util.concurrent.TimeUnit;
 
+import io.micrometer.core.instrument.Timer;
 import jakarta.ws.rs.DELETE;
 import jakarta.ws.rs.GET;
 import jakarta.ws.rs.PUT;
@@ -45,10 +47,21 @@ public class RegistryREST {
 	@PUT
 	@Path("{name}/{location}")
 	public Response register(@PathParam("name") final String name, @PathParam("location") final String location) {
+		long startTime = System.currentTimeMillis();
 		boolean success = Registry.getRegistryInstance().register(name, location);
 		if (success) {
+			// Histogram metrics
+			long duration = System.currentTimeMillis()-startTime;
+			Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/registerService");
+			addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 			return Response.status(Status.CREATED).build();
 		}
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/registerService");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 		return Response.ok().build();
 	}
 
@@ -61,10 +74,21 @@ public class RegistryREST {
 	@DELETE
 	@Path("{name}/{location}")
 	public Response unregister(@PathParam("name") final String name, @PathParam("location") final String location) {
+		long startTime = System.currentTimeMillis();
 		boolean success = Registry.getRegistryInstance().unregister(name, location);
 		if (success) {
+			// Histogram metrics
+			long duration = System.currentTimeMillis()-startTime;
+			Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/unregisterService");
+			addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 			return Response.status(Response.Status.OK).build();
 		}
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/unregisterService");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 		return Response.status(Response.Status.NOT_FOUND).build();
 	}
 
@@ -76,7 +100,13 @@ public class RegistryREST {
 	@GET
 	@Path("{name}")
 	public Response getInstances(@PathParam("name") final String name) {
+		long startTime = System.currentTimeMillis();
 		List<String> locations = Registry.getRegistryInstance().getLocations(name);
+		// Histogram metrics
+		long duration = System.currentTimeMillis()-startTime;
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/getInstanceService");
+		addTimer.record(duration, TimeUnit.MILLISECONDS);
+
 		return Response.status(Response.Status.OK).entity(locations).build();
 	}
 
