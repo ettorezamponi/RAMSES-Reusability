@@ -44,7 +44,10 @@ import tools.ezamponi.MetricsExporter;
 @WebServlet("/dataBaseAction")
 public class DataBaseActionServlet extends AbstractUIServlet {
 	private static final long serialVersionUID = 1L;
+	// [0.0, 1.0]
 	double httpSuccessProbability = 1;
+	// percentage of slowing http request, [0, 100]
+	long delay = 0;
 
 	private static final String[] PARAMETERS = new String[] { "categories", "products", "users", "orders" };
 	private static final Logger LOG = LoggerFactory.getLogger(DataBaseActionServlet.class);
@@ -101,7 +104,7 @@ public class DataBaseActionServlet extends AbstractUIServlet {
 			redirect("/", response);
 		}
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
 		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/databaseAction", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 	}

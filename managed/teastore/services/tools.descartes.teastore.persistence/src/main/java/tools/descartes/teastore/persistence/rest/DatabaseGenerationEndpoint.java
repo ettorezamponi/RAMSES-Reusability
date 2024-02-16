@@ -42,7 +42,10 @@ import tools.ezamponi.MetricsExporter;
 public class DatabaseGenerationEndpoint {
 
 	private static final Logger LOG = LoggerFactory.getLogger(DatabaseGenerationEndpoint.class);
+	// [0.0, 1.0]
 	double httpSuccessProbability = 1;
+	// percentage of slowing http request, [0, 100]
+	long delay = 0;
 
 	/**
 	 * Drop database and create a new one.
@@ -96,7 +99,7 @@ public class DatabaseGenerationEndpoint {
 				+ maxOrderCount + " max orders per user.";
 
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = System.currentTimeMillis()-startTime+delay;
 		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/generatedb", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 		return Response.ok(message).build();

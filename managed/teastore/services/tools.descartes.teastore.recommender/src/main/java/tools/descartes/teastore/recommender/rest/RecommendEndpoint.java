@@ -40,7 +40,10 @@ import tools.ezamponi.MetricsExporter;
 @Produces({ "application/json" })
 @Consumes({ "application/json" })
 public class RecommendEndpoint {
+	// [0.0, 1.0]
 	double httpSuccessProbability = 1;
+	// percentage of slowing http request, [0, 100]
+	long delay = 0;
 
 	/**
 	 * Return a list of all {@link Product}s, that are recommended for the given
@@ -63,7 +66,7 @@ public class RecommendEndpoint {
 		long startTime = System.currentTimeMillis();
 		List<Long> recommended = RecommenderSelector.getInstance().recommendProducts(uid, currentItems);
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = System.currentTimeMillis()-startTime+delay;
 		Timer addTimer = MetricsExporter.createTimerMetric("POST", "/recommend", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 

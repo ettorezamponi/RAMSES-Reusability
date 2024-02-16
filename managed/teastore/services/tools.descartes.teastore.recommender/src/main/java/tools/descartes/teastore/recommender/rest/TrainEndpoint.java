@@ -37,7 +37,10 @@ import java.util.concurrent.TimeUnit;
 @Path("train")
 @Produces({ "text/plain", "application/json" })
 public class TrainEndpoint {
+	// [0.0, 1.0]
 	double httpSuccessProbability = 1;
+	// percentage of slowing http request, [0, 100]
+	long delay = 0;
 
 	/**
 	 * Triggers the training of the recommendation algorithm. It retrieves all data
@@ -62,7 +65,7 @@ public class TrainEndpoint {
 			long time = System.currentTimeMillis() - start;
 			if (number != -1) {
 				// Histogram metrics
-				long duration = System.currentTimeMillis()-startTime;
+				long duration = System.currentTimeMillis()-startTime+delay;
 				Timer addTimer = MetricsExporter.createTimerMetric("GET", "/train", httpSuccessProbability, new Random().nextDouble());
 				addTimer.record(duration, TimeUnit.MILLISECONDS);
 

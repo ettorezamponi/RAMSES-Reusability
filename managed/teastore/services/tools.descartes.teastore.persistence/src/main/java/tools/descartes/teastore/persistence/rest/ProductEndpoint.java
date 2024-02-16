@@ -39,7 +39,10 @@ import tools.ezamponi.util.UtilMethods;
  */
 @Path("products")
 public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
+	// [0.0, 1.0]
 	double httpSuccessProbability = 1;
+	// percentage of slowing http request, [0, 100]
+	long delay = 0;
 
 	/**
 	 * {@inheritDoc}
@@ -112,7 +115,7 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 
 		if (categoryId == null) {
 			// Histogram metrics
-			long duration = System.currentTimeMillis()-startTime;
+			long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
 			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForCategory", httpSuccessProbability, new Random().nextDouble());
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 
@@ -124,7 +127,7 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 			products.add(new Product(p));
 		}
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
 		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForCategory", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 
@@ -142,7 +145,7 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 		long startTime = System.currentTimeMillis();
 		if (categoryId == null) {
 			// Histogram metrics
-			long duration = (long) (System.currentTimeMillis()-startTime+0.001);
+			long duration = (long) ((System.currentTimeMillis()-startTime+0.001) * (1 + (delay/100.0)));
 			Timer addTimer = MetricsExporter.createTimerErrorMetric("GET", "/countForCategory");
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 			return Response.status(404).build();
@@ -150,14 +153,14 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 		long count = ProductRepository.REPOSITORY.getProductCount(categoryId);
 		if (count >= 0) {
 			// Histogram metrics
-			long duration = System.currentTimeMillis()-startTime;
+			long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
 			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/countForCategory", httpSuccessProbability, new Random().nextDouble());
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 
 			return Response.ok(String.valueOf(count)).build();
 		}
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
 		Timer addTimer = MetricsExporter.createTimerErrorMetric("GET", "/countForCategory");
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 		return Response.status(404).build();

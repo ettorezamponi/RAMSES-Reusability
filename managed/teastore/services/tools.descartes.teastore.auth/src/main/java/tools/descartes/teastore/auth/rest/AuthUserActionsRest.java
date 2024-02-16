@@ -50,7 +50,10 @@ import tools.ezamponi.MetricsExporter;
 @Produces({ "application/json" })
 @Consumes({ "application/json" })
 public class AuthUserActionsRest {
+  // [0.0, 1.0]
   double httpSuccessProbability = 1;
+  // percentage of slowing http request, [0, 100]
+  long delay = 0;
 
   /**
    * Persists order in database.
@@ -88,7 +91,7 @@ public class AuthUserActionsRest {
 
     if (new ShaSecurityProvider().validate(blob) == null || blob.getOrderItems().isEmpty()) {
       // Histogram metrics
-      long duration = System.currentTimeMillis()-startTime;
+      long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));;
       Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/placeOrder");
       addTimer.record(duration, TimeUnit.MILLISECONDS);
       return Response.status(Response.Status.NOT_FOUND).build();
@@ -110,13 +113,13 @@ public class AuthUserActionsRest {
           Order.class, blob.getOrder());
     } catch (LoadBalancerTimeoutException e) {
       // Histogram metrics
-      long duration = System.currentTimeMillis()-startTime;
+      long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
       Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/placeOrder");
       addTimer.record(duration, TimeUnit.MILLISECONDS);
       return Response.status(408).build();
     } catch (NotFoundException e) {
       // Histogram metrics
-      long duration = System.currentTimeMillis()-startTime;
+      long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
       Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/placeOrder");
       addTimer.record(duration, TimeUnit.MILLISECONDS);
       return Response.status(404).build();
@@ -128,13 +131,13 @@ public class AuthUserActionsRest {
             OrderItem.class, item);
       } catch (TimeoutException e) {
         // Histogram metrics
-        long duration = System.currentTimeMillis()-startTime;
+        long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
         Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/placeOrder");
         addTimer.record(duration, TimeUnit.MILLISECONDS);
         return Response.status(408).build();
       } catch (NotFoundException e) {
         // Histogram metrics
-        long duration = System.currentTimeMillis()-startTime;
+        long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
         Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/placeOrder");
         addTimer.record(duration, TimeUnit.MILLISECONDS);
         return Response.status(404).build();
@@ -144,7 +147,7 @@ public class AuthUserActionsRest {
     blob.getOrderItems().clear();
     blob = new ShaSecurityProvider().secure(blob);
     // Histogram metrics
-    long duration = System.currentTimeMillis()-startTime;
+    long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
     Timer addTimer = MetricsExporter.createTimerMetric("POST", "/placeOrder", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
 
@@ -175,7 +178,7 @@ public class AuthUserActionsRest {
           User.class, "name", name);
     } catch (TimeoutException e) {
       // Histogram metrics
-      long duration = System.currentTimeMillis()-startTime;
+      long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
       Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/login");
       addTimer.record(duration,TimeUnit.MILLISECONDS);
       return Response.status(408).build();
@@ -189,14 +192,14 @@ public class AuthUserActionsRest {
       blob.setSID(new RandomSessionIdGenerator().getSessionId());
       blob = new ShaSecurityProvider().secure(blob);
       // Histogram metrics
-      long duration = System.currentTimeMillis()-startTime;
+      long duration = System.currentTimeMillis()-startTime+delay;
       Timer addTimer = MetricsExporter.createTimerMetric("POST", "/login", httpSuccessProbability, new Random().nextDouble());
       addTimer.record(duration,TimeUnit.MILLISECONDS);
 
       return Response.status(Response.Status.OK).entity(blob).build();
     }
     // Histogram metrics
-    long duration = System.currentTimeMillis()-startTime;
+    long duration = System.currentTimeMillis()-startTime+delay;
     Timer addTimer = MetricsExporter.createTimerMetric("POST", "/login", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration,TimeUnit.MILLISECONDS);
 
@@ -219,7 +222,7 @@ public class AuthUserActionsRest {
     blob.setOrder(new Order());
     blob.getOrderItems().clear();
     // Histogram metrics
-    long duration = System.currentTimeMillis()-startTime;
+    long duration = System.currentTimeMillis()-startTime+delay;
     Timer addTimer = MetricsExporter.createTimerMetric("POST", "/logout", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration,TimeUnit.MILLISECONDS);
 

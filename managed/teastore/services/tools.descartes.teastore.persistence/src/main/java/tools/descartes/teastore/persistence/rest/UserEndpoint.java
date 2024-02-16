@@ -39,7 +39,10 @@ import tools.ezamponi.MetricsExporter;
  */
 @Path("users")
 public class UserEndpoint extends AbstractCRUDEndpoint<User> {
+	// [0.0, 1.0]
 	double httpSuccessProbability = 1;
+	// percentage of slowing http request, [0, 100]
+	long delay = 0;
 
 	/**
 	 * {@inheritDoc}
@@ -121,7 +124,7 @@ public class UserEndpoint extends AbstractCRUDEndpoint<User> {
 			return Response.status(Status.NOT_FOUND).build();
 		}
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = System.currentTimeMillis()-startTime+delay;
 		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/findUserById", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 

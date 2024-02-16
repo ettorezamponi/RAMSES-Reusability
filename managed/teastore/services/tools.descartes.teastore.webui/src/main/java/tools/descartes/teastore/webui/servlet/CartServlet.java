@@ -46,7 +46,8 @@ import tools.ezamponi.MetricsExporter;
 @WebServlet("/cart")
 public class CartServlet extends AbstractUIServlet {
   private static final long serialVersionUID = 1L;
-  double httpSuccessProbability = 1;
+  double httpSuccessProbability = 1; // [0.0, 1.0]
+  long delay = 0; // percentage of slowing http request, [0, 100]
 
   /**
    * @see HttpServlet#HttpServlet()
@@ -105,7 +106,7 @@ public class CartServlet extends AbstractUIServlet {
     request.getRequestDispatcher("WEB-INF/pages/cart.jsp").forward(request, response);
 
     // Histogram metrics
-    long duration = System.currentTimeMillis()-startTime;
+    long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
     Timer addTimer = MetricsExporter.createTimerMetric("GET", "/cart", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
   }

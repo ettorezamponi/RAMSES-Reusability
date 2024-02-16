@@ -37,7 +37,10 @@ import tools.ezamponi.MetricsExporter;
 @WebServlet("/loginAction")
 public class LoginActionServlet extends AbstractUIServlet {
 	private static final long serialVersionUID = 1L;
+	// [0.0, 1.0]
 	double httpSuccessProbability = 1;
+	// percentage of slowing http request, [0, 100]
+	long delay = 0;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -93,7 +96,7 @@ public class LoginActionServlet extends AbstractUIServlet {
 			handleGETRequest(request, response);
 		}
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
 		Timer addTimer = MetricsExporter.createTimerMetric("POST", "/loginAction", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 

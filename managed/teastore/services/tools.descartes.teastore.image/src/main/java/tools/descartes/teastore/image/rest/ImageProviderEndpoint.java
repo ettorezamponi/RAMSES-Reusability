@@ -45,7 +45,10 @@ import tools.ezamponi.util.UtilMethods;
 @Consumes({ "application/json" })
 public class ImageProviderEndpoint {
 
+  // [0.0, 1.0]
   double httpSuccessProbability = 1;
+  // percentage of slowing http request, [0, 100]
+  long delay = 0;
 
   /**
    * Queries the image provider for the given product IDs in the given size, provided as strings.
@@ -55,7 +58,7 @@ public class ImageProviderEndpoint {
   @POST
   @Path("getProductImages")
   public Response getProductImages(HashMap<Long, String> images) {
-    long duration = UtilMethods.randomNumber(0.005,0.600);
+    long duration = (long) (UtilMethods.randomNumber(0.005,0.600) * (1 + (delay/100.0)));
     Timer addTimer = MetricsExporter.createTimerMetric("POST", "/getProductImages", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
     return Response.ok()
@@ -72,7 +75,7 @@ public class ImageProviderEndpoint {
   @POST
   @Path("getWebImages")
   public Response getWebUIImages(HashMap<String, String> images) {
-    long duration = UtilMethods.randomNumber(0.005,0.400);
+    long duration = (long) (UtilMethods.randomNumber(0.005,0.400) * (1 + (delay/100.0)));
     Timer addTimer = MetricsExporter.createTimerMetric("POST", "/getWebImages", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
     return Response.ok()
@@ -92,7 +95,7 @@ public class ImageProviderEndpoint {
     long startTime = System.currentTimeMillis();
     SetupController.SETUP.reconfiguration();
     // Histogram metrics
-    long duration = System.currentTimeMillis()-startTime;
+    long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
     Timer addTimer = MetricsExporter.createTimerMetric("GET", "/regenerateImages", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration,TimeUnit.MILLISECONDS);
 

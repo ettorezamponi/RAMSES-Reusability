@@ -38,7 +38,10 @@ import tools.ezamponi.MetricsExporter;
 @Path("services")
 @Produces({ "application/json" })
 public class RegistryREST {
+	// [0.0, 1.0]
 	double httpSuccessProbability = 1;
+	// percentage of slowing http request, [0, 100]
+	long delay = 0;
 
 	/**
 	 * Register a service at a location.
@@ -53,14 +56,14 @@ public class RegistryREST {
 		boolean success = Registry.getRegistryInstance().register(name, location);
 		if (success) {
 			// Histogram metrics
-			long duration = System.currentTimeMillis()-startTime;
+			long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
 			Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/registerService", httpSuccessProbability, new Random().nextDouble());
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 
 			return Response.status(Status.CREATED).build();
 		}
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
 		Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/registerService", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 
@@ -80,14 +83,14 @@ public class RegistryREST {
 		boolean success = Registry.getRegistryInstance().unregister(name, location);
 		if (success) {
 			// Histogram metrics
-			long duration = System.currentTimeMillis()-startTime;
+			long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
 			Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/unregisterService", httpSuccessProbability, new Random().nextDouble());
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 
 			return Response.status(Response.Status.OK).build();
 		}
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
 		Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/unregisterService", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 
@@ -105,7 +108,7 @@ public class RegistryREST {
 		long startTime = System.currentTimeMillis();
 		List<String> locations = Registry.getRegistryInstance().getLocations(name);
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
 		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/getInstanceService", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 

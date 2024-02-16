@@ -48,7 +48,10 @@ import tools.ezamponi.MetricsExporter;
 @WebServlet("/category")
 public class CategoryServlet extends AbstractUIServlet {
   private static final long serialVersionUID = 1L;
+  // [0.0, 1.0]
   double httpSuccessProbability = 1;
+  // percentage of slowing http request, [0, 100]
+  long delay = 0;
 
   private static final int INITIAL_PRODUCT_DISPLAY_COUNT = 20;
   private static final List<Integer> PRODUCT_DISPLAY_COUNT_OPTIONS = Arrays.asList(5, 10, 20, 30,
@@ -123,7 +126,7 @@ public class CategoryServlet extends AbstractUIServlet {
       redirect("/", response);
     }
     // Histogram metrics
-    long duration = System.currentTimeMillis()-startTime;
+    long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
     Timer addTimer = MetricsExporter.createTimerMetric("GET", "/category", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
   }

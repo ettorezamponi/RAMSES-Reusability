@@ -39,7 +39,10 @@ import tools.ezamponi.util.UtilMethods;
  */
 @Path("orders")
 public class OrderEndpoint extends AbstractCRUDEndpoint<Order> {
+	// [0.0, 1.0]
 	double httpSuccessProbability = 1;
+	// percentage of slowing http request, [0, 100]
+	long delay = 0;
 
 	/**
 	 * {@inheritDoc}
@@ -111,7 +114,7 @@ public class OrderEndpoint extends AbstractCRUDEndpoint<Order> {
 		long startTime = System.currentTimeMillis();
 
 		if (userId == null) {
-			long duration = UtilMethods.randomNumber(0.015,0.700);
+			long duration = (long) (UtilMethods.randomNumber(0.015,0.700) * (1 + (delay/100.0)));
 			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForUser", httpSuccessProbability, new Random().nextDouble());
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 
@@ -123,7 +126,7 @@ public class OrderEndpoint extends AbstractCRUDEndpoint<Order> {
 			orders.add(new Order(o));
 		}
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
 		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForUser", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 		return orders;

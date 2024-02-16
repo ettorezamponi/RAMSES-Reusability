@@ -38,7 +38,10 @@ import tools.ezamponi.util.UtilMethods;
  */
 @Path("orderitems")
 public class OrderItemEndpoint extends AbstractCRUDEndpoint<OrderItem> {
+	// [0.0, 1.0]
 	double httpSuccessProbability = 1;
+	// percentage of slowing http request, [0, 100]
+	long delay = 0;
 
 	/**
 	 * {@inheritDoc}
@@ -110,7 +113,7 @@ public class OrderItemEndpoint extends AbstractCRUDEndpoint<OrderItem> {
 		long startTime = System.currentTimeMillis();
 
 		if (productId == null) {
-			long duration = UtilMethods.randomNumber(0.015,0.500);
+			long duration = UtilMethods.randomNumber(0.015,0.500)+delay;
 			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForProduct", httpSuccessProbability, new Random().nextDouble());
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 
@@ -122,7 +125,7 @@ public class OrderItemEndpoint extends AbstractCRUDEndpoint<OrderItem> {
 			orderItems.add(new OrderItem(oi));
 		}
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = System.currentTimeMillis()-startTime+delay;
 		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForProduct", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 
@@ -145,7 +148,7 @@ public class OrderItemEndpoint extends AbstractCRUDEndpoint<OrderItem> {
 		long startTime = System.currentTimeMillis();
 
 		if (orderId == null) {
-			long duration = UtilMethods.randomNumber(0.015,0.400);
+			long duration = UtilMethods.randomNumber(0.015,0.400)+delay;
 			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForOrder", httpSuccessProbability, new Random().nextDouble());
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 
@@ -157,7 +160,7 @@ public class OrderItemEndpoint extends AbstractCRUDEndpoint<OrderItem> {
 			orderItems.add(new OrderItem(oi));
 		}
 		// Histogram metrics
-		long duration = System.currentTimeMillis()-startTime;
+		long duration = System.currentTimeMillis()-startTime+delay;
 		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForOrder", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 

@@ -45,7 +45,10 @@ import tools.ezamponi.MetricsExporter;
 public class ProfileServlet extends AbstractUIServlet {
 
   private static final long serialVersionUID = 1L;
+  // [0.0, 1.0]
   double httpSuccessProbability = 1;
+  // percentage of slowing http request, [0, 100]
+  long delay = 0;
 
   /**
    * @see HttpServlet#HttpServlet()
@@ -82,7 +85,7 @@ public class ProfileServlet extends AbstractUIServlet {
       request.getRequestDispatcher("WEB-INF/pages/profile.jsp").forward(request, response);
     }
     // Histogram metrics
-    long duration = System.currentTimeMillis()-startTime;
+    long duration = (long) ((System.currentTimeMillis()-startTime) * (1 + (delay/100.0)));
     Timer addTimer = MetricsExporter.createTimerMetric("GET", "/profile", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
 
