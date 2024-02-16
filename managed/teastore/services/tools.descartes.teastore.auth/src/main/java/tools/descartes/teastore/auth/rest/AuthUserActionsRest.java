@@ -16,6 +16,7 @@ package tools.descartes.teastore.auth.rest;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import io.micrometer.core.instrument.Timer;
@@ -49,6 +50,7 @@ import tools.ezamponi.MetricsExporter;
 @Produces({ "application/json" })
 @Consumes({ "application/json" })
 public class AuthUserActionsRest {
+  double httpSuccessProbability = 1;
 
   /**
    * Persists order in database.
@@ -143,7 +145,7 @@ public class AuthUserActionsRest {
     blob = new ShaSecurityProvider().secure(blob);
     // Histogram metrics
     long duration = System.currentTimeMillis()-startTime;
-    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/placeOrder");
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/placeOrder", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
 
     return Response.status(Response.Status.OK).entity(blob).build();
@@ -188,14 +190,14 @@ public class AuthUserActionsRest {
       blob = new ShaSecurityProvider().secure(blob);
       // Histogram metrics
       long duration = System.currentTimeMillis()-startTime;
-      Timer addTimer = MetricsExporter.createTimerMetric("POST", "/login");
+      Timer addTimer = MetricsExporter.createTimerMetric("POST", "/login", httpSuccessProbability, new Random().nextDouble());
       addTimer.record(duration,TimeUnit.MILLISECONDS);
 
       return Response.status(Response.Status.OK).entity(blob).build();
     }
     // Histogram metrics
     long duration = System.currentTimeMillis()-startTime;
-    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/login");
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/login", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration,TimeUnit.MILLISECONDS);
 
     return Response.status(Response.Status.OK).entity(blob).build();
@@ -218,7 +220,7 @@ public class AuthUserActionsRest {
     blob.getOrderItems().clear();
     // Histogram metrics
     long duration = System.currentTimeMillis()-startTime;
-    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/logout");
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/logout", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration,TimeUnit.MILLISECONDS);
 
     return Response.status(Response.Status.OK).entity(blob).build();

@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.time.YearMonth;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import io.micrometer.core.instrument.Timer;
@@ -42,6 +43,7 @@ import tools.ezamponi.MetricsExporter;
 public class CartActionServlet extends AbstractUIServlet {
 	private static final long serialVersionUID = 1L;
 	private static final DateTimeFormatter DTF = DateTimeFormatter.ofPattern("MM/yyyy");
+	double httpSuccessProbability = 0.95;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -96,7 +98,7 @@ public class CartActionServlet extends AbstractUIServlet {
 		} finally {
 			// Histogram metrics
 			long duration = System.currentTimeMillis()-startTime;
-			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/cartAction");
+			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/cartAction", httpSuccessProbability, new Random().nextDouble());
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 		}
 	}

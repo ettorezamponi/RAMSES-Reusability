@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import io.micrometer.core.instrument.Timer;
@@ -47,6 +48,7 @@ import tools.ezamponi.MetricsExporter;
 @WebServlet("/category")
 public class CategoryServlet extends AbstractUIServlet {
   private static final long serialVersionUID = 1L;
+  double httpSuccessProbability = 1;
 
   private static final int INITIAL_PRODUCT_DISPLAY_COUNT = 20;
   private static final List<Integer> PRODUCT_DISPLAY_COUNT_OPTIONS = Arrays.asList(5, 10, 20, 30,
@@ -122,7 +124,7 @@ public class CategoryServlet extends AbstractUIServlet {
     }
     // Histogram metrics
     long duration = System.currentTimeMillis()-startTime;
-    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/category");
+    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/category", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
   }
 

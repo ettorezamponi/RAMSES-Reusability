@@ -25,6 +25,7 @@ import tools.descartes.teastore.entities.Order;
 import tools.descartes.teastore.entities.OrderItem;
 import tools.ezamponi.MetricsExporter;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -36,6 +37,7 @@ import java.util.concurrent.TimeUnit;
 @Path("train")
 @Produces({ "text/plain", "application/json" })
 public class TrainEndpoint {
+	double httpSuccessProbability = 1;
 
 	/**
 	 * Triggers the training of the recommendation algorithm. It retrieves all data
@@ -61,7 +63,7 @@ public class TrainEndpoint {
 			if (number != -1) {
 				// Histogram metrics
 				long duration = System.currentTimeMillis()-startTime;
-				Timer addTimer = MetricsExporter.createTimerMetric("GET", "/train");
+				Timer addTimer = MetricsExporter.createTimerMetric("GET", "/train", httpSuccessProbability, new Random().nextDouble());
 				addTimer.record(duration, TimeUnit.MILLISECONDS);
 
 				return Response.ok("The (re)train was succesfully done. It took " + time + "ms and " + number

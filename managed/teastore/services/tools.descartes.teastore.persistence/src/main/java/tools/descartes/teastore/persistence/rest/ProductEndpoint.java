@@ -15,6 +15,7 @@ package tools.descartes.teastore.persistence.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import io.micrometer.core.instrument.Timer;
@@ -38,6 +39,7 @@ import tools.ezamponi.util.UtilMethods;
  */
 @Path("products")
 public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
+	double httpSuccessProbability = 1;
 
 	/**
 	 * {@inheritDoc}
@@ -111,7 +113,7 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 		if (categoryId == null) {
 			// Histogram metrics
 			long duration = System.currentTimeMillis()-startTime;
-			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForCategory");
+			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForCategory", httpSuccessProbability, new Random().nextDouble());
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 
 			return listAll(startPosition, maxResult);
@@ -123,7 +125,7 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 		}
 		// Histogram metrics
 		long duration = System.currentTimeMillis()-startTime;
-		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForCategory");
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForCategory", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 
 		return products;
@@ -149,7 +151,7 @@ public class ProductEndpoint extends AbstractCRUDEndpoint<Product> {
 		if (count >= 0) {
 			// Histogram metrics
 			long duration = System.currentTimeMillis()-startTime;
-			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/countForCategory");
+			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/countForCategory", httpSuccessProbability, new Random().nextDouble());
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 
 			return Response.ok(String.valueOf(count)).build();

@@ -16,6 +16,7 @@ package tools.descartes.teastore.webui.servlet;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import io.micrometer.core.instrument.Timer;
@@ -39,6 +40,7 @@ import tools.ezamponi.MetricsExporter;
 @WebServlet("/about")
 public class AboutUsServlet extends AbstractUIServlet {
   private static final long serialVersionUID = 1L;
+  double httpSuccessProbability = 1;
 
   /**
    * @see HttpServlet#HttpServlet()
@@ -74,7 +76,7 @@ public class AboutUsServlet extends AbstractUIServlet {
     request.getRequestDispatcher("WEB-INF/pages/about.jsp").forward(request, response);
     // Histogram metrics
     long duration = System.currentTimeMillis()-startTime;
-    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/aboutUs");
+    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/aboutUs", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
   }
 

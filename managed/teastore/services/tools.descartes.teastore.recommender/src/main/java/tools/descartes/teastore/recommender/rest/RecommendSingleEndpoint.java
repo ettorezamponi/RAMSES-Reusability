@@ -15,6 +15,7 @@ package tools.descartes.teastore.recommender.rest;
 
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import io.micrometer.core.instrument.Timer;
@@ -41,6 +42,7 @@ import tools.ezamponi.MetricsExporter;
 @Produces({ "application/json" })
 @Consumes({ "application/json" })
 public class RecommendSingleEndpoint {
+	double httpSuccessProbability = 1;
 
 	/**
 	 * Return a list of all {@link Product}s, that are recommended for the given
@@ -68,7 +70,7 @@ public class RecommendSingleEndpoint {
 		List<Long> recommended = RecommenderSelector.getInstance().recommendProducts(uid, list);
 		// Histogram metrics
 		long duration = System.currentTimeMillis()-startTime;
-		Timer addTimer = MetricsExporter.createTimerMetric("POST", "/recommendsingle");
+		Timer addTimer = MetricsExporter.createTimerMetric("POST", "/recommendsingle", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 
 		return Response.ok().entity(recommended).build();

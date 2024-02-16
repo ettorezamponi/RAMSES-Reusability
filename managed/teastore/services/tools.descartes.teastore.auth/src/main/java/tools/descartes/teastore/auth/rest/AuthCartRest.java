@@ -31,6 +31,7 @@ import tools.descartes.teastore.registryclient.util.NotFoundException;
 import tools.descartes.teastore.registryclient.util.TimeoutException;
 import tools.ezamponi.MetricsExporter;
 
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -43,6 +44,7 @@ import java.util.concurrent.TimeUnit;
 @Consumes({ "application/json" })
 public class AuthCartRest {
 
+  double httpSuccessProbability = 1;
   /**
    * Adds product to cart. If the product is already in the cart the quantity is
    * increased.
@@ -91,10 +93,9 @@ public class AuthCartRest {
     blob = new ShaSecurityProvider().secure(blob);
     // Histogram metrics
     long duration = System.currentTimeMillis()-startTime;
-    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/addToCart");
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/addToCart", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration,TimeUnit.MILLISECONDS);
     //System.out.println("TIMER CREATO con tempo: "+duration);
-
     return Response.status(Response.Status.OK).entity(blob).build();
   }
 
@@ -122,7 +123,7 @@ public class AuthCartRest {
       blob = new ShaSecurityProvider().secure(blob);
       // Histogram metrics
       long duration = System.currentTimeMillis()-startTime;
-      Timer addTimer = MetricsExporter.createTimerMetric("POST", "/removeProduct");
+      Timer addTimer = MetricsExporter.createTimerMetric("POST", "/removeProduct", httpSuccessProbability, new Random().nextDouble());
       addTimer.record(duration,TimeUnit.MILLISECONDS);
 
       return Response.status(Response.Status.OK).entity(blob).build();
@@ -157,7 +158,7 @@ public class AuthCartRest {
         blob = new ShaSecurityProvider().secure(blob);
         // Histogram metrics
         long duration = System.currentTimeMillis()-startTime;
-        Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/updateQuantity");
+        Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/updateQuantity", httpSuccessProbability, new Random().nextDouble());
         addTimer.record(duration,TimeUnit.MILLISECONDS);
 
         return Response.status(Response.Status.OK).entity(blob).build();

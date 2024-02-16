@@ -56,38 +56,6 @@ public class InstancesManagerService {
             log.warn("\nContainer name: {} \nports: {}", Arrays.stream(container.getNames()).findFirst().orElse("N/A"), Arrays.toString(container.getPorts()));
         }
 
-        //Container name: /sefa-delivery-proxy-1-service
-        //	ports: [ContainerPort(ip=0.0.0.0, privatePort=58095, publicPort=55025, type=tcp)]
-
-
-        /*for (Image container : containers) {
-            log.warn("\nImage label: "+container.getId() + ", REPO DIGEST: " + Arrays.toString(container.getRepoTags()));
-        }/*
-        // Image label: sha256:a7b94a512d1a 7f6a1d08d90cfe10975e783c506765588105c6a5f6fdeaef45fd,
-        // REPO DIGEST: [sbi98/sefa-payment-proxy-2-service:arm64]
-
-        InspectContainerResponse analyse = dockerClient.inspectContainerCmd("sefa-web-service").exec();
-        log.debug("Container ispezionato: " +analyse.getName());
-
-        /*String newContainerId = dockerClient.createContainerCmd("delivery-proxy-2-service:arm64")
-                .withName("delivery-2-FINALLY")
-                .exec()
-                .getId();*/
-        //dockerClient.startContainerCmd("delivery-proxy-2-service").exec();
-        /*String imageName = "sefa-delivery-proxy-2-service";
-        String newContainerId = dockerClient.createContainerCmd(imageName)
-                .withName(imageName)
-                .exec()
-                .getId();
-        dockerClient.startContainerCmd(newContainerId).exec();
-        log.debug("**** START NEW IMAGE ****");*/
-
-        //addInstances("teastore-webui", 1);
-        //stopInstance("auth", 8080);
-        //addInstances("teastore-webui", 1);
-
-        //TODO CRASHA SEMPRE A MENO CHE NON FACCIAMO RIPARTIRE IL VECCHIO CONTAINER
-
         switch (currentProfile) {
             case "PerfectInstance" -> simulationInstanceParamsMap.put(currentProfile, List.of(
                     // (failureRate, sleepDuration, sleepVariance)
@@ -116,7 +84,6 @@ public class InstancesManagerService {
 
 
     public List<ServiceContainerInfo> addInstances(String serviceImplementationName, int numberOfInstances) {
-        //String imageName = "giamburrasca/sefa-"+serviceImplementationName+":"+arch;
         String containerName = serviceImplementationName;
         String imageName = "teastore-"+serviceImplementationName;
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);

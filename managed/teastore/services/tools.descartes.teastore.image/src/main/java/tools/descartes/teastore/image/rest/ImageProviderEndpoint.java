@@ -45,7 +45,7 @@ import tools.ezamponi.util.UtilMethods;
 @Consumes({ "application/json" })
 public class ImageProviderEndpoint {
 
-  String melodyMetrics = null;
+  double httpSuccessProbability = 1;
 
   /**
    * Queries the image provider for the given product IDs in the given size, provided as strings.
@@ -56,7 +56,7 @@ public class ImageProviderEndpoint {
   @Path("getProductImages")
   public Response getProductImages(HashMap<Long, String> images) {
     long duration = UtilMethods.randomNumber(0.005,0.600);
-    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/getProductImages");
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/getProductImages", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
     return Response.ok()
         .entity(ImageProvider.IP.getProductImages(images.entrySet().parallelStream().collect(
@@ -73,7 +73,7 @@ public class ImageProviderEndpoint {
   @Path("getWebImages")
   public Response getWebUIImages(HashMap<String, String> images) {
     long duration = UtilMethods.randomNumber(0.005,0.400);
-    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/getWebImages");
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/getWebImages", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
     return Response.ok()
         .entity(ImageProvider.IP.getWebUIImages(images.entrySet().parallelStream().collect(
@@ -93,7 +93,7 @@ public class ImageProviderEndpoint {
     SetupController.SETUP.reconfiguration();
     // Histogram metrics
     long duration = System.currentTimeMillis()-startTime;
-    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/regenerateImages");
+    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/regenerateImages", httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration,TimeUnit.MILLISECONDS);
 
     return Response.ok().build();

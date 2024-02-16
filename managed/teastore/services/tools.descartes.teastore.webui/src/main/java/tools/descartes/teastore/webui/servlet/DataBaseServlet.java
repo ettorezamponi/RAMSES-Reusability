@@ -15,6 +15,7 @@
 package tools.descartes.teastore.webui.servlet;
 
 import java.io.IOException;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import io.micrometer.core.instrument.Timer;
@@ -37,6 +38,7 @@ import tools.ezamponi.MetricsExporter;
 @WebServlet("/database")
 public class DataBaseServlet extends AbstractUIServlet {
 	private static final long serialVersionUID = 1L;
+	double httpSuccessProbability = 1;
 
 	/**
 	 * @see HttpServlet#HttpServlet()
@@ -59,7 +61,7 @@ public class DataBaseServlet extends AbstractUIServlet {
 		request.getRequestDispatcher("WEB-INF/pages/database.jsp").forward(request, response);
 		// Histogram metrics
 		long duration = System.currentTimeMillis()-startTime;
-		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/database");
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/database", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 	}
 

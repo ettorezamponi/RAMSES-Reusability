@@ -15,6 +15,7 @@ package tools.descartes.teastore.persistence.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import io.micrometer.core.instrument.Timer;
@@ -38,6 +39,7 @@ import tools.ezamponi.util.UtilMethods;
  */
 @Path("orders")
 public class OrderEndpoint extends AbstractCRUDEndpoint<Order> {
+	double httpSuccessProbability = 1;
 
 	/**
 	 * {@inheritDoc}
@@ -110,7 +112,7 @@ public class OrderEndpoint extends AbstractCRUDEndpoint<Order> {
 
 		if (userId == null) {
 			long duration = UtilMethods.randomNumber(0.015,0.700);
-			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForUser");
+			Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForUser", httpSuccessProbability, new Random().nextDouble());
 			addTimer.record(duration, TimeUnit.MILLISECONDS);
 
 			return listAll(startPosition, maxResult);
@@ -122,7 +124,7 @@ public class OrderEndpoint extends AbstractCRUDEndpoint<Order> {
 		}
 		// Histogram metrics
 		long duration = System.currentTimeMillis()-startTime;
-		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForUser");
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/listAllForUser", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 		return orders;
 	}

@@ -15,6 +15,7 @@ package tools.descartes.teastore.persistence.rest;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 
 import io.micrometer.core.instrument.Timer;
@@ -38,6 +39,7 @@ import tools.ezamponi.MetricsExporter;
  */
 @Path("users")
 public class UserEndpoint extends AbstractCRUDEndpoint<User> {
+	double httpSuccessProbability = 1;
 
 	/**
 	 * {@inheritDoc}
@@ -120,7 +122,7 @@ public class UserEndpoint extends AbstractCRUDEndpoint<User> {
 		}
 		// Histogram metrics
 		long duration = System.currentTimeMillis()-startTime;
-		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/findUserById");
+		Timer addTimer = MetricsExporter.createTimerMetric("GET", "/findUserById", httpSuccessProbability, new Random().nextDouble());
 		addTimer.record(duration, TimeUnit.MILLISECONDS);
 
 		return Response.ok(new User(entity)).build();

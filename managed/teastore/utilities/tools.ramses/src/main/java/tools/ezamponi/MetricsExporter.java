@@ -133,8 +133,12 @@ public class MetricsExporter {
         }
     }
 
-    public static Timer createTimerMetric(String method, String uri) {
-        Timer timer = Timer.builder("http_server_requests")
+    public static Timer createTimerMetric(String method, String uri, Double probability, Double rndValue) {
+        Timer timer;
+        //System.out.println("PROBABILITA ESTRATTA: "+rndValue+" SU UNA PROBABILITA' DI RIUSCITA DEL "+probability);
+        if (rndValue < probability) {
+            //System.out.println("SUCCESS HTTP CALL");
+            timer = Timer.builder("http_server_requests")
                 .tags("exception", "None",
                         "method", method,
                         "outcome", "SUCCESS",
@@ -142,7 +146,10 @@ public class MetricsExporter {
                         "uri", uri)
                 .publishPercentileHistogram()
                 .register(MetricsExporter.prometheusRegistry);
-
+        } else {
+            //System.out.println("ERROR HTTP CALL");
+            timer = createTimerErrorMetric(method, uri);
+        }
         return timer;
     }
     public static Timer createTimerErrorMetric(String method, String uri) {
