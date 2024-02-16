@@ -46,8 +46,8 @@ import tools.ezamponi.MetricsExporter;
 @WebServlet("/cart")
 public class CartServlet extends AbstractUIServlet {
   private static final long serialVersionUID = 1L;
-  double httpSuccessProbability = 1; // [0.0, 1.0]
-  long delay = 0; // percentage of slowing http request, [0, 100]
+  double httpSuccessProbability = 1; // [0.0, 1.0] --- DEFAULT 1
+  long delay = 0; // percentage of slowing http request, [0, 100] --- DEFAULT 0
 
   /**
    * @see HttpServlet#HttpServlet()
