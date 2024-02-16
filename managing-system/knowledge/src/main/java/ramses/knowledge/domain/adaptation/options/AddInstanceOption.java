@@ -46,7 +46,11 @@ public class AddInstanceOption extends AdaptationOption {
     @JsonIgnore
     @Override
     public String getDescription() {
-        return (isForced() ? "FORCED" : ("Goal: " + getQosGoal().getSimpleName())) + " - Add a new instance. Service: " + super.getServiceId() + (!instancesToShutdownIds.isEmpty() ? (".\n\t\t\t\t\tInstances to remove: " + instancesToShutdownIds + "\n\t\t\t\t\t") : " ")  + getComment();
+        return (isForced() ? "FORCED" : ("Goal: " + getQosGoal().getSimpleName())) + " - " +// se isForced = true allora stamperà FORCED, altrimenti avremo Goal con QoSGoal+name
+                (super.getServiceId().contains("TEASTORE") ? "Replace instance for 'single container mode' of Teastore" : "Add a new instance.") +
+                ". Service: " + super.getServiceId() +
+                (!instancesToShutdownIds.isEmpty() ? (".\n\t\t\t\t\tInstances to remove: " + instancesToShutdownIds + "\n\t\t\t\t\t") : " ") + // Se la lista non è vuota avremo instance to remove+lista, altrimenti uno spazio vuoto
+                getComment(); // commento
     }
 
 }

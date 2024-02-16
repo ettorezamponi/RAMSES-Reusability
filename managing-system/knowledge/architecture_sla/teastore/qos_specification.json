@@ -71,7 +71,7 @@
 				{
 					"name" : "average_response_time",
 					"weight" : 0.5,
-					"max_threshold": 70
+					"max_threshold": 40
 				}
 			]
 		},
@@ -86,7 +86,7 @@
 				{
 					"name" : "average_response_time",
 					"weight" : 0.5,
-					"max_threshold": 250
+					"max_threshold": 400
 				}
 			]
 		}

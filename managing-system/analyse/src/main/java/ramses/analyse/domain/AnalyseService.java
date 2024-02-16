@@ -351,10 +351,14 @@ public class AnalyseService {
             log.warn("{}: the analysis window is not filled yet. Skipping the proposal of Adaptation Options.", serviceId);
             return servicesRequiringOrCompletingAdaptation.get(serviceId);
         }
+
         log.debug("{}: current Availability value: {} @ {}", service.getServiceId(), service.getCurrentValueForQoS(Availability.class), service.getCurrentImplementation().getQoSCollection().getValuesHistoryForQoS(Availability.class).get(analysisWindowSize-1).getTimestamp());
         log.debug("{}: current ART value: {} @ {}", service.getServiceId(), service.getCurrentValueForQoS(AverageResponseTime.class), service.getCurrentImplementation().getQoSCollection().getValuesHistoryForQoS(AverageResponseTime.class).get(analysisWindowSize-1).getTimestamp());
+        // it returns ADD IMPLEMENTATION / CHANGE LB WEIGHTS OPTIONS
         proposedAdaptationOptions.addAll(handleAvailabilityAnalysis(service, serviceAvailabilityHistory));
         proposedAdaptationOptions.addAll(handleAverageResponseTimeAnalysis(service, serviceAvgRespTimeHistory));
+
+        // it returns CHANGING IMPLEMENTATION OPTIONS
         if (service.shouldConsiderChangingImplementation()) {
             proposedAdaptationOptions.add(createChangeImplementationOption(service, Availability.class));
             proposedAdaptationOptions.add(createChangeImplementationOption(service, AverageResponseTime.class));
@@ -393,16 +397,18 @@ public class AnalyseService {
     private List<AdaptationOption> handleAvailabilityAnalysis(Service service, List<Double> serviceAvailabilityHistory) {
         List<AdaptationOption> adaptationOptions = new LinkedList<>();
         Availability availabilitySpecs = (Availability) service.getQoSSpecifications().get(Availability.class);
+        // se la soglia non è rispettata...
         if (!availabilitySpecs.isSatisfied(serviceAvailabilityHistory, qosSatisfactionRate)){
             log.debug("{}: Availability is not satisfied at rate {}. Current value: {}. Threshold: {}", service.getServiceId(), qosSatisfactionRate, service.getCurrentValueForQoS(Availability.class), ((Availability) service.getQoSSpecifications().get(Availability.class)).getMinThreshold());
             List<Instance> instances = service.getInstances();
+            // in teastore non avremo mai più istanze per lo stesso servizio
             List<Instance> lessAvailableInstances = instances.stream().filter(
                     i -> !availabilitySpecs.isSatisfied(i.getCurrentValueForQoS(Availability.class).getDoubleValue())
             ).toList();
-
             // If there is more than one instance and at least one instance satisfies the avg Response time specifications, then we can try to change the LB weights.
             if (instances.size()>1 && lessAvailableInstances.size()<instances.size() && service.getConfiguration().getLoadBalancerType().equals(ServiceConfiguration.LoadBalancerType.WEIGHTED_RANDOM))
                 adaptationOptions.add(new ChangeLoadBalancerWeightsOption(service.getServiceId(), service.getCurrentImplementationId(), Availability.class, "At least one instance satisfies the avg Availability specifications"));
+
             adaptationOptions.add(new AddInstanceOption(service.getServiceId(), service.getCurrentImplementationId(), Availability.class, "The service avg availability specification is not satisfied"));
         }else{
             log.debug("{}: Availability is satisfied at rate {}", service.getServiceId(), qosSatisfactionRate);
@@ -439,7 +445,7 @@ public class AnalyseService {
         for (String endpoint : latestActiveMetrics.getHttpMetrics().keySet()) {
             successfulRequestsDuration += latestActiveMetrics.getHttpMetrics().get(endpoint).getTotalDurationOfSuccessful();
             successfulRequestsCount += latestActiveMetrics.getHttpMetrics().get(endpoint).getTotalCountOfSuccessful();
-            System.out.println("TOTALE DURATA E RICHIESTE HTTP *NUOVE* per il servizio "+instance.getInstanceId()+": "+successfulRequestsDuration+", "+successfulRequestsCount);
+            //System.out.println("TOTALE DURATA E RICHIESTE HTTP *NUOVE* per il servizio "+instance.getInstanceId()+": "+successfulRequestsDuration+", "+successfulRequestsCount);
             HttpEndpointMetrics oldestEndpointMetrics = oldestActiveMetrics.getHttpMetrics().get(endpoint);
             if (oldestEndpointMetrics != null) {
                 successfulRequestsDuration -= oldestEndpointMetrics.getTotalDurationOfSuccessful();
