@@ -314,6 +314,7 @@ public abstract class AbstractUIServlet extends HttpServlet {
 		request.getRequestDispatcher("WEB-INF/pages/error.jsp").forward(request, response);
 		// Histogram metrics
 		long duration = UtilMethods.randomNumber(0.005,0.400);
+		//TODO make success histogram for the same URI
 		Timer addTimer = MetricsExporter.createTimerErrorMetric(request.getMethod(), request.getRequestURI());
 		addTimer.record(duration,TimeUnit.MILLISECONDS);
 	}

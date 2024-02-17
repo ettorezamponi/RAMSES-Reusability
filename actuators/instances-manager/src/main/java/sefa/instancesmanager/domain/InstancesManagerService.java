@@ -84,8 +84,11 @@ public class InstancesManagerService {
 
 
     public List<ServiceContainerInfo> addInstances(String serviceImplementationName, int numberOfInstances) {
-        String containerName = serviceImplementationName;
-        String imageName = "teastore-"+serviceImplementationName;
+        // remove the "teastore-" part
+        int index = serviceImplementationName.indexOf("-");
+        String containerName = index != -1 ? serviceImplementationName.substring(index + 1).toLowerCase() : serviceImplementationName.toLowerCase();
+
+        String imageName = "teastore-"+containerName;
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
         Boolean special = false;
@@ -118,7 +121,7 @@ public class InstancesManagerService {
         for (int i = 0; i < numberOfInstances; i++) {
             int randomPort = getRandomPort();
             //TODO --DA CHIEDERE-- per qualche secondo si hanno problemi con eureka avendo due istanze registrate con il nome webui@teastore-webui:8080
-            if(serviceImplementationName.contains("webui"))
+            if(containerName.contains("webui"))
                 randomPort = 8080;
             String dockerName;
             ExposedPort exposedRandomPort = ExposedPort.tcp(8080); // intern port of the container

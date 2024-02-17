@@ -81,6 +81,7 @@ public class ExecuteService {
 
         String newInstancesAddress = instancesResponse.getDockerizedInstances().get(0).getAddress() + ":" + instancesResponse.getDockerizedInstances().get(0).getPort();
         String newInstanceId = service.createInstance(newInstancesAddress).getInstanceId();
+        //String newInstanceId = addInstanceOption.getServiceId();
         log.info("Adding instance to service " + serviceId + " with new instance " + newInstanceId);
         Map<String, Double> newWeights = addInstanceOption.getFinalWeights(newInstanceId);
         //log.info("*** NEW WEIGHTS= "+newWeights);
@@ -90,8 +91,10 @@ public class ExecuteService {
                 actuatorShutdownInstance(instanceToShutdownId);
                 knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
             }
-            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(service.getServiceId(), newWeights, addInstanceOption.getInstancesToShutdownIds()));
-            knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+            if (!serviceId.contains("webui")) {
+                configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(service.getServiceId(), newWeights, addInstanceOption.getInstancesToShutdownIds()));
+                knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+            }
         }
     }
 
@@ -107,8 +110,10 @@ public class ExecuteService {
         actuatorShutdownInstance(instanceToShutdownId);
         knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
         if (newWeights != null) {
-            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, List.of(instanceToShutdownId)));
-            knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+            if (!serviceId.contains("webui")) {
+                configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, List.of(instanceToShutdownId)));
+                knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+            }
         }
     }
 
@@ -126,8 +131,10 @@ public class ExecuteService {
             log.warn("SHUTDOWN INSTANCE REQUEST: serviceId= {}, instanceToShutdownId={}", serviceId, instanceToShutdownId);
             knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
         });
-        configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, changeLoadBalancerWeightsOption.getInstancesToShutdownIds()));
-        knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+        if (!serviceId.contains("webui")) {
+            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, changeLoadBalancerWeightsOption.getInstancesToShutdownIds()));
+            knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+        }
     }
 
     /** Change the implementation of a given service.
@@ -168,7 +175,8 @@ public class ExecuteService {
         // [delivery-proxy-1-service@sefa-delivery-proxy-1-service:58095]
 
         oldInstancesIds.forEach(this::actuatorShutdownInstance);
-        configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, null, oldInstancesIds));
+        if (!serviceId.contains("webui"))
+            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, null, oldInstancesIds));
 
         // Update knowledge with the new instances
         List<String> newInstancesAddresses = instancesResponse.getDockerizedInstances().stream().collect(LinkedList::new, (list, instance) -> list.add(instance.getAddress()+":"+instance.getPort()), List::addAll);

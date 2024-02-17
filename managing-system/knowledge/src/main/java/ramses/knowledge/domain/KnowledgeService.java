@@ -6,10 +6,7 @@ import ramses.knowledge.domain.adaptation.specifications.AverageResponseTime;
 import ramses.knowledge.domain.adaptation.specifications.QoSSpecification;
 import ramses.knowledge.domain.adaptation.values.QoSCollection;
 import ramses.knowledge.domain.adaptation.values.QoSHistory;
-import ramses.knowledge.domain.architecture.Instance;
-import ramses.knowledge.domain.architecture.InstanceStatus;
-import ramses.knowledge.domain.architecture.Service;
-import ramses.knowledge.domain.architecture.ServiceConfiguration;
+import ramses.knowledge.domain.architecture.*;
 import ramses.knowledge.domain.metrics.InstanceMetricsSnapshot;
 import lombok.Getter;
 import lombok.Setter;
@@ -164,17 +161,17 @@ public class KnowledgeService {
 
     public void changeServiceImplementation(String serviceId, String newImplementationId, List<String> newInstancesAddresses){
         Service service = servicesMap.get(serviceId);
-        service.getCurrentImplementation().setPenalty(0);
+        /*service.getCurrentImplementation().setPenalty(0);
 
         for (Instance instance : service.getInstances()) {
             markInstanceAsShutdown(serviceId, instance.getInstanceId());
             service.removeInstance(instance);
-        }
-        service.setCurrentImplementationId(newImplementationId);
+        }*/
+        //service.setCurrentImplementationId(serviceId);
 
-        for (String instanceAddress : newInstancesAddresses) {
+        /*for (String instanceAddress : newInstancesAddresses) {
             service.createInstance(instanceAddress);
-        }
+        }*/
 
         if (service.getConfiguration().getLoadBalancerType() == ServiceConfiguration.LoadBalancerType.WEIGHTED_RANDOM) {
             Map<String, Double> newWeights = new HashMap<>();

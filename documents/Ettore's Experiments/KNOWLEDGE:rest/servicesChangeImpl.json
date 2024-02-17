@@ -1,0 +1,1553 @@
+// GRAN PROBLEMA CON "webui@webui:8080"
+
+[
+  {
+    "serviceId": "TEASTORE-PERSISTENCE",
+    "currentImplementationId": "persistence",
+    "configuration": {
+      "serviceId": "TEASTORE-PERSISTENCE",
+      "timestamp": "2024-02-17T17:01:44.418+00:00",
+      "loadBalancerWeights": {
+        "persistence@teastore-persistence:1111": 1.0
+      },
+      "loadBalancerType": "WEIGHTED_RANDOM",
+      "circuitBreakersConfiguration": {}
+    },
+    "dependencies": [],
+    "possibleImplementations": {
+      "persistence": {
+        "serviceId": "TEASTORE-PERSISTENCE",
+        "implementationId": "persistence",
+        "instances": {
+          "persistence@teastore-persistence:1111": {
+            "instanceId": "persistence@teastore-persistence:1111",
+            "serviceId": "TEASTORE-PERSISTENCE",
+            "serviceImplementationId": "persistence",
+            "currentStatus": "ACTIVE",
+            "qoSCollection": {
+              "qoSHistoryMap": {
+                "ramses.knowledge.domain.adaptation.specifications.Availability": {
+                  "specification": {
+                    "@type": "Availability",
+                    "weight": 0.5,
+                    "constraintDescription": "value > 95.00%",
+                    "min_threshold": 0.95
+                  },
+                  "valuesStack": [
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:05:23.917+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:04:48.618+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:04:12.544+00:00"
+                    }
+                  ],
+                  "currentValue": {
+                    "invalidatesThisAndPreviousValues": false,
+                    "doubleValue": 0.91,
+                    "timestamp": "2024-02-17T17:01:44.247+00:00"
+                  }
+                },
+                "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+                  "specification": {
+                    "@type": "AverageResponseTime",
+                    "weight": 0.5,
+                    "constraintDescription": "value < 70.0",
+                    "max_threshold": 70.0
+                  },
+                  "valuesStack": [
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 71.54761904761905,
+                      "timestamp": "2024-02-17T17:05:23.917+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 12.058823529411764,
+                      "timestamp": "2024-02-17T17:04:48.618+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 244.39622641509433,
+                      "timestamp": "2024-02-17T17:04:12.544+00:00"
+                    }
+                  ],
+                  "currentValue": {
+                    "invalidatesThisAndPreviousValues": false,
+                    "doubleValue": 5.0,
+                    "timestamp": "2024-02-17T17:01:44.247+00:00"
+                  }
+                }
+              }
+            },
+            "latestInstanceMetricsSnapshot": {
+              "id": 130,
+              "serviceId": "TEASTORE-PERSISTENCE",
+              "instanceId": "persistence@teastore-persistence:1111",
+              "status": "ACTIVE",
+              "circuitBreakerMetrics": {},
+              "httpMetrics": {
+                "GET@/countForCategory": {
+                  "id": 317,
+                  "endpoint": "/countForCategory",
+                  "httpMethod": "GET",
+                  "outcomeMetrics": {
+                    "SUCCESS": {
+                      "outcome": "SUCCESS",
+                      "status": 200,
+                      "count": 288,
+                      "totalDuration": 14872.0,
+                      "maxDuration": 154.0
+                    }
+                  }
+                },
+                "GET@/listAllForCategory": {
+                  "id": 318,
+                  "endpoint": "/listAllForCategory",
+                  "httpMethod": "GET",
+                  "outcomeMetrics": {
+                    "SUCCESS": {
+                      "outcome": "SUCCESS",
+                      "status": 200,
+                      "count": 293,
+                      "totalDuration": 37322.0,
+                      "maxDuration": 1093.0
+                    }
+                  }
+                }
+              },
+              "cpuUsage": 0.27416595380667236,
+              "diskTotalSpace": 1.17782851584E11,
+              "diskFreeSpace": 2.3110168576E10,
+              "timestamp": "2024-02-17T17:07:07.039+00:00",
+              "active": true,
+              "shutdown": false,
+              "unreachable": false,
+              "failed": false,
+              "booting": false
+            }
+          }
+        },
+        "qoSCollection": {
+          "qoSHistoryMap": {
+            "ramses.knowledge.domain.adaptation.specifications.Availability": {
+              "specification": {
+                "@type": "Availability",
+                "weight": 0.5,
+                "constraintDescription": "value > 95.00%",
+                "min_threshold": 0.95
+              },
+              "valuesStack": [
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:05:23.917+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:04:48.618+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:04:12.544+00:00"
+                }
+              ],
+              "currentValue": null
+            },
+            "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+              "specification": {
+                "@type": "AverageResponseTime",
+                "weight": 0.5,
+                "constraintDescription": "value < 70.0",
+                "max_threshold": 70.0
+              },
+              "valuesStack": [
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 71.54761904761905,
+                  "timestamp": "2024-02-17T17:05:23.917+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 12.058823529411764,
+                  "timestamp": "2024-02-17T17:04:48.618+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 244.39622641509433,
+                  "timestamp": "2024-02-17T17:04:12.544+00:00"
+                }
+              ],
+              "currentValue": null
+            }
+          }
+        },
+        "qoSBenchmarks": {
+          "ramses.knowledge.domain.adaptation.specifications.Availability": 0.91,
+          "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": 5.0
+        },
+        "preference": 1.0,
+        "trust": 1,
+        "penalty": 0,
+        "instanceLoadShutdownThreshold": 0.4
+      }
+    },
+    "qoSSpecifications": {
+      "ramses.knowledge.domain.adaptation.specifications.Availability": {
+        "@type": "Availability",
+        "weight": 0.5,
+        "constraintDescription": "value > 95.00%",
+        "min_threshold": 0.95
+      },
+      "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+        "@type": "AverageResponseTime",
+        "weight": 0.5,
+        "constraintDescription": "value < 70.0",
+        "max_threshold": 70.0
+      }
+    },
+    "latestAdaptationDate": "2024-02-17T17:01:42.154+00:00",
+    "loadBalancerWeights": {
+      "persistence@teastore-persistence:1111": 1.0
+    }
+  },
+  {
+    "serviceId": "TEASTORE-RECOMMENDER",
+    "currentImplementationId": "recommender",
+    "configuration": {
+      "serviceId": "TEASTORE-RECOMMENDER",
+      "timestamp": "2024-02-17T17:01:44.674+00:00",
+      "loadBalancerWeights": {
+        "recommender@teastore-recommender:3333": 1.0
+      },
+      "loadBalancerType": "WEIGHTED_RANDOM",
+      "circuitBreakersConfiguration": {}
+    },
+    "dependencies": [],
+    "possibleImplementations": {
+      "recommender": {
+        "serviceId": "TEASTORE-RECOMMENDER",
+        "implementationId": "recommender",
+        "instances": {
+          "recommender@teastore-recommender:3333": {
+            "instanceId": "recommender@teastore-recommender:3333",
+            "serviceId": "TEASTORE-RECOMMENDER",
+            "serviceImplementationId": "recommender",
+            "currentStatus": "ACTIVE",
+            "qoSCollection": {
+              "qoSHistoryMap": {
+                "ramses.knowledge.domain.adaptation.specifications.Availability": {
+                  "specification": {
+                    "@type": "Availability",
+                    "weight": 0.5,
+                    "constraintDescription": "value > 95.00%",
+                    "min_threshold": 0.95
+                  },
+                  "valuesStack": [
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:05:24.123+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:04:48.680+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:04:19.829+00:00"
+                    }
+                  ],
+                  "currentValue": {
+                    "invalidatesThisAndPreviousValues": false,
+                    "doubleValue": 0.91,
+                    "timestamp": "2024-02-17T17:01:44.464+00:00"
+                  }
+                },
+                "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+                  "specification": {
+                    "@type": "AverageResponseTime",
+                    "weight": 0.5,
+                    "constraintDescription": "value < 70.0",
+                    "max_threshold": 70.0
+                  },
+                  "valuesStack": [
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.4142011834319526,
+                      "timestamp": "2024-02-17T17:05:24.123+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 4.165605095541402,
+                      "timestamp": "2024-02-17T17:04:48.680+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 6.723404255319149,
+                      "timestamp": "2024-02-17T17:04:19.829+00:00"
+                    }
+                  ],
+                  "currentValue": {
+                    "invalidatesThisAndPreviousValues": false,
+                    "doubleValue": 2.0,
+                    "timestamp": "2024-02-17T17:01:44.464+00:00"
+                  }
+                }
+              }
+            },
+            "latestInstanceMetricsSnapshot": {
+              "id": 145,
+              "serviceId": "TEASTORE-RECOMMENDER",
+              "instanceId": "recommender@teastore-recommender:3333",
+              "status": "ACTIVE",
+              "circuitBreakerMetrics": {},
+              "httpMetrics": {
+                "POST@/recommend": {
+                  "id": 346,
+                  "endpoint": "/recommend",
+                  "httpMethod": "POST",
+                  "outcomeMetrics": {
+                    "SUCCESS": {
+                      "outcome": "SUCCESS",
+                      "status": 200,
+                      "count": 553,
+                      "totalDuration": 49157.0,
+                      "maxDuration": 104.0
+                    }
+                  }
+                }
+              },
+              "cpuUsage": 0.3649230769230769,
+              "diskTotalSpace": 1.17782851584E11,
+              "diskFreeSpace": 2.310948864E10,
+              "timestamp": "2024-02-17T17:07:50.587+00:00",
+              "active": true,
+              "shutdown": false,
+              "unreachable": false,
+              "failed": false,
+              "booting": false
+            }
+          }
+        },
+        "qoSCollection": {
+          "qoSHistoryMap": {
+            "ramses.knowledge.domain.adaptation.specifications.Availability": {
+              "specification": {
+                "@type": "Availability",
+                "weight": 0.5,
+                "constraintDescription": "value > 95.00%",
+                "min_threshold": 0.95
+              },
+              "valuesStack": [
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:05:24.123+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:04:48.680+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:04:19.829+00:00"
+                }
+              ],
+              "currentValue": null
+            },
+            "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+              "specification": {
+                "@type": "AverageResponseTime",
+                "weight": 0.5,
+                "constraintDescription": "value < 70.0",
+                "max_threshold": 70.0
+              },
+              "valuesStack": [
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.4142011834319526,
+                  "timestamp": "2024-02-17T17:05:24.123+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 4.165605095541402,
+                  "timestamp": "2024-02-17T17:04:48.680+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 6.723404255319149,
+                  "timestamp": "2024-02-17T17:04:19.829+00:00"
+                }
+              ],
+              "currentValue": null
+            }
+          }
+        },
+        "qoSBenchmarks": {
+          "ramses.knowledge.domain.adaptation.specifications.Availability": 0.91,
+          "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": 2.0
+        },
+        "preference": 1.0,
+        "trust": 1,
+        "penalty": 0,
+        "instanceLoadShutdownThreshold": 0.4
+      }
+    },
+    "qoSSpecifications": {
+      "ramses.knowledge.domain.adaptation.specifications.Availability": {
+        "@type": "Availability",
+        "weight": 0.5,
+        "constraintDescription": "value > 95.00%",
+        "min_threshold": 0.95
+      },
+      "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+        "@type": "AverageResponseTime",
+        "weight": 0.5,
+        "constraintDescription": "value < 70.0",
+        "max_threshold": 70.0
+      }
+    },
+    "latestAdaptationDate": "2024-02-17T17:01:42.154+00:00",
+    "loadBalancerWeights": {
+      "recommender@teastore-recommender:3333": 1.0
+    }
+  },
+  {
+    "serviceId": "TEASTORE-REGISTRY",
+    "currentImplementationId": "registry",
+    "configuration": {
+      "serviceId": "TEASTORE-REGISTRY",
+      "timestamp": "2024-02-17T17:01:44.981+00:00",
+      "loadBalancerWeights": {
+        "registry@teastore-registry:1000": 1.0
+      },
+      "loadBalancerType": "WEIGHTED_RANDOM",
+      "circuitBreakersConfiguration": {}
+    },
+    "dependencies": [],
+    "possibleImplementations": {
+      "registry": {
+        "serviceId": "TEASTORE-REGISTRY",
+        "implementationId": "registry",
+        "instances": {
+          "registry@teastore-registry:1000": {
+            "instanceId": "registry@teastore-registry:1000",
+            "serviceId": "TEASTORE-REGISTRY",
+            "serviceImplementationId": "registry",
+            "currentStatus": "ACTIVE",
+            "qoSCollection": {
+              "qoSHistoryMap": {
+                "ramses.knowledge.domain.adaptation.specifications.Availability": {
+                  "specification": {
+                    "@type": "Availability",
+                    "weight": 0.5,
+                    "constraintDescription": "value > 95.00%",
+                    "min_threshold": 0.95
+                  },
+                  "valuesStack": [
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:07:34.365+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:07:13.083+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:06:51.439+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:06:30.052+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:05:57.050+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:05:24.296+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:04:48.732+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:04:19.906+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:03:55.376+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:03:32.651+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:03:09.004+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:02:44.119+00:00"
+                    }
+                  ],
+                  "currentValue": {
+                    "invalidatesThisAndPreviousValues": false,
+                    "doubleValue": 1.0,
+                    "timestamp": "2024-02-17T17:07:34.365+00:00"
+                  }
+                },
+                "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+                  "specification": {
+                    "@type": "AverageResponseTime",
+                    "weight": 0.5,
+                    "constraintDescription": "value < 40.0",
+                    "max_threshold": 40.0
+                  },
+                  "valuesStack": [
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 0.022222222222222223,
+                      "timestamp": "2024-02-17T17:07:34.365+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 0.04285714285714286,
+                      "timestamp": "2024-02-17T17:07:13.083+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 0.011904761904761904,
+                      "timestamp": "2024-02-17T17:06:51.439+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 0.07575757575757576,
+                      "timestamp": "2024-02-17T17:06:30.052+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 0.10869565217391304,
+                      "timestamp": "2024-02-17T17:05:57.050+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 0.010526315789473684,
+                      "timestamp": "2024-02-17T17:05:24.296+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 0.017699115044247787,
+                      "timestamp": "2024-02-17T17:04:48.732+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 0.07865168539325842,
+                      "timestamp": "2024-02-17T17:04:19.906+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 0.0,
+                      "timestamp": "2024-02-17T17:03:55.376+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 0.03296703296703297,
+                      "timestamp": "2024-02-17T17:03:32.651+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 0.0,
+                      "timestamp": "2024-02-17T17:03:09.004+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 0.0989010989010989,
+                      "timestamp": "2024-02-17T17:02:44.119+00:00"
+                    }
+                  ],
+                  "currentValue": {
+                    "invalidatesThisAndPreviousValues": false,
+                    "doubleValue": 0.05228747098312316,
+                    "timestamp": "2024-02-17T17:07:34.365+00:00"
+                  }
+                }
+              }
+            },
+            "latestInstanceMetricsSnapshot": {
+              "id": 146,
+              "serviceId": "TEASTORE-REGISTRY",
+              "instanceId": "registry@teastore-registry:1000",
+              "status": "ACTIVE",
+              "circuitBreakerMetrics": {},
+              "httpMetrics": {
+                "PUT@/registerService": {
+                  "id": 347,
+                  "endpoint": "/registerService",
+                  "httpMethod": "PUT",
+                  "outcomeMetrics": {
+                    "SUCCESS": {
+                      "outcome": "SUCCESS",
+                      "status": 200,
+                      "count": 897,
+                      "totalDuration": 193.0,
+                      "maxDuration": 5.0
+                    }
+                  }
+                },
+                "GET@/getInstanceService": {
+                  "id": 348,
+                  "endpoint": "/getInstanceService",
+                  "httpMethod": "GET",
+                  "outcomeMetrics": {
+                    "SUCCESS": {
+                      "outcome": "SUCCESS",
+                      "status": 200,
+                      "count": 1450,
+                      "totalDuration": 44.0,
+                      "maxDuration": 2.0
+                    }
+                  }
+                }
+              },
+              "cpuUsage": 0.2770949720670391,
+              "diskTotalSpace": 1.17782851584E11,
+              "diskFreeSpace": 2.3109419008E10,
+              "timestamp": "2024-02-17T17:07:55.838+00:00",
+              "active": true,
+              "shutdown": false,
+              "unreachable": false,
+              "failed": false,
+              "booting": false
+            }
+          }
+        },
+        "qoSCollection": {
+          "qoSHistoryMap": {
+            "ramses.knowledge.domain.adaptation.specifications.Availability": {
+              "specification": {
+                "@type": "Availability",
+                "weight": 0.5,
+                "constraintDescription": "value > 95.00%",
+                "min_threshold": 0.95
+              },
+              "valuesStack": [
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:07:34.365+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:07:13.083+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:06:51.439+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:06:30.052+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:05:57.050+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:05:24.296+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:04:48.732+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:04:19.906+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:03:55.376+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:03:32.651+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:03:09.004+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:02:44.119+00:00"
+                }
+              ],
+              "currentValue": {
+                "invalidatesThisAndPreviousValues": false,
+                "doubleValue": 1.0,
+                "timestamp": "2024-02-17T17:07:34.365+00:00"
+              }
+            },
+            "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+              "specification": {
+                "@type": "AverageResponseTime",
+                "weight": 0.5,
+                "constraintDescription": "value < 40.0",
+                "max_threshold": 40.0
+              },
+              "valuesStack": [
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.022222222222222223,
+                  "timestamp": "2024-02-17T17:07:34.365+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.04285714285714286,
+                  "timestamp": "2024-02-17T17:07:13.083+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.011904761904761904,
+                  "timestamp": "2024-02-17T17:06:51.439+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.07575757575757576,
+                  "timestamp": "2024-02-17T17:06:30.052+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.10869565217391304,
+                  "timestamp": "2024-02-17T17:05:57.050+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.010526315789473684,
+                  "timestamp": "2024-02-17T17:05:24.296+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.017699115044247787,
+                  "timestamp": "2024-02-17T17:04:48.732+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.07865168539325842,
+                  "timestamp": "2024-02-17T17:04:19.906+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.0,
+                  "timestamp": "2024-02-17T17:03:55.376+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.03296703296703297,
+                  "timestamp": "2024-02-17T17:03:32.651+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.0,
+                  "timestamp": "2024-02-17T17:03:09.004+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.0989010989010989,
+                  "timestamp": "2024-02-17T17:02:44.119+00:00"
+                }
+              ],
+              "currentValue": {
+                "invalidatesThisAndPreviousValues": false,
+                "doubleValue": 0.05228747098312316,
+                "timestamp": "2024-02-17T17:07:34.365+00:00"
+              }
+            }
+          }
+        },
+        "qoSBenchmarks": {
+          "ramses.knowledge.domain.adaptation.specifications.Availability": 0.91,
+          "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": 1.0
+        },
+        "preference": 1.0,
+        "trust": 1,
+        "penalty": 0,
+        "instanceLoadShutdownThreshold": 0.4
+      }
+    },
+    "qoSSpecifications": {
+      "ramses.knowledge.domain.adaptation.specifications.Availability": {
+        "@type": "Availability",
+        "weight": 0.5,
+        "constraintDescription": "value > 95.00%",
+        "min_threshold": 0.95
+      },
+      "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+        "@type": "AverageResponseTime",
+        "weight": 0.5,
+        "constraintDescription": "value < 40.0",
+        "max_threshold": 40.0
+      }
+    },
+    "latestAdaptationDate": "2024-02-17T17:01:42.154+00:00",
+    "loadBalancerWeights": {
+      "registry@teastore-registry:1000": 1.0
+    }
+  },
+  {
+    "serviceId": "TEASTORE-AUTH",
+    "currentImplementationId": "auth",
+    "configuration": {
+      "serviceId": "TEASTORE-AUTH",
+      "timestamp": "2024-02-17T17:01:43.385+00:00",
+      "loadBalancerWeights": {
+        "auth@teastore-auth:2222": 1.0
+      },
+      "loadBalancerType": "WEIGHTED_RANDOM",
+      "circuitBreakersConfiguration": {}
+    },
+    "dependencies": [],
+    "possibleImplementations": {
+      "auth": {
+        "serviceId": "TEASTORE-AUTH",
+        "implementationId": "auth",
+        "instances": {
+          "auth@teastore-auth:2222": {
+            "instanceId": "auth@teastore-auth:2222",
+            "serviceId": "TEASTORE-AUTH",
+            "serviceImplementationId": "auth",
+            "currentStatus": "ACTIVE",
+            "qoSCollection": {
+              "qoSHistoryMap": {
+                "ramses.knowledge.domain.adaptation.specifications.Availability": {
+                  "specification": {
+                    "@type": "Availability",
+                    "weight": 0.5,
+                    "constraintDescription": "value > 95.00%",
+                    "min_threshold": 0.95
+                  },
+                  "valuesStack": [
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:05:09.574+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:04:41.404+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:04:12.670+00:00"
+                    }
+                  ],
+                  "currentValue": {
+                    "invalidatesThisAndPreviousValues": false,
+                    "doubleValue": 0.9,
+                    "timestamp": "2024-02-17T17:01:42.463+00:00"
+                  }
+                },
+                "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+                  "specification": {
+                    "@type": "AverageResponseTime",
+                    "weight": 0.5,
+                    "constraintDescription": "value < 200.0",
+                    "max_threshold": 200.0
+                  },
+                  "valuesStack": [
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 179.75862068965517,
+                      "timestamp": "2024-02-17T17:05:09.574+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 200.18072289156626,
+                      "timestamp": "2024-02-17T17:04:41.404+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1546.060606060606,
+                      "timestamp": "2024-02-17T17:04:12.670+00:00"
+                    }
+                  ],
+                  "currentValue": {
+                    "invalidatesThisAndPreviousValues": false,
+                    "doubleValue": 15.0,
+                    "timestamp": "2024-02-17T17:01:42.463+00:00"
+                  }
+                }
+              }
+            },
+            "latestInstanceMetricsSnapshot": {
+              "id": 143,
+              "serviceId": "TEASTORE-AUTH",
+              "instanceId": "auth@teastore-auth:2222",
+              "status": "ACTIVE",
+              "circuitBreakerMetrics": {},
+              "httpMetrics": {
+                "POST@/logout": {
+                  "id": 342,
+                  "endpoint": "/logout",
+                  "httpMethod": "POST",
+                  "outcomeMetrics": {
+                    "SUCCESS": {
+                      "outcome": "SUCCESS",
+                      "status": 200,
+                      "count": 91,
+                      "totalDuration": 11.0,
+                      "maxDuration": 0.0
+                    }
+                  }
+                },
+                "POST@/addToCart": {
+                  "id": 343,
+                  "endpoint": "/addToCart",
+                  "httpMethod": "POST",
+                  "outcomeMetrics": {
+                    "SUCCESS": {
+                      "outcome": "SUCCESS",
+                      "status": 200,
+                      "count": 280,
+                      "totalDuration": 119708.0,
+                      "maxDuration": 540.0
+                    }
+                  }
+                }
+              },
+              "cpuUsage": 0.344335604770017,
+              "diskTotalSpace": 1.17782851584E11,
+              "diskFreeSpace": 2.310948864E10,
+              "timestamp": "2024-02-17T17:07:50.561+00:00",
+              "active": true,
+              "shutdown": false,
+              "unreachable": false,
+              "failed": false,
+              "booting": false
+            }
+          }
+        },
+        "qoSCollection": {
+          "qoSHistoryMap": {
+            "ramses.knowledge.domain.adaptation.specifications.Availability": {
+              "specification": {
+                "@type": "Availability",
+                "weight": 0.5,
+                "constraintDescription": "value > 95.00%",
+                "min_threshold": 0.95
+              },
+              "valuesStack": [
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:05:09.574+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:04:41.404+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:04:12.670+00:00"
+                }
+              ],
+              "currentValue": null
+            },
+            "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+              "specification": {
+                "@type": "AverageResponseTime",
+                "weight": 0.5,
+                "constraintDescription": "value < 200.0",
+                "max_threshold": 200.0
+              },
+              "valuesStack": [
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 179.75862068965517,
+                  "timestamp": "2024-02-17T17:05:09.574+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 200.18072289156626,
+                  "timestamp": "2024-02-17T17:04:41.404+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1546.060606060606,
+                  "timestamp": "2024-02-17T17:04:12.670+00:00"
+                }
+              ],
+              "currentValue": null
+            }
+          }
+        },
+        "qoSBenchmarks": {
+          "ramses.knowledge.domain.adaptation.specifications.Availability": 0.9,
+          "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": 15.0
+        },
+        "preference": 1.0,
+        "trust": 1,
+        "penalty": 0,
+        "instanceLoadShutdownThreshold": 0.4
+      }
+    },
+    "qoSSpecifications": {
+      "ramses.knowledge.domain.adaptation.specifications.Availability": {
+        "@type": "Availability",
+        "weight": 0.5,
+        "constraintDescription": "value > 95.00%",
+        "min_threshold": 0.95
+      },
+      "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+        "@type": "AverageResponseTime",
+        "weight": 0.5,
+        "constraintDescription": "value < 200.0",
+        "max_threshold": 200.0
+      }
+    },
+    "latestAdaptationDate": "2024-02-17T17:01:42.154+00:00",
+    "loadBalancerWeights": {
+      "auth@teastore-auth:2222": 1.0
+    }
+  },
+  {
+    "serviceId": "TEASTORE-WEBUI",
+    "currentImplementationId": "webui",
+    "configuration": {
+      "serviceId": "TEASTORE-WEBUI",
+      "timestamp": "2024-02-17T17:06:10.986+00:00",
+      "loadBalancerWeights": {
+        "webui@webui:8080": 1.0
+      },
+      "loadBalancerType": "WEIGHTED_RANDOM",
+      "circuitBreakersConfiguration": {}
+    },
+    "dependencies": [],
+    "possibleImplementations": {
+      "webui": {
+        "serviceId": "TEASTORE-WEBUI",
+        "implementationId": "webui",
+        "instances": {
+          "webui@webui:8080": {
+            "instanceId": "webui@webui:8080",
+            "serviceId": "TEASTORE-WEBUI",
+            "serviceImplementationId": "webui",
+            "currentStatus": "BOOTING",
+            "qoSCollection": {
+              "qoSHistoryMap": {
+                "ramses.knowledge.domain.adaptation.specifications.Availability": {
+                  "specification": {
+                    "@type": "Availability",
+                    "weight": 0.5,
+                    "constraintDescription": "value > 95.00%",
+                    "min_threshold": 0.95
+                  },
+                  "valuesStack": [],
+                  "currentValue": {
+                    "invalidatesThisAndPreviousValues": false,
+                    "doubleValue": 0.91,
+                    "timestamp": "2024-02-17T17:06:08.949+00:00"
+                  }
+                },
+                "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+                  "specification": {
+                    "@type": "AverageResponseTime",
+                    "weight": 0.5,
+                    "constraintDescription": "value < 400.0",
+                    "max_threshold": 400.0
+                  },
+                  "valuesStack": [],
+                  "currentValue": {
+                    "invalidatesThisAndPreviousValues": false,
+                    "doubleValue": 100.0,
+                    "timestamp": "2024-02-17T17:06:08.949+00:00"
+                  }
+                }
+              }
+            },
+            "latestInstanceMetricsSnapshot": {
+              "id": null,
+              "serviceId": "TEASTORE-WEBUI",
+              "instanceId": "webui@webui:8080",
+              "status": "BOOTING",
+              "circuitBreakerMetrics": {},
+              "httpMetrics": {},
+              "cpuUsage": null,
+              "diskTotalSpace": null,
+              "diskFreeSpace": null,
+              "timestamp": "2024-02-17T17:06:08.949+00:00",
+              "active": false,
+              "shutdown": false,
+              "unreachable": false,
+              "failed": false,
+              "booting": true
+            }
+          }
+        },
+        "qoSCollection": {
+          "qoSHistoryMap": {
+            "ramses.knowledge.domain.adaptation.specifications.Availability": {
+              "specification": {
+                "@type": "Availability",
+                "weight": 0.5,
+                "constraintDescription": "value > 95.00%",
+                "min_threshold": 0.95
+              },
+              "valuesStack": [
+                {
+                  "invalidatesThisAndPreviousValues": true,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:05:09.656+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:04:41.473+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:04:12.777+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 0.872093023255814,
+                  "timestamp": "2024-02-17T17:03:26.596+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:03:02.897+00:00"
+                }
+              ],
+              "currentValue": {
+                "invalidatesThisAndPreviousValues": false,
+                "doubleValue": 0.9744186046511627,
+                "timestamp": "2024-02-17T17:05:09.656+00:00"
+              }
+            },
+            "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+              "specification": {
+                "@type": "AverageResponseTime",
+                "weight": 0.5,
+                "constraintDescription": "value < 400.0",
+                "max_threshold": 400.0
+              },
+              "valuesStack": [
+                {
+                  "invalidatesThisAndPreviousValues": true,
+                  "doubleValue": 798.4678747940692,
+                  "timestamp": "2024-02-17T17:05:09.656+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1778.4733893557423,
+                  "timestamp": "2024-02-17T17:04:41.473+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 8091.516853932584,
+                  "timestamp": "2024-02-17T17:04:12.777+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 10543.373333333333,
+                  "timestamp": "2024-02-17T17:03:26.596+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 13029.08,
+                  "timestamp": "2024-02-17T17:03:02.897+00:00"
+                }
+              ],
+              "currentValue": {
+                "invalidatesThisAndPreviousValues": false,
+                "doubleValue": 6848.182290283145,
+                "timestamp": "2024-02-17T17:05:09.656+00:00"
+              }
+            }
+          }
+        },
+        "qoSBenchmarks": {
+          "ramses.knowledge.domain.adaptation.specifications.Availability": 0.91,
+          "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": 100.0
+        },
+        "preference": 1.0,
+        "trust": 1,
+        "penalty": 2,
+        "instanceLoadShutdownThreshold": 0.4
+      }
+    },
+    "qoSSpecifications": {
+      "ramses.knowledge.domain.adaptation.specifications.Availability": {
+        "@type": "Availability",
+        "weight": 0.5,
+        "constraintDescription": "value > 95.00%",
+        "min_threshold": 0.95
+      },
+      "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+        "@type": "AverageResponseTime",
+        "weight": 0.5,
+        "constraintDescription": "value < 400.0",
+        "max_threshold": 400.0
+      }
+    },
+    "latestAdaptationDate": "2024-02-17T17:06:11.227+00:00",
+    "loadBalancerWeights": {
+      "webui@webui:8080": 1.0
+    }
+  },
+  {
+    "serviceId": "TEASTORE-IMAGE",
+    "currentImplementationId": "image",
+    "configuration": {
+      "serviceId": "TEASTORE-IMAGE",
+      "timestamp": "2024-02-17T17:01:44.208+00:00",
+      "loadBalancerWeights": {
+        "image@teastore-image:4444": 1.0
+      },
+      "loadBalancerType": "WEIGHTED_RANDOM",
+      "circuitBreakersConfiguration": {}
+    },
+    "dependencies": [],
+    "possibleImplementations": {
+      "image": {
+        "serviceId": "TEASTORE-IMAGE",
+        "implementationId": "image",
+        "instances": {
+          "image@teastore-image:4444": {
+            "instanceId": "image@teastore-image:4444",
+            "serviceId": "TEASTORE-IMAGE",
+            "serviceImplementationId": "image",
+            "currentStatus": "ACTIVE",
+            "qoSCollection": {
+              "qoSHistoryMap": {
+                "ramses.knowledge.domain.adaptation.specifications.Availability": {
+                  "specification": {
+                    "@type": "Availability",
+                    "weight": 0.5,
+                    "constraintDescription": "value > 95.00%",
+                    "min_threshold": 0.95
+                  },
+                  "valuesStack": [
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:07:50.817+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:06:51.505+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:05:57.093+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:04:55.879+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:04:26.404+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:03:55.485+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 1.0,
+                      "timestamp": "2024-02-17T17:03:09.075+00:00"
+                    }
+                  ],
+                  "currentValue": {
+                    "invalidatesThisAndPreviousValues": false,
+                    "doubleValue": 1.0,
+                    "timestamp": "2024-02-17T17:07:50.817+00:00"
+                  }
+                },
+                "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+                  "specification": {
+                    "@type": "AverageResponseTime",
+                    "weight": 0.5,
+                    "constraintDescription": "value < 400.0",
+                    "max_threshold": 400.0
+                  },
+                  "valuesStack": [
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 263.2258064516129,
+                      "timestamp": "2024-02-17T17:07:50.817+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 197.62264150943398,
+                      "timestamp": "2024-02-17T17:06:51.505+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 245.8381112984823,
+                      "timestamp": "2024-02-17T17:05:57.093+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 244.4299401197605,
+                      "timestamp": "2024-02-17T17:04:55.879+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 233.40677966101694,
+                      "timestamp": "2024-02-17T17:04:26.404+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 254.89714285714285,
+                      "timestamp": "2024-02-17T17:03:55.485+00:00"
+                    },
+                    {
+                      "invalidatesThisAndPreviousValues": false,
+                      "doubleValue": 208.09230769230768,
+                      "timestamp": "2024-02-17T17:03:09.075+00:00"
+                    }
+                  ],
+                  "currentValue": {
+                    "invalidatesThisAndPreviousValues": false,
+                    "doubleValue": 236.9046558080613,
+                    "timestamp": "2024-02-17T17:07:50.817+00:00"
+                  }
+                }
+              }
+            },
+            "latestInstanceMetricsSnapshot": {
+              "id": 147,
+              "serviceId": "TEASTORE-IMAGE",
+              "instanceId": "image@teastore-image:4444",
+              "status": "ACTIVE",
+              "circuitBreakerMetrics": {},
+              "httpMetrics": {
+                "POST@/getWebImages": {
+                  "id": 349,
+                  "endpoint": "/getWebImages",
+                  "httpMethod": "POST",
+                  "outcomeMetrics": {
+                    "SUCCESS": {
+                      "outcome": "SUCCESS",
+                      "status": 200,
+                      "count": 1552,
+                      "totalDuration": 316854.0,
+                      "maxDuration": 400.0
+                    }
+                  }
+                },
+                "POST@/getProductImages": {
+                  "id": 350,
+                  "endpoint": "/getProductImages",
+                  "httpMethod": "POST",
+                  "outcomeMetrics": {
+                    "SUCCESS": {
+                      "outcome": "SUCCESS",
+                      "status": 200,
+                      "count": 1134,
+                      "totalDuration": 343593.0,
+                      "maxDuration": 600.0
+                    }
+                  }
+                }
+              },
+              "cpuUsage": 0.35242839352428396,
+              "diskTotalSpace": 1.17782851584E11,
+              "diskFreeSpace": 2.3109419008E10,
+              "timestamp": "2024-02-17T17:07:55.954+00:00",
+              "active": true,
+              "shutdown": false,
+              "unreachable": false,
+              "failed": false,
+              "booting": false
+            }
+          }
+        },
+        "qoSCollection": {
+          "qoSHistoryMap": {
+            "ramses.knowledge.domain.adaptation.specifications.Availability": {
+              "specification": {
+                "@type": "Availability",
+                "weight": 0.5,
+                "constraintDescription": "value > 95.00%",
+                "min_threshold": 0.95
+              },
+              "valuesStack": [
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:07:50.817+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:06:51.505+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:05:57.093+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:04:55.879+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:04:26.404+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:03:55.485+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 1.0,
+                  "timestamp": "2024-02-17T17:03:09.075+00:00"
+                }
+              ],
+              "currentValue": {
+                "invalidatesThisAndPreviousValues": false,
+                "doubleValue": 1.0,
+                "timestamp": "2024-02-17T17:07:50.817+00:00"
+              }
+            },
+            "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+              "specification": {
+                "@type": "AverageResponseTime",
+                "weight": 0.5,
+                "constraintDescription": "value < 400.0",
+                "max_threshold": 400.0
+              },
+              "valuesStack": [
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 263.2258064516129,
+                  "timestamp": "2024-02-17T17:07:50.817+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 197.62264150943398,
+                  "timestamp": "2024-02-17T17:06:51.505+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 245.8381112984823,
+                  "timestamp": "2024-02-17T17:05:57.093+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 244.4299401197605,
+                  "timestamp": "2024-02-17T17:04:55.879+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 233.40677966101694,
+                  "timestamp": "2024-02-17T17:04:26.404+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 254.89714285714285,
+                  "timestamp": "2024-02-17T17:03:55.485+00:00"
+                },
+                {
+                  "invalidatesThisAndPreviousValues": false,
+                  "doubleValue": 208.09230769230768,
+                  "timestamp": "2024-02-17T17:03:09.075+00:00"
+                }
+              ],
+              "currentValue": {
+                "invalidatesThisAndPreviousValues": false,
+                "doubleValue": 236.9046558080613,
+                "timestamp": "2024-02-17T17:07:50.817+00:00"
+              }
+            }
+          }
+        },
+        "qoSBenchmarks": {
+          "ramses.knowledge.domain.adaptation.specifications.Availability": 0.91,
+          "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": 250.0
+        },
+        "preference": 1.0,
+        "trust": 1,
+        "penalty": 0,
+        "instanceLoadShutdownThreshold": 0.4
+      }
+    },
+    "qoSSpecifications": {
+      "ramses.knowledge.domain.adaptation.specifications.Availability": {
+        "@type": "Availability",
+        "weight": 0.5,
+        "constraintDescription": "value > 95.00%",
+        "min_threshold": 0.95
+      },
+      "ramses.knowledge.domain.adaptation.specifications.AverageResponseTime": {
+        "@type": "AverageResponseTime",
+        "weight": 0.5,
+        "constraintDescription": "value < 400.0",
+        "max_threshold": 400.0
+      }
+    },
+    "latestAdaptationDate": "2024-02-17T17:01:42.154+00:00",
+    "loadBalancerWeights": {
+      "image@teastore-image:4444": 1.0
+    }
+  }
+]

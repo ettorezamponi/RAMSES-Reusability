@@ -1,3 +1,4 @@
+// ART values based on simulation with 20 users on Locust
 {
 	"services" : [
 		{
@@ -8,11 +9,11 @@
 					"adaptation_benchmarks" : [
 						{
 							"name": "average_response_time",
-							"benchmark": 100
+							"benchmark": 15
 						},
 						{
 							"name": "availability",
-							"benchmark": 0.91
+							"benchmark": 0.90
 						}
 					]
 				}
@@ -26,7 +27,7 @@
 					"adaptation_benchmarks" : [
 						{
 							"name": "average_response_time",
-							"benchmark": 100
+							"benchmark": 250
 						},
 						{
 							"name": "availability",
@@ -44,7 +45,7 @@
 					"adaptation_benchmarks" : [
 						{
 							"name": "average_response_time",
-							"benchmark": 100
+							"benchmark": 5
 						},
 						{
 							"name": "availability",
@@ -62,7 +63,7 @@
 					"adaptation_benchmarks" : [
 						{
 							"name": "average_response_time",
-							"benchmark": 100
+							"benchmark": 2
 						},
 						{
 							"name": "availability",
@@ -80,7 +81,7 @@
 					"adaptation_benchmarks" : [
 						{
 							"name": "average_response_time",
-							"benchmark": 100
+							"benchmark": 1
 						},
 						{
 							"name": "availability",
