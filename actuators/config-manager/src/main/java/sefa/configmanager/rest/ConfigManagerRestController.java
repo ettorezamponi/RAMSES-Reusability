@@ -23,7 +23,8 @@ public class ConfigManagerRestController {
 	@PostMapping(path = "/changeLBWeights")
 	public void changeLBWeights(@RequestBody ChangeLBWeightsRequest request) {
 		try {
-			if (!request.getServiceId().contains("webui")) {
+			System.out.println("REQUESTO TO CHANGE: "+request.getServiceId());
+			if (!request.getServiceId().contains("WEBUI")) {
 				configManagerService.pull();
 				configManagerService.updateLoadbalancerWeights(request.getServiceId(), request.getNewWeights(), request.getInstancesToRemoveWeightOf());
 				configManagerService.commitAndPush("ConfigManagerActuator: changing properties");
