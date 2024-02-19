@@ -58,6 +58,16 @@ const httpServerRequest = new promClient.Histogram({
 
 const app = express();
 
+// Error injection
+let art_delay = 0;
+let delay_art_init = 30
+let delay_art_finish = 45
+
+let outcome = 'SUCCESS'
+let status = '200'
+let delay_availability_init = 30
+let delay_availability_finish = 45
+
 async function updateMetrics() {
     // CPU metrics
     try {
@@ -79,6 +89,7 @@ async function updateMetrics() {
         console.error('Errore durante la lettura dello spazio su disco:', error);
     }
 };
+
 // Usa il middleware response-time per ottenere la durata delle richieste
 app.use(responseTime());
 let maxDurationSuccess = 0;
@@ -90,21 +101,13 @@ app.use((req, res, next) => {
         const end = new Date();
         const durationInSeconds = (end - start) / 1000;
 
-        const randomValue = Math.random()
-        if (durationInSeconds > maxDurationError && randomValue < 0.25) {
-            maxDurationError = durationInSeconds;
-            httpMaxRequest.labels('None', req.method, 'SERVER_ERROR', '500', req.originalUrl).set(durationInSeconds);
+        httpServerRequest.labels('None', req.method, outcome, status, req.originalUrl).observe(durationInSeconds);
 
-        } else if (durationInSeconds > maxDurationSuccess ) {
+        if (durationInSeconds > maxDurationSuccess ) {
             maxDurationSuccess = durationInSeconds;
-            httpMaxRequest.labels('None', req.method,'SUCCESS',res.statusCode, req.originalUrl).set(durationInSeconds);
+            httpMaxRequest.labels('None', req.method,outcome,status, req.originalUrl).set(durationInSeconds);
         }
 
-        if (randomValue < 0.25) {
-            httpServerRequest.labels('None', req.method, 'SERVER_ERROR', '500', req.originalUrl).observe(durationInSeconds);
-        } else {
-            httpServerRequest.labels('None', req.method, 'SUCCESS', res.statusCode, req.originalUrl).observe(durationInSeconds);
-        }
     });
 
     next();
@@ -209,19 +212,22 @@ app.get('/metrics', async (req, res) => {
 
 // get cart with id
 app.get('/cart/:id', (req, res) => {
-    redisClient.get(req.params.id, (err, data) => {
-        if(err) {
-            req.log.error('ERROR', err);
-            res.status(500).send(err);
-        } else {
-            if(data == null) {
-                res.status(404).send('cart not found');
+    setTimeout(() => {
+
+        redisClient.get(req.params.id, (err, data) => {
+            if (err) {
+                req.log.error('ERROR', err);
+                res.status(500).send(err);
             } else {
-                res.set('Content-Type', 'application/json');
-                res.send(data);
+                if (data == null) {
+                    res.status(404).send('cart not found');
+                } else {
+                    res.set('Content-Type', 'application/json');
+                    res.send(data);
+                }
             }
-        }
-    });
+        });
+    }, art_delay);
 });
 
 // delete cart with id
@@ -513,6 +519,36 @@ function saveCart(id, cart) {
     });
 }
 
+function enable_delay_art_after(seconds) {
+    setTimeout(() => {
+        art_delay = 70;
+        console.log("Delay ART modified to " + art_delay)
+    }, seconds);
+}
+
+function disable_delay_art_after(seconds) {
+    setTimeout(() => {
+        art_delay = 0;
+        console.log("Delay ART back to normal values")
+    }, seconds);
+}
+
+function enable_slow_availability_after(seconds) {
+    setTimeout(() => {
+        outcome = 'SERVER_ERROR'
+        status = '500'
+        console.log('Server_error injected')
+    }, seconds);
+}
+
+function disable_slow_availability_after(seconds) {
+    setTimeout(() => {
+        outcome = 'SUCCESS'
+        status = '200'
+        console.log('Server requests back to normal')
+    }, seconds);
+}
+
 // connect to Redis
 var redisClient = redis.createClient({
     host: redisHost
@@ -532,3 +568,8 @@ app.listen(port, () => {
     logger.info('Started on port', port);
 });
 
+// ERROR INJECTION
+//enable_delay_art_after(delay_art_init);
+//disable_delay_art_after(delay_art_finish)
+//enable_slow_availability_after(delay_availability_init)
+//disable_slow_availability_after(delay_availability_finish)
