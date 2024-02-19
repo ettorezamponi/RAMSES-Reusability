@@ -11,6 +11,7 @@ import uuid
 import json
 import requests
 import traceback
+import threading
 from flask import Flask
 from flask import Response
 from flask import request
@@ -24,6 +25,18 @@ import prometheus_client
 from prometheus_client import Counter
 from prometheus_client import Gauge
 from prometheus_client import Histogram
+
+# Error injection variables
+custom_delay_enabled = False
+custom_delay = 500
+delay_init = 30
+delay_finish = 45
+
+outcome = 'SUCCESS'
+status = '200'
+delay_availability_init = 30
+delay_availability_finish = 45
+
 
 import py_eureka_client.eureka_client as eureka_client
 # The flowing code will register your server to eureka server and also start to send heartbeat every 30 seconds
@@ -87,15 +100,15 @@ def health():
 
         #TODO add probability of SERVER_ERROR
         PromMetrics['HTTP_SERVER_REQUESTS_SECONDS'].labels(
-            exception=exception, method=method, outcome='SUCCESS', status='200', uri=uri
+            exception=exception, method=method, outcome=outcome, status=status, uri=uri
         ).observe(duration_seconds)
 
         if duration_seconds > max_value1:
             PromMetrics['HTTP_SERVER_REQUESTS_SECONDS_MAX'].labels(
                 exception=exception,
                 method=method,
-                outcome='SUCCESS',
-                status='200',
+                outcome=outcome,
+                status=status,
                 uri=uri,
             ).set(duration_seconds)
             max_value1 = duration_seconds
@@ -186,8 +199,8 @@ def pay(id):
     if not anonymous_user:
         try:
             req = requests.post('http://{user}:8080/order/{id}'.format(user=USER, id=id),
-                    data=json.dumps({'orderid': orderid, 'cart': cart}),
-                    headers={'Content-Type': 'application/json'})
+                                data=json.dumps({'orderid': orderid, 'cart': cart}),
+                                headers={'Content-Type': 'application/json'})
             app.logger.info('order history returned {}'.format(req.status_code))
         except requests.exceptions.RequestException as err:
             app.logger.error(err)
@@ -210,15 +223,15 @@ def pay(id):
     uri = request.path
 
     PromMetrics['HTTP_SERVER_REQUESTS_SECONDS'].labels(
-        exception=exception, method=method, outcome='SUCCESS', status='200', uri=uri
+        exception=exception, method=method, outcome=outcome, status=status, uri=uri
     ).observe(duration_seconds)
 
     if duration_seconds > max_value2:
         PromMetrics['HTTP_SERVER_REQUESTS_SECONDS_MAX'].labels(
             exception=exception,
             method=method,
-            outcome='SUCCESS',
-            status='200',
+            outcome=outcome,
+            status=status,
             uri=uri,
         ).set(duration_seconds)
         max_value2 = duration_seconds
@@ -230,11 +243,44 @@ def queueOrder(order):
     app.logger.info('queue order')
 
     # For screenshot demo requirements optionally add in a bit of delay
-    delay = int(os.getenv('PAYMENT_DELAY_MS', 0))
+    # Utilizza il ritardo personalizzato solo se abilitato
+    if custom_delay_enabled and custom_delay is not None:
+        delay = custom_delay
+        print('DELAYING PAYMENT by {}ms'.format(delay))
+    else:
+        delay = int(os.getenv('PAYMENT_DELAY_MS', 0))
+
+    # milliseconds
     time.sleep(delay / 1000)
 
     headers = {}
     publisher.publish(order, headers)
+
+# Funzione per abilitare il ritardo dopo un tot di secondi
+def enable_delay_ART_after(seconds):
+    global custom_delay_enabled
+    threading.Timer(seconds, lambda: setattr(custom_delay_enabled, True)).start()
+    return 'Delay enabled for {} seconds'.format(delay_finish-delay_init)
+
+# Funzione per disabilitare il ritardo dopo un tot di secondi
+def disable_delay_ART_after(seconds):
+    global custom_delay_enabled
+    threading.Timer(seconds, lambda: setattr(custom_delay_enabled, False)).start()
+    return 'Delay disabled'
+
+def enable_delay_availability_after(delay_availability_init):
+    global outcome, status
+    time.sleep(delay_availability_init)
+    outcome = 'SERVER_ERROR'
+    status = '500'
+    return 'Less availability enabled for {} seconds'.format(delay_availability_finish-delay_availability_init)
+
+def disable_delay_availability_after(delay_availability_finish):
+    global outcome, status
+    time.sleep(delay_availability_finish)
+    outcome = 'SUCCESS'
+    status = '200'
+    return 'Availability back to normal'
 
 
 def countItems(items):
@@ -248,6 +294,12 @@ def countItems(items):
 
 # RabbitMQ
 publisher = Publisher(app.logger)
+
+# ERROR INJECTION
+#enable_delay_ART_after(delay_init)
+#disable_delay_ART_after(delay_finish)
+#enable_delay_availability_after(delay_availability_init)
+#disable_delay_availability_after(delay_availability_finish)
 
 if __name__ == "__main__":
     sh = logging.StreamHandler(sys.stdout)
