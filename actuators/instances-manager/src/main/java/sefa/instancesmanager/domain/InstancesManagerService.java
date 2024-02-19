@@ -85,6 +85,7 @@ public class InstancesManagerService {
         //addInstances("teastore-webui", 1);
         //stopInstance("auth", 8080);
         //addInstances("teastore-webui", 1);
+        //addInstances("RS-PAYMENT",1);
 
         //TODO CRASHA SEMPRE A MENO CHE NON FACCIAMO RIPARTIRE IL VECCHIO CONTAINER
 
@@ -116,29 +117,24 @@ public class InstancesManagerService {
 
 
     public List<ServiceContainerInfo> addInstances(String serviceImplementationName, int numberOfInstances) {
-        //String imageName = "giamburrasca/sefa-"+serviceImplementationName+":"+arch;
-        String imageName = serviceImplementationName;
+        // serviceImplementationName : "RS-PAYMENT"
+        String imageName = serviceImplementationName.toLowerCase()+":2.1.0";
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
-        Boolean special = false;
 
         //per il registry abbiamo bisogno di avere lo stesso nome e così funziona
-        String containerName = serviceImplementationName.split("-")[1];
+        String containerName = serviceImplementationName.toLowerCase().split("-")[1];
         log.info("CONTAINER NAME: " + containerName);
 
-        if (containerName.contains("registry") || containerName.contains("persistence") || containerName.contains("recommender") || containerName.contains("image")) {
-            special = true;
-        }
-
         // Registry should have the same name, so completly delete the previous one
-        //TODO theoretically persistence service could have more than one implementation
-        if (special) {
-            if (numberOfInstances > 1) {
-                numberOfInstances = 1;
-            }
-            deleteContainer(containerName);
-            log.info("Deleted {} container", containerName);
+        // TODO theoretically persistence service could have more than one implementation
+
+        if (numberOfInstances > 1) {
+            numberOfInstances = 1;
         }
+        deleteContainer(containerName);
+        log.info("Deleted {} container", containerName);
+
 
         synchronized (lock) {
             if (serviceImplementationName.equalsIgnoreCase("restaurant-service") || serviceImplementationName.startsWith("payment-proxy"))
@@ -146,8 +142,14 @@ public class InstancesManagerService {
             else
                 simulationInstanceParamsList = List.of(new SimulationInstanceParams(0.0, 0.0, 0.0));
         }
+
         for (int i = 0; i < numberOfInstances; i++) {
             int randomPort = getRandomPort();
+            if (serviceImplementationName.toLowerCase().contains("payment"))
+                randomPort = 8002;
+            else
+                randomPort = 8001;
+
             String dockerName;
             ExposedPort exposedRandomPort = ExposedPort.tcp(8080); // intern port of the container
             Ports portBindings = new Ports();
@@ -156,14 +158,11 @@ public class InstancesManagerService {
             //String containerName = "sefa-" + serviceImplementationName + "-" + randomPort;
             //String containerName = serviceImplementationName + "-" + randomPort;
 
-            if (special)
-                dockerName = containerName;
-            else
-                dockerName = containerName + "-" + randomPort;
+            dockerName = containerName;
 
             HostConfig hostConfig = new HostConfig();
             hostConfig.withPortBindings(portBindings);
-            hostConfig.withNetworkMode("teastore");
+            hostConfig.withNetworkMode("robot-shop");
             List<String> envVars = buildContainerEnvVariables(containerName, randomPort, simulationInstanceParamsList.get(i % simulationInstanceParamsList.size()));
             String newContainerId = dockerClient.createContainerCmd(imageName)
                     .withImage(imageName)

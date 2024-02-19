@@ -20,7 +20,7 @@ public class ConfigManagerService {
     Git gitClient;
     CredentialsProvider credentialsProvider;
 
-    public ConfigManagerService(@Value("https://github.com/ettorezamponi/config-server.git") String gitRepository) throws Exception {
+    public ConfigManagerService(@Value("https://github.com/ettorezamponi/robotshop-configserver.git") String gitRepository) throws Exception {
         String token = "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";
         if (token == null)
             throw new Exception("GITHUB_OAUTH environment variable not set");

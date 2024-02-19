@@ -14,21 +14,21 @@ cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/actuators/instances-
 
 ##### RAMSES #####
 cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/managing-system/knowledge
-docker build -t ramses-knowledge .
+docker build -t rs-knowledge .
 
 cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/managing-system/monitor
-docker build -t ramses-monitor .
+docker build -t rs-monitor .
 
 cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/managing-system/analyse
-docker build -t ramses-analyse .
+docker build -t rs-analyse .
 
 cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/managing-system/plan
-docker build -t ramses-plan .
+docker build -t rs-plan .
 
 cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/managing-system/execute/
-docker build -t ramses-execute .
+docker build -t rs-execute .
 
 cd /Users/ettorezamponi/Documents/RAMSES/ramses-reusability/managing-system/dashboard/
-docker build -t ramses-dashboard .
+docker build -t rs-dashboard .
 
 echo; PrintSuccess "DOCKER LOCAL IMAGES BUILDED!"; echo

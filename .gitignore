@@ -36,4 +36,4 @@ ARCHIVE/*
 
 **/.classpath
 .classpath
-/managed/robot-shop-master/cart/node_modules/
+/managed-system/robot-shop-master/cart/node_modules/

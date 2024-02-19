@@ -81,6 +81,7 @@ public class ExecuteService {
 
         String newInstancesAddress = instancesResponse.getDockerizedInstances().get(0).getAddress() + ":" + instancesResponse.getDockerizedInstances().get(0).getPort();
         String newInstanceId = service.createInstance(newInstancesAddress).getInstanceId();
+        //String newInstanceId = addInstanceOption.getServiceId();
         log.info("Adding instance to service " + serviceId + " with new instance " + newInstanceId);
         Map<String, Double> newWeights = addInstanceOption.getFinalWeights(newInstanceId);
         //log.info("*** NEW WEIGHTS= "+newWeights);
@@ -90,8 +91,10 @@ public class ExecuteService {
                 actuatorShutdownInstance(instanceToShutdownId);
                 knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
             }
-            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(service.getServiceId(), newWeights, addInstanceOption.getInstancesToShutdownIds()));
-            knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+            if (!serviceId.contains("cart") || !serviceId.contains("payment")) {
+                configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(service.getServiceId(), newWeights, addInstanceOption.getInstancesToShutdownIds()));
+                knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+            }
         }
     }
 
@@ -107,8 +110,10 @@ public class ExecuteService {
         actuatorShutdownInstance(instanceToShutdownId);
         knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
         if (newWeights != null) {
-            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, List.of(instanceToShutdownId)));
-            knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+            if (!serviceId.contains("cart") || !serviceId.contains("payment")) {
+                configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, List.of(instanceToShutdownId)));
+                knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+            }
         }
     }
 
@@ -126,8 +131,10 @@ public class ExecuteService {
             log.warn("SHUTDOWN INSTANCE REQUEST: serviceId= {}, instanceToShutdownId={}", serviceId, instanceToShutdownId);
             knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
         });
-        configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, changeLoadBalancerWeightsOption.getInstancesToShutdownIds()));
-        knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+        if (!serviceId.contains("cart") || !serviceId.contains("payment")) {
+            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, changeLoadBalancerWeightsOption.getInstancesToShutdownIds()));
+            knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+        }
     }
 
     /** Change the implementation of a given service.
@@ -150,25 +157,9 @@ public class ExecuteService {
         // Remove the old implementation instances and their weights
         List<String> oldInstancesIds = oldImplementation.getInstances().values().stream().collect(LinkedList::new, (list, instance) -> list.add(instance.getInstanceId()), List::addAll);
 
-        //log.debug("*** CHANGEIMPLEMENTATIONOPTION="+changeImplementationOption);
-        // Goal: AverageResponseTime - Change DELIVERY-PROXY-SERVICE implementation from delivery-proxy-1-service to
-        // delivery-proxy-2-service. Changing implementation
-
-        // log.debug("*** OLDIMPLEMENTATION="+oldImplementation);
-        // ServiceImplementation(serviceId=DELIVERY-PROXY-SERVICE, implementationId=delivery-proxy-1-service,
-        // instances={delivery-proxy-1-service@sefa-delivery-proxy-1-service:58095=ramses.knowledge.domain.architecture.Instance@710987da},
-        // qoSCollection=QoSCollection(qoSHistoryMap={class ramses.knowledge.domain.adaptation.specifications.AverageResponseTime=QoSHistory(specification=AverageResponseTime(Weight: 0.5, Constraint: value < 150.0),
-        // valuesStack=[238.098, 237.017, 239.197, 239.113, 250.791], currentValue=240.843),
-        // class ramses.knowledge.domain.adaptation.specifications.Availability=QoSHistory(specification=Availability(Weight: 0.5, Constraint: value > 92.00%),
-        // valuesStack=[1.000, 1.000, 1.000, 1.000, 1.000], currentValue=1.000)}),
-        // qoSBenchmarks={class ramses.knowledge.domain.adaptation.specifications.AverageResponseTime=400.0, class ramses.knowledge.domain.adaptation.specifications.Availability=0.93},
-        // preference=0.2, trust=1, penalty=2, instanceLoadShutdownThreshold=0.4)
-
-        // log.debug("*** OLDINSTANCESIDS="+oldInstancesIds);
-        // [delivery-proxy-1-service@sefa-delivery-proxy-1-service:58095]
-
         oldInstancesIds.forEach(this::actuatorShutdownInstance);
-        configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, null, oldInstancesIds));
+        if (!serviceId.contains("cart") || !serviceId.contains("payment"))
+            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, null, oldInstancesIds));
 
         // Update knowledge with the new instances
         List<String> newInstancesAddresses = instancesResponse.getDockerizedInstances().stream().collect(LinkedList::new, (list, instance) -> list.add(instance.getAddress()+":"+instance.getPort()), List::addAll);

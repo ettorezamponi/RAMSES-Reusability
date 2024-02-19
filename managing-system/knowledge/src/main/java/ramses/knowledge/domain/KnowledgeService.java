@@ -163,7 +163,7 @@ public class KnowledgeService {
 
     public void changeServiceImplementation(String serviceId, String newImplementationId, List<String> newInstancesAddresses){
         Service service = servicesMap.get(serviceId);
-        service.getCurrentImplementation().setPenalty(0);
+        /*service.getCurrentImplementation().setPenalty(0);
 
         for (Instance instance : service.getInstances()) {
             markInstanceAsShutdown(serviceId, instance.getInstanceId());
@@ -173,7 +173,7 @@ public class KnowledgeService {
 
         for (String instanceAddress : newInstancesAddresses) {
             service.createInstance(instanceAddress);
-        }
+        }*/
 
         if (service.getConfiguration().getLoadBalancerType() == ServiceConfiguration.LoadBalancerType.WEIGHTED_RANDOM) {
             Map<String, Double> newWeights = new HashMap<>();

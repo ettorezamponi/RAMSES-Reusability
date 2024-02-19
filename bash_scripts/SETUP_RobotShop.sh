@@ -71,7 +71,8 @@ docker run -P --name knowledge-db --network robot-shop -d knowledge-db
 sleep 10
 docker run -P --name rs-probe -d --network robot-shop rs-probe
 docker run -p 8081:8081 --name maven-configserver -d --network robot-shop rs-configserver
-#docker run -P --name teastore-instancesmanager -d --network teastore instances-manager
+docker run -P --name rs-instances-manager -d --network robot-shop rs-instancesmanager
+docker run -P --name rs-config-manager -d --network robot-shop rs-configmanager
 
 durata_timer=10
 
@@ -113,4 +114,5 @@ PrintSuccess "EVERYTHING SET UP!"
 
 # LOAD GENERATOR (understand other env var and configuration)
 # docker run --name restclient -e HOST=http://web:8080 --network robot-shop -d rs-restclient
+# docker run --name restclient -e HOST=http://web:8080 --network robot-shop -d rs-restclient-paymenterror
 

@@ -1,3 +1,7 @@
+#    TO RUN
+# 1) export PATH="/Users/ettorezamponi/Library/Python/3.9/bin"
+# 2) locust
+
 import os
 import random
 

@@ -4,7 +4,7 @@
 
 # Changing the NUM_CLIENTS environment variable varies the load on the application
 # The bigger the number the more requests, the bigger the load
-NUM_CLIENTS=1
+NUM_CLIENTS=20
 
 # Time to run with NUM_CLIENTS e.g. 1h
 RUN_TIME=0
@@ -13,7 +13,7 @@ RUN_TIME=0
 HOST="http://localhost:8080"
 
 # Error flag
-ERROR=0
+ERROR=1
 
 # Daemon flag
 DAEMON="-it"

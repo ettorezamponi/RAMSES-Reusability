@@ -6,8 +6,8 @@ ENTRYPOINT ["java","-jar","/app/spring-boot-application.jar"]
 
 ENV KNOWLEDGE_URL=http://ramses-knowledge:58005
 ENV MONITOR_URL=http://ramses-monitor:58001
-ENV INSTANCES_MANAGER_ACTUATOR_URL=http://sefa-instances-manager:58015
-ENV CONFIG_MANAGER_ACTUATOR_URL=http://sefa-config-manager:58016
+ENV INSTANCES_MANAGER_ACTUATOR_URL=http://rs-instances-manager:58015
+ENV CONFIG_MANAGER_ACTUATOR_URL=http://rs-config-manager:58016
 
 EXPOSE 58004
 

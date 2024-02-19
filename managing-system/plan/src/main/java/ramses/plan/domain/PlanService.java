@@ -330,7 +330,8 @@ public class PlanService {
         double bestImplementationBenefit = 0;
         for (String implementationId: changeImplementationOption.getPossibleImplementations()) {
             Class<? extends QoSSpecification> goal = changeImplementationOption.getQosGoal();
-            ServiceImplementation implementation = service.getPossibleImplementations().get(implementationId);
+            //ServiceImplementation implementation = service.getPossibleImplementations().get(implementationId);
+            ServiceImplementation implementation = service.getCurrentImplementation();
             double benchmark = implementation.getBenchmark(changeImplementationOption.getQosGoal());
             if (Availability.class == goal) {
                 benchmark = benchmark * implementation.getPreference();
@@ -412,7 +413,7 @@ public class PlanService {
                 }
                 if (ChangeImplementationOption.class.equals(adaptationOption.getClass())) {
                     ChangeImplementationOption changeImplementationOption = (ChangeImplementationOption) adaptationOption;
-                    availabilityEstimation = service.getPossibleImplementations().get(changeImplementationOption.getNewImplementationId()).getBenchmark(Availability.class);
+                    availabilityEstimation = service.getCurrentImplementation().getBenchmark(Availability.class);
                 }
                 double newBenefit = availabilityEstimation / service.getCurrentValueForQoS(Availability.class).getDoubleValue();
                 log.debug(service.getServiceId() + ": " + adaptationOption.getClass().getSimpleName() + " option for Availability. BENEFIT: " + newBenefit);
@@ -466,7 +467,7 @@ public class PlanService {
                 }
                 if(ChangeImplementationOption.class.equals(adaptationOption.getClass())) {
                     ChangeImplementationOption changeImplementationOption = (ChangeImplementationOption) adaptationOption;
-                    avgResponseTimeEstimation = service.getPossibleImplementations().get(changeImplementationOption.getNewImplementationId()).getBenchmark(AverageResponseTime.class);
+                    avgResponseTimeEstimation = service.getCurrentImplementation().getBenchmark(AverageResponseTime.class);
                 }
                 double newBenefit =  service.getCurrentValueForQoS(AverageResponseTime.class).getDoubleValue() / avgResponseTimeEstimation;
                 log.debug(service.getServiceId() + ": " + adaptationOption.getClass().getSimpleName() + " option for AVG RT. BENEFIT: " + newBenefit);

@@ -3,8 +3,8 @@ FROM python:3.9
 # Some default values
 ENV HOST="http://localhost:8080/" \
     SILENT=0 \
-    NUM_CLIENTS=1 \
-    ERROR=0 \
+    NUM_CLIENTS=20 \
+    ERROR=1 \
     RUN_TIME=0
     
 
