@@ -98,7 +98,6 @@ def health():
         method = request.method
         uri = request.path
 
-        #TODO add probability of SERVER_ERROR
         PromMetrics['HTTP_SERVER_REQUESTS_SECONDS'].labels(
             exception=exception, method=method, outcome=outcome, status=status, uri=uri
         ).observe(duration_seconds)
