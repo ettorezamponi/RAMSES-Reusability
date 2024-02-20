@@ -28,14 +28,15 @@ from prometheus_client import Histogram
 
 # Error injection variables
 custom_delay_enabled = False
-custom_delay = 500
-delay_init = 30
-delay_finish = 45
+custom_delay = 6000
+delay_ART_init = 0 * 60
+delay_ART_finish = 0 * 60
 
 outcome = 'SUCCESS'
 status = '200'
-delay_availability_init = 30
-delay_availability_finish = 45
+# 3 e 7, con metric and analysis window entrambe a 3, changeImplementation
+delay_availability_init = 3 * 60
+delay_availability_finish = 7 * 60
 
 
 import py_eureka_client.eureka_client as eureka_client
@@ -239,47 +240,37 @@ def pay(id):
 
 
 def queueOrder(order):
+    global custom_delay_enabled, custom_delay
     app.logger.info('queue order')
 
-    # For screenshot demo requirements optionally add in a bit of delay
-    # Utilizza il ritardo personalizzato solo se abilitato
-    if custom_delay_enabled and custom_delay is not None:
-        delay = custom_delay
-        print('DELAYING PAYMENT by {}ms'.format(delay))
-    else:
-        delay = int(os.getenv('PAYMENT_DELAY_MS', 0))
-
-    # milliseconds
-    time.sleep(delay / 1000)
+    if custom_delay_enabled:
+        # milliseconds
+        time.sleep(custom_delay / 1000)
+        app.logger.info('DELAYING PAYMENT by {}ms'.format(custom_delay/1000))
 
     headers = {}
     publisher.publish(order, headers)
 
-# Funzione per abilitare il ritardo dopo un tot di secondi
-def enable_delay_ART_after(seconds):
+def enable_delay_ART_after():
     global custom_delay_enabled
-    threading.Timer(seconds, lambda: setattr(custom_delay_enabled, True)).start()
-    return 'Delay enabled for {} seconds'.format(delay_finish-delay_init)
+    custom_delay_enabled = True
+    app.logger.info('ART SLOWERING for {} seconds'.format(delay_ART_finish-delay_ART_init))
 
-# Funzione per disabilitare il ritardo dopo un tot di secondi
-def disable_delay_ART_after(seconds):
+def disable_delay_ART_after():
     global custom_delay_enabled
-    threading.Timer(seconds, lambda: setattr(custom_delay_enabled, False)).start()
-    return 'Delay disabled'
+    custom_delay_enabled = False
+    app.logger.info('ART BACK TO NORMAL VALUES')
 
-def enable_delay_availability_after(delay_availability_init):
+def enable_delay_availability_after():
     global outcome, status
-    time.sleep(delay_availability_init)
     outcome = 'SERVER_ERROR'
     status = '500'
-    return 'Less availability enabled for {} seconds'.format(delay_availability_finish-delay_availability_init)
-
-def disable_delay_availability_after(delay_availability_finish):
+    app.logger.info('DELAY AVAILABILITY for {} seconds'.format(delay_availability_finish-delay_availability_init))
+def disable_delay_availability_after():
     global outcome, status
-    time.sleep(delay_availability_finish)
     outcome = 'SUCCESS'
     status = '200'
-    return 'Availability back to normal'
+    app.logger.info('AVAILABILITY BACK to normal values')
 
 
 def countItems(items):
@@ -290,15 +281,23 @@ def countItems(items):
 
     return count
 
-
 # RabbitMQ
 publisher = Publisher(app.logger)
 
-# ERROR INJECTION
-#enable_delay_ART_after(delay_init)
-#disable_delay_ART_after(delay_finish)
-#enable_delay_availability_after(delay_availability_init)
-#disable_delay_availability_after(delay_availability_finish)
+with app.app_context():
+    # ERROR INJECTION
+    t_enable_delay = threading.Timer(delay_ART_init, enable_delay_ART_after)
+    t_enable_delay.start()
+
+    t_disable_delay = threading.Timer(delay_ART_finish, disable_delay_ART_after)
+    t_disable_delay.start()
+
+    t_enable_availability = threading.Timer(delay_availability_init, enable_delay_availability_after)
+    t_enable_availability.start()
+
+    t_disable_availability = threading.Timer(delay_availability_finish, disable_delay_availability_after)
+    t_disable_availability.start()
+
 
 if __name__ == "__main__":
     sh = logging.StreamHandler(sys.stdout)

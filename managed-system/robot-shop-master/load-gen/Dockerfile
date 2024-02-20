@@ -5,7 +5,7 @@ ENV HOST="http://localhost:8080/" \
     SILENT=0 \
     NUM_CLIENTS=20 \
     ERROR=1 \
-    RUN_TIME=0
+    RUN_TIME=10m
     
 
 WORKDIR /load
