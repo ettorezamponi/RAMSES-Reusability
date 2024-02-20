@@ -118,12 +118,21 @@ public class InstancesManagerService {
 
     public List<ServiceContainerInfo> addInstances(String serviceImplementationName, int numberOfInstances) {
         // serviceImplementationName : "RS-PAYMENT"
-        String imageName = serviceImplementationName.toLowerCase()+":2.1.0";
+
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
 
         //per il registry abbiamo bisogno di avere lo stesso nome e così funziona
-        String containerName = serviceImplementationName.toLowerCase().split("-")[1];
+        String containerName, imageName;
+        if (serviceImplementationName.contains("-")) {
+            containerName = serviceImplementationName.toLowerCase().split("-")[1];
+            imageName = serviceImplementationName.toLowerCase() + ":2.1.0";
+        }
+        else {
+            containerName = serviceImplementationName.toLowerCase();
+            imageName = "rs-"+containerName+":2.1.0";
+        }
+
         log.info("CONTAINER NAME: " + containerName);
 
         // Registry should have the same name, so completly delete the previous one

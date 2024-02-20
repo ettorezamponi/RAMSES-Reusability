@@ -67,9 +67,11 @@ public class ServiceImplementation {
     }
 
     public Instance createInstance(String instanceAddress, List<QoSSpecification> qoSSpecifications) {
+        instanceAddress = instanceAddress.contains("-") ? instanceAddress : "rs-" + instanceAddress;
+        instanceAddress = controlPort(instanceAddress);
         String instanceId = implementationId + "@" + instanceAddress;
-        if (instances.containsKey(instanceId))
-            throw new RuntimeException("Instance already exists");
+        //if (instances.containsKey(instanceId))
+        //    throw new RuntimeException("Instance already exists");
         Instance instance = new Instance(instanceId, serviceId);
         for (QoSSpecification specification : qoSSpecifications) {
             instance.getQoSCollection().createHistory(specification);
@@ -77,6 +79,15 @@ public class ServiceImplementation {
         }
         instances.put(instanceId, instance);
         return instance;
+    }
+
+    private String controlPort(String variable) {
+        String portPart = variable.substring(variable.lastIndexOf(":") + 1);
+        int port = Integer.parseInt(portPart);
+        port = (port != 8080) ? 8080 : port;
+        variable = variable.substring(0, variable.lastIndexOf(":") + 1) + port;
+        System.out.println("PORTA MODIFICATA: "+variable);
+        return variable;
     }
 
     public double addPenalty(double penalty) {
