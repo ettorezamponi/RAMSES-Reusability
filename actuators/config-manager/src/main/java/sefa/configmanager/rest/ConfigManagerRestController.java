@@ -23,11 +23,9 @@ public class ConfigManagerRestController {
 	@PostMapping(path = "/changeLBWeights")
 	public void changeLBWeights(@RequestBody ChangeLBWeightsRequest request) {
 		try {
-			if (!request.getServiceId().toLowerCase().contains("cart") || !request.getServiceId().toLowerCase().contains("payment")) {
-				configManagerService.pull();
-				configManagerService.updateLoadbalancerWeights(request.getServiceId(), request.getNewWeights(), request.getInstancesToRemoveWeightOf());
-				configManagerService.commitAndPush("ConfigManagerActuator: changing properties");
-			}
+			configManagerService.pull();
+			configManagerService.updateLoadbalancerWeights(request.getServiceId(), request.getNewWeights(), request.getInstancesToRemoveWeightOf());
+			configManagerService.commitAndPush("ConfigManagerActuator: changing properties");
 		} catch (Exception e) {
 			try {
 				configManagerService.rollback();

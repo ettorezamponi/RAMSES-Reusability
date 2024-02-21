@@ -84,17 +84,16 @@ public class ExecuteService {
         //String newInstanceId = addInstanceOption.getServiceId();
         log.info("Adding instance to service " + serviceId + " with new instance " + newInstanceId);
         Map<String, Double> newWeights = addInstanceOption.getFinalWeights(newInstanceId);
-        //log.info("*** NEW WEIGHTS= "+newWeights);
+        log.info("*** NEW WEIGHTS ADDINSTANCE= "+newWeights);
         knowledgeClient.notifyAddInstance(new AddInstanceRequest(serviceId, newInstancesAddress));
         if (newWeights != null) {
             for (String instanceToShutdownId : addInstanceOption.getInstancesToShutdownIds()) {
                 actuatorShutdownInstance(instanceToShutdownId);
                 knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
             }
-            if (!serviceId.contains("cart") || !serviceId.contains("payment")) {
-                configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(service.getServiceId(), newWeights, addInstanceOption.getInstancesToShutdownIds()));
-                knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
-            }
+            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(service.getServiceId(), newWeights, addInstanceOption.getInstancesToShutdownIds()));
+            knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+
         }
     }
 
@@ -107,13 +106,14 @@ public class ExecuteService {
         String serviceId = shutdownInstanceOption.getServiceId();
         String instanceToShutdownId = shutdownInstanceOption.getInstanceToShutdownId();
         Map<String, Double> newWeights = shutdownInstanceOption.getNewWeights();
+        log.info("*** NEW WEIGHTS SHUTDOWN= "+newWeights);
+
         actuatorShutdownInstance(instanceToShutdownId);
         knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
         if (newWeights != null) {
-            if (!serviceId.contains("cart") || !serviceId.contains("payment")) {
-                configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, List.of(instanceToShutdownId)));
-                knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
-            }
+            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, List.of(instanceToShutdownId)));
+            knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+
         }
     }
 
@@ -126,15 +126,16 @@ public class ExecuteService {
     private void handleChangeLBWeightsOption(ChangeLoadBalancerWeightsOption changeLoadBalancerWeightsOption) {
         String serviceId = changeLoadBalancerWeightsOption.getServiceId();
         Map<String, Double> newWeights = changeLoadBalancerWeightsOption.getNewWeights();
+        log.info("*** NEW WEIGHTS CHANGE LB= "+newWeights);
+
         changeLoadBalancerWeightsOption.getInstancesToShutdownIds().forEach(instanceToShutdownId -> {
             actuatorShutdownInstance(instanceToShutdownId);
             log.warn("SHUTDOWN INSTANCE REQUEST: serviceId= {}, instanceToShutdownId={}", serviceId, instanceToShutdownId);
             knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
         });
-        if (!serviceId.contains("cart") || !serviceId.contains("payment")) {
-            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, changeLoadBalancerWeightsOption.getInstancesToShutdownIds()));
-            knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
-        }
+        configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, changeLoadBalancerWeightsOption.getInstancesToShutdownIds()));
+        knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+
     }
 
     /** Change the implementation of a given service.
@@ -158,8 +159,8 @@ public class ExecuteService {
         List<String> oldInstancesIds = oldImplementation.getInstances().values().stream().collect(LinkedList::new, (list, instance) -> list.add(instance.getInstanceId()), List::addAll);
 
         oldInstancesIds.forEach(this::actuatorShutdownInstance);
-        if (!serviceId.contains("cart") || !serviceId.contains("payment"))
-            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, null, oldInstancesIds));
+
+        configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, null, oldInstancesIds));
 
         // Update knowledge with the new instances
         List<String> newInstancesAddresses = instancesResponse.getDockerizedInstances().stream().collect(LinkedList::new, (list, instance) -> list.add(instance.getAddress()+":"+instance.getPort()), List::addAll);
