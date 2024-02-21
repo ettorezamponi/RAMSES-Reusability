@@ -23,7 +23,7 @@ public class ConfigManagerRestController {
 	@PostMapping(path = "/changeLBWeights")
 	public void changeLBWeights(@RequestBody ChangeLBWeightsRequest request) {
 		try {
-			System.out.println("REQUESTO TO CHANGE: "+request.getServiceId());
+			System.out.println("REQUEST TO CHANGE: "+request.getServiceId() +", "+request.getNewWeights()+" , instance ro remove weight of: "+request.getInstancesToRemoveWeightOf());
 
 			configManagerService.pull();
 			configManagerService.updateLoadbalancerWeights(request.getServiceId(), request.getNewWeights(), request.getInstancesToRemoveWeightOf());
