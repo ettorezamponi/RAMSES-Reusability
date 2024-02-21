@@ -92,10 +92,10 @@ public class ExecuteService {
                 actuatorShutdownInstance(instanceToShutdownId);
                 knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
             }
-            if (!serviceId.contains("webui")) {
-                configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(service.getServiceId(), newWeights, addInstanceOption.getInstancesToShutdownIds()));
-                knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
-            }
+
+            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(service.getServiceId(), newWeights, addInstanceOption.getInstancesToShutdownIds()));
+            knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+
         }
     }
 
@@ -111,10 +111,10 @@ public class ExecuteService {
         actuatorShutdownInstance(instanceToShutdownId);
         knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
         if (newWeights != null) {
-            if (!serviceId.contains("webui")) {
-                configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, List.of(instanceToShutdownId)));
-                knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
-            }
+
+            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, List.of(instanceToShutdownId)));
+            knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+
         }
     }
 
@@ -132,10 +132,10 @@ public class ExecuteService {
             log.warn("SHUTDOWN INSTANCE REQUEST: serviceId= {}, instanceToShutdownId={}", serviceId, instanceToShutdownId);
             knowledgeClient.notifyShutdownInstance(new ShutdownInstanceRequest(serviceId, instanceToShutdownId));
         });
-        if (!serviceId.contains("webui")) {
-            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, changeLoadBalancerWeightsOption.getInstancesToShutdownIds()));
-            knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
-        }
+
+        configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, newWeights, changeLoadBalancerWeightsOption.getInstancesToShutdownIds()));
+        knowledgeClient.setLoadBalancerWeights(serviceId, newWeights);
+
     }
 
     /** Change the implementation of a given service.
@@ -177,8 +177,8 @@ public class ExecuteService {
 
         oldInstancesIds.forEach(this::actuatorShutdownInstance);
 
-        if (!serviceId.contains("webui"))
-            configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, null, oldInstancesIds));
+
+        configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, null, oldInstancesIds));
 
         // Update knowledge with the new instances
         List<String> newInstancesAddresses = instancesResponse.getDockerizedInstances().stream().collect(LinkedList::new, (list, instance) -> list.add(instance.getAddress()+":"+instance.getPort()), List::addAll);

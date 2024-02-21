@@ -24,11 +24,11 @@ public class ConfigManagerRestController {
 	public void changeLBWeights(@RequestBody ChangeLBWeightsRequest request) {
 		try {
 			System.out.println("REQUESTO TO CHANGE: "+request.getServiceId());
-			if (!request.getServiceId().contains("WEBUI")) {
-				configManagerService.pull();
-				configManagerService.updateLoadbalancerWeights(request.getServiceId(), request.getNewWeights(), request.getInstancesToRemoveWeightOf());
-				configManagerService.commitAndPush("ConfigManagerActuator: changing properties");
-			}
+
+			configManagerService.pull();
+			configManagerService.updateLoadbalancerWeights(request.getServiceId(), request.getNewWeights(), request.getInstancesToRemoveWeightOf());
+			configManagerService.commitAndPush("ConfigManagerActuator: changing properties");
+
 		} catch (Exception e) {
 			try {
 				configManagerService.rollback();
