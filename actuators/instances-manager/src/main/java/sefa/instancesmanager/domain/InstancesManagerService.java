@@ -91,26 +91,25 @@ public class InstancesManagerService {
         String imageName = "teastore-"+containerName;
         List<ServiceContainerInfo> serviceContainerInfos = new ArrayList<>(numberOfInstances);
         List<SimulationInstanceParams> simulationInstanceParamsList;
-        Boolean special = false;
 
         //per il registry abbiamo bisogno di avere lo stesso nome e così funziona
         //String containerName = serviceImplementationName.split("-")[1];
         log.info("CONTAINER DA STARTARE NAME: " + containerName);
 
-        //TODO trattare tutti i conteiner ugualmente ri-assegnando lo stesso nome??
+        /*//TODO trattare tutti i container ugualmente ri-assegnando lo stesso nome??
         if (containerName.contains("registry") || containerName.contains("persistence") || containerName.contains("recommender") || containerName.contains("image") || containerName.contains("webui")) {
             special = true;
-        }
+        }*/
 
         // Registry should have the same name, so completly delete the previous one
         //TODO theoretically persistence service could have more than one implementation, rimane fuori solo AUTH dallo special...
-        if (special) {
-            if (numberOfInstances > 1) {
-                numberOfInstances = 1;
-            }
-            deleteContainer(containerName);
-            log.info("Deleted {} container", containerName);
+
+        if (numberOfInstances > 1) {
+            numberOfInstances = 1;
         }
+        deleteContainer(containerName);
+        log.info("Deleted {} container", containerName);
+
 
         synchronized (lock) {
             if (serviceImplementationName.equalsIgnoreCase("restaurant-service") || serviceImplementationName.startsWith("payment-proxy"))
@@ -131,10 +130,11 @@ public class InstancesManagerService {
             //String containerName = "sefa-" + serviceImplementationName + "-" + randomPort;
             //String containerName = serviceImplementationName + "-" + randomPort;
 
-            if (special)
+            /*if (special)
                 dockerName = containerName;
             else
-                dockerName = containerName + "-" + randomPort;
+                dockerName = containerName + "-" + randomPort;*/
+            dockerName = containerName;
 
             HostConfig hostConfig = new HostConfig();
             hostConfig.withPortBindings(portBindings);
@@ -181,12 +181,14 @@ public class InstancesManagerService {
     }
 
     public void stopInstance(String address, int port) {
+        address = address.toLowerCase().contains("-") ? address.toLowerCase().split("-")[1] : address.toLowerCase();
+        String finalAddress = address;
         List<Container> containers = dockerClient
                 .listContainersCmd()
                 .exec()
                 .stream()
                 .filter(container ->
-                        Arrays.stream(container.getNames()).anyMatch(name -> name.contains(address))
+                        Arrays.stream(container.getNames()).anyMatch(name -> name.contains(finalAddress))
                 )
                 .toList();
 

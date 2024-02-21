@@ -81,6 +81,7 @@ public class ExecuteService {
 
         String newInstancesAddress = instancesResponse.getDockerizedInstances().get(0).getAddress() + ":" + instancesResponse.getDockerizedInstances().get(0).getPort();
         String newInstanceId = service.createInstance(newInstancesAddress).getInstanceId();
+        System.out.println("NEW INSTANCE ADDRESS: "+newInstancesAddress+", NEW INSTANCE ID: "+newInstanceId);
         //String newInstanceId = addInstanceOption.getServiceId();
         log.info("Adding instance to service " + serviceId + " with new instance " + newInstanceId);
         Map<String, Double> newWeights = addInstanceOption.getFinalWeights(newInstanceId);
@@ -175,6 +176,7 @@ public class ExecuteService {
         // [delivery-proxy-1-service@sefa-delivery-proxy-1-service:58095]
 
         oldInstancesIds.forEach(this::actuatorShutdownInstance);
+
         if (!serviceId.contains("webui"))
             configManagerClient.changeLBWeights(new ChangeLBWeightsRequest(serviceId, null, oldInstancesIds));
 
@@ -193,8 +195,9 @@ public class ExecuteService {
      * @param instanceToRemoveId the id of the instance to shut down
      */
     public void actuatorShutdownInstance(String instanceToRemoveId) {
-        String[] ipPort = instanceToRemoveId.split("@")[1].split(":");
+        System.out.println("INSTANCE TO REMOVE ID: "+instanceToRemoveId);
+        String[] ipPort = instanceToRemoveId.split("-")[1].split(":");
         // (sefa-delivery-proxy-1-service, delivery-proxy-1-service, 58095)
-        instancesManagerClient.removeInstance(new RemoveInstanceRequest(instanceToRemoveId.split("@")[0], ipPort[0], Integer.parseInt(ipPort[1])));
+        instancesManagerClient.removeInstance(new RemoveInstanceRequest(instanceToRemoveId.toLowerCase().split("-")[1], ipPort[0], Integer.parseInt(ipPort[1])));
     }
 }

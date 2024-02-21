@@ -67,9 +67,10 @@ public class ServiceImplementation {
     }
 
     public Instance createInstance(String instanceAddress, List<QoSSpecification> qoSSpecifications) {
+        instanceAddress = instanceAddress.contains("-") ? instanceAddress : "teastore-" + instanceAddress;
         String instanceId = implementationId + "@" + instanceAddress;
-        if (instances.containsKey(instanceId))
-            throw new RuntimeException("Instance already exists");
+        //if (instances.containsKey(instanceId))
+        //    throw new RuntimeException("Instance already exists");
         Instance instance = new Instance(instanceId, serviceId);
         for (QoSSpecification specification : qoSSpecifications) {
             instance.getQoSCollection().createHistory(specification);
