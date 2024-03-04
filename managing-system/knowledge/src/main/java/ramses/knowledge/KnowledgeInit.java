@@ -84,6 +84,7 @@ public class KnowledgeInit implements InitializingBean {
                 service.createInstance(instanceId.split("@")[1]).setCurrentStatus(InstanceStatus.ACTIVE);
             });
 
+            //check on GitHub repo the configuration
             service.setConfiguration(probeClient.getServiceConfiguration(service.getServiceId(), service.getCurrentImplementationId()));
             configurationRepository.save(service.getConfiguration());
             knowledgeService.addService(service);
