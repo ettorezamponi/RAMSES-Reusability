@@ -28,14 +28,14 @@ from prometheus_client import Histogram
 
 # Error injection variables
 custom_delay_enabled = False
-custom_delay = 6000
+custom_delay = 0
 delay_ART_init = 0 * 60
 delay_ART_finish = 0 * 60
 
 outcome = 'SUCCESS'
 status = '200'
 # 3 e 7 (con metric and analysis window entrambe a 3) changeImplementation
-delay_availability_init = 8 * 60
+delay_availability_init = 7 * 60
 delay_availability_finish = 14 * 60
 
 

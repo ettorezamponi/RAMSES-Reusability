@@ -60,13 +60,13 @@ const app = express();
 
 // Error injection
 let art_delay = 0;
-let delay_art_init = 3 * 1000 * 60
+let delay_art_init = 4 * 1000 * 60
 let delay_art_finish = 7 * 1000 * 60
 
 let outcome = 'SUCCESS'
 let status = '200'
-let delay_availability_init = 3 * 1000 * 60
-let delay_availability_finish = 7 * 1000 * 60
+let delay_availability_init = 0 * 1000 * 60
+let delay_availability_finish = 0 * 1000 * 60
 
 async function updateMetrics() {
     // CPU metrics
