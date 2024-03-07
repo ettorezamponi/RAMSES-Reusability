@@ -61,7 +61,7 @@ const app = express();
 // Error injection
 let art_delay = 0;
 let delay_art_init = 4 * 1000 * 60
-let delay_art_finish = 7 * 1000 * 60
+let delay_art_finish = 8 * 1000 * 60
 
 let outcome = 'SUCCESS'
 let status = '200'

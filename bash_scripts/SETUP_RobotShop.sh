@@ -34,8 +34,8 @@ docker run -d --name catalogue --network robot-shop --health-cmd="curl -H 'X-INS
 # Start User container (DO mongodb, redis)
 docker run -d --name user --network robot-shop --health-cmd="curl -H 'X-INSTANA-SYNTHETIC: 1' -f http://localhost:8080/health" --health-interval=10s --health-timeout=10s --health-retries=3 rs-user:2.1.0
 
-# Start Cart container (DO redis, eureka)
-docker run -d --name cart --network robot-shop -p 8001:8080 --health-cmd="curl -H 'X-INSTANA-SYNTHETIC: 1' -f http://localhost:8080/health" --health-interval=10s --health-timeout=10s --health-retries=3 rs-cart-fault #rs-cart-fault ART slow 4-7 minutes
+# Start Cart container (DO redis, eureka) #############
+docker run -d --name cart --network robot-shop -p 8001:8080 --health-cmd="curl -H 'X-INSTANA-SYNTHETIC: 1' -f http://localhost:8080/health" --health-interval=10s --health-timeout=10s --health-retries=3 rs-cart:2.1.0 #rs-cart-fault ART slow 4-8 minutes
 
 # Start MySQL container
 docker run -d --name mysql --network robot-shop --cap-add=NET_ADMIN robotshop/rs-mysql-db:2.1.0
@@ -46,8 +46,8 @@ docker run -d --name shipping --network robot-shop --health-cmd="curl -H 'X-INST
 # Start Ratings container (DO MySql)
 docker run -d --name ratings -e APP_ENV="prod" --network robot-shop --health-cmd="curl -H 'X-INSTANA-SYNTHETIC: 1' -f http://localhost:8080/health" --health-interval=10s --health-timeout=10s --health-retries=3 rs-ratings:2.1.0
 
-# Start Payment container (DO Rabbitmq, Eureka)
-docker run -d --name payment --network robot-shop --health-cmd="curl -H 'X-INSTANA-SYNTHETIC: 1' -f http://localhost:8080/health" --health-interval=10s --health-timeout=10s --health-retries=3 -p 8002:8080 rs-payment-fault #rs-payment-fault SLOW AVAILABILITY 8-14 MINUTE
+# Start Payment container (DO Rabbitmq, Eureka) ###########
+docker run -d --name payment --network robot-shop --health-cmd="curl -H 'X-INSTANA-SYNTHETIC: 1' -f http://localhost:8080/health" --health-interval=10s --health-timeout=10s --health-retries=3 -p 8002:8080 rs-payment:2.1.0 #rs-payment-fault SLOW AVAILABILITY 7-14 MINUTE
 
 # Start Dispatch container (DO Rabbitmq)
 docker run -d --name dispatch --network robot-shop rs-dispatch:2.1.0
