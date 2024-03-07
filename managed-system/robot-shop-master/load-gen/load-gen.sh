@@ -4,16 +4,16 @@
 
 # Changing the NUM_CLIENTS environment variable varies the load on the application
 # The bigger the number the more requests, the bigger the load
-NUM_CLIENTS=20
+NUM_CLIENTS=15
 
 # Time to run with NUM_CLIENTS e.g. 1h
-RUN_TIME=0
+RUN_TIME=15m
 
 # HOST where Stan's Robot Shop web UI is running
 HOST="http://localhost:8080"
 
 # Error flag
-ERROR=1
+ERROR=0
 
 # Daemon flag
 DAEMON="-it"

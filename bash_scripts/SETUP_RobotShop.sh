@@ -6,6 +6,10 @@ PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 TAG="2.1.0"
 REPO="robotshop"  # Replace with your actual repository
 
+# Set to 'Y' to simulate SCENARIO 1
+injection="Y"
+time_injection=300
+
 ##### Network #####
 docker network rm robot-shop
 PrintSuccess "-- Network Removed --"
@@ -44,7 +48,7 @@ docker run -d --name shipping --network robot-shop --health-cmd="curl -H 'X-INST
 docker run -d --name ratings -e APP_ENV="prod" --network robot-shop --health-cmd="curl -H 'X-INSTANA-SYNTHETIC: 1' -f http://localhost:8080/health" --health-interval=10s --health-timeout=10s --health-retries=3 rs-ratings:2.1.0
 
 # Start Payment container (DO Rabbitmq, Eureka)
-docker run -d --name payment --network robot-shop --health-cmd="curl -H 'X-INSTANA-SYNTHETIC: 1' -f http://localhost:8080/health" --health-interval=10s --health-timeout=10s --health-retries=3 -p 8002:8080 rs-payment:2.1.0
+docker run -d --name payment --network robot-shop --health-cmd="curl -H 'X-INSTANA-SYNTHETIC: 1' -f http://localhost:8080/health" --health-interval=10s --health-timeout=10s --health-retries=3 -p 8002:8080 rs-payment:2.1.0 #rs-payment-fault SLOW AVAILABILITY 8-14 MINUTE
 
 # Start Dispatch container (DO Rabbitmq)
 docker run -d --name dispatch --network robot-shop rs-dispatch:2.1.0
@@ -113,6 +117,14 @@ sleep 3
 PrintSuccess "EVERYTHING SET UP!"
 
 # LOAD GENERATOR (understand other env var and configuration)
-# docker run --name restclient -e HOST=http://web:8080 --network robot-shop -d rs-restclient
+docker run --name restclient -e HOST=http://web:8080 --network robot-shop -d rs-restclient
 # docker run --name restclient -e HOST=http://web:8080 --network robot-shop -d rs-restclient-paymenterror
 
+if [[ $injection == "Y" ]]; then
+    echo "INJECTION STARTED"
+    sleep $time_injection
+    CONTAINER_ID=$(docker ps -qf "name=cart")
+    docker stop $CONTAINER_ID
+    PrintSuccess "CONTAINER STOPPED!"
+
+fi

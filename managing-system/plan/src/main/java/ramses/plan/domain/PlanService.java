@@ -32,7 +32,7 @@ public class PlanService {
 
     @Getter
     @Setter
-    private boolean adaptationAuthorized = false;
+    private boolean adaptationAuthorized = true;
 
     // For a given service, the system must not be in a transition state.
     // In that case, only forced adaptation options are allowed.

@@ -35,8 +35,8 @@ delay_ART_finish = 0 * 60
 outcome = 'SUCCESS'
 status = '200'
 # 3 e 7 (con metric and analysis window entrambe a 3) changeImplementation
-delay_availability_init = 3 * 60
-delay_availability_finish = 7 * 60
+delay_availability_init = 8 * 60
+delay_availability_finish = 14 * 60
 
 
 import py_eureka_client.eureka_client as eureka_client
