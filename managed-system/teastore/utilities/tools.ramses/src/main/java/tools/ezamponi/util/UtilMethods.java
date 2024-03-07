@@ -11,7 +11,7 @@ public class UtilMethods {
         Random random = new Random();
         long number = minLong + random.nextInt((int) (maxLong - minLong + 1));
 
-        System.out.println("Random number (long): " + number);
+        //System.out.println("Random number (long): " + number);
         return number;
     }
 }

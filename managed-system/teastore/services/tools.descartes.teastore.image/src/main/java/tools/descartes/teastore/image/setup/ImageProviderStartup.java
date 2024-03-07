@@ -40,6 +40,8 @@ import java.util.concurrent.TimeUnit;
 @WebListener
 public class ImageProviderStartup implements ServletContextListener {
 
+    public static double httpSuccessProbability = 1;
+
     private static final Logger LOG = LoggerFactory.getLogger(ImageProviderStartup.class);
     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
 
@@ -87,6 +89,12 @@ public class ImageProviderStartup implements ServletContextListener {
       executorService.schedule(() -> {
           MyEurekaClientHelper.register();
       }, 40, TimeUnit.SECONDS);
+
+      executorService.schedule(() -> {
+          ImageProviderStartup.httpSuccessProbability = 0.6;
+          LOG.info("probability changed to "+ImageProviderStartup.httpSuccessProbability);
+      }, 240, TimeUnit.SECONDS);
+
 
       executorService.shutdown();
   }

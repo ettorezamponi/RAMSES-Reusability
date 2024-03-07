@@ -44,6 +44,9 @@ public class AuthStartup implements ServletContextListener {
   private static final Logger LOG = LoggerFactory.getLogger(AuthStartup.class);
   ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
   private static final int REST_READ_TIMOUT = 1750;
+  public static double httpSuccessProbability = 1;
+
+  public static long delay = 0;
 
 
   /**
@@ -86,6 +89,11 @@ public class AuthStartup implements ServletContextListener {
     executorService.schedule(() -> {
       MyEurekaClientHelper.register();
     }, 40, TimeUnit.SECONDS);
+
+    executorService.schedule(() -> {
+      AuthStartup.delay = 300;
+      LOG.info("ART changed to "+AuthStartup.delay);
+    }, 300, TimeUnit.SECONDS);
 
     executorService.shutdown();
   }

@@ -16,6 +16,8 @@ package tools.descartes.teastore.image.rest;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Random;
+import java.util.concurrent.Executors;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
@@ -32,6 +34,7 @@ import jakarta.ws.rs.core.Response;
 import jakarta.ws.rs.core.UriInfo;
 import tools.descartes.teastore.entities.ImageSize;
 import tools.descartes.teastore.image.ImageProvider;
+import tools.descartes.teastore.image.setup.ImageProviderStartup;
 import tools.descartes.teastore.image.setup.SetupController;
 import tools.ezamponi.MetricsExporter;
 import tools.ezamponi.util.UtilMethods;
@@ -45,8 +48,7 @@ import tools.ezamponi.util.UtilMethods;
 @Consumes({ "application/json" })
 public class ImageProviderEndpoint {
 
-  // [0.0, 1.0]
-  double httpSuccessProbability = 1;
+  // TODO clean all the six service with delay and httpSuccessAvailability
   // percentage of slowing http request, [0, 100]
   long delay = 0;
 
@@ -58,8 +60,9 @@ public class ImageProviderEndpoint {
   @POST
   @Path("getProductImages")
   public Response getProductImages(HashMap<Long, String> images) {
+
     long duration = (long) (UtilMethods.randomNumber(0.005,0.600) * (1 + (delay/100.0)));
-    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/getProductImages", httpSuccessProbability, new Random().nextDouble());
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/getProductImages", ImageProviderStartup.httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
     return Response.ok()
         .entity(ImageProvider.IP.getProductImages(images.entrySet().parallelStream().collect(
@@ -76,7 +79,7 @@ public class ImageProviderEndpoint {
   @Path("getWebImages")
   public Response getWebUIImages(HashMap<String, String> images) {
     long duration = (long) (UtilMethods.randomNumber(0.005,0.400) * (1 + (delay/100.0)));
-    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/getWebImages", httpSuccessProbability, new Random().nextDouble());
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/getWebImages", ImageProviderStartup.httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration, TimeUnit.MILLISECONDS);
     return Response.ok()
         .entity(ImageProvider.IP.getWebUIImages(images.entrySet().parallelStream().collect(
@@ -96,7 +99,7 @@ public class ImageProviderEndpoint {
     SetupController.SETUP.reconfiguration();
     // Histogram metrics
     long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));
-    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/regenerateImages", httpSuccessProbability, new Random().nextDouble());
+    Timer addTimer = MetricsExporter.createTimerMetric("GET", "/regenerateImages", ImageProviderStartup.httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration,TimeUnit.MILLISECONDS);
 
     return Response.ok().build();

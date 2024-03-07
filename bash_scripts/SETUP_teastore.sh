@@ -7,7 +7,8 @@ PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 export GITHUB_REPOSITORY_URL=https://github.com/ettorezamponi/config-server.git
 export GITHUB_OAUTH=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
 
-injection="Y"
+# Set to 'Y' to simulate SCENARIO 1
+injection="N"
 time_injection=240
 
 ##### Network #####
@@ -35,13 +36,13 @@ docker run -P --name knowledge-db --network teastore -d knowledge-db
 docker run --name persistence -e "REGISTRY_HOST=registry" -e "HOST_NAME=persistence" -e "DB_HOST=db" -e "DB_PORT=3306" -p 1111:8080 --network teastore -d teastore-persistence
 
 #STORE/AUTH
-docker run --name auth -e "REGISTRY_HOST=registry" -e "HOST_NAME=auth" -p 2222:8080 --network teastore -d teastore-auth
+docker run --name auth -e "REGISTRY_HOST=registry" -e "HOST_NAME=auth" -p 2222:8080 --network teastore -d teastore-auth-fault
 
 #RECOMMENDER
 docker run --name recommender -e "REGISTRY_HOST=registry" -e "HOST_NAME=recommender" -p 3333:8080 --network teastore -d teastore-recommender
 
 #IMAGE
-docker run --name image -e "REGISTRY_HOST=registry" -e "HOST_NAME=image" -p 4444:8080 --network teastore -d teastore-image
+docker run --name image -e "REGISTRY_HOST=registry" -e "HOST_NAME=image" -p 4444:8080 --network teastore -d teastore-image-fault
 
 #WEBUI
 docker run --name webui -e "REGISTRY_HOST=registry" -e "HOST_NAME=webui" -p 8080:8080 --network teastore -d teastore-webui
@@ -106,5 +107,10 @@ if [[ $injection == "Y" ]]; then
     sleep $time_injection
     CONTAINER_ID=$(docker ps -qf "name=recommender")
     docker stop $CONTAINER_ID
-    PrintSuccess "CONTAINER $CONTAINER_ID STOPPED!"
+    PrintSuccess "CONTAINER STOPPED!"
+
+    sleep $time_injection
+    CONTAINER_ID=$(docker ps -qf "name=persistence")
+    docker stop $CONTAINER_ID
+    PrintSuccess "CONTAINER STOPPED!"
 fi

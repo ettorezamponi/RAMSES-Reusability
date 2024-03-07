@@ -13,7 +13,7 @@ public class Injection {
 
         scheduler.schedule(() -> {
             probability[0] = value;
-            System.out.println("SUCCESS VARIABLE IMPOSTATA A "+value+" DOPO "+seconds+ " SECONDI");
+            System.out.println("PROBABILITA' IMPOSTATA A "+value+" DOPO "+seconds+ " SECONDI");
         }, seconds, TimeUnit.SECONDS);
 
         scheduler.shutdown();

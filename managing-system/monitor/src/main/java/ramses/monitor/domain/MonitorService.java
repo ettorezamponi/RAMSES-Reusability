@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.concurrent.ThreadPoolTaskScheduler;
 
+import javax.annotation.PostConstruct;
 import java.util.*;
 import java.util.concurrent.ScheduledFuture;
 import java.util.concurrent.atomic.AtomicBoolean;
@@ -36,7 +37,7 @@ public class MonitorService {
 
     @Getter
     @Value("${SCHEDULING_PERIOD}")
-    private int schedulingPeriod = 5000; // monitor scheduling period [ms]
+    private int schedulingPeriod = 10000; // monitor scheduling period [ms]
 
     private final AtomicBoolean loopIterationFinished = new AtomicBoolean(true);
     private final Queue<List<InstanceMetricsSnapshot>> instanceMetricsListBuffer = new LinkedList<>();
@@ -51,13 +52,13 @@ public class MonitorService {
         knowledgeClient.getServicesMap().values().forEach(service -> managedServices.add(service.getServiceId()));
     }
 
-    /*
+
     // Decomment to start routine on startup instead of manually starting it
     @PostConstruct
     public void initRoutine() {
         monitorRoutine = taskScheduler.scheduleWithFixedDelay(new MonitorRoutine(), schedulingPeriod);
     }
-    */
+
 
     // PRIMO METODO CHE VIENE INVOCATO QUANDO IL MONITOR PARTE
     // The Runnable interface should be implemented by any class whose instances are intended to be executed by a thread.

@@ -22,6 +22,7 @@ import jakarta.ws.rs.core.Response;
 
 import jakarta.ws.rs.core.UriInfo;
 import tools.descartes.teastore.auth.security.ShaSecurityProvider;
+import tools.descartes.teastore.auth.startup.AuthStartup;
 import tools.descartes.teastore.entities.OrderItem;
 import tools.descartes.teastore.entities.Product;
 import tools.descartes.teastore.entities.message.SessionBlob;
@@ -44,10 +45,6 @@ import java.util.concurrent.TimeUnit;
 @Consumes({ "application/json" })
 public class AuthCartRest {
 
-  // [0.0, 1.0]
-  double httpSuccessProbability = 1;
-  // percentage of slowing http request, [0, 100]
-  long delay = 0;
   /**
    * Adds product to cart. If the product is already in the cart the quantity is
    * increased.
@@ -69,13 +66,13 @@ public class AuthCartRest {
           pid);
     } catch (TimeoutException e) {
       // Histogram metrics
-      long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));;
+      long duration = (long) (System.currentTimeMillis()-startTime * (1 + (AuthStartup.delay/100.0)));;
       Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/addToCart");
       addTimer.record(duration, TimeUnit.MILLISECONDS);
       return Response.status(408).build();
     } catch (NotFoundException e) {
       // Histogram metrics
-      long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));;
+      long duration = (long) (System.currentTimeMillis()-startTime * (1 + (AuthStartup.delay/100.0)));;
       Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/addToCart");
       addTimer.record(duration, TimeUnit.MILLISECONDS);
       return Response.status(404).build();
@@ -95,8 +92,8 @@ public class AuthCartRest {
     blob.getOrderItems().add(item);
     blob = new ShaSecurityProvider().secure(blob);
     // Histogram metrics
-    long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));;
-    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/addToCart", httpSuccessProbability, new Random().nextDouble());
+    long duration = (long) (System.currentTimeMillis()-startTime * (1 + (AuthStartup.delay/100.0)));;
+    Timer addTimer = MetricsExporter.createTimerMetric("POST", "/addToCart", AuthStartup.httpSuccessProbability, new Random().nextDouble());
     addTimer.record(duration,TimeUnit.MILLISECONDS);
     //System.out.println("TIMER CREATO con tempo: "+duration);
     return Response.status(Response.Status.OK).entity(blob).build();
@@ -125,14 +122,14 @@ public class AuthCartRest {
       blob.getOrderItems().remove(toRemove);
       blob = new ShaSecurityProvider().secure(blob);
       // Histogram metrics
-      long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));;
-      Timer addTimer = MetricsExporter.createTimerMetric("POST", "/removeProduct", httpSuccessProbability, new Random().nextDouble());
+      long duration = (long) (System.currentTimeMillis()-startTime * (1 + (AuthStartup.delay/100.0)));;
+      Timer addTimer = MetricsExporter.createTimerMetric("POST", "/removeProduct", AuthStartup.httpSuccessProbability, new Random().nextDouble());
       addTimer.record(duration,TimeUnit.MILLISECONDS);
 
       return Response.status(Response.Status.OK).entity(blob).build();
     } else {
       // Histogram metrics
-      long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));;
+      long duration = (long) (System.currentTimeMillis()-startTime * (1 + (AuthStartup.delay/100.0)));;
       Timer addTimer = MetricsExporter.createTimerErrorMetric("POST", "/removeProduct");
       addTimer.record(duration, TimeUnit.MILLISECONDS);
       return Response.status(Response.Status.NOT_FOUND).build();
@@ -160,15 +157,15 @@ public class AuthCartRest {
         item.setQuantity(quantity);
         blob = new ShaSecurityProvider().secure(blob);
         // Histogram metrics
-        long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));;
-        Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/updateQuantity", httpSuccessProbability, new Random().nextDouble());
+        long duration = (long) (System.currentTimeMillis()-startTime * (1 + (AuthStartup.delay/100.0)));;
+        Timer addTimer = MetricsExporter.createTimerMetric("PUT", "/updateQuantity", AuthStartup.httpSuccessProbability, new Random().nextDouble());
         addTimer.record(duration,TimeUnit.MILLISECONDS);
 
         return Response.status(Response.Status.OK).entity(blob).build();
       }
     }
     // Histogram metrics
-    long duration = (long) (System.currentTimeMillis()-startTime * (1 + (delay/100.0)));;
+    long duration = (long) (System.currentTimeMillis()-startTime * (1 + (AuthStartup.delay/100.0)));;
     Timer addTimer = MetricsExporter.createTimerErrorMetric("PUT", "/updateQuantity");
     addTimer.record(duration, TimeUnit.MILLISECONDS);
     return Response.status(Response.Status.NOT_FOUND).build();
