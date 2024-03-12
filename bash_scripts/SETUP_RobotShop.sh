@@ -121,7 +121,7 @@ docker run --name restclient -e HOST=http://web:8080 --network robot-shop -d rs-
 
 if [[ $injection == "Y" ]]; then
 
-    durata_timer=240
+    durata_timer=180
     while [ $durata_timer -gt 0 ]; do
         # Stampa il tempo rimanente
         printf "\rRemaining timer for first FAULT INJECTION: %02d:%02d \r" $((durata_timer/60)) $((durata_timer%60))
@@ -134,7 +134,7 @@ if [[ $injection == "Y" ]]; then
     docker stop $CONTAINER_ID
     PrintSuccess "CONTAINER STOPPED!"
 
-    durata_timer=430
+    durata_timer=120
     while [ $durata_timer -gt 0 ]; do
         # Stampa il tempo rimanente
         printf "\rRemaining timer for second FAULT INJECTION: %02d:%02d \r" $((durata_timer/60)) $((durata_timer%60))
@@ -147,7 +147,7 @@ if [[ $injection == "Y" ]]; then
     docker stop $CONTAINER_ID
     PrintSuccess "CONTAINER STOPPED!"
 
-    durata_timer=10
+    durata_timer=20
     while [ $durata_timer -gt 0 ]; do
         # Stampa il tempo rimanente
         printf "\rRemaining timer for third FAULT INJECTION: %02d:%02d \r" $((durata_timer/60)) $((durata_timer%60))
