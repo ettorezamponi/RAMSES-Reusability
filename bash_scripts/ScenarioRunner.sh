@@ -124,6 +124,7 @@ echo; PrintWarn "Do you wanna simulate a scenario ?!"; echo
 echo; PrintWarn "1:addIstance \ 2:changeImplementation \ 3:changeLBWeights \ 4:shutdownInstance"; echo
 
 
+
 echo "Insert the number of the scenario you want or press anything else to exit:"
 read userInput
 
