@@ -73,7 +73,7 @@ The entire project was tested on Mac (Apple Silicon and Intel), Windows and Linu
 
    Once you have created your configuration repository, generate a GitHub personal access token to grant the _Managed System_ the permission to push data on your repository. You 		can do so by following [this 	guide](https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/creating-a-personal-access-token).
 
-   At this point, enter your configuration repo and access token into the [bash script](/bash_scripts/execute/SETUP_ICSE.sh) (or in the [linux script](./bash_scripts/execute/SETUP_ICSE_LINUX.sh)) initial variables.
+   At this point, enter your configuration repo and access token into the [bash script](/bash_scripts/ScenarioRunner.sh) (or in the [linux script](./bash_scripts/execute/SETUP_ICSE_LINUX.sh)) initial variables.
 
    ```
    $ export GITHUB_REPOSITORY_URL = ...
@@ -83,9 +83,9 @@ The entire project was tested on Mac (Apple Silicon and Intel), Windows and Linu
 4. ### Execute the script
    * **MAC**
    
-     You can run the ready-to-use script without any further operations, [SETUP_ICSE.sh](/bash_scripts/execute/SETUP_ICSE.sh) and follow the instructions via CLI.
+     You can run the ready-to-use script without any further operations, [ScenarioRunner.sh](/bash_scripts/ScenarioRunner.sh) and follow the instructions via CLI.
      ```
-     $ sh SETUP_ICSE.sh
+     $ sh ScenarioRunner.sh
      ```
    * **WINDOWS** 
    
@@ -95,7 +95,7 @@ The entire project was tested on Mac (Apple Silicon and Intel), Windows and Linu
 
      Finally launch the script.
      ```
-     $ sh SETUP_ICSE.sh
+     $ sh ScenarioRunner.sh
      ```
    * **LINUX**  
 
@@ -362,7 +362,7 @@ Once we have our rest client set up properly, clean the GitHub configuration rep
 
 1) Build the client with the command `gradle build` inside the REST client folder.
 2) Create de Docker image with the command `docker build -t restclient .` inside always the same root folder.
-3) Launch the setup [script](./bash_scripts/execute/SETUP_ICSE.sh) following the initial installation [guide](#installation-guide) without any scenarios.
+3) Launch the setup [script](./bash_scripts/ScenarioRunner.sh) following the initial installation [guide](#installation-guide) without any scenarios.
 4) After all launch your new REST client through the command `docker run -P -d --network ramses-sas-net restclient`.
 
 ## Project Dependencies
