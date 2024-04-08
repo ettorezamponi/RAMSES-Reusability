@@ -1,4 +1,4 @@
-# RAMSES - ICSE2024 presentation
+# RAMSES - SEAMS2024 presentation
 
 We present four scenarios that the actuator is able to recognise and apply to SEFA (application composed of microservices built ad-hoc).
 
