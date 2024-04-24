@@ -21,7 +21,7 @@ MSc final thesis project by Ettore Zamponi.
 ---
 
 # *RAMSES - A Reusable Autonomic Manager for MicroServicES*
-MSc final thesis project by Vincenzo Riccio and Giancarlo Sorrentino ([LINK](https://github.com/ramses-sas).
+MSc final thesis project by Vincenzo Riccio and Giancarlo Sorrentino ([LINK](https://github.com/ramses-sas)).
 
 ## Project composition
 This project is a Self-Adaptive System made of:
