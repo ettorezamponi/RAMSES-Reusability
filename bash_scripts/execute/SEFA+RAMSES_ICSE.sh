@@ -4,7 +4,7 @@ PrintWarn() { echo -e "\033[0;33m$1\033[0m"; }
 PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 
 export GITHUB_REPOSITORY_URL=https://github.com/ettorezamponi/config-server.git
-export GITHUB_OAUTH=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
+export GITHUB_OAUTH=
 
 
 if [[(${ARCH} != "arm64") && ( ${ARCH} != "amd64")]]; then
