@@ -5,7 +5,7 @@ PrintError() { echo -e "\033[0;31m$1\033[0m"; }
 
 # MODIFY THESE TWO VARIABLES TO BE ABLE TO MANAGE THE CONFIG SERVER
 export GITHUB_REPOSITORY_URL=https://github.com/ettorezamponi/config-server.git
-export GITHUB_OAUTH=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
+export GITHUB_OAUTH=
 
 if [[("${GITHUB_OAUTH}" = "") || ("${GITHUB_REPOSITORY_URL}" = "")]]; then
   PrintWarn "Desired architecture not specified or unknown. Supported values are 'arm64' and 'amd64'. Using 'arm64' as default option"
@@ -13,7 +13,7 @@ if [[("${GITHUB_OAUTH}" = "") || ("${GITHUB_REPOSITORY_URL}" = "")]]; then
   exit 1
 fi
 
-ARCH="arm64"
+ARCH="amd64"
 PrintWarn "Running script with selected architecture: ${ARCH}"
 sleep 1
 
